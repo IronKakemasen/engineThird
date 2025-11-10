@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Development|x64">
+      <Configuration>Development</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ff56d370-060e-4425-883b-f155c5555d7c}</ProjectGuid>
+    <RootNamespace>engineSecond</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>engineThird</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)..\Generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <IntDir>$(SolutionDir)..\Generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir)..\Generated\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>/ignore:4049 /ignore:4048 %(AdditionalOptions)</AdditionalOptions>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration />
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\bufferAndMap\bufferAndMap.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.cpp" />
+    <ClCompile Include="M\commonVariables.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\barrierControll\barrierControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\commandControll\commandControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\dxCompile\dxCompile.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\fenceControll\fenceControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\leakChecker\leakChecker.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\logAndException\detectException.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\material\material.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp" />
+    <ClCompile Include="M\lowerLayer\math\matrix\matrix.cpp" />
+    <ClCompile Include="M\lowerLayer\math\vector\vector.cpp" />
+    <ClCompile Include="M\utilities\vectorAndMatrix\vectorAndMatrix.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\WinApp.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaders.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexDataForLine\vertexDataForLine.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineCreators.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\bufferAndMap\bufferAndMap.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.h" />
+    <ClInclude Include="M\commonVariables.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\barrierControll\barrierControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\commandControll\commandControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\dxCompile\dxCompile.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\fenceControll\fenceControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\leakChecker\leakChecker.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\logAndException\detectException.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\material\material.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h" />
+    <ClInclude Include="M\lowerLayer\math\matrix\matrix.h" />
+    <ClInclude Include="M\lowerLayer\math\vector\vector.h" />
+    <ClInclude Include="M\utilities\benriTemplateFunc\benriTempFunc.h" />
+    <ClInclude Include="M\utilities\vectorAndMatrix\vectorAndMatrix.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\WinApp.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaders.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexDataForLine\vertexDataForLine.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineCreators.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="external\imgui\imgui.vcxproj" />
+    <None Include="external\imgui\imgui.vcxproj.filters" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

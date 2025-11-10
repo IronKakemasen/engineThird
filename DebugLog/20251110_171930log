@@ -1,0 +1,26 @@
+Use Adapter:NVIDIA GeForce RTX 5050 Laptop GPU
+
+FeatureLevel:12.2
+
+Complete create D3D12Device
+
+Complete create CommandQueue
+
+Complete create SwapChain
+
+Complete create rtvDescriptorHeap
+
+Complete pull Resource
+
+Complete create Allocators
+
+Complete create CommandList
+
+Complete built fence
+
+Complete creat event
+
+Complete load shader
+
+Complete compile
+

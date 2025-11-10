@@ -1,0 +1,40 @@
+Use Adapter:NVIDIA GeForce RTX 5050 Laptop GPU
+
+FeatureLevel:12.2
+
+Complete create D3D12Device
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./M/resource/preset/shader/Object3d.VS.hlsl,profile:vs_6_0
+
+Object3d.VSCompiled
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./M/resource/preset/shader/Object3d.PS.hlsl,profile:ps_6_0
+
+Object3d.PSCompiled
+
+Complete create CommandQueue
+
+Complete create SwapChain
+
+Complete create rtvDescriptorHeap
+
+Complete pull Resource
+
+Complete create Allocators
+
+Complete create CommandList
+
+Complete built fence
+
+Complete creat event
+
+Complete create rootSignature
+
