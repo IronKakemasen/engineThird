@@ -35,6 +35,7 @@ public:
 		return nameList;
 	}
 
+	int GetIDFromTableName(std::string shaderSetName_);
 	ShaderSet Getter_ShaderSet(std::string name_);
 	std::unordered_map<std::string, ShaderSet> Getter_ShaderTable();
 

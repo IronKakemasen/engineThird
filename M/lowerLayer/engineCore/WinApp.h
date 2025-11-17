@@ -29,6 +29,18 @@
 #include "./allPipelineSet/allPipelineSet.h"
 //===================================================================
 
+//=================================================================== Imgui
+#ifdef USE_IMGUI
+#include "../../../External/imgui/imgui.h"
+#include "../../../External/imgui/imgui_impl_dx12.h"
+#include "../../../External/imgui/imgui_impl_win32.h"
+#endif 
+////===================================================================
+
+//#include "../../../External/DirectXTex/d3dx12.h"
+
+
+
 class WinApp
 {
 public:

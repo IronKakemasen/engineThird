@@ -6,6 +6,15 @@
 
 #pragma comment(lib,"d3d12.lib")
 
+int VPShaderTable::GetIDFromTableName(std::string shaderSetName_)
+{
+	assert(DoesContain(nameList, shaderSetName_));
+
+	return map_nameAndID[shaderSetName_];
+}
+
+
+
 //シェーダセットのテーブルを設定
 void VPShaderTable::AddToTable(std::string name_,
 	IDxcBlob* src_vertexShaderBlob_, IDxcBlob* src_pixelShaderBlob_)

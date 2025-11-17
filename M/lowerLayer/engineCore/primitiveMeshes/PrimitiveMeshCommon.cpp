@@ -8,7 +8,6 @@ void PrimitiveMeshCommon::Init(PipelineSet* pipelineSet_, uint16_t kMaxDraw_)
 	kMaxDraw = kMaxDraw_;
 }
 
-
 void PrimitiveMeshCommon::DrawIndexReset()
 {
 	cur_drawIndex = 0;

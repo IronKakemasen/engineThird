@@ -2,6 +2,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <memory>
+#include <functional>
 #include "../../allShaderData/vpShaderTable/vpShaderTable.h"
 #include "./pipelineCreators/pipelineCreators.h"
 
@@ -9,14 +10,16 @@ class PipelineSet
 {
 	static inline PipelineCreators pipelineCreators;
 
-	//Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineStateObject = nullptr;
-	//Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineStateObject = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+
+	ID3D12CommandList* commandList = nullptr;
 
 
 public:
 
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineStateObject = nullptr;
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+	//Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineStateObject = nullptr;
+	//Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
 
 	static [[nodiscard]] std::unique_ptr<PipelineSet> CreateGraphicsPipelineSet(ID3D12Device* device_, 
 		std::string shaderSetName_,
@@ -24,6 +27,16 @@ public:
 		BlendMode blendMode_,
 		CullMode cullMode_,
 		bool isTopologyLine = false);
+
+	void Activate_RootparameterCreateFunc(std::function<std::vector<D3D12_ROOT_PARAMETER>()> func_);
+	void Activate_InputLayoutCreateFunc(std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_);
+
+	inline void Setter_Commandlist(ID3D12CommandList* commandList_)
+	{
+		commandList = commandList_;
+	}
+
+
 
 	//inline void Setter_RootSignature(ID3D12RootSignature* dst_)
 	//{
@@ -39,8 +52,6 @@ public:
 	//{
 	//	return pipelineStateObject.Get();
 	//}
-
-
 
 	//inline auto* Getter_RootSignature()
 	//{

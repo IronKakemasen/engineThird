@@ -1,22 +1,47 @@
 #include "allPipelineSet.h"
 #include "../../../utilities/benriTemplateFunc/benriTempFunc.h"
 #include <assert.h>
+#include "../allShaderData/vpShaders.h"
 
 
-void AllPipelineSet::Initialize(ID3D12Device* device_, VPShaderTable* vpShaderTable_)
+void AllPipelineSet::Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12CommandList* commandList_)
 {
-	vpShaderTable = vpShaderTable_;
+	commandList = commandList_;
+	vpShaders = vpShaders_;
 	device = device_;
+
+}
+
+void AllPipelineSet::CreateNewPipeline(
+	std::string vsFileName_,
+	std::string psFileName_,
+	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
+	std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_)
+{
+	std::string tableName = vsFileName_ + psFileName_;
+
+	vpShaders->AddPixelShader(psFileName_);
+	vpShaders->AddVertexShader(vsFileName_);
+	vpShaders->AddToTable(tableName, psFileName_, vsFileName_);
+	pipelineSets[0][0][0]->Activate_InputLayoutCreateFunc(inputElementDescCreateFunc_);
+	pipelineSets[0][0][0]->Activate_RootparameterCreateFunc(rootParameterCreateFunc_);
+
+	Add(tableName);
+
+
 
 }
 
 void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 {
-	if (vpShaderTable)
+	if (vpShaders)
 	{
+		auto* vpShaderTable = vpShaders->Getter_VPShaderTable();
+
 		assert(DoesContain(vpShaderTable->Getter_NameList(), shaderSetName_));
 
 		int const shaderSetIndex = vpShaderTable->Getter_Map_nameAndID()[shaderSetName_];
+
 
 		pipelineSets[shaderSetIndex][kBlendModeNormal][kCullModeBack] =
 			PipelineSet::CreateGraphicsPipelineSet(device, shaderSetName_, vpShaderTable,
@@ -44,6 +69,17 @@ void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 				kBlendModeNormal, CullMode::kCullModeNone, isTopologyLine);
 
 
+		//CommandListSetter
+		for (int k = 0; k < kCountOfBlendMode; ++k)
+		{
+			for (int j = 0; j < kCountOfCullMode; ++j)
+			{
+				pipelineSets[shaderSetIndex][k][j]->Setter_Commandlist(commandList);
+			}
+		}
+	
+
+
 
 	}
 
@@ -53,8 +89,3 @@ void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 	}
 }
 
-void AllPipelineSet::CreateAllGraphicsPipelineSets(ID3D12Device* device_, VPShaderTable* vpShaderTable_)
-{
-
-
-}

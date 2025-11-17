@@ -1,45 +1,39 @@
 #include "inputLayoutDescCreator.h"
+#include "../../../allPipelineSet.h"
+#include <assert.h>
+
 #pragma comment(lib,"d3d12.lib")
 
 
-
-void InputLayoutDescCreator::SetInputElementDescs(std::string shaderSetName_)
+void InputLayoutDescCreator::CopyFromIndex(int funcIndex_)
 {
+	std::vector<D3D12_INPUT_ELEMENT_DESC> tmpDescs = funcs_inputElementDescsCreate[funcIndex_]();
+	heap_inputElementDescs.second = UINT(tmpDescs.size());
+	heap_inputElementDescs.first = new D3D12_INPUT_ELEMENT_DESC[heap_inputElementDescs.second];
 
-	UINT numElements = 0;
 
-	if (shaderSetName_ == "Default,Default")
+	int index = 0;
+	for (auto itr = tmpDescs.begin(); itr != tmpDescs.end(); ++itr,index++)
 	{
-		numElements = 3;
-		heap_inputElementDescs.second = numElements;
-
-		heap_inputElementDescs.first = new D3D12_INPUT_ELEMENT_DESC[numElements];
-
-		heap_inputElementDescs.first[0] = GetInputElementDesc(
-			"POSITION",
-			0,
-			DXGI_FORMAT_R32G32B32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		);
-
-		heap_inputElementDescs.first[1] = GetInputElementDesc(
-			"TEXCOORD",
-			0,
-			DXGI_FORMAT_R32G32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		);
-
-		heap_inputElementDescs.first[2] = GetInputElementDesc(
-			"NORMAL",
-			0,
-			DXGI_FORMAT_R32G32B32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		);
-
-
+		heap_inputElementDescs.first[index] = (*itr);
+		
 	}
 
+}
 
+void InputLayoutDescCreator::AddToFuncs_InputElementDescsCreate(
+	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_)
+{
+	sum_created++;
+	if (sum_created >= AllPipelineSet::kNumShaderSet) assert(false);
+	
+	funcs_inputElementDescsCreate.emplace_back(func_);
+
+}
+
+void InputLayoutDescCreator::SetInputElementDescs(int funcIndex_)
+{
+	CopyFromIndex(funcIndex_);
 }
 
 D3D12_INPUT_ELEMENT_DESC InputLayoutDescCreator::GetInputElementDesc(
@@ -59,11 +53,10 @@ D3D12_INPUT_ELEMENT_DESC InputLayoutDescCreator::GetInputElementDesc(
 	return ret_elementDesc;
 }
 
-D3D12_INPUT_LAYOUT_DESC InputLayoutDescCreator::CreateInputLayoutDesc(std::string shaderSetName_)
+[[nodiscard]] D3D12_INPUT_LAYOUT_DESC InputLayoutDescCreator::CreateInputLayoutDesc(int funcIndex_)
 {
 	D3D12_INPUT_LAYOUT_DESC ret_inputLayoutDesc = {};
-	SetInputElementDescs(shaderSetName_);
-
+	SetInputElementDescs(funcIndex_);
 
 	ret_inputLayoutDesc.pInputElementDescs = heap_inputElementDescs.first;
 	ret_inputLayoutDesc.NumElements = heap_inputElementDescs.second;;
@@ -81,3 +74,25 @@ void InputLayoutDescCreator::SafeRelease()
 		heap_inputElementDescs.second = 0;
 	}
 }
+
+
+//heap_inputElementDescs.first[0] = GetInputElementDesc(
+//	"POSITION",
+//	0,
+//	DXGI_FORMAT_R32G32B32_FLOAT,
+//	D3D12_APPEND_ALIGNED_ELEMENT
+//);
+//
+//heap_inputElementDescs.first[1] = GetInputElementDesc(
+//	"TEXCOORD",
+//	0,
+//	DXGI_FORMAT_R32G32_FLOAT,
+//	D3D12_APPEND_ALIGNED_ELEMENT
+//);
+//
+//heap_inputElementDescs.first[2] = GetInputElementDesc(
+//	"NORMAL",
+//	0,
+//	DXGI_FORMAT_R32G32B32_FLOAT,
+//	D3D12_APPEND_ALIGNED_ELEMENT
+//);

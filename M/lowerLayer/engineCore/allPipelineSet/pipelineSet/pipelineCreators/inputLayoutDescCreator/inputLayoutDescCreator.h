@@ -2,24 +2,35 @@
 #include <d3d12.h>
 #include "../pipelineComponents.h"
 #include <string>
+#include <vector>
+#include <functional>
+
 
 class InputLayoutDescCreator
 {	
-	std::pair<D3D12_INPUT_ELEMENT_DESC*, UINT> heap_inputElementDescs = { nullptr ,0};
+	int sum_created = 0;
 
-	D3D12_INPUT_ELEMENT_DESC GetInputElementDesc(
+	std::pair<D3D12_INPUT_ELEMENT_DESC*, UINT> heap_inputElementDescs = { nullptr ,0};
+	std::vector < std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()>> funcs_inputElementDescsCreate;
+
+
+
+	//いつか修正
+	void SetInputElementDescs(int funcIndex_);
+	void CopyFromIndex(int funcIndex_);
+
+public:
+
+	static D3D12_INPUT_ELEMENT_DESC GetInputElementDesc(
 		LPCSTR semanticName_,
 		UINT semanticIndex_,
 		DXGI_FORMAT format_,
 		UINT alignedByteOffset_
 	);
 
-	//いつか修正
-	void SetInputElementDescs(std::string shaderSetName_);
+	void AddToFuncs_InputElementDescsCreate(std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_);
 
-public:
-
-	D3D12_INPUT_LAYOUT_DESC CreateInputLayoutDesc(std::string shaderSetName_);
+	[[nodiscard]] D3D12_INPUT_LAYOUT_DESC CreateInputLayoutDesc(int funcIndex_);
 	void SafeRelease();
 };
 

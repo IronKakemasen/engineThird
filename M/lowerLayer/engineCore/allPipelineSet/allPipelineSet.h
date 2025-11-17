@@ -2,34 +2,36 @@
 #include "./pipelineSet/pipelineSet.h"
 #include <memory>
 
-class VPShaderTable;
+
+class VpShaders;
+
 
 class AllPipelineSet
 {
-	static int const numShaderSet = 5;
+public:
+	static int const kNumShaderSet = 5;
+
+private:
 	//[ pipelineSet ]
-	std::unique_ptr<PipelineSet> pipelineSets[numShaderSet][kCountOfBlendMode][kCountOfCullMode];
+	std::unique_ptr<PipelineSet> pipelineSets[kNumShaderSet][kCountOfBlendMode][kCountOfCullMode];
 
-	VPShaderTable* vpShaderTable = nullptr;
+	VpShaders* vpShaders = nullptr;
 	ID3D12Device* device = nullptr;
+	ID3D12CommandList* commandList = nullptr;
 
-	void CreateAllGraphicsPipelineSets(ID3D12Device* device_, VPShaderTable* vpShaderTable_);
-	
+
 
 
 public:
 
-	inline void Setter_ShaderSetNameList(VPShaderTable* vpShaderTable_)
-	{
-		vpShaderTable = vpShaderTable_;
-	}
+	void Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12CommandList* commandList_);
+	void CreateNewPipeline(
+		std::string vsFileName_,
+		std::string psFileName_,
+		std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
+		std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_);
 
-	inline void Setter_Device(ID3D12Device* device_)
-	{
-		device = device_;
-	}
 
-	void Initialize(ID3D12Device* device_, VPShaderTable* vpShaderTable_);
 	void Add(std::string shaderSetName_, bool isTopologyLine = false);
 
 };

@@ -4,6 +4,15 @@
 
 #pragma comment(lib,"d3d12.lib")
 
+void PipelineSet::Activate_InputLayoutCreateFunc(std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_)
+{
+	pipelineCreators.inputLayoutCreator.AddToFuncs_InputElementDescsCreate(func_);
+}
+
+void PipelineSet::Activate_RootparameterCreateFunc(std::function<std::vector<D3D12_ROOT_PARAMETER>()> func_)
+{
+	pipelineCreators.rootSignatureCreator.AddToFuncs_RootParametersCreate(func_);
+}
 
 
 [[nodiscard]] std::unique_ptr<PipelineSet> PipelineSet::CreateGraphicsPipelineSet(ID3D12Device* device_,
@@ -17,6 +26,8 @@
 	std::unique_ptr<PipelineSet> ret_pipelineSet = std::make_unique<PipelineSet>();
 	//graphiscPipelineDesc
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graghicsPipeLineStatedesc{};
+
+	int shaderSetIndex = vpShaderTable_->GetIDFromTableName(shaderSetName_);
 
 	//==============================================================================================
 	//PrimitiveTopologyType
@@ -59,6 +70,7 @@
 	//==============================================================================================
 	ret_pipelineSet->rootSignature = pipelineCreators.rootSignatureCreator.CreateRootSignature(
 	device_,
+	shaderSetIndex,
 	shaderSetName_);
 	graghicsPipeLineStatedesc.pRootSignature = ret_pipelineSet->rootSignature.Get();
 
@@ -66,7 +78,7 @@
 	//InputLayout
 	//==============================================================================================
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
-	inputLayoutDesc = pipelineCreators.inputLayoutCreator.CreateInputLayoutDesc(shaderSetName_);
+	inputLayoutDesc = pipelineCreators.inputLayoutCreator.CreateInputLayoutDesc(shaderSetIndex);
 	graghicsPipeLineStatedesc.InputLayout = inputLayoutDesc;
 
 	//==============================================================================================

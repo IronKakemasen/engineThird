@@ -1,7 +1,7 @@
 #include "WinApp.h"
 #include "./barrierControll/barrierControll.h"
 #include <assert.h>
-
+#include "./allPipelineSet/pipelineSet/pipelineCreators/pipelineCreators.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -47,15 +47,82 @@ bool WinApp::InitD3D()
 	fenceControll.Initialize(deviceSetUp.Getter_Device(), deviceSetUp.Getter_DxgiFactory());
 
 	//pipelineSetの初期化
-	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), vpShaders.Getter_VPShaderTable());
+	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, commandControll.Getter_commandList());
 
-	vpShaders.AddPixelShader("Object3d.PS");
-	vpShaders.AddVertexShader("Object3d.VS");
-	vpShaders.AddToTable("Default,Default", "Object3d.PS", "Object3d.VS");
+	auto inputLayOutFunc = []() 
+		{
+		std::vector<D3D12_INPUT_ELEMENT_DESC> descs;
+		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
+			"POSITION",
+			0,
+			DXGI_FORMAT_R32G32B32_FLOAT,
+			D3D12_APPEND_ALIGNED_ELEMENT
+		));
 
-	allPipelineSet.Add("Default,Default");
+		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
+			"TEXCOORD",
+			0,
+			DXGI_FORMAT_R32G32_FLOAT,
+			D3D12_APPEND_ALIGNED_ELEMENT
+		));
+
+		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
+			"NORMAL",
+			0,
+			DXGI_FORMAT_R32G32B32_FLOAT,
+			D3D12_APPEND_ALIGNED_ELEMENT
+		));
+
+		return descs;
+
+	};
+
+	auto rootparameterFunc = []() {
+
+		std::vector<D3D12_ROOT_PARAMETER> meters;
+
+		meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
+			D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+			D3D12_SHADER_VISIBILITY_PIXEL,
+			0));
+
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(3));
+
+		return meters;
+	};
+
+	allPipelineSet.CreateNewPipeline("Object3d.VS", "Object3d.PS", inputLayOutFunc, rootparameterFunc);
+
+	//vpShaders.AddPixelShader("Object3d.PS");
+	//vpShaders.AddVertexShader("Object3d.VS");
+	//vpShaders.AddToTable("Default,Default", "Object3d.PS", "Object3d.VS");
+	//allPipelineSet.Add("Default,Default");
 
 	commandControll.Getter_commandList()->Close();
+
+	//
+	//if (shaderSetName_ == "Object3d.VSObject3d.PS")
+	//{
+	//	numRootParameters = 5;
+	//
+	//	heap_rootParameters = new D3D12_ROOT_PARAMETER[numRootParameters];
+	//
+	//	//Descriptortableを使う
+	//	heap_rootParameters[0] = GetRootParaMeterDescriptorRange();
+	//	//WorldMatrix
+	//	heap_rootParameters[1] = GetRootParaMeterVertexShader(0);
+	//	//CameraPara
+	//	heap_rootParameters[2] = GetRootParaMeterVertexShader(1);
+	//
+	//	//Material
+	//	heap_rootParameters[3] = GetRootParaMeterPixelShader(2);
+	//	//DirectionalLight
+	//	heap_rootParameters[4] = GetRootParaMeterPixelShader(3);
+	//}
+
 	return true;
 }
 
@@ -305,5 +372,15 @@ void WinApp::EndFrame()
 
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
