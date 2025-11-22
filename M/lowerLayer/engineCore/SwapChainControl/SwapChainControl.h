@@ -6,7 +6,7 @@
 
 
 
-class SwapChainControll
+class SwapChainControl
 {
 public:
 

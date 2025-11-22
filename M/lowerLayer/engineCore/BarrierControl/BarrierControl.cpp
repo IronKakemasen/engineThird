@@ -1,10 +1,10 @@
-#include "barrierControll.h"
-#include "../commandControll/commandControll.h"
+#include "BarrierControl.h"
+#include "../CommandControl/CommandControl.h"
 
 #pragma comment(lib,"d3d12.lib")
 
 
-D3D12_RESOURCE_BARRIER BarrierControll::Create(
+D3D12_RESOURCE_BARRIER BarrierControl::Create(
 	ID3D12Resource* dst_resource_,
 	D3D12_RESOURCE_BARRIER_TYPE Type,
 	D3D12_RESOURCE_BARRIER_FLAGS Flags,
@@ -32,7 +32,7 @@ D3D12_RESOURCE_BARRIER BarrierControll::Create(
 	return ret_barrier;
 }
 
-void BarrierControll::Pitch(CommandControll* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_)
+void BarrierControl::Pitch(CommandControl* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_)
 {
 	//TransitionBarrierを張る
 	commanndControll_->Getter_commandList()->ResourceBarrier(1, barrier_);

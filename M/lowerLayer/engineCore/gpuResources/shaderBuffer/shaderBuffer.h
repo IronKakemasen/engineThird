@@ -4,7 +4,7 @@
 #include "../../../../../external/DirectXTex/DirectXTex.h"
 
 struct SrvDescriptorHeap;
-class CommandControll;
+class CommandControl;
 
 
 struct ShaderBuffer :GPUResourceBehavior
@@ -25,7 +25,7 @@ public:
 	DirectX::ScratchImage LoadTextureFile(std::string const& filePath_);
 
 	void UploadTextureData(
-		ID3D12Device* device_, CommandControll* commandControll_,
+		ID3D12Device* device_, CommandControl* CommandControl_,
 		DirectX::ScratchImage const& mipImages_);
 
 	void CreateSRV(ID3D12Device* device_, SrvDescriptorHeap* descriptorHeap_,

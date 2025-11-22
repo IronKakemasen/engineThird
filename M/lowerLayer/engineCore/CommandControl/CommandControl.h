@@ -4,7 +4,7 @@
 #include <d3d12.h>
 #include <vector>
 
-class CommandControll
+class CommandControl
 {
 	//コマンドキュー
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue = nullptr;

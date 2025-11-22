@@ -15,9 +15,9 @@
 
 //=================================================================== otherCoreSystems
 #include "./deviceSetUp/deviceSetUp.h"
-#include "./fenceControll/fenceControll.h"
-#include "./commandControll/commandControll.h"
-#include "./swapChainControll/swapChainControll.h"
+#include "./FenceControl/FenceControl.h"
+#include "./CommandControl/CommandControl.h"
+#include "./SwapChainControl/SwapChainControl.h"
 #include "./dxCompile/dxCompile.h"
 //===================================================================
 
@@ -84,14 +84,14 @@ private:
 	//[ DeviceSetUp ]
 	DeviceSetUp deviceSetUp;
 
-	//[ CommandControll ]
-	CommandControll commandControll;
+	//[ CommandControl ]
+	CommandControl CommandControl;
 
-	//[ FenceControll ]
-	FenceControll fenceControll;
+	//[ FenceControl ]
+	FenceControl FenceControl;
 
 	//[ SwapChain ]
-	SwapChainControll swapChainControll;
+	SwapChainControl SwapChainControl;
 
 	//[ DxCompile ]
 	DxCompile dxCompile;

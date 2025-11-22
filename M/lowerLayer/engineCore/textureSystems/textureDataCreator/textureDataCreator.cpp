@@ -4,7 +4,7 @@
 #include "../../gpuResources/shaderBuffer/shaderBuffer.h"
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 #include "../../bufferAndMap/bufferAndMap.h"
-#include "../../commandControll/commandControll.h"
+#include "../../CommandControl/CommandControl.h"
 
 TextureDataCreator::TextureDataCreator()
 {
@@ -36,7 +36,7 @@ int TextureDataCreator::CreateShaderBufferFromFile(std::string filePath_)
 }
 
 
-void TextureDataCreator::Init(SrvDescriptorHeap* srvDescriptorHeap_ , ID3D12Device* device_, CommandControll* commandControl_)
+void TextureDataCreator::Init(SrvDescriptorHeap* srvDescriptorHeap_ , ID3D12Device* device_, CommandControl* commandControl_)
 {
 	device = device_;
 	commandControl = commandControl_;

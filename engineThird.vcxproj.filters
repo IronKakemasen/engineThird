@@ -33,7 +33,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\WinApp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\logAndException\detectException.cpp">
@@ -45,13 +45,13 @@
     <ClCompile Include="M\lowerLayer\engineCore\leakChecker\leakChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\fenceControll\fenceControll.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\FenceControl\FenceControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\commandControll\commandControll.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\CommandControl\CommandControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.cpp">
@@ -75,7 +75,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\barrierControll\barrierControll.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.cpp">
@@ -206,7 +206,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\WinApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.h">
+    <ClInclude Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\logAndException\detectException.h">
@@ -218,13 +218,13 @@
     <ClInclude Include="M\lowerLayer\engineCore\leakChecker\leakChecker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\fenceControll\fenceControll.h">
+    <ClInclude Include="M\lowerLayer\engineCore\FenceControl\FenceControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\commandControll\commandControll.h">
+    <ClInclude Include="M\lowerLayer\engineCore\CommandControl\CommandControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.h">
@@ -248,7 +248,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\barrierControll\barrierControll.h">
+    <ClInclude Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.h">

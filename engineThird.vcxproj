@@ -171,11 +171,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\barrierControll\barrierControll.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\commandControll\commandControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\CommandControl\CommandControl.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\dxCompile\dxCompile.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\fenceControll\fenceControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\FenceControl\FenceControl.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\leakChecker\leakChecker.cpp" />
@@ -183,7 +183,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\meshStructure\material\material.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.cpp" />
@@ -231,11 +231,11 @@
     <ClInclude Include="M\commonVariables.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\barrierControll\barrierControll.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\commandControll\commandControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\CommandControl\CommandControl.h" />
     <ClInclude Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.h" />
     <ClInclude Include="M\lowerLayer\engineCore\dxCompile\dxCompile.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\fenceControll\fenceControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\FenceControl\FenceControl.h" />
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\leakChecker\leakChecker.h" />
@@ -243,7 +243,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.h" />
     <ClInclude Include="M\lowerLayer\engineCore\meshStructure\material\material.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.h" />
     <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h" />
     <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.h" />

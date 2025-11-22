@@ -4,13 +4,13 @@
 #include <d3d12.h>
 #include <stdint.h>
 #include <dxgi1_6.h>
-#include "../swapChainControll/swapChainControll.h"
+#include "../SwapChainControl/SwapChainControl.h"
 
-class FenceControll
+class FenceControl
 {
 	//[ Fence ]
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence = nullptr;
-	uint64_t fenceCounter[SwapChainControll::kFrameBufferCnt] = {0,0};
+	uint64_t fenceCounter[SwapChainControl::kFrameBufferCnt] = {0,0};
 	HANDLE fenceEvent = nullptr;
 
 

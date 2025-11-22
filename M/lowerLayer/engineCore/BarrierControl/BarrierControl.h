@@ -1,9 +1,9 @@
 #pragma once
 #include <d3d12.h>
 
-class CommandControll;
+class CommandControl;
 
-namespace BarrierControll
+namespace BarrierControl
 {
 	D3D12_RESOURCE_BARRIER Create(
 		ID3D12Resource* dst_resource_,
@@ -13,7 +13,7 @@ namespace BarrierControll
 		D3D12_RESOURCE_STATES after_,
 		UINT transitionSubResource_);
 
-	void Pitch(CommandControll* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_);
+	void Pitch(CommandControl* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_);
 
 }
 

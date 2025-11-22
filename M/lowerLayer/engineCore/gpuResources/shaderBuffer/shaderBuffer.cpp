@@ -2,7 +2,7 @@
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 #include "../../../../utilities/convertString/convertString.h"
 #include "../../bufferAndMap/bufferAndMap.h"
-#include "../../commandControll/commandControll.h"
+#include "../../CommandControl/CommandControl.h"
 
 D3D12_SHADER_RESOURCE_VIEW_DESC ShaderBuffer::CreateSRVDescFromTexture(
 	DXGI_FORMAT metaDataFormat_, size_t mipLevels_)
@@ -43,7 +43,7 @@ void ShaderBuffer::CreateSRV(ID3D12Device* device_, SrvDescriptorHeap* descripto
 }
 
 void ShaderBuffer::UploadTextureData(
-	ID3D12Device* device_, CommandControll* commandControll_,
+	ID3D12Device* device_, CommandControl* CommandControl_,
 	DirectX::ScratchImage const& mipImages_)
 {
 	std::vector<D3D12_SUBRESOURCE_DATA> subresource;
@@ -55,9 +55,9 @@ void ShaderBuffer::UploadTextureData(
 
 	intermediateResource = CreateBufferResource(device_, intermediateSize);
 
-	commandControll_->PrepareForNextCommandList();
+	CommandControl_->PrepareForNextCommandList();
 
-	UpdateSubresources(commandControll_->Getter_commandList(), resource.Get(), intermediateResource.Get(), 0, 0,
+	UpdateSubresources(CommandControl_->Getter_commandList(), resource.Get(), intermediateResource.Get(), 0, 0,
 		UINT(subresource.size()), subresource.data());
 	//Textureへの転送後は利用できるよう、D3D2_RESOUTRCE_STATE_COPY_DESTから
 	//D3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
@@ -69,9 +69,9 @@ void ShaderBuffer::UploadTextureData(
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 
-	commandControll_->Getter_commandList()->ResourceBarrier(1, &barrier);
+	CommandControl_->Getter_commandList()->ResourceBarrier(1, &barrier);
 
-	commandControll_->Getter_commandList()->Close();
+	CommandControl_->Getter_commandList()->Close();
 }
 
 

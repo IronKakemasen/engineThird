@@ -1,23 +1,23 @@
-#include "commandControll.h"
+#include "CommandControl.h"
 #include <assert.h>
-#include "../swapChainControll/swapChainControll.h"
+#include "../SwapChainControl/SwapChainControl.h"
 #include "../WinApp.h"
 
 #pragma comment(lib,"d3d12.lib")
 
-void CommandControll::PrepareForNextCommandList()
+void CommandControl::PrepareForNextCommandList()
 {
 
-	HRESULT hr = commandAllocators[SwapChainControll::frameIndex]->Reset();
+	HRESULT hr = commandAllocators[SwapChainControl::frameIndex]->Reset();
 	assert(SUCCEEDED(hr));
 
-	hr = commandList->Reset(commandAllocators[SwapChainControll::frameIndex].Get(), nullptr);
+	hr = commandList->Reset(commandAllocators[SwapChainControl::frameIndex].Get(), nullptr);
 	assert(SUCCEEDED(hr));
 
 }
 
 
-void CommandControll::MakeCommandQueue(ID3D12Device* device_)
+void CommandControl::MakeCommandQueue(ID3D12Device* device_)
 {
 	D3D12_COMMAND_QUEUE_DESC desc{};
 
@@ -34,11 +34,11 @@ void CommandControll::MakeCommandQueue(ID3D12Device* device_)
 	assert(SUCCEEDED(hr));
 	Log(WinApp::log, "Complete create CommandQueue\n");
 }
-void CommandControll::MakeCommandAllocator(ID3D12Device* device_)
+void CommandControl::MakeCommandAllocator(ID3D12Device* device_)
 {
-	commandAllocators.resize(SwapChainControll::kFrameBufferCnt );
+	commandAllocators.resize(SwapChainControl::kFrameBufferCnt );
 
-	for (int i = 0; i < SwapChainControll::kFrameBufferCnt ; ++i)
+	for (int i = 0; i < SwapChainControl::kFrameBufferCnt ; ++i)
 	{
 		
 		HRESULT hr = device_->CreateCommandAllocator(
@@ -52,11 +52,11 @@ void CommandControll::MakeCommandAllocator(ID3D12Device* device_)
 
 	Log(WinApp::log, "Complete create Allocators\n");
 }
-void CommandControll::MakeCommandList(ID3D12Device* device_)
+void CommandControl::MakeCommandList(ID3D12Device* device_)
 {
 	HRESULT hr = device_->CreateCommandList(0, 
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		commandAllocators[SwapChainControll::frameIndex].Get(),
+		commandAllocators[SwapChainControl::frameIndex].Get(),
 		nullptr, 
 		IID_PPV_ARGS(commandList.GetAddressOf()));
 
