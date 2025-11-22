@@ -8,7 +8,7 @@ void TextureDataManager::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Devic
 
 }
 
-void TextureDataManager::CreateTextureFromFile(TextureTag tag_, std::string filePath_)
+int TextureDataManager::CreateTextureFromFile( std::string filePath_)
 {
-	map_textureID[tag_] = textureDataCreator.CreateShaderBufferFromFile(filePath_);
+	return textureDataCreator.CreateShaderBufferFromFile(filePath_);
 }

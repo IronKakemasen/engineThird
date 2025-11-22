@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\M.cpp" />
     <ClCompile Include="M\utilities\convertString\convertString.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allMesh\allMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.cpp" />
@@ -205,8 +206,10 @@
     <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\M.h" />
     <ClInclude Include="M\utilities\convertString\convertString.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allMesh\allMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.h" />
@@ -266,6 +269,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.h" />
+    <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

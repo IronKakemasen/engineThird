@@ -62,6 +62,7 @@ public:
 	void TermApp();
 	void BeginFrame();
 	void EndFrame();
+	TextureDataManager* GetterP_TextureDataManager();
 
 	~WinApp();
 

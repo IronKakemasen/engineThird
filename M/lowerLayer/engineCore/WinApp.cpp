@@ -3,9 +3,13 @@
 #include <assert.h>
 #include "./allPipelineSet/pipelineSet/pipelineCreators/pipelineCreators.h"
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
+//#pragma comment(lib,"d3d12.lib")
+//#pragma comment(lib,"dxgi.lib")
 
+TextureDataManager* WinApp::GetterP_TextureDataManager()
+{
+	return &textureDataManager;
+}
 
 bool WinApp::InitD3D()
 {
