@@ -7,6 +7,8 @@ struct VertexShaderOutput
 
 };
 
+
+
 struct DirectionalLight
 {
     float4 color;

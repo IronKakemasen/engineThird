@@ -133,6 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\utilities\convertString\convertString.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\allMesh\allMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -154,6 +157,7 @@
     <ClCompile Include="external\imgui\imgui_widgets.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\MaterialBuffer\MaterialBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp" />
@@ -182,6 +186,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.cpp" />
     <ClCompile Include="M\lowerLayer\math\matrix\matrix.cpp" />
     <ClCompile Include="M\lowerLayer\math\vector\vector.cpp" />
     <ClCompile Include="M\utilities\vectorAndMatrix\vectorAndMatrix.cpp" />
@@ -195,8 +200,16 @@
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\MatrixBuffer\MatrixBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\utilities\convertString\convertString.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\allMesh\allMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
     <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
@@ -205,6 +218,7 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\MaterialBuffer\MaterialBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h" />
@@ -232,6 +246,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\swapChainControll\swapChainControll.h" />
     <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.h" />
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h" />
     <ClInclude Include="M\lowerLayer\math\vector\vector.h" />
     <ClInclude Include="M\utilities\benriTemplateFunc\benriTempFunc.h" />
@@ -246,6 +261,11 @@
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\MatrixBuffer\MatrixBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

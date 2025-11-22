@@ -9,6 +9,9 @@
 
 bool WinApp::InitD3D()
 {
+	//COMの初期化
+	CoInitializeEx(0, COINITBASE_MULTITHREADED);
+
 	log = DebugLogInitialize();
 
 	//デバイス
@@ -33,9 +36,9 @@ bool WinApp::InitD3D()
 	dsvDescriptorHeap.Init(deviceSetUp.Getter_Device(), 1);
 
 	//swapChainの設定
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = swapChainControll.Initialize(
+	swapChainControll.Initialize(
 		&m_hWnd, commandControll.Getter_CommandQueue(), deviceSetUp.Getter_DxgiFactory(),
-		deviceSetUp.Getter_Device(), &rtvDescHeap);
+		deviceSetUp.Getter_Device(), &rtvDescHeap,&dsvDescriptorHeap);
 
 	//コマンドアローケータの生成
 	commandControll.MakeCommandAllocator(deviceSetUp.Getter_Device());
@@ -48,6 +51,13 @@ bool WinApp::InitD3D()
 
 	//pipelineSetの初期化
 	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, commandControll.Getter_commandList());
+
+	//メッシュの初期化、生成
+	allMesh.Init(deviceSetUp.Getter_Device());
+
+	//textureDataManagerの初期化
+	textureDataManager.Init(&srvDescHeap,deviceSetUp.Getter_Device(), commandControll.Getter_commandList());
+
 
 	auto inputLayOutFunc = []() 
 		{
@@ -88,58 +98,133 @@ bool WinApp::InitD3D()
 
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(2));
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(3));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(4));
 
 		return meters;
 	};
 
 	allPipelineSet.CreateNewPipeline("Object3d.VS", "Object3d.PS", inputLayOutFunc, rootparameterFunc);
 
-	//vpShaders.AddPixelShader("Object3d.PS");
-	//vpShaders.AddVertexShader("Object3d.VS");
-	//vpShaders.AddToTable("Default,Default", "Object3d.PS", "Object3d.VS");
-	//allPipelineSet.Add("Default,Default");
+
+#ifdef USE_IMGUI
+	//ImGuiの初期化
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui::StyleColorsClassic();
+	ImGui_ImplWin32_Init(m_hWnd);
+	ImGui_ImplDX12_Init(
+		deviceSetUp.Getter_Device(),
+		swapChainControll.Ref_SwapChainDesc().BufferCount,
+		swapChainControll.Ref_RenderTargetDesc().Format,
+		srvDescHeap.Getter_Descriptorheap(),
+		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		//SRVHeap上の０番目
+		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
+#endif
 
 	commandControll.Getter_commandList()->Close();
-
-	//
-	//if (shaderSetName_ == "Object3d.VSObject3d.PS")
-	//{
-	//	numRootParameters = 5;
-	//
-	//	heap_rootParameters = new D3D12_ROOT_PARAMETER[numRootParameters];
-	//
-	//	//Descriptortableを使う
-	//	heap_rootParameters[0] = GetRootParaMeterDescriptorRange();
-	//	//WorldMatrix
-	//	heap_rootParameters[1] = GetRootParaMeterVertexShader(0);
-	//	//CameraPara
-	//	heap_rootParameters[2] = GetRootParaMeterVertexShader(1);
-	//
-	//	//Material
-	//	heap_rootParameters[3] = GetRootParaMeterPixelShader(2);
-	//	//DirectionalLight
-	//	heap_rootParameters[4] = GetRootParaMeterPixelShader(3);
-	//}
-
 	return true;
 }
 
-void WinApp::TermApp()
+void WinApp::BeginFrame()
 {
-	TermWnd();
-	TermD3D();
+	//描画先のRTV、DSVを設定する
+	//swapChainControll.Getter_DepthBuffer() = descriptorHeapSet.dH_dsv->GetCPUDescriptorHandleForHeapStart();
+
+	//Imguiにここからフレームが始まる旨を告げる
+	ImGui_ImplDX12_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	// コマンドの記録を開始.
+	commandControll.PrepareForNextCommandList();
+
+	//バリア
+	D3D12_RESOURCE_BARRIER barrier = BarrierControll::Create(
+		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Resource(),
+		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		D3D12_RESOURCE_BARRIER_FLAG_NONE,
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+
+	//TransitionBarrierを張る
+	BarrierControll::Pitch(&commandControll, &barrier);
+
+	// レンダーゲットの設定.
+	commandControll.Getter_commandList()->OMSetRenderTargets(1,
+		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Handle(), false,
+		swapChainControll.Getter_DepthBuffer()->Getter_Handle());
+	//commandControll.Getter_commandList()->OMSetRenderTargets(1,
+	//	swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Handle(), FALSE, nullptr);
+
+	
+	//指定した深度で画面クリアする
+	commandControll.Getter_commandList()->ClearDepthStencilView(*swapChainControll.Getter_DepthBuffer()->Getter_Handle(),
+		D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+	//指定した色で画面全体をクリアする
+	commandControll.Getter_commandList()->ClearRenderTargetView(
+		*swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Handle(), windowColor, 0, nullptr);
+
+	////描画用のDescriptorHeapの設定
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescHeap.Getter_Descriptorheap()};
+	commandControll.Getter_commandList()->SetDescriptorHeaps(1, descriptorHeaps);
+
+	//DXの行列の設定
+	commandControll.Getter_commandList()->RSSetViewports(1,
+		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_ViewportMatrix());
+
+	commandControll.Getter_commandList()->RSSetScissorRects(1,
+		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->ScissorRect());
+
+
 }
 
+void WinApp::EndFrame()
+{
+	//[ 画面に書く処理が終わり、画面に映すので状態を遷移 ]
+	ImGui::Render();
+	//実際のcommandListのImguiの描画コマンドを積む
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandControll.Getter_commandList());
+
+	//バリア
+	//RenderTarget->Prsent
+	D3D12_RESOURCE_BARRIER barrier = BarrierControll::Create(
+		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Resource(),
+		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		D3D12_RESOURCE_BARRIER_FLAG_NONE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+
+	//TransitionBarrierを張る
+	BarrierControll::Pitch(&commandControll, &barrier);
+
+	//コマンドリストの内容を確定させる
+	HRESULT hr = commandControll.Getter_commandList()->Close();
+	assert(SUCCEEDED(hr));
+
+	//GPUにコマンドリストの実行を行わさせる
+	ID3D12CommandList* commandLists[] = { commandControll.Getter_commandList() };
+	commandControll.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
+	//GPUとOSに画面の交換を行うように通知する
+	swapChainControll.Getter_SwapChain()->Present(1, 0);
+
+	//イベントを待つ
+	fenceControll.WaitFenceEvent(commandControll.Getter_CommandQueue(), swapChainControll.Getter_SwapChain());
+
+
+}
 
 LRESULT CALLBACK WinApp::WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_)
 {
-	////ImGuiにメッセージを渡す
-	//if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
-	//{
-	//	return true;
-	//}
+	//ImGuiにメッセージを渡す
+	if (ImGui_ImplWin32_WndProcHandler(hWnd_, msg_, wParam_, lParam_))
+	{
+		return true;
+	}
 
 	//メッセージに応じてゲーム固有の処理を行う
 	switch (msg_)
@@ -157,9 +242,39 @@ LRESULT CALLBACK WinApp::WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM l
 
 }
 
+void WinApp::TermWnd()
+{
+	//ウィンドウの登録を解除
+	if (m_hInst)
+	{
+		UnregisterClass(m_windowName, m_hInst);
+	}
+
+	m_hInst = nullptr;
+	m_hWnd = nullptr;
+}
+
+void WinApp::TermD3D()
+{
+	CloseHandle(fenceControll.Getter_FenceEvent());
 
 
-WinApp::WinApp(uint32_t width_, uint32_t height_,LPCWSTR windowName_)
+	ImGui_ImplDX12_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
+
+	CloseWindow(m_hWnd);
+
+	//COMの終了
+	CoUninitialize();
+
+}
+
+
+
+
+WinApp::WinApp(uint32_t width_, uint32_t height_, LPCWSTR windowName_)
 	:m_width(width_),
 	m_height(height_),
 	m_windowName(windowName_),
@@ -171,7 +286,9 @@ WinApp::WinApp(uint32_t width_, uint32_t height_,LPCWSTR windowName_)
 }
 
 WinApp::~WinApp()
-{ }
+{
+
+}
 
 
 bool WinApp::InitApp()
@@ -211,7 +328,7 @@ bool WinApp::InitWnd()
 	{
 		return false;
 	}
- 
+
 	// ウィンドウクラスの登録
 	WNDCLASSEX wc = {};
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -273,108 +390,12 @@ bool WinApp::InitWnd()
 	return true;
 }
 
-void WinApp::TermWnd()
+void WinApp::TermApp()
 {
-	//ウィンドウの登録を解除
-	if (m_hInst)
-	{
-		UnregisterClass(m_windowName, m_hInst);
-	}
-
-	m_hInst = nullptr;
-	m_hWnd = nullptr;
-}
-
-void WinApp::TermD3D()
-{
-	CloseHandle(fenceControll.Getter_FenceEvent());
-
-	CloseWindow(m_hWnd);
+	TermWnd();
+	TermD3D();
 
 }
-
-void WinApp::BeginFrame()
-{
-	//描画先のRTV、DSVを設定する
-	//depthStencilSetUp.dsvHandle = descriptorHeapSet.dH_dsv->GetCPUDescriptorHandleForHeapStart();
-
-	// コマンドの記録を開始.
-	commandControll.PrepareForNextCommandList();
-
-	//バリア
-	D3D12_RESOURCE_BARRIER barrier = BarrierControll::Create(
-		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Resource(),
-		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-		D3D12_RESOURCE_BARRIER_FLAG_NONE,
-		D3D12_RESOURCE_STATE_PRESENT,
-		D3D12_RESOURCE_STATE_RENDER_TARGET,
-		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-
-	//TransitionBarrierを張る
-	BarrierControll::Pitch(&commandControll, &barrier);
-
-	//commandControll.commandList->OMSetRenderTargets(1,
-	//	&swapChainControll.swapChain_resourcesAndHandles[backBufferIndex].rtvHandle, false, &depthStencilSetUp.dsvHandle);
-	// レンダーゲットの設定.
-	commandControll.Getter_commandList()->OMSetRenderTargets(1,
-		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Handle(), FALSE, nullptr);
-
-
-	//指定した深度で画面クリアする
-	//commandControll.commandList->ClearDepthStencilView(depthStencilSetUp.dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-
-	//指定した色で画面全体をクリアする
-	commandControll.Getter_commandList()->ClearRenderTargetView(
-		*swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Handle(), windowColor, 0, nullptr);
-
-	//////描画用のDescriptorHeapの設定
-	//ID3D12DescriptorHeap* descriptorHeaps[] = { descriptorHeapSet.dH_srv.Get() };
-	//commandControll.commandList->SetDescriptorHeaps(1, descriptorHeaps);
-
-	//DXの行列の設定
-	commandControll.Getter_commandList()->RSSetViewports(1,
-		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_ViewportMatrix());
-
-	commandControll.Getter_commandList()->RSSetScissorRects(1,
-		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->ScissorRect());
-
-}
-
-void WinApp::EndFrame()
-{
-	//[ 画面に書く処理が終わり、画面に映すので状態を遷移 ]
-
-	//バリア
-	//RenderTarget->Prsent
-	D3D12_RESOURCE_BARRIER barrier = BarrierControll::Create(
-		swapChainControll.Getter_ColorBuffer(swapChainControll.frameIndex)->Getter_Resource(),
-		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
-		D3D12_RESOURCE_BARRIER_FLAG_NONE,
-		D3D12_RESOURCE_STATE_RENDER_TARGET,
-		D3D12_RESOURCE_STATE_PRESENT,
-		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
-
-	//TransitionBarrierを張る
-	BarrierControll::Pitch(&commandControll,&barrier);
-
-	//コマンドリストの内容を確定させる
-	HRESULT hr = commandControll.Getter_commandList()->Close();
-	assert(SUCCEEDED(hr));
-
-	//GPUにコマンドリストの実行を行わさせる
-	ID3D12CommandList* commandLists[] = { commandControll.Getter_commandList() };
-	commandControll.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
-	//GPUとOSに画面の交換を行うように通知する
-	swapChainControll.Getter_SwapChain()->Present(1, 0);
-
-	//イベントを待つ
-	fenceControll.WaitFenceEvent(commandControll.Getter_CommandQueue(), swapChainControll.Getter_SwapChain());
-
-
-}
-
-
-
 
 
 

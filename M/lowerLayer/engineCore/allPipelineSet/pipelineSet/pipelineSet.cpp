@@ -4,6 +4,7 @@
 
 #pragma comment(lib,"d3d12.lib")
 
+
 void PipelineSet::Activate_InputLayoutCreateFunc(std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_)
 {
 	pipelineCreators.inputLayoutCreator.AddToFuncs_InputElementDescsCreate(func_);
@@ -26,7 +27,6 @@ void PipelineSet::Activate_RootparameterCreateFunc(std::function<std::vector<D3D
 	std::unique_ptr<PipelineSet> ret_pipelineSet = std::make_unique<PipelineSet>();
 	//graphiscPipelineDesc
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graghicsPipeLineStatedesc{};
-
 	int shaderSetIndex = vpShaderTable_->GetIDFromTableName(shaderSetName_);
 
 	//==============================================================================================
@@ -72,7 +72,10 @@ void PipelineSet::Activate_RootparameterCreateFunc(std::function<std::vector<D3D
 	device_,
 	shaderSetIndex,
 	shaderSetName_);
+
 	graghicsPipeLineStatedesc.pRootSignature = ret_pipelineSet->rootSignature.Get();
+	//rootparameterを記録しておく
+	pipelineCreators.rootSignatureCreator.RecordRootparameters(ret_pipelineSet->rootParameters, shaderSetIndex);
 
 	//==============================================================================================
 	//InputLayout

@@ -4,7 +4,7 @@
 #include "../allShaderData/vpShaders.h"
 
 
-void AllPipelineSet::Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12CommandList* commandList_)
+void AllPipelineSet::Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12GraphicsCommandList* commandList_)
 {
 	commandList = commandList_;
 	vpShaders = vpShaders_;
@@ -18,7 +18,7 @@ void AllPipelineSet::CreateNewPipeline(
 	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
 	std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_)
 {
-	std::string tableName = vsFileName_ + psFileName_;
+	std::string tableName = vsFileName_ + " + " + psFileName_;
 
 	vpShaders->AddPixelShader(psFileName_);
 	vpShaders->AddVertexShader(vsFileName_);
@@ -27,8 +27,6 @@ void AllPipelineSet::CreateNewPipeline(
 	pipelineSets[0][0][0]->Activate_RootparameterCreateFunc(rootParameterCreateFunc_);
 
 	Add(tableName);
-
-
 
 }
 

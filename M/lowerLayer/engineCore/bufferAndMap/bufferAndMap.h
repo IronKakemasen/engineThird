@@ -18,12 +18,10 @@ public:
 	{
 		//リソースのサイズ
 		UINT sizeOfBuffer = static_cast<UINT>(sizeof(std::remove_pointer<decltype(buffMap)>));
-
 		//Resourceの生成
 		buff = CreateBufferResource(device_, sizeOfBuffer);
 		//書き込むためのアドレスを取得
 		buff->Map(0, nullptr, reinterpret_cast<void**>(&buffMap));
-
 	}
 
 

@@ -6,9 +6,6 @@
 
 class GPUResourceBehavior
 {
-public:
-	//[ currentDescriptorUsingIndex ]
-	static inline uint16_t cur_index = 0;
 
 protected:
 	Microsoft::WRL::ComPtr<ID3D12Resource> resource = { nullptr };
@@ -16,11 +13,15 @@ protected:
 
 public:
 
+	inline void Setter_Resource(Microsoft::WRL::ComPtr<ID3D12Resource> src_)
+	{
+		resource = src_;
+	}
+
 	inline auto** Getter_ResourcePP()
 	{
 		return resource.GetAddressOf();
 	}
-
 
 	inline auto* Getter_Resource()
 	{
@@ -31,7 +32,5 @@ public:
 	{
 		return &handle;
 	}
-
-
 };
 

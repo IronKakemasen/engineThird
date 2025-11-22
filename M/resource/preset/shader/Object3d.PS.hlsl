@@ -5,8 +5,8 @@ SamplerState gSampler : register(s0);
 
 //コンスタントバッファの定義
 //b = constantBuffer,0 = shader上でのresourceナンバー
-ConstantBuffer<Material>gMaterial : register(b2);
-ConstantBuffer<DirectionalLight> gDirectionalLight : register(b3);
+ConstantBuffer<Material>gMaterial : register(b3);
+ConstantBuffer<DirectionalLight> gDirectionalLight : register(b4);
 
 
 struct PixcelShaderOutput

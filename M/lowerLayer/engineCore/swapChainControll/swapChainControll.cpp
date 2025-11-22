@@ -2,11 +2,16 @@
 #include <assert.h>
 #include "../WinApp.h"
 #include "../../../commonVariables.h"
-#include "../allDescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+void SwapChainControll::CreateDepthSencilView(ID3D12Device* device_, DsvDescriptorHeap* dsvDescHeap_)
+{
+	depthBuffer.CreateDepthStencilTextureResource(device_, (int)V_Common::kWindow_W, (int)V_Common::kWindow_H);
+	auto desc = depthBuffer.CreateDepthStencilViewDesc();
+	depthBuffer.CreateDSV(device_, dsvDescHeap_, desc);
+}
 
 void SwapChainControll::CreateRenderTargetView(ID3D12Device* device_, RtvDescriptorHeap* rtvDescHeap_)
 {
@@ -17,6 +22,7 @@ void SwapChainControll::CreateRenderTargetView(ID3D12Device* device_, RtvDescrip
 		colorBuffers[i].CreateRTV(device_, rtvDescHeap_, rtvDesc);
 	}
 
+	renderTargetDescForImGui = rtvDesc;
 }
 
 
@@ -68,19 +74,20 @@ void SwapChainControll::PullSwapChainResource()
 
 }
 
-DXGI_SWAP_CHAIN_DESC1 SwapChainControll::Initialize(HWND* hwnd_, ID3D12CommandQueue* commandQueue_,
-	IDXGIFactory7* dxgiFactory_, ID3D12Device* device_, RtvDescriptorHeap* rtvDescHeap_)
+void SwapChainControll::Initialize(HWND* hwnd_, ID3D12CommandQueue* commandQueue_,
+	IDXGIFactory7* dxgiFactory_, ID3D12Device* device_, 
+	RtvDescriptorHeap* rtvDescHeap_, DsvDescriptorHeap* dsvDescHeap_)
 {
-	DXGI_SWAP_CHAIN_DESC1 desc = CreateSwapChain(hwnd_, commandQueue_, dxgiFactory_);
+	swapChainDescForImGui = CreateSwapChain(hwnd_, commandQueue_, dxgiFactory_);
 
 	PullSwapChainResource();
 
 	CreateRenderTargetView(device_, rtvDescHeap_);
+	CreateDepthSencilView(device_, dsvDescHeap_);
 
 	for (int i = 0u; i < kFrameBufferCnt; ++i)
 	{
 		colorBuffers[i].SetDXMatrix(V_Common::kWindow_W, V_Common::kWindow_H);
 	}
 
-	return desc;
 }

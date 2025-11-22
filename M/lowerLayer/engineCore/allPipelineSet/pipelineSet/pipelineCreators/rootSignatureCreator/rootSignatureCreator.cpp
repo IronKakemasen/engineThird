@@ -17,7 +17,6 @@ void RootSignatureCreator::CopyFromIndex(int funcIndex_)
 	{
 		heap_rootParametersAndSum.first[index] = (*itr);
 	}
-
 }
 
 
@@ -62,6 +61,18 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterVertexShader(int regi
 	ret_rootParameter.Descriptor.ShaderRegister = registerNum_;
 
 	return ret_rootParameter;
+
+}
+
+void RootSignatureCreator::RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER>& dst_, int funcIndex_)
+{
+	std::vector<D3D12_ROOT_PARAMETER> rootParameters = funcs_rootParametersCreate[funcIndex_]();
+
+	int index = 0;
+	for (auto itr = rootParameters.begin(); itr != rootParameters.end(); ++itr, index++)
+	{
+		dst_.emplace_back((*itr));
+	}
 
 }
 

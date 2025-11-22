@@ -29,13 +29,23 @@
 #include "./allPipelineSet/allPipelineSet.h"
 //===================================================================
 
+//=================================================================== allMesh
+#include "./allMesh/allMesh.h"
+//===================================================================
+
+//=================================================================== allMesh
+#include "./textureSystems/textureDataManager/textureDataManager.h"
+//===================================================================
+
 //=================================================================== Imgui
 #ifdef USE_IMGUI
 #include "../../../External/imgui/imgui.h"
 #include "../../../External/imgui/imgui_impl_dx12.h"
 #include "../../../External/imgui/imgui_impl_win32.h"
 #endif 
-////===================================================================
+//===================================================================
+
+
 
 //#include "../../../External/DirectXTex/d3dx12.h"
 
@@ -97,6 +107,12 @@ private:
 	//[ AllPipelineSet ]
 	AllPipelineSet allPipelineSet;
 
+	//[ AllMesh ]
+	AllMesh allMesh;
+
+	//[ TextureDataManager ] 
+	TextureDataManager textureDataManager;
+
 	bool InitApp();
 	bool InitWnd();
 	void TermWnd();
@@ -106,6 +122,7 @@ private:
 
 
 	static LRESULT CALLBACK WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
+
 
 
 
@@ -121,3 +138,8 @@ void SafeRelease(T*& ptr)
 	}
 }
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
+	HWND hWnd,
+	UINT msg,
+	WPARAM wParam,
+	LPARAM lParam);

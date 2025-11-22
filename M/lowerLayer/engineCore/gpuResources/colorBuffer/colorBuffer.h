@@ -8,10 +8,14 @@ struct ColorBuffer:GPUResourceBehavior
 {
 private:
 
+	//[ currentDescriptorUsingIndex ]
+	static inline uint16_t cur_index = 0;
+
 	D3D12_VIEWPORT viewport;
 	D3D12_RECT scissorRect;
 
 public:
+	
 
 	inline auto* Getter_ViewportMatrix()
 	{
