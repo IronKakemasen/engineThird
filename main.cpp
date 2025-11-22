@@ -8,10 +8,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_CHECK_ALWAYS_DF);
 
-
     WinApp winApp((UINT)V_Common::kWindow_W, (UINT)V_Common::kWindow_H, L"Title");
+	
+	
+	
+	
+	
 	MSG msg = {};
-
 	while (WM_QUIT != msg.message)
 	{
 		//Windowにメッセージが来てたら最優先で処理させる

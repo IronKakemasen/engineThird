@@ -19,7 +19,6 @@ class PipelineSet
 	
 	ID3D12GraphicsCommandList* commandList = nullptr;
 
-
 	template<typename... D3D12_GPU_VIRTUAL_ADDRESS>
 	void SetConstantBufferViews(D3D12_GPU_VIRTUAL_ADDRESS... args_)
 	{
@@ -27,6 +26,7 @@ class PipelineSet
 		D3D12_GPU_VIRTUAL_ADDRESS virtualGpuAdress[] = { args_... };
 
 		size_t limit = rootParameters.size();
+
 		if (length > limit)
 		{
 			assert(false);

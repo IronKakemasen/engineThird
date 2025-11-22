@@ -40,7 +40,6 @@ void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 
 		int const shaderSetIndex = vpShaderTable->Getter_Map_nameAndID()[shaderSetName_];
 
-
 		pipelineSets[shaderSetIndex][kBlendModeNormal][kCullModeBack] =
 			PipelineSet::CreateGraphicsPipelineSet(device, shaderSetName_, vpShaderTable,
 				kBlendModeNormal, CullMode::kCullModeBack, isTopologyLine);
@@ -75,10 +74,6 @@ void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 				pipelineSets[shaderSetIndex][k][j]->Setter_Commandlist(commandList);
 			}
 		}
-	
-
-
-
 	}
 
 	else

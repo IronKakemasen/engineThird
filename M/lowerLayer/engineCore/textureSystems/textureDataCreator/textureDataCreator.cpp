@@ -4,6 +4,7 @@
 #include "../../gpuResources/shaderBuffer/shaderBuffer.h"
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 #include "../../bufferAndMap/bufferAndMap.h"
+#include "../../commandControll/commandControll.h"
 
 TextureDataCreator::TextureDataCreator()
 {
@@ -21,7 +22,7 @@ int TextureDataCreator::CreateShaderBufferFromFile(std::string filePath_)
 
 	texData.UploadTextureData(
 		device,
-		commandList,
+		commandControl,
 		mipImages);
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = 
@@ -35,10 +36,10 @@ int TextureDataCreator::CreateShaderBufferFromFile(std::string filePath_)
 }
 
 
-void TextureDataCreator::Init(SrvDescriptorHeap* srvDescriptorHeap_ , ID3D12Device* device_, ID3D12GraphicsCommandList* commandList_)
+void TextureDataCreator::Init(SrvDescriptorHeap* srvDescriptorHeap_ , ID3D12Device* device_, CommandControll* commandControl_)
 {
 	device = device_;
-	commandList = commandList_;
+	commandControl = commandControl_;
 	srvDescriptorHeap = srvDescriptorHeap_;
 
 

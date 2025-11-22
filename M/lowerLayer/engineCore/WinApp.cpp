@@ -55,8 +55,8 @@ bool WinApp::InitD3D()
 	//メッシュの初期化、生成
 	allMesh.Init(deviceSetUp.Getter_Device());
 
-	//textureDataManagerの初期化
-	textureDataManager.Init(&srvDescHeap,deviceSetUp.Getter_Device(), commandControll.Getter_commandList());
+	//textureDataManager,textureDataCreatorの初期化
+	textureDataManager.Init(&srvDescHeap,deviceSetUp.Getter_Device(), &commandControll);
 
 
 	auto inputLayOutFunc = []() 

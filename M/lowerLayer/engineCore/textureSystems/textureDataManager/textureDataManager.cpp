@@ -2,9 +2,9 @@
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 
 
-void TextureDataManager::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_, ID3D12GraphicsCommandList* commandList_)
+void TextureDataManager::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_, CommandControll* commandControl_)
 {
-	textureDataCreator.Init(srvDescriptorHeap_, device_, commandList_);
+	textureDataCreator.Init(srvDescriptorHeap_, device_, commandControl_);
 
 }
 
