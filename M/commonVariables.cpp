@@ -9,4 +9,5 @@ float const V_Common::kQuaterQuater = 0.125f;
 float const V_Common::inv_255 = 1.0f / 255.0f;
 float const V_Common::inv_100 = 0.01f;
 float const V_Common::inv_10 = 0.1f;
+float const V_Common::FOVy = 90.0f * V_Common::kPi / 180.0f;
 

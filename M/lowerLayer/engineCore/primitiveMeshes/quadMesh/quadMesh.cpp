@@ -39,9 +39,9 @@ void QuadMesh::Create(ID3D12Device* device_)
 	for (UINT i = 0; i < kMaxDraw; ++i)
 	{
 		// 行列バッファ生成
-		worldMatrixBuffer[i].worldMatrix.CreateAndMapping(device_);
+		worldMatrixBuffer[i].matrix.CreateAndMapping(device_);
 		//wvp行列バッファの生成
-		wvpMatrixBuffer[i].worldMatrix.CreateAndMapping(device_);
+		wvpMatrixBuffer[i].matrix.CreateAndMapping(device_);
 		// マテリアルバッファ作成
 		materialBuffer[i].material.CreateAndMapping(device_);
 	}

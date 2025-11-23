@@ -2,14 +2,7 @@
 #include "./BarrierControl/BarrierControl.h"
 #include <assert.h>
 #include "./allPipelineSet/pipelineSet/pipelineCreators/pipelineCreators.h"
-
-//#pragma comment(lib,"d3d12.lib")
-//#pragma comment(lib,"dxgi.lib")
-
-TextureDataManager* WinApp::GetterP_TextureDataManager()
-{
-	return &textureDataManager;
-}
+#include "../../M.h"
 
 bool WinApp::InitD3D()
 {
@@ -55,12 +48,15 @@ bool WinApp::InitD3D()
 
 	//pipelineSetの初期化
 	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, CommandControl.Getter_commandList());
-
+	
 	//メッシュの初期化、生成
 	allMesh.Init(deviceSetUp.Getter_Device());
 
 	//textureDataManager,textureDataCreatorの初期化
 	textureDataManager.Init(&srvDescHeap,deviceSetUp.Getter_Device(), &CommandControl);
+
+	//exclusiveDrawの初期化
+	exclusiveDraw.Init(&allPipelineSet, &allMesh, textureDataManager.Getter_ShaderData());
 
 
 	auto inputLayOutFunc = []() 
@@ -100,11 +96,12 @@ bool WinApp::InitD3D()
 			D3D12_SHADER_VISIBILITY_PIXEL,
 			0));
 
+		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterDescriptorRange());
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(2));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(3));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(4));
+		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(2));
+		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
+		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(4));
 
 		return meters;
 	};
@@ -125,17 +122,16 @@ bool WinApp::InitD3D()
 		srvDescHeap.Getter_Descriptorheap(),
 		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		//SRVHeap上の０番目
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
+
+	ShaderBuffer::cur_index++;
 #endif
 
-	CommandControl.Getter_commandList()->Close();
+
 	return true;
 }
 
 void WinApp::BeginFrame()
 {
-	//描画先のRTV、DSVを設定する
-	//SwapChainControl.Getter_DepthBuffer() = descriptorHeapSet.dH_dsv->GetCPUDescriptorHandleForHeapStart();
-
 	//Imguiにここからフレームが始まる旨を告げる
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -154,7 +150,7 @@ void WinApp::BeginFrame()
 		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
 	//TransitionBarrierを張る
-	BarrierControl::Pitch(&CommandControl, &barrier);
+	BarrierControl::Pitch(CommandControl.Getter_commandList(), &barrier);
 
 	// レンダーゲットの設定.
 	CommandControl.Getter_commandList()->OMSetRenderTargets(1,
@@ -188,6 +184,9 @@ void WinApp::BeginFrame()
 
 void WinApp::EndFrame()
 {
+	//drawIndexをリセットする
+	exclusiveDraw.ResetDrawIndex();
+
 	//[ 画面に書く処理が終わり、画面に映すので状態を遷移 ]
 	ImGui::Render();
 	//実際のcommandListのImguiの描画コマンドを積む
@@ -204,7 +203,7 @@ void WinApp::EndFrame()
 		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
 	//TransitionBarrierを張る
-	BarrierControl::Pitch(&CommandControl, &barrier);
+	BarrierControl::Pitch(CommandControl.Getter_commandList(), &barrier);
 
 	//コマンドリストの内容を確定させる
 	HRESULT hr = CommandControl.Getter_commandList()->Close();
@@ -275,9 +274,6 @@ void WinApp::TermD3D()
 
 }
 
-
-
-
 WinApp::WinApp(uint32_t width_, uint32_t height_, LPCWSTR windowName_)
 	:m_width(width_),
 	m_height(height_),
@@ -309,6 +305,14 @@ bool WinApp::InitApp()
 		return false;
 	}
 
+
+	//テクスチャ読み込み（コマンド積む）
+	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw);
+
+	CommandControl.Getter_commandList()->Close();
+	ID3D12CommandList* commandLists[] = { CommandControl.Getter_commandList() };
+	CommandControl.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
+	FenceControl.WaitFenceEvent(CommandControl.Getter_CommandQueue(), SwapChainControl.Getter_SwapChain());
 
 	return true;
 }

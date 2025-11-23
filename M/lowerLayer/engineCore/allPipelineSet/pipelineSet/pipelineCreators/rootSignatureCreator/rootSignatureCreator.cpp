@@ -90,8 +90,6 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
 	descriptorRange[0].RangeType = rangeType_;
 	//offsetを自動計算
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-
 	//Descriptortableを使う
 	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	//pixcelShaderを使う
@@ -144,8 +142,6 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterDescriptorRange()
 
 	D3D12_ROOT_SIGNATURE_DESC signatureDesc = {};
 
-	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
-
 	//バイリニアフィルター
 	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
 	//0～1の範囲外をリピート
@@ -160,10 +156,8 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterDescriptorRange()
 	staticSamplers[0].ShaderRegister = 0;
 	//PixcelShaderで使う
 	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-
 	signatureDesc.pStaticSamplers = staticSamplers;
 	signatureDesc.NumStaticSamplers = _countof(staticSamplers);
-
 
 	//std::pair<D3D12_ROOT_PARAMETER*, UINT> rootParameters = GetRootParameters(shaderSetName_);
 	SetRootParameters(index_);

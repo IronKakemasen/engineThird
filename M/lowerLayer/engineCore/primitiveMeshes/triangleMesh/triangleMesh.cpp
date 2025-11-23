@@ -8,7 +8,6 @@ TriangleMesh::TriangleMesh()
 
 void TriangleMesh::Create(ID3D12Device* device_)
 {
-
 	// 頂点データのサイズ
 	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(VertexData) * vertexCnt);
 	// 頂点バッファ生成
@@ -26,9 +25,9 @@ void TriangleMesh::Create(ID3D12Device* device_)
 	for (UINT i = 0; i < kMaxDraw; ++i)
 	{
 		// ワールド行列バッファ生成
-		worldMatrixBuffer[i].worldMatrix.CreateAndMapping(device_);
+		worldMatrixBuffer[i].matrix.CreateAndMapping(device_);
 		//wvp行列バッファの生成
-		wvpMatrixBuffer[i].worldMatrix.CreateAndMapping(device_);
+		wvpMatrixBuffer[i].matrix.CreateAndMapping(device_);
 		// マテリアルバッファ作成
 		materialBuffer[i].material.CreateAndMapping(device_);
 	}

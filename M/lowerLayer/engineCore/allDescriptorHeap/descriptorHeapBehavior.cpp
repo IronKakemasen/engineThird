@@ -25,6 +25,23 @@ SIZE_T DescriptorHeapBehavior::GetGPUDescriptorHandle(uint16_t index_)
 	return ret_handleGPU.ptr;
 }
 
+D3D12_CPU_DESCRIPTOR_HANDLE DescriptorHeapBehavior::GetCPUDescriptorHandle2(uint16_t index_)
+{
+	D3D12_CPU_DESCRIPTOR_HANDLE ret_handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	ret_handleCPU.ptr += sizeOfDescriptor * index_;
+
+	return ret_handleCPU;
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE DescriptorHeapBehavior::GetGPUDescriptorHandle2(uint16_t index_)
+{
+	D3D12_GPU_DESCRIPTOR_HANDLE ret_handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	ret_handleGPU.ptr += sizeOfDescriptor * index_;
+
+	return ret_handleGPU;
+}
+
+
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DescriptorHeapBehavior::CreateDescriptorHeap(ID3D12Device* device_, D3D12_DESCRIPTOR_HEAP_TYPE heapType_, UINT numDescriptors_, bool shaderVisible)
 {
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ret_descriptorHeap = nullptr;

@@ -4,6 +4,15 @@
 
 #pragma comment(lib,"d3d12.lib")
 
+void PipelineSet::SetPipelineState()
+{
+	commandList->SetPipelineState(pipelineStateObject.Get());
+}
+
+void PipelineSet::SetGraphicsRootSignature()
+{
+	commandList->SetGraphicsRootSignature(rootSignature.Get());
+}
 
 void PipelineSet::Activate_InputLayoutCreateFunc(std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_)
 {

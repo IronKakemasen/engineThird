@@ -7,8 +7,6 @@ struct VertexShaderOutput
 
 };
 
-
-
 struct DirectionalLight
 {
     float4 color;
@@ -19,17 +17,13 @@ struct DirectionalLight
 struct Material
 {
     float4 color;
-    int enableLighting;
     float4x4 uvTransform;
-    float shininess;
 };
 
 
 struct CameraParameters
 {
     float3 camera_worldPos;
-    float4x4 viewProjection;
-
 };
 
 struct CommonVariables

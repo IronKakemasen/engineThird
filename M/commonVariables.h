@@ -12,6 +12,7 @@ namespace V_Common
 	extern float const inv_255;
 	extern float const inv_100;
 	extern float const inv_10;
+	extern float const FOVy;
 
 
 }

@@ -13,7 +13,7 @@ namespace BarrierControl
 		D3D12_RESOURCE_STATES after_,
 		UINT transitionSubResource_);
 
-	void Pitch(CommandControl* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_);
+	void Pitch(ID3D12GraphicsCommandList* cList_, D3D12_RESOURCE_BARRIER* barrier_);
 
 }
 

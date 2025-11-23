@@ -7,6 +7,8 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string 	pathToPresetTex =   "./M/resource/preset/texture/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
+	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
+	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
 
 
 }

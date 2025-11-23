@@ -12,6 +12,7 @@ class RootSignatureCreator
 	int sum_created = 0;
 
 	inline static D3D12_DESCRIPTOR_RANGE descriptorRange[1];
+	inline static D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 
 	std::vector<std::function<std::vector<D3D12_ROOT_PARAMETER>()>> funcs_rootParametersCreate;
 	std::pair<D3D12_ROOT_PARAMETER*, UINT> heap_rootParametersAndSum;

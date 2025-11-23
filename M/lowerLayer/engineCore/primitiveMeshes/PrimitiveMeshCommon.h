@@ -20,14 +20,26 @@ struct PrimitiveMeshCommon
 		kQuad = 128,
 	};
 
-
-protected:
-	virtual void Create(ID3D12Device* device_) = 0;
-
 	// 頂点バッファマップ
 	VertexData* vertexMap = nullptr;
 	// インデックスバッファマップ
 	uint32_t* indexMap = nullptr;
+
+	//マテリアルバッファ
+	std::vector<MaterialBuffer> materialBuffer;
+	//ワールドマトリクスバッファ
+	std::vector<MatrixBuffer> worldMatrixBuffer;
+	//WVPマトリクスバッファ
+	std::vector<MatrixBuffer> wvpMatrixBuffer;
+
+	uint16_t cur_drawIndex = 0;
+	uint16_t kMaxDraw = 0;
+	UINT vertexCnt = 0;
+	UINT indexCnt = 0;
+
+protected:
+	virtual void Create(ID3D12Device* device_) = 0;
+
 	// 頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuff;
 	// インデックスバッファ
@@ -38,23 +50,24 @@ protected:
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
-	//マテリアルバッファ
-	std::vector<MaterialBuffer> materialBuffer;
-	//ワールドマトリクスバッファ
-	std::vector<MatrixBuffer> worldMatrixBuffer;
-	//WVPマトリクスバッファ
-	std::vector<MatrixBuffer> wvpMatrixBuffer;
-
-
-	uint16_t cur_drawIndex = 0;
-	uint16_t kMaxDraw = 0;
-	UINT vertexCnt = 0;
-	UINT indexCnt = 0;
 
 
 	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_);
+
+public:
+
 	void DrawIndexReset();
 	void DetectOverDrawing();
+
+	auto* Getter_VertexBufferView()
+	{
+		return &vertexBufferView;
+	}
+
+	auto* IndexBufferView()
+	{
+		return &indexBufferView;
+	}
 
 };
 

@@ -32,7 +32,12 @@ int TextureDataCreator::CreateShaderBufferFromFile(std::string filePath_)
 
 	shaderBufferData.emplace_back(texData);
 
-	return ShaderBuffer::cur_index - 1;
+#ifdef USE_IMGUI
+	return ShaderBuffer::cur_index - 2;
+#endif // USE_IMGUI
+
+	return ShaderBuffer::cur_index - 1 ;
+
 }
 
 

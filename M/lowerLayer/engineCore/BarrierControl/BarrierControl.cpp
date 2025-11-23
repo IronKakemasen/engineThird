@@ -15,10 +15,10 @@ D3D12_RESOURCE_BARRIER BarrierControl::Create(
 	D3D12_RESOURCE_BARRIER ret_barrier{};
 	
 	//バリアの設定
-	ret_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	ret_barrier.Type = Type;
 	//Noneにしておく
-	ret_barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	//バリアを張る対象のリソース。現在のバックバッファーに対して行う
+	ret_barrier.Flags = Flags;
+	//バリアを張る対象のリソース。
 	ret_barrier.Transition.pResource = dst_resource_;
 
 	ret_barrier.Transition.Subresource = transitionSubResource_;
@@ -32,10 +32,10 @@ D3D12_RESOURCE_BARRIER BarrierControl::Create(
 	return ret_barrier;
 }
 
-void BarrierControl::Pitch(CommandControl* commanndControll_, D3D12_RESOURCE_BARRIER* barrier_)
+void BarrierControl::Pitch(ID3D12GraphicsCommandList* cList_, D3D12_RESOURCE_BARRIER* barrier_)
 {
 	//TransitionBarrierを張る
-	commanndControll_->Getter_commandList()->ResourceBarrier(1, barrier_);
+	cList_->ResourceBarrier(1, barrier_);
 
 }
 

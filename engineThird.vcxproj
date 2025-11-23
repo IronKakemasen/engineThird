@@ -133,6 +133,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\utilities\Camera\CameraBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.cpp" />
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp" />
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileBehavior.cpp" />
+    <ClCompile Include="M\utilities\ConvertToRadian\ConvertToRadian.cpp" />
     <ClCompile Include="M\M.cpp" />
     <ClCompile Include="M\utilities\convertString\convertString.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allMesh\allMesh.cpp" />
@@ -207,8 +212,18 @@
     <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
+    <ClCompile Include="M\utilities\Transform\Transform.cpp" />
+    <ClCompile Include="M\utilities\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="M\utilities\UVTransform\UVTransform.cpp" />
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\TriangleM\TriangleM.cpp" />
+    <ClCompile Include="M\utilities\Camera\NormalCamera\NormalCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\utilities\Camera\CameraBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.h" />
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h" />
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileBehavior.h" />
+    <ClInclude Include="M\utilities\ConvertToRadian\ConvertToRadian.h" />
     <ClInclude Include="M\M.h" />
     <ClInclude Include="M\utilities\convertString\convertString.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allMesh\allMesh.h" />
@@ -270,6 +285,11 @@
     <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.h" />
     <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />
+    <ClInclude Include="M\utilities\Transform\Transform.h" />
+    <ClInclude Include="M\utilities\Quaternion\Quaternion.h" />
+    <ClInclude Include="M\utilities\UVTransform\UVTransform.h" />
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\TriangleM\TriangleM.h" />
+    <ClInclude Include="M\utilities\Camera\NormalCamera\NormalCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

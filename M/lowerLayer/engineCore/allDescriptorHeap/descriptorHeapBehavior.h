@@ -36,6 +36,10 @@ public:
 	[[nodiscard]] SIZE_T GetCPUDescriptorHandle(uint16_t index_);
 	[[nodiscard]] SIZE_T GetGPUDescriptorHandle(uint16_t index_);
 
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle2(uint16_t index_);
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle2(uint16_t index_);
+
+
 	static [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(ID3D12Device* device_,
 		D3D12_DESCRIPTOR_HEAP_TYPE heapType_, UINT numDescriptors_, bool shaderVisible);
 

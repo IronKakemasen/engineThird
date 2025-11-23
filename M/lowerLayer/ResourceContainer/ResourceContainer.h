@@ -7,7 +7,8 @@ class TextureDataManager;
 enum class TextureTag
 {
 	kWhite2x2,
-
+	kSouhei,
+	kPlayer,
 
 	kCount
 };

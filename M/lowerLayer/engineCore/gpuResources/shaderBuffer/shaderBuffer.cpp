@@ -3,6 +3,7 @@
 #include "../../../../utilities/convertString/convertString.h"
 #include "../../bufferAndMap/bufferAndMap.h"
 #include "../../CommandControl/CommandControl.h"
+#include "../../BarrierControl/BarrierControl.h"
 
 D3D12_SHADER_RESOURCE_VIEW_DESC ShaderBuffer::CreateSRVDescFromTexture(
 	DXGI_FORMAT metaDataFormat_, size_t mipLevels_)
@@ -12,9 +13,9 @@ D3D12_SHADER_RESOURCE_VIEW_DESC ShaderBuffer::CreateSRVDescFromTexture(
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = UINT(mipLevels_);
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	srvDesc.Texture2D.PlaneSlice = 0;
-	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
+	//srvDesc.Texture2D.MostDetailedMip = 0;
+	//srvDesc.Texture2D.PlaneSlice = 0;
+	//srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 
 	return srvDesc;
 }
@@ -26,16 +27,17 @@ void ShaderBuffer::CreateSRV(ID3D12Device* device_, SrvDescriptorHeap* descripto
 	//テクスチャハンドル
 	if (cur_index > 0)
 	{
-		handle.ptr = descriptorHeap_->GetCPUDescriptorHandle(cur_index);
-		handleGPU.ptr = descriptorHeap_->GetGPUDescriptorHandle(cur_index);
+		handle = descriptorHeap_->GetCPUDescriptorHandle2(cur_index);
+		handleGPU = descriptorHeap_->GetGPUDescriptorHandle2(cur_index);
 
 		device_->CreateShaderResourceView(resource.Get(), &desc_, handle);
-
 	}
 	else
 	{
 		handle = descriptorHeap_->Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart();
 		handleGPU = descriptorHeap_->Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart();
+
+		device_->CreateShaderResourceView(resource.Get(), &desc_, handle);
 	}
 
 	cur_index++;
@@ -55,23 +57,20 @@ void ShaderBuffer::UploadTextureData(
 
 	intermediateResource = CreateBufferResource(device_, intermediateSize);
 
-	CommandControl_->PrepareForNextCommandList();
-
 	UpdateSubresources(CommandControl_->Getter_commandList(), resource.Get(), intermediateResource.Get(), 0, 0,
 		UINT(subresource.size()), subresource.data());
+
 	//Textureへの転送後は利用できるよう、D3D2_RESOUTRCE_STATE_COPY_DESTから
 	//D3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
-	D3D12_RESOURCE_BARRIER barrier{};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	barrier.Transition.pResource = resource.Get();
-	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
+		resource.Get(),
+		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		D3D12_RESOURCE_BARRIER_FLAG_NONE,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
-	CommandControl_->Getter_commandList()->ResourceBarrier(1, &barrier);
-
-	CommandControl_->Getter_commandList()->Close();
+	BarrierControl::Pitch(CommandControl_->Getter_commandList(), &barrier);
 }
 
 
@@ -102,9 +101,6 @@ DirectX::ScratchImage ShaderBuffer::LoadTextureFile(std::string const& filePath_
 
 ShaderBuffer::ShaderBuffer()
 {
-#ifdef USE_IMGUI
-	cur_index += 1;
-#endif // #ifdef USE_IMGUI
 
 }
 
@@ -142,8 +138,8 @@ void ShaderBuffer::CreateTextureResourceFromMetaData(
 		D3D12_HEAP_FLAG_NONE,				//Heapの特殊な設定、特になし
 		&resourceDesc,						//Resourceの設定
 		D3D12_RESOURCE_STATE_COPY_DEST,		//データ転送される設定
-		nullptr,							//Clear最適値。使わないのでnullptr
-		IID_PPV_ARGS(&resource));			//作成するresourceへのポインタのポインタ
+		nullptr,									//Clear最適値。使わないのでnullptr
+		IID_PPV_ARGS(&resource));				//作成するresourceへのポインタのポインタ
 
 	assert(SUCCEEDED(hr));
 

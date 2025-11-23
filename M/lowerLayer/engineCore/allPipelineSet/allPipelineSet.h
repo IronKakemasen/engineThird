@@ -31,5 +31,9 @@ public:
 
 	void Add(std::string shaderSetName_, bool isTopologyLine = false);
 
+	inline auto* Getter_pipelineSet(int shaderSetIndex_,BlendMode blendMode_,CullMode cullMode_)
+	{
+		return pipelineSets[shaderSetIndex_][blendMode_][cullMode_].get();
+	}
 };
 

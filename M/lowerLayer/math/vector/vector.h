@@ -4,7 +4,7 @@ struct Matrix4;
 struct Matrix3;
 
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
-//Vector2  　　　　 　　　　　　　　　　　　　　　　　　　　□
+//Vector2  　　　　 　　　　　　　　　　　　　　　　　　　　
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
 struct Vector2
 {
@@ -13,6 +13,7 @@ struct Vector2
 
 	Vector2(float entries[2]) : x(entries[0]), y(entries[1]){}
 	Vector2(float u_, float v_) : x(u_), y(v_){}
+	Vector2() {};
 	float GetMagnitutde();
 	Vector2 GetNormalized();
 	float GetCos(Vector2 other_);
@@ -21,7 +22,7 @@ struct Vector2
 };
 
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
-//Vector3　　　　 　　　　　　　　　　　　　　　　　　　　  □
+//Vector3　　　　 　　　　　　　　　　　　　　　　　　　　  
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
 struct Vector3
 {
@@ -48,7 +49,7 @@ struct Vector3
 
 
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
-//Vector4  　　　　 　　　　　　　　　　　　　　　　　　　　□
+//Vector4  　　　　 　　　　　　　　　　　　　　　　　　　　
 //□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
 struct Vector4
 {

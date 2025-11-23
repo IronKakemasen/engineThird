@@ -25,15 +25,16 @@
 #include "./allShaderData/vpShaders.h"
 //===================================================================
 
-//=================================================================== allPipelineSet
+//=================================================================== allPipelineSet,DrawSystem
 #include "./allPipelineSet/allPipelineSet.h"
+#include "./ExclusiveDraw/ExclusiveDraw.h"
 //===================================================================
 
 //=================================================================== allMesh
 #include "./allMesh/allMesh.h"
 //===================================================================
 
-//=================================================================== allMesh
+//=================================================================== textureSystem
 #include "./textureSystems/textureDataManager/textureDataManager.h"
 //===================================================================
 
@@ -47,7 +48,6 @@
 
 
 
-//#include "../../../External/DirectXTex/d3dx12.h"
 
 
 
@@ -62,7 +62,6 @@ public:
 	void TermApp();
 	void BeginFrame();
 	void EndFrame();
-	TextureDataManager* GetterP_TextureDataManager();
 
 	~WinApp();
 
@@ -105,8 +104,9 @@ private:
 	//[ ShaderData , vpShadertable  ]
 	VpShaders vpShaders;
 
-	//[ AllPipelineSet ]
+	//[ AllPipelineSet,ExclusiveDraw ]
 	AllPipelineSet allPipelineSet;
+	ExclusiveDraw exclusiveDraw;
 
 	//[ AllMesh ]
 	AllMesh allMesh;
@@ -123,9 +123,6 @@ private:
 
 
 	static LRESULT CALLBACK WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
-
-
-
 
 };
 

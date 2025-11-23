@@ -2,6 +2,10 @@
 #pragma comment(lib,"d3d12.lib")
 
 
+
+
+
+
 [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(
 	ID3D12Device* device_, UINT sizeInByte_)
 {
