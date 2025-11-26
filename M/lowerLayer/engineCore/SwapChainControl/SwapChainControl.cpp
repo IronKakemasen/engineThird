@@ -8,7 +8,7 @@
 
 void SwapChainControl::CreateDepthSencilView(ID3D12Device* device_, DsvDescriptorHeap* dsvDescHeap_)
 {
-	depthBuffer.CreateDepthStencilTextureResource(device_, (int)V_Common::kWindow_W, (int)V_Common::kWindow_H);
+	depthBuffer.CreateDepthStencilTextureResource(device_, (int)CommonV::kWindow_W, (int)CommonV::kWindow_H);
 	auto desc = depthBuffer.CreateDepthStencilViewDesc();
 	depthBuffer.CreateDSV(device_, dsvDescHeap_, desc);
 }
@@ -33,8 +33,8 @@ DXGI_SWAP_CHAIN_DESC1 SwapChainControl::CreateSwapChain(HWND* hwnd_, ID3D12Comma
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	//画面の縦横。クライアント領域と同じにしておく
-	swapChainDesc.Width = (UINT)V_Common::kWindow_W;
-	swapChainDesc.Height = (UINT)V_Common::kWindow_H;
+	swapChainDesc.Width = (UINT)CommonV::kWindow_W;
+	swapChainDesc.Height = (UINT)CommonV::kWindow_H;
 	//色の形成
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	//マルチサンプルしない
@@ -87,7 +87,7 @@ void SwapChainControl::Initialize(HWND* hwnd_, ID3D12CommandQueue* commandQueue_
 
 	for (int i = 0u; i < kFrameBufferCnt; ++i)
 	{
-		colorBuffers[i].SetDXMatrix(V_Common::kWindow_W, V_Common::kWindow_H);
+		colorBuffers[i].SetDXMatrix(CommonV::kWindow_W, CommonV::kWindow_H);
 	}
 
 }

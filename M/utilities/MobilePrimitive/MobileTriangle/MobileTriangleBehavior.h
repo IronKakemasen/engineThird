@@ -1,7 +1,7 @@
 #pragma once
 #include "../MobileBehavior.h"
 
-struct MobileTrianglebehavior:MobileBehavior
+struct MobileTrianglebehavior:MobileBehavior 
 {
 	VertexData left;
 	VertexData top;
@@ -12,7 +12,7 @@ struct MobileTrianglebehavior:MobileBehavior
 	MobileTrianglebehavior();
 
 	virtual void Update() = 0;
-	virtual void Draw(Matrix4& vpMat_) = 0;
+	virtual void Draw(Matrix4* vpMat_)override {};
 
 	void Initialize(float width_, float height_, Vector3 pos_, int texHandle_, Vector4 color_ = { 255,255,255,255 });
 	void Initialize(Vector3 local_leftPos_, Vector3 local_topPos_, Vector3 local_rightPos_,

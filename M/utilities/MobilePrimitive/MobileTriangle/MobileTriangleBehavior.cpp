@@ -1,9 +1,11 @@
 #include "MobileTriangleBehavior.h"
+#include "../../../M.h"
 
 MobileTrianglebehavior::MobileTrianglebehavior()
 {
 	MobileTrianglebehavior::count++;
 	uvTrans.translate = kCentroid_equilateraltriangle;
+
 }
 
 void MobileTrianglebehavior::Initialize(float width_, float height_, Vector3 pos_, int texHandle_, Vector4 color_)

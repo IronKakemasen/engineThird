@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace V_Common
+namespace CommonV
 {
 	extern float const kWindow_W;
 	extern float const kWindow_H;

@@ -114,6 +114,8 @@ private:
 	//[ TextureDataManager ] 
 	TextureDataManager textureDataManager;
 
+
+
 	bool InitApp();
 	bool InitWnd();
 	void TermWnd();

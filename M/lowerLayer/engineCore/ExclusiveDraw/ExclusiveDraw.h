@@ -16,10 +16,16 @@ class ExclusiveDraw
 
 public:
 	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std::vector<ShaderBuffer >* shaderBufferData_);
+
 	void DrawMobileTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
-		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ ,CullMode cullMode_,
+		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ ,CullMode cullMode_,int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 
-	void ResetDrawIndex();
+	void DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_,
+		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
+
+
+	void ResetDrawIndexes();
 };
 

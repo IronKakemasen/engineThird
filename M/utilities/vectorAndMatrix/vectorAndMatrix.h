@@ -30,7 +30,7 @@ Matrix4 Get_Orthographic3D(
 //ビューポート変換3D
 Matrix4 Get_ViewportTransformation3D(
 	const float left_ = 0.0f, const float top_ = 0.0f,
-	const float windowWidth_ = V_Common::kWindow_W, const float windowHeight_ = V_Common::kWindow_H,
+	const float windowWidth_ = CommonV::kWindow_W, const float windowHeight_ = CommonV::kWindow_H,
 	const float minDepth_ = 0.0f, const float maxDepth_ = 1.0f);
 //透視投影行列
 Matrix4 Get_PerspectiveFOV(float fovY_, float aspectRatio_, float nearClip_ = 0.1f, float farClip_ = 1000.0f);

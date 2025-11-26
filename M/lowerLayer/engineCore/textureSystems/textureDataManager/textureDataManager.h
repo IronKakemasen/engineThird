@@ -13,6 +13,8 @@ public:
 
 private:
 	TextureDataCreator textureDataCreator;
+
+
 public:
 	inline auto* Getter_ShaderData()
 	{

@@ -10,7 +10,7 @@
 #include "../constantBuffer/MatrixBuffer/MatrixBuffer.h"
 #include <vector>
 
-
+class PipelineSet;
 
 struct PrimitiveMeshCommon
 {
@@ -50,12 +50,11 @@ protected:
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
-
-
 	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_);
 
 public:
 
+	void SetPipelineset(PipelineSet* pipelineSet_);
 	void DrawIndexReset();
 	void DetectOverDrawing();
 
@@ -63,6 +62,12 @@ public:
 	{
 		return &vertexBufferView;
 	}
+
+	auto* Getter_IndexBufferView()
+	{
+		return &indexBufferView;
+	}
+
 
 	auto* IndexBufferView()
 	{

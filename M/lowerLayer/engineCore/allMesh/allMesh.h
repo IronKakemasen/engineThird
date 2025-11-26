@@ -7,8 +7,9 @@ class AllMesh
 	std::unique_ptr<TriangleMesh> triangleMesh;
 	std::unique_ptr<QuadMesh> quadMesh;
 
-	bool initOnlyOnce = true;
 public:
+
+	void ResetDrawIndexes();
 	void Init(ID3D12Device* device_);
 
 	inline auto* Getter_TriangleMesh()

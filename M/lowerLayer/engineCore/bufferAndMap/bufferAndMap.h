@@ -7,7 +7,6 @@
 template <typename T>
 struct BufferAndMap
 {
-
 private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buff = nullptr;
 

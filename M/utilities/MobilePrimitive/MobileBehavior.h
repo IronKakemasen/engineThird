@@ -3,17 +3,13 @@
 #include "../UVTransform/UVTransform.h"
 #include "../../M.h"
 #include "../../lowerLayer/engineCore/meshStructure/vertexData/VertexData.h"
+#include "../../lowerLayer/engineCore/CommonDrawingSystem/CommonDrawSystem.h"
 
-struct MobileBehavior
+struct MobileBehavior:CommonDrawingSystem
 {
 	Transform trans;
 	UVTransform uvTrans;
-
-	Vector4 color;
-	CullMode cullMode;
 	DrawMode drawMode;
-	BlendMode blendMode;
-	int texHandle;
 
 	MobileBehavior();
 };

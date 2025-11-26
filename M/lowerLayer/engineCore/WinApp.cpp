@@ -124,6 +124,7 @@ bool WinApp::InitD3D()
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
 
 	ShaderBuffer::cur_index++;
+
 #endif
 
 
@@ -185,7 +186,7 @@ void WinApp::BeginFrame()
 void WinApp::EndFrame()
 {
 	//drawIndexをリセットする
-	exclusiveDraw.ResetDrawIndex();
+	exclusiveDraw.ResetDrawIndexes();
 
 	//[ 画面に書く処理が終わり、画面に映すので状態を遷移 ]
 	ImGui::Render();
@@ -307,7 +308,7 @@ bool WinApp::InitApp()
 
 
 	//テクスチャ読み込み（コマンド積む）
-	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw);
+	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,vpShaders.Getter_VPShaderTable());
 
 	CommandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { CommandControl.Getter_commandList() };

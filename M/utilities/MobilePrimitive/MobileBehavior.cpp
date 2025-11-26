@@ -2,10 +2,6 @@
 
 MobileBehavior::MobileBehavior()
 {
-	color = { 255,255,255,255 };
-	cullMode = kCullModeBack;
+	uvTrans.translate = { 0.5f,0.5f };
 	drawMode = DrawMode::kSolid;
-	blendMode = kBlendModeNormal;
-	texHandle = M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2);
-
 }

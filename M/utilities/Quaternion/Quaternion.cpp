@@ -30,7 +30,7 @@ Vector4 Quaternion::Get()
 {
 	float radian = GetRadian(deltaTheta);
 	Vector3 buff = Vector3{ axis }.GetNormalized();
-	float halfRad = radian * V_Common::kHalf;
+	float halfRad = radian * CommonV::kHalf;
 	float sinNum = sinf(halfRad);
 
 	Vector4 quaternion = { buff.x * sinNum,buff.y * sinNum

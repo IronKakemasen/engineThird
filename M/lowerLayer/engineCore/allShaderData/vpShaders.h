@@ -19,7 +19,6 @@ class VpShaders
 
 public:
 
-
 	auto* Getter_VertexShaderData()
 	{
 		return &vertexShaderData;

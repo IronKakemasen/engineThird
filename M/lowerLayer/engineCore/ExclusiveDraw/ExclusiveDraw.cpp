@@ -4,11 +4,9 @@
 #include "../gpuResources/shaderBuffer/shaderBuffer.h"
 #include "../BarrierControl/BarrierControl.h"
 
-void ExclusiveDraw::ResetDrawIndex()
+void ExclusiveDraw::ResetDrawIndexes()
 {
-	auto* triangleMesh = allMesh->Getter_TriangleMesh();
-
-	triangleMesh->DrawIndexReset();
+	allMesh->ResetDrawIndexes();
 }
 
 void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std::vector<ShaderBuffer >* shaderBufferData_)
@@ -18,8 +16,111 @@ void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std
 	shaderBufferData = shaderBufferData_;
 }
 
+//void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+//	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_,
+//	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
+//{
+//	auto* quadMesh = allMesh->Getter_QuadMesh();
+//
+//	quadMesh->DetectOverDrawing();
+//
+//	if (drawMode_ == kSolid)
+//	{
+//		int i = quadMesh->cur_drawIndex;
+//
+//		//使用する三角形のマップインデックス
+//		uint32_t const usingIndex_index = i * quadMesh->indexCnt;
+//		uint32_t const usingVertex_index = i * quadMesh->vertexCnt;
+//
+//		VertexData vData[4] =
+//		{
+//			leftBottom_,leftTop_,rightBottom_,rightTop_
+//		};
+//
+//		uint32_t indices[6] = { 0,1,2,2,1,3 };
+//
+//		float const i255 = CommonV::inv_255;
+//		Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
+//
+//		//< データの入力 >
+//		//[ インデックス ]
+//		std::memcpy(&quadMesh->indexMap[usingIndex_index], indices, sizeof(uint32_t) * quadMesh->indexCnt);
+//		
+//		//[ 頂点 ]
+//		std::memcpy(&quadMesh->vertexMap[usingVertex_index], vData, sizeof(VertexData) * quadMesh->vertexCnt);
+//		
+//		//[ 行列 ]
+//		Matrix4 wMat = trans_.GetWorldMatrix();
+//		Matrix4 wvp = wMat.Multiply(vpMat_);
+//		*quadMesh->worldMatrixBuffer[i].matrix.buffMap = wMat;
+//		*quadMesh->wvpMatrixBuffer[i].matrix.buffMap = wvp;
+//
+//		//[ マテリアル ]
+//		//色
+//		Matrix4 uvMat = uvTrans_.GetUVMat();
+//		quadMesh->materialBuffer[i].material.buffMap->color = color;
+//		quadMesh->materialBuffer[i].material.buffMap->uvTransform = uvMat;
+//
+//		//< データの転送 >
+//		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(0, blendMode_, cullMode_);
+//		auto* cList = src_pipeline->Getter_CommandList();
+//
+//		cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//
+//		src_pipeline->SetGraphicsRootSignature();
+//		src_pipeline->SetPipelineState();
+//
+//		//VBV
+//		cList->IASetVertexBuffers(0, 1, quadMesh->Getter_VertexBufferView());
+//
+//		//IBV
+//		cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
+//
+//		cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[texHandle_].handleGPU);
+//
+//		//Cバッファの場所を指定
+//		src_pipeline->SetConstantBufferViews(
+//			triangleMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
+//			triangleMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
+//			triangleMesh->materialBuffer[i].material.GetVirtualGPUAddress());
+//
+//		//< 描画 >
+//		//RootSignatureを設定、PSOに設定しているけど別途必要
+//		commandList->SetGraphicsRootSignature(pipelineSetTriangles[pipelineComponents.cur_blendMode]
+//			[(int)pipelineComponents.cur_cullMode][pipelineComponents.cur_shaderType]->rootSignature.Get());
+//		commandList->SetPipelineState(pipelineSetTriangles[pipelineComponents.cur_blendMode]
+//			[(int)pipelineComponents.cur_cullMode][pipelineComponents.cur_shaderType]->pipelineStateObject.Get());
+//		//VBV
+//		commandList->IASetVertexBuffers(0, 1, &quadMesh->vertexBufferView);
+//		//IBV
+//		commandList->IASetIndexBuffer(&quadMesh->indexBufferView);
+//		//形状の設定。PSOに設定しているものと同じものを選択
+//		commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//
+//		//マテリアルのCバッファの場所を指定
+//		commandList->SetGraphicsRootConstantBufferView(0, quadMesh->mappedResource[indexQuad].materialBuff->GetGPUVirtualAddress());
+//		//transformationMatrixResource用Cバッファの場所を指定
+//		commandList->SetGraphicsRootConstantBufferView(1, quadMesh->mappedResource[indexQuad].transformationMatrixBuff->GetGPUVirtualAddress());
+//
+//		//SRVのDescriptortableの先頭を設定。2はrootparameter[2]である//
+//		commandList->SetGraphicsRootDescriptorTable(2, textureResourceDataList[texHandle_].textureHandle.textureSrvHandleGPU);
+//		//DirectionalLight用のバッファの場所を指定
+//		commandList->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+//		//CommonVariableのバッファの場所を指定
+//		commandList->SetGraphicsRootConstantBufferView(4, commonVariablesResource->GetGPUVirtualAddress());
+//
+//		//描画(DrawCall)。6インデックスで一つのインスタンス
+//		commandList->DrawIndexedInstanced(kNumIndexPerQuad, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
+//
+//		//次の描画用にインクリメント
+//		indexQuad++;
+//	}
+//
+//}
+
+
 void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
-	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ , CullMode cullMode_,
+	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ , CullMode cullMode_, int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
 {
 	if (drawMode_ == kSolid)
@@ -37,7 +138,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 			left_,top_,right_
 		};
 
-		float const i255 = V_Common::inv_255;
+		float const i255 = CommonV::inv_255;
 		Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
 
 		//< データのコピー>
@@ -58,7 +159,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 
 		//< データの転送 >
 		//< 描画 >
-		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(0, blendMode_, cullMode_);
+		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
 		auto* cList = src_pipeline->Getter_CommandList();
 
 		cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

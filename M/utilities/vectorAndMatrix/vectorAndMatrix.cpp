@@ -58,10 +58,10 @@ Matrix4 Get_ViewportTransformation3D(
 {
 	return Matrix4
 	{
-		windowWidth_ * V_Common::kHalf, 0.0f, 0.0f, 0.0f,
-		0.0f, -windowHeight_ * V_Common::kHalf, 0.0f, 0.0f,
+		windowWidth_ * CommonV::kHalf, 0.0f, 0.0f, 0.0f,
+		0.0f, -windowHeight_ * CommonV::kHalf, 0.0f, 0.0f,
 		0.0f, 0.0f, maxDepth_ - minDepth_, 0.0f,
-		left_ + windowWidth_ * V_Common::kHalf, top_ + windowHeight_ * V_Common::kHalf, minDepth_, 1.0f,
+		left_ + windowWidth_ * CommonV::kHalf, top_ + windowHeight_ * CommonV::kHalf, minDepth_, 1.0f,
 	};
 }
 Matrix4 Get_Orthographic3D(
@@ -158,7 +158,7 @@ Matrix4 Get_SRTMat3D(const Vector3& scale_, const Vector3& rotateTheta_, const V
 	Matrix4 ret_mat;
 
 	//回転角をradianに変換
-	static float const degreeConverter = V_Common::kPi / 180.0f;
+	static float const degreeConverter = CommonV::kPi / 180.0f;
 	Vector3 rotateRad = rotateTheta_ * degreeConverter;
 
 	//3つの回転軸に対応した行列を作成
@@ -231,7 +231,7 @@ Matrix4 Get_STRMat3D(const Vector3& scale_, const Vector3& movementTheta_, const
 	Matrix4 ret_mat;
 
 	//回転角をradianに変換
-	static float const degreeConverter = V_Common::kPi / 180.0f;
+	static float const degreeConverter = CommonV::kPi / 180.0f;
 	Vector3 rotateRad = movementTheta_ * degreeConverter;
 
 	//3つの回転軸に対応した行列を作成
@@ -306,7 +306,7 @@ Matrix3 Get_SRTMat2D(const float& delta_scaleX_, const float& delta_scaleY_, con
 	Matrix3 ret_mat;
 
 	//回転角をradianに変換
-	static float const degreeConverter = V_Common::kPi / 180.0f;
+	static float const degreeConverter = CommonV::kPi / 180.0f;
 	float delta_rotateRad = delta_rotateTheta_ * degreeConverter;
 	float cosT = cosf(delta_rotateRad);
 	float sinT = sinf(delta_rotateRad);
@@ -379,10 +379,10 @@ Vector3 ConvertToRectangularCoordinate(Vector3& sphereCoord_)
 
 Vector4 GetQuaternion(Vector3 v_, float deltaTheta_)
 {
-	float const degreeConverter = V_Common::kPi / 180.0f;
+	float const degreeConverter = CommonV::kPi / 180.0f;
 	float radian = deltaTheta_ * degreeConverter;
 	Vector3 buff = v_.GetNormalized();
-	float halfRad = radian * V_Common::kHalf;
+	float halfRad = radian * CommonV::kHalf;
 	float sinNum = sinf(halfRad);
 
 	Vector4 quaternion = { buff.x * sinNum,buff.y * sinNum

@@ -213,16 +213,46 @@
     <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\TriangleM\TriangleM.cpp">
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\utilities\Camera\CameraBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\Camera\CameraBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\utilities\Camera\NormalCamera\NormalCamera.cpp">
+    <ClCompile Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\utilities\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\SceneController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\RunSpeedChanger\RunSpeedChanger.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -428,16 +458,46 @@
     <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\TriangleM\TriangleM.h">
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\utilities\Camera\CameraBehavior.h">
+    <ClInclude Include="M\lowerLayer\Camera\CameraBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\utilities\Camera\NormalCamera\NormalCamera.h">
+    <ClInclude Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileQuad\MobileQuadBehavior.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\utilities\MobilePrimitive\MobileQuad\MQuad\MQuad.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\RunSpeedChanger\RunSpeedChanger.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SampleScene\SampleScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
