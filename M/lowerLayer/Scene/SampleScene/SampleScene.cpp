@@ -11,7 +11,9 @@ void SampleScene::Draw()
 {
 	Matrix4* vpMat = &mainCamera->vpMat;
 
-	triangle->Draw(vpMat);
+
+
+	drawExecutor->DrawRegistered(vpMat);
 }
 
 void SampleScene::Reset()

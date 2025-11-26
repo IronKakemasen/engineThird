@@ -4,7 +4,6 @@
 #include "./M/lowerLayer/Camera/NormalCamera/NormalCamera.h"
 #include "M/lowerLayer/Scene/SceneController/SceneController.h"
 
-
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	////＜ポインタ破壊などを検知するためのもの＞

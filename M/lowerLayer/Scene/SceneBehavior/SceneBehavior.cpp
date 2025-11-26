@@ -16,10 +16,4 @@ void SceneBehavior::RegisterForDrawExecutor(CommonDrawingSystem* dst_)
 
 }
 
-void SceneBehavior::DrawAllRegistered(Matrix4* vpMat_)
-{
-	drawExecutor->Setter_ViewProjMat(vpMat_);
-	drawExecutor->DrawRegistered();
-
-}
 

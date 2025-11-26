@@ -10,18 +10,13 @@ void DrawExecutor::Register(CommonDrawingSystem* dst_)
 	curIndex++;
 }
 
-void DrawExecutor::Setter_ViewProjMat(Matrix4* viewProjectionMatrix_)
-{
-	viewProjectionMatrix = viewProjectionMatrix_;
-}
-
-void DrawExecutor::DrawRegistered()
+void DrawExecutor::DrawRegistered(Matrix4* vpMat_)
 {
 	for (const auto& [id, data] : drawDataContainer) 
 	{
 		if (data->doDraw)
 		{
-			data->Draw(viewProjectionMatrix);
+			data->Draw(vpMat_);
 		}
 	}
 }
