@@ -23,7 +23,6 @@ protected:
 	std::unique_ptr< CameraBehavior > mainCamera;
 	std::unique_ptr< DrawExecutor >drawExecutor;
 	void RegisterForDrawExecutor(CommonDrawingSystem* dst_);
-	void DrawAllRegistered(Matrix4* vpMat_);
 
 };
 

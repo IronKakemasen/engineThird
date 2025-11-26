@@ -7,6 +7,8 @@ public:
 	SampleScene();
 
 	std::unique_ptr<MTriangle> triangle;
+	std::unique_ptr<MQuad> quad;
+
 
 	virtual void Update() override;
 	virtual void Draw() override;
