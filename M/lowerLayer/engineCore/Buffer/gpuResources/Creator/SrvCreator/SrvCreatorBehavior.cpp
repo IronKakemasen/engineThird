@@ -1,7 +1,7 @@
 #include "SrvCreatorBehavior.h"
 #include "../../Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../Resource/shaderBuffer/shaderBuffer.h"
-#include "../../../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
+#include "../../../../DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 #pragma comment(lib,"d3d12.lib")
 
 void SrvCreatorBehavior::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_,

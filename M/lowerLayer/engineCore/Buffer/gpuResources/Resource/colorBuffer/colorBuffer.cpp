@@ -1,5 +1,5 @@
 #include "colorBuffer.h"
-#include "../../../../allDescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
+#include "../../../../DescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
 #include <assert.h>
 
 void ColorBuffer::SetDXMatrix(float width_, float height_, float left_, float top_)

@@ -1,6 +1,6 @@
 #include "rootSignatureCreator.h"
-#include "../../../../WinApp.h"
-#include "../../../allPipelineSet.h"
+#include "../../../WinApp.h"
+#include "../../allPipelineSet.h"
 #include <assert.h>
 
 #pragma comment(lib,"d3d12.lib")

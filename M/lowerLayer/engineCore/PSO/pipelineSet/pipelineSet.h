@@ -3,8 +3,8 @@
 #include <d3d12.h>
 #include <memory>
 #include <functional>
-#include "../../allShaderData/vpShaderTable/vpShaderTable.h"
-#include "./pipelineCreators/pipelineCreators.h"
+#include "../../VpShader/vpShaderTable/vpShaderTable.h"
+#include "../pipelineCreators/pipelineCreators.h"
 #include <assert.h>
 #pragma comment(lib,"d3d12.lib")
 

@@ -8,9 +8,9 @@
 //===================================================================
 
 //=================================================================== descriptorHeaps
-#include "./allDescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
-#include "./allDescriptorHeap/dsvDescriptorHeap/dsvDescriptorHeap.h"		
-#include "./allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
+#include "./DescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
+#include "./DescriptorHeap/dsvDescriptorHeap/dsvDescriptorHeap.h"		
+#include "./DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 //===================================================================
 
 //=================================================================== otherCoreSystems
@@ -22,12 +22,12 @@
 //===================================================================
 
 //=================================================================== shaderData,Table
-#include "./allShaderData/vpShaders.h"
+#include "./VpShader/vpShaders.h"
 //===================================================================
 
 //=================================================================== allPipelineSet,DrawSystem
-#include "./allPipelineSet/allPipelineSet.h"
-#include "./ExclusiveDraw/ExclusiveDraw.h"
+#include "./PSO/allPipelineSet.h"
+#include "./Render/ExclusiveDraw/ExclusiveDraw.h"
 //===================================================================
 
 //=================================================================== allMesh,ParticleMeshSrvCreator
@@ -35,7 +35,7 @@
 //===================================================================
 
 //=================================================================== textureSystem
-#include "./textureSystems/textureDataManager/textureDataManager.h"
+#include "./Render/textureSystems/textureDataManager/textureDataManager.h"
 //===================================================================
 
 //=================================================================== BufferData,Creator
