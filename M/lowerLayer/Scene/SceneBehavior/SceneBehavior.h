@@ -2,8 +2,8 @@
 #include <memory>
 #include "../../DrawExecutor/DrawExecutor.h"
 #include "../../Camera/NormalCamera/NormalCamera.h"
-#include "../../../utilities/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
-#include "../../../utilities/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
+#include "../../Model/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
+#include "../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 
 
 class SceneBehavior

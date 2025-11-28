@@ -36,7 +36,5 @@ private:
 	//シーンをセットする
 	void SetScenesToArray();
 
-
-
 };
 

@@ -83,8 +83,6 @@ void PipelineSet::Activate_RootparameterCreateFunc(std::function<std::vector<D3D
 	shaderSetName_);
 
 	graghicsPipeLineStatedesc.pRootSignature = ret_pipelineSet->rootSignature.Get();
-	//rootparameterを記録しておく
-	pipelineCreators.rootSignatureCreator.RecordRootparameters(ret_pipelineSet->rootParameters, shaderSetIndex);
 
 	//==============================================================================================
 	//InputLayout

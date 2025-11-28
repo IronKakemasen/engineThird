@@ -133,21 +133,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\engineCore\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp" />
     <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.cpp" />
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp" />
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\CameraBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.cpp" />
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp" />
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.cpp" />
     <ClCompile Include="M\utilities\ConvertToRadian\ConvertToRadian.cpp" />
-    <ClCompile Include="M\M.cpp" />
+    <ClCompile Include="M\lowerLayer\M.cpp" />
     <ClCompile Include="M\utilities\convertString\convertString.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allMesh\allMesh.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\depthBuffer\depthBuffer.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -173,7 +175,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\bufferAndMap\bufferAndMap.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\bufferAndMap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.cpp" />
@@ -188,8 +190,8 @@
     <ClCompile Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\dxCompile\dxCompile.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\FenceControl\FenceControl.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\gpuResourcesBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\colorBuffer\colorBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\leakChecker\leakChecker.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\logAndException\detectException.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.cpp" />
@@ -198,7 +200,6 @@
     <ClCompile Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.cpp" />
     <ClCompile Include="M\lowerLayer\math\matrix\matrix.cpp" />
     <ClCompile Include="M\lowerLayer\math\vector\vector.cpp" />
     <ClCompile Include="M\utilities\vectorAndMatrix\vectorAndMatrix.cpp" />
@@ -216,34 +217,46 @@
     <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
     <ClCompile Include="M\utilities\Transform\Transform.cpp" />
     <ClCompile Include="M\utilities\Quaternion\Quaternion.cpp" />
     <ClCompile Include="M\utilities\UVTransform\UVTransform.cpp" />
-    <ClCompile Include="M\utilities\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\SceneController.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\RunSpeedChanger\RunSpeedChanger.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleScene.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Data\ShaderBufferData\ShaderBufferData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\TransformMatrix\TransformMatrix.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.cpp" />
+    <ClCompile Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\StructuredBuffer\StructuredBufferAndMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\engineCore\ParticleMesh2D\ParticleMesh2DCommon.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.h" />
     <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h" />
     <ClInclude Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.h" />
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileQuad\MQuad\MQuad.h" />
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileQuad\MobileQuadBehavior.h" />
+    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h" />
+    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.h" />
     <ClInclude Include="M\lowerLayer\Camera\CameraBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.h" />
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h" />
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileBehavior.h" />
+    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h" />
+    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.h" />
     <ClInclude Include="M\utilities\ConvertToRadian\ConvertToRadian.h" />
-    <ClInclude Include="M\M.h" />
+    <ClInclude Include="M\lowerLayer\M.h" />
     <ClInclude Include="M\utilities\convertString\convertString.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allMesh\allMesh.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\depthBuffer\depthBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\depthBuffer\depthBuffer.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
     <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
@@ -256,7 +269,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\bufferAndMap\bufferAndMap.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\bufferAndMap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.h" />
@@ -270,8 +283,8 @@
     <ClInclude Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.h" />
     <ClInclude Include="M\lowerLayer\engineCore\dxCompile\dxCompile.h" />
     <ClInclude Include="M\lowerLayer\engineCore\FenceControl\FenceControl.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\gpuResourcesBehavior.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\colorBuffer\colorBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\gpuResourcesBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\colorBuffer\colorBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\leakChecker\leakChecker.h" />
     <ClInclude Include="M\lowerLayer\engineCore\logAndException\detectException.h" />
     <ClInclude Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.h" />
@@ -280,7 +293,6 @@
     <ClInclude Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.h" />
     <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.h" />
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataCreator\textureDataCreator.h" />
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h" />
     <ClInclude Include="M\lowerLayer\math\vector\vector.h" />
     <ClInclude Include="M\utilities\benriTemplateFunc\benriTempFunc.h" />
@@ -299,17 +311,27 @@
     <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\shaderBuffer\shaderBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\shaderBuffer\shaderBuffer.h" />
     <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />
     <ClInclude Include="M\utilities\Transform\Transform.h" />
     <ClInclude Include="M\utilities\Quaternion\Quaternion.h" />
     <ClInclude Include="M\utilities\UVTransform\UVTransform.h" />
-    <ClInclude Include="M\utilities\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h" />
+    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h" />
     <ClInclude Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneController.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\RunSpeedChanger\RunSpeedChanger.h" />
     <ClInclude Include="M\lowerLayer\Scene\SampleScene\SampleScene.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Data\ShaderBufferData\ShaderBufferData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\TransformMatrix\TransformMatrix.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h" />
+    <ClInclude Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.h" />
+    <ClInclude Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\StructuredBuffer\StructuredBufferAndMap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

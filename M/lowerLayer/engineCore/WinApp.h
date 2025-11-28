@@ -30,12 +30,17 @@
 #include "./ExclusiveDraw/ExclusiveDraw.h"
 //===================================================================
 
-//=================================================================== allMesh
+//=================================================================== allMesh,ParticleMeshSrvCreator
 #include "./allMesh/allMesh.h"
+#include "./gpuResources/Creator/SrvCreator/SrvCreator.h"
 //===================================================================
 
 //=================================================================== textureSystem
 #include "./textureSystems/textureDataManager/textureDataManager.h"
+//===================================================================
+
+//=================================================================== ShaderBufferData
+#include "./gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 //===================================================================
 
 //=================================================================== Imgui
@@ -57,7 +62,6 @@ public:
 
 	static inline std::ofstream log;
 
-
 	WinApp(uint32_t width_, uint32_t height_, LPCWSTR windowName_);
 	void TermApp();
 	void BeginFrame();
@@ -73,13 +77,11 @@ private:
 	Microsoft::WRL::ComPtr <ID3D12Debug1> debugController = nullptr;
 #endif 
 
-
 	HINSTANCE m_hInst;
 	HWND m_hWnd;
 	uint32_t m_width;
 	uint32_t m_height;
 	LPCWSTR m_windowName;
-
 
 	//[ DeviceSetUp ]
 	DeviceSetUp deviceSetUp;
@@ -108,22 +110,21 @@ private:
 	AllPipelineSet allPipelineSet;
 	ExclusiveDraw exclusiveDraw;
 
-	//[ AllMesh ]
+	//[ AllMesh ,ParticleMeshSrvCreator ]
 	AllMesh allMesh;
+	SrvCreator srvCreator;
+
+	//[ ShaderBufferData ]
+	ShaderBufferData shaderBufferData;
 
 	//[ TextureDataManager ] 
 	TextureDataManager textureDataManager;
 
-
-
 	bool InitApp();
 	bool InitWnd();
 	void TermWnd();
-
 	bool InitD3D();
 	void TermD3D();
-
-
 	static LRESULT CALLBACK WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
 };

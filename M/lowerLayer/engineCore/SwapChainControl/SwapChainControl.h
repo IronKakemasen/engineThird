@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../gpuResources/ColorBuffer/ColorBuffer.h"
-#include "../gpuResources/depthBuffer/depthBuffer.h"
+#include "../gpuResources/Resource/colorBuffer/colorBuffer.h"
+#include "../gpuResources/Resource/depthBuffer/depthBuffer.h"
 #include <dxgi1_6.h>
 
 

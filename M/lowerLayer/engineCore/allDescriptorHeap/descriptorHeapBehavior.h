@@ -17,7 +17,6 @@ protected:
 	//最大領域分割数
 	uint8_t kMaxDescriptor = 0;
 
-
 public:
 
 	inline auto* Getter_Descriptorheap()

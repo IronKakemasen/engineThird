@@ -7,8 +7,8 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string 	pathToPresetTex =   "./M/resource/preset/texture/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
-	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
-	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
+	//LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
+	//LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
 
 
 }
@@ -20,9 +20,15 @@ int ResourceContainer::GetTextureIndex(TextureTag tag_)
 
 void ResourceContainer::Init(TextureDataManager* textureManager_)
 {
-	textureManager = textureManager_;
-	LoadAllTextureFile();
-	Log(WinApp::log, "Complete : LoadTexture");
+	static bool onlyOnce = true;
+	if (onlyOnce)
+	{
+		textureManager = textureManager_;
+		LoadAllTextureFile();
+		Log(WinApp::log, "Complete : LoadTexture");
+
+		onlyOnce = false;
+	}
 
 }
 

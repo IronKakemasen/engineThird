@@ -76,62 +76,38 @@ void RootSignatureCreator::RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER
 
 }
 
-D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
+void RootSignatureCreator::SetDescriptorRange(D3D12_DESCRIPTOR_RANGE* dst_,
 	D3D12_DESCRIPTOR_RANGE_TYPE rangeType_,
-	D3D12_SHADER_VISIBILITY visibility_,
 	int registerNum_)
 {
-	D3D12_ROOT_PARAMETER ret_rootParameter = {};
-
-	descriptorRange[0].BaseShaderRegister = registerNum_;
+	dst_->BaseShaderRegister = registerNum_;
 	//数は1つ
-	descriptorRange[0].NumDescriptors = 1;
+	dst_->NumDescriptors = 1;
 	//SRVを使う
-	descriptorRange[0].RangeType = rangeType_;
+	dst_->RangeType = rangeType_;
 	//offsetを自動計算
-	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+	dst_->OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+}
+
+D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
+	D3D12_DESCRIPTOR_RANGE* descriptorRange_,
+	D3D12_SHADER_VISIBILITY visibility_,
+	UINT numDescriptors_)
+{
+	D3D12_ROOT_PARAMETER ret_rootParameter = {};
 	//Descriptortableを使う
 	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	//pixcelShaderを使う
 	ret_rootParameter.ShaderVisibility = visibility_;
 	//tableの中身の配列を指定
-	ret_rootParameter.DescriptorTable.pDescriptorRanges = descriptorRange;
+	ret_rootParameter.DescriptorTable.pDescriptorRanges = descriptorRange_;
 	//tableで利用する
-	ret_rootParameter.DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
-
+	ret_rootParameter.DescriptorTable.NumDescriptorRanges = numDescriptors_;
 
 	return ret_rootParameter;
-
 }
 
 
-D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterDescriptorRange()
-{
-	D3D12_ROOT_PARAMETER ret_rootParameter = {};
-
-	//descriptorRange[0] = GetShaderViewDescriptorRange();
-	//0から始まる
-	descriptorRange[0].BaseShaderRegister = 0;
-	//数は1つ
-	descriptorRange[0].NumDescriptors = 1;
-	//SRVを使う
-	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	//offsetを自動計算
-	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-	//Descriptortableを使う
-	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	//pixcelShaderを使う
-	ret_rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	//tableの中身の配列を指定
-	ret_rootParameter.DescriptorTable.pDescriptorRanges = descriptorRange;
-	//tableで利用する
-	ret_rootParameter.DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
-
-
-	return ret_rootParameter;
-
-}
 
 [[nodiscard]] Microsoft::WRL::ComPtr<ID3D12RootSignature> RootSignatureCreator::CreateRootSignature(
 	ID3D12Device* device_,

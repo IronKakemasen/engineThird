@@ -1,25 +1,18 @@
 #pragma once
-#include "../textureDataCreator/textureDataCreator.h"
-#include "../../gpuResources/shaderBuffer/shaderBuffer.h"
+#include <string>
 
 struct SrvDescriptorHeap;
 class CommandControl;
+class TextureSrvCreator;
 
 class TextureDataManager
 {
+	TextureSrvCreator* textureSrvCreator = nullptr;;
+
 public:
-	void Init(SrvDescriptorHeap* srvDescriptorHeap_ , ID3D12Device* device_, CommandControl* commandControl_);
+
+	void Init(TextureSrvCreator* textureSrvCreator_);
 	int CreateTextureFromFile(std::string filePath_);
-
-private:
-	TextureDataCreator textureDataCreator;
-
-
-public:
-	inline auto* Getter_ShaderData()
-	{
-		return textureDataCreator.Getter_ShaderBufferData();
-	}
 
 };
 

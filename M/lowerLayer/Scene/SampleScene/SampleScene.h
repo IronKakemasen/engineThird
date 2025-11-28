@@ -1,5 +1,6 @@
 #pragma once
 #include "../SceneBehavior/SceneBehavior.h"
+#include "../../Particle/2D/TestParticle/TestParticle.h"
 
 class SampleScene final : public SceneBehavior
 {
@@ -8,6 +9,7 @@ public:
 
 	std::unique_ptr<MTriangle> triangle;
 	std::unique_ptr<MQuad> quad;
+	std::unique_ptr<TestParticle> particles;
 
 
 	virtual void Update() override;

@@ -2,15 +2,14 @@
 #include <stdint.h>
 #include <wrl.h>
 #include <d3d12.h>
-#include "../meshStructure/vertexData/VertexData.h"
-#include "../meshStructure/vertexDataForLine/vertexDataForLine.h"
 #include <memory>
 #include <assert.h>
-#include "../constantBuffer/MaterialBuffer/MaterialBuffer.h"
-#include "../constantBuffer/MatrixBuffer/MatrixBuffer.h"
 #include <vector>
 
-class PipelineSet;
+#include "../meshStructure/vertexData/VertexData.h"
+#include "../meshStructure/vertexDataForLine/vertexDataForLine.h"
+#include "../constantBuffer/MaterialBuffer/MaterialBuffer.h"
+#include "../constantBuffer/MatrixBuffer/MatrixBuffer.h"
 
 struct PrimitiveMeshCommon
 {
@@ -38,8 +37,6 @@ struct PrimitiveMeshCommon
 	UINT indexCnt = 0;
 
 protected:
-	virtual void Create(ID3D12Device* device_) = 0;
-
 	// 頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuff;
 	// インデックスバッファ
@@ -50,11 +47,11 @@ protected:
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
+	virtual void Create(ID3D12Device* device_) = 0;
 	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_);
 
 public:
 
-	void SetPipelineset(PipelineSet* pipelineSet_);
 	void DrawIndexReset();
 	void DetectOverDrawing();
 
@@ -67,7 +64,6 @@ public:
 	{
 		return &indexBufferView;
 	}
-
 
 	auto* IndexBufferView()
 	{
