@@ -1,14 +1,14 @@
 #include "textureDataManager.h"
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
+#include "../../gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
 
 
-void TextureDataManager::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_, CommandControl* commandControl_)
+void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_)
 {
-	textureDataCreator.Init(srvDescriptorHeap_, device_, commandControl_);
-
+	textureSrvCreator = textureSrvCreator_;
 }
 
 int TextureDataManager::CreateTextureFromFile( std::string filePath_)
 {
-	return textureDataCreator.CreateShaderBufferFromFile(filePath_);
+	return textureSrvCreator->CreateShaderBufferFromFile(filePath_);
 }

@@ -15,7 +15,7 @@ class PipelineSet
 
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineStateObject = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature = nullptr;
-	std::vector<D3D12_ROOT_PARAMETER> rootParameters;
+
 	ID3D12GraphicsCommandList* commandList = nullptr;
 
 
@@ -30,12 +30,6 @@ public:
 		uint8_t length = sizeof...(args_);
 		D3D12_GPU_VIRTUAL_ADDRESS virtualGpuAdress[] = { args_... };
 
-		size_t limit = rootParameters.size();
-
-		if (length > limit - 1 )
-		{
-			assert(false);
-		}
 
 		for (int i = 0; i < length; i++)
 		{

@@ -1,0 +1,5 @@
+
+struct CommonVariables
+{
+    float time;
+};

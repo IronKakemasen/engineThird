@@ -1,7 +1,5 @@
 #include "./M/lowerLayer/engineCore/WinApp.h"
-#include "./M/M.h"
-#include "./M/utilities/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
-#include "./M/lowerLayer/Camera/NormalCamera/NormalCamera.h"
+#include "./M/lowerLayer/M.h"
 #include "M/lowerLayer/Scene/SceneController/SceneController.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)

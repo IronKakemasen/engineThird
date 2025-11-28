@@ -2,7 +2,7 @@
 #include "./BarrierControl/BarrierControl.h"
 #include <assert.h>
 #include "./allPipelineSet/pipelineSet/pipelineCreators/pipelineCreators.h"
-#include "../../M.h"
+#include "../M.h"
 
 bool WinApp::InitD3D()
 {
@@ -49,65 +49,14 @@ bool WinApp::InitD3D()
 	//pipelineSetの初期化
 	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, CommandControl.Getter_commandList());
 	
-	//メッシュの初期化、生成
-	allMesh.Init(deviceSetUp.Getter_Device());
+	//srvCreatorの初期化
+	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&CommandControl , &shaderBufferData);
 
 	//textureDataManager,textureDataCreatorの初期化
-	textureDataManager.Init(&srvDescHeap,deviceSetUp.Getter_Device(), &CommandControl);
+	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator());
 
 	//exclusiveDrawの初期化
-	exclusiveDraw.Init(&allPipelineSet, &allMesh, textureDataManager.Getter_ShaderData());
-
-
-	auto inputLayOutFunc = []() 
-		{
-		std::vector<D3D12_INPUT_ELEMENT_DESC> descs;
-		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
-			"POSITION",
-			0,
-			DXGI_FORMAT_R32G32B32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		));
-
-		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
-			"TEXCOORD",
-			0,
-			DXGI_FORMAT_R32G32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		));
-
-		descs.emplace_back(InputLayoutDescCreator::GetInputElementDesc(
-			"NORMAL",
-			0,
-			DXGI_FORMAT_R32G32B32_FLOAT,
-			D3D12_APPEND_ALIGNED_ELEMENT
-		));
-
-		return descs;
-
-	};
-
-	auto rootparameterFunc = []() {
-
-		std::vector<D3D12_ROOT_PARAMETER> meters;
-
-		meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
-			D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-			D3D12_SHADER_VISIBILITY_PIXEL,
-			0));
-
-		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterDescriptorRange());
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
-		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(2));
-		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
-		//meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(4));
-
-		return meters;
-	};
-
-	allPipelineSet.CreateNewPipeline("Object3d.VS", "Object3d.PS", inputLayOutFunc, rootparameterFunc);
-
+	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData.data);
 
 #ifdef USE_IMGUI
 	//ImGuiの初期化
@@ -127,6 +76,10 @@ bool WinApp::InitD3D()
 
 #endif
 
+	//メッシュの初期化、生成
+	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator());
+
+
 
 	return true;
 }
@@ -134,9 +87,11 @@ bool WinApp::InitD3D()
 void WinApp::BeginFrame()
 {
 	//Imguiにここからフレームが始まる旨を告げる
+#ifdef USE_IMGUI
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+#endif
 
 	// コマンドの記録を開始.
 	CommandControl.PrepareForNextCommandList();
@@ -189,9 +144,12 @@ void WinApp::EndFrame()
 	exclusiveDraw.ResetDrawIndexes();
 
 	//[ 画面に書く処理が終わり、画面に映すので状態を遷移 ]
+
+#ifdef USE_IMGUI
 	ImGui::Render();
 	//実際のcommandListのImguiの描画コマンドを積む
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), CommandControl.Getter_commandList());
+#endif
 
 	//バリア
 	//RenderTarget->Prsent
@@ -306,9 +264,8 @@ bool WinApp::InitApp()
 		return false;
 	}
 
-
 	//テクスチャ読み込み（コマンド積む）
-	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,vpShaders.Getter_VPShaderTable());
+	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,vpShaders.Getter_VPShaderTable(),&allPipelineSet);
 
 	CommandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { CommandControl.Getter_commandList() };

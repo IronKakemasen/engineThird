@@ -11,7 +11,7 @@ class RootSignatureCreator
 {
 	int sum_created = 0;
 
-	inline static D3D12_DESCRIPTOR_RANGE descriptorRange[1];
+	//inline static D3D12_DESCRIPTOR_RANGE descriptorRange[1];
 	inline static D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 
 	std::vector<std::function<std::vector<D3D12_ROOT_PARAMETER>()>> funcs_rootParametersCreate;
@@ -25,13 +25,14 @@ public:
 	void RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER>& dst_ , int funcIndex_);
 
 	static D3D12_ROOT_PARAMETER GetRootParameterWithDescriptorRange(
-		D3D12_DESCRIPTOR_RANGE_TYPE rangeType_,
+		D3D12_DESCRIPTOR_RANGE* descriptorRange_,
 		D3D12_SHADER_VISIBILITY visibility_,
-		int registerNum_);
+		UINT numDescriptors_);
 
 	static D3D12_ROOT_PARAMETER GetRootParaMeterPixelShader(int registerNum_);
 	static D3D12_ROOT_PARAMETER GetRootParaMeterVertexShader(int registerNum_);
-	static D3D12_ROOT_PARAMETER GetRootParaMeterDescriptorRange();
+	static void SetDescriptorRange(D3D12_DESCRIPTOR_RANGE* dst_,
+		D3D12_DESCRIPTOR_RANGE_TYPE rangeType_, int registerNum_);
 
 	void AddToFuncs_RootParametersCreate(std::function<std::vector<D3D12_ROOT_PARAMETER>()> func_);
 

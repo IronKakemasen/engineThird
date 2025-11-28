@@ -1,7 +1,7 @@
 #include "SceneController.h"
 #include "../SceneBehavior/SceneBehavior.h"
 #include <assert.h>
-#include "../../../M.h"
+#include "../../M.h"
 #include "../FwdScenes.h"
 
 void SceneController::Update()

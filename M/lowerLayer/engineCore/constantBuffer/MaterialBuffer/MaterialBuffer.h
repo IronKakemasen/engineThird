@@ -1,7 +1,6 @@
 #pragma once
-#include "../../bufferAndMap/bufferAndMap.h"
+#include "../bufferAndMap.h"
 #include "../../meshStructure/material/material.h"
-
 
 struct MaterialBuffer
 {
