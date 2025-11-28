@@ -3,8 +3,8 @@
 #include "../../commonVariables.h"
 
 //=================================================================== debugSystems
-#include "./logAndException/outputDebugLog.h"
-#include "./logAndException/detectException.h"
+#include "./Essential/logAndException/outputDebugLog.h"
+#include "./Essential/logAndException/detectException.h"
 //===================================================================
 
 //=================================================================== descriptorHeaps
@@ -14,11 +14,11 @@
 //===================================================================
 
 //=================================================================== otherCoreSystems
-#include "./deviceSetUp/deviceSetUp.h"
-#include "./FenceControl/FenceControl.h"
-#include "./CommandControl/CommandControl.h"
-#include "./SwapChainControl/SwapChainControl.h"
-#include "./dxCompile/dxCompile.h"
+#include "./Essential/deviceSetUp/deviceSetUp.h"
+#include "./Essential/FenceControl/FenceControl.h"
+#include "./Essential/CommandControl/CommandControl.h"
+#include "./Essential/SwapChainControl/SwapChainControl.h"
+#include "./Essential/dxCompile/dxCompile.h"
 //===================================================================
 
 //=================================================================== shaderData,Table
@@ -31,16 +31,17 @@
 //===================================================================
 
 //=================================================================== allMesh,ParticleMeshSrvCreator
-#include "./allMesh/allMesh.h"
-#include "./gpuResources/Creator/SrvCreator/SrvCreator.h"
+#include "./Mesh/allMesh/allMesh.h"
 //===================================================================
 
 //=================================================================== textureSystem
 #include "./textureSystems/textureDataManager/textureDataManager.h"
 //===================================================================
 
-//=================================================================== ShaderBufferData
-#include "./gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
+//=================================================================== BufferData,Creator
+#include "./Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
+#include "./Buffer/gpuResources/Creator/SrvCreator/SrvCreator.h"
+
 //===================================================================
 
 //=================================================================== Imgui
@@ -87,13 +88,13 @@ private:
 	DeviceSetUp deviceSetUp;
 
 	//[ CommandControl ]
-	CommandControl CommandControl;
+	CommandControl commandControl;
 
 	//[ FenceControl ]
-	FenceControl FenceControl;
+	FenceControl fenceControl;
 
 	//[ SwapChain ]
-	SwapChainControl SwapChainControl;
+	SwapChainControl swapChainControl;
 
 	//[ DxCompile ]
 	DxCompile dxCompile;

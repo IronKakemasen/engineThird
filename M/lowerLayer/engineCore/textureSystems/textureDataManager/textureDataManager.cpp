@@ -1,6 +1,6 @@
 #include "textureDataManager.h"
 #include "../../allDescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
-#include "../../gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
+#include "../../Buffer/gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
 
 
 void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_)

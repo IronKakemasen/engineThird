@@ -3,7 +3,7 @@
 #include "./ResourceContainer/ResourceContainer.h"
 #include "../utilities/Transform/Transform.h"
 #include "../utilities/UVTransform/UVTransform.h"
-#include "./engineCore/meshStructure/vertexData/VertexData.h"
+#include "./engineCore/Mesh/meshStructure/vertexData/VertexData.h"
 #include <functional>
 #include <d3d12.h>
 

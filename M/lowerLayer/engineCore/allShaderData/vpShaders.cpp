@@ -1,7 +1,7 @@
 #include "vpShaders.h"
 #include <assert.h>
 #include "../WinApp.h"
-#include "../dxCompile/dxCompile.h"
+#include "../Essential/dxCompile/dxCompile.h"
 
 #pragma comment(lib,"d3d12.lib")
 

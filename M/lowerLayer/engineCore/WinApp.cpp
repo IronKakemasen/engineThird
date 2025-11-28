@@ -1,5 +1,5 @@
 #include "WinApp.h"
-#include "./BarrierControl/BarrierControl.h"
+#include "./Essential/BarrierControl/BarrierControl.h"
 #include <assert.h>
 #include "./allPipelineSet/pipelineSet/pipelineCreators/pipelineCreators.h"
 #include "../M.h"
@@ -25,7 +25,7 @@ bool WinApp::InitD3D()
 	vpShaders.Init(&dxCompile);
 
 	//コマンドキュー
-	CommandControl.MakeCommandQueue(deviceSetUp.Getter_Device());
+	commandControl.MakeCommandQueue(deviceSetUp.Getter_Device());
 
 	//rtv、srv、dsvそれぞれのdescriptorHeapを作成する
 	rtvDescHeap.Init(deviceSetUp.Getter_Device(), 2);
@@ -33,24 +33,24 @@ bool WinApp::InitD3D()
 	dsvDescriptorHeap.Init(deviceSetUp.Getter_Device(), 1);
 
 	//swapChainの設定
-	SwapChainControl.Initialize(
-		&m_hWnd, CommandControl.Getter_CommandQueue(), deviceSetUp.Getter_DxgiFactory(),
+	swapChainControl.Initialize(
+		&m_hWnd, commandControl.Getter_CommandQueue(), deviceSetUp.Getter_DxgiFactory(),
 		deviceSetUp.Getter_Device(), &rtvDescHeap,&dsvDescriptorHeap);
 
 	//コマンドアローケータの生成
-	CommandControl.MakeCommandAllocator(deviceSetUp.Getter_Device());
+	commandControl.MakeCommandAllocator(deviceSetUp.Getter_Device());
 
 	//コマンドリストの生成
-	CommandControl.MakeCommandList(deviceSetUp.Getter_Device());
+	commandControl.MakeCommandList(deviceSetUp.Getter_Device());
 
 	//FenceControl
-	FenceControl.Initialize(deviceSetUp.Getter_Device(), deviceSetUp.Getter_DxgiFactory());
+	fenceControl.Initialize(deviceSetUp.Getter_Device(), deviceSetUp.Getter_DxgiFactory());
 
 	//pipelineSetの初期化
-	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, CommandControl.Getter_commandList());
+	allPipelineSet.Initialize(deviceSetUp.Getter_Device(), &vpShaders, commandControl.Getter_commandList());
 	
 	//srvCreatorの初期化
-	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&CommandControl , &shaderBufferData);
+	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&commandControl , &shaderBufferData);
 
 	//textureDataManager,textureDataCreatorの初期化
 	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator());
@@ -66,8 +66,8 @@ bool WinApp::InitD3D()
 	ImGui_ImplWin32_Init(m_hWnd);
 	ImGui_ImplDX12_Init(
 		deviceSetUp.Getter_Device(),
-		SwapChainControl.Ref_SwapChainDesc().BufferCount,
-		SwapChainControl.Ref_RenderTargetDesc().Format,
+		swapChainControl.Ref_SwapChainDesc().BufferCount,
+		swapChainControl.Ref_RenderTargetDesc().Format,
 		srvDescHeap.Getter_Descriptorheap(),
 		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		//SRVHeap上の０番目
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
@@ -94,11 +94,11 @@ void WinApp::BeginFrame()
 #endif
 
 	// コマンドの記録を開始.
-	CommandControl.PrepareForNextCommandList();
+	commandControl.PrepareForNextCommandList();
 
 	//バリア
 	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
-		SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Resource(),
+		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Resource(),
 		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
 		D3D12_RESOURCE_BARRIER_FLAG_NONE,
 		D3D12_RESOURCE_STATE_PRESENT,
@@ -106,34 +106,34 @@ void WinApp::BeginFrame()
 		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
 	//TransitionBarrierを張る
-	BarrierControl::Pitch(CommandControl.Getter_commandList(), &barrier);
+	BarrierControl::Pitch(commandControl.Getter_commandList(), &barrier);
 
 	// レンダーゲットの設定.
-	CommandControl.Getter_commandList()->OMSetRenderTargets(1,
-		SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Handle(), false,
-		SwapChainControl.Getter_DepthBuffer()->Getter_Handle());
+	commandControl.Getter_commandList()->OMSetRenderTargets(1,
+		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Handle(), false,
+		swapChainControl.Getter_DepthBuffer()->Getter_Handle());
 	//CommandControl.Getter_commandList()->OMSetRenderTargets(1,
 	//	SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Handle(), FALSE, nullptr);
 
 	
 	//指定した深度で画面クリアする
-	CommandControl.Getter_commandList()->ClearDepthStencilView(*SwapChainControl.Getter_DepthBuffer()->Getter_Handle(),
+	commandControl.Getter_commandList()->ClearDepthStencilView(*swapChainControl.Getter_DepthBuffer()->Getter_Handle(),
 		D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 	//指定した色で画面全体をクリアする
-	CommandControl.Getter_commandList()->ClearRenderTargetView(
-		*SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Handle(), windowColor, 0, nullptr);
+	commandControl.Getter_commandList()->ClearRenderTargetView(
+		*swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Handle(), windowColor, 0, nullptr);
 
 	////描画用のDescriptorHeapの設定
 	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescHeap.Getter_Descriptorheap()};
-	CommandControl.Getter_commandList()->SetDescriptorHeaps(1, descriptorHeaps);
+	commandControl.Getter_commandList()->SetDescriptorHeaps(1, descriptorHeaps);
 
 	//DXの行列の設定
-	CommandControl.Getter_commandList()->RSSetViewports(1,
-		SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_ViewportMatrix());
+	commandControl.Getter_commandList()->RSSetViewports(1,
+		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_ViewportMatrix());
 
-	CommandControl.Getter_commandList()->RSSetScissorRects(1,
-		SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->ScissorRect());
+	commandControl.Getter_commandList()->RSSetScissorRects(1,
+		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->ScissorRect());
 
 
 }
@@ -148,13 +148,13 @@ void WinApp::EndFrame()
 #ifdef USE_IMGUI
 	ImGui::Render();
 	//実際のcommandListのImguiの描画コマンドを積む
-	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), CommandControl.Getter_commandList());
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandControl.Getter_commandList());
 #endif
 
 	//バリア
 	//RenderTarget->Prsent
 	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
-		SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Resource(),
+		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Resource(),
 		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
 		D3D12_RESOURCE_BARRIER_FLAG_NONE,
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
@@ -162,20 +162,20 @@ void WinApp::EndFrame()
 		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
 	//TransitionBarrierを張る
-	BarrierControl::Pitch(CommandControl.Getter_commandList(), &barrier);
+	BarrierControl::Pitch(commandControl.Getter_commandList(), &barrier);
 
 	//コマンドリストの内容を確定させる
-	HRESULT hr = CommandControl.Getter_commandList()->Close();
+	HRESULT hr = commandControl.Getter_commandList()->Close();
 	assert(SUCCEEDED(hr));
 
 	//GPUにコマンドリストの実行を行わさせる
-	ID3D12CommandList* commandLists[] = { CommandControl.Getter_commandList() };
-	CommandControl.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
+	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };
+	commandControl.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
 	//GPUとOSに画面の交換を行うように通知する
-	SwapChainControl.Getter_SwapChain()->Present(1, 0);
+	swapChainControl.Getter_SwapChain()->Present(1, 0);
 
 	//イベントを待つ
-	FenceControl.WaitFenceEvent(CommandControl.Getter_CommandQueue(), SwapChainControl.Getter_SwapChain());
+	fenceControl.WaitFenceEvent(commandControl.Getter_CommandQueue(), swapChainControl.Getter_SwapChain());
 
 
 }
@@ -218,7 +218,7 @@ void WinApp::TermWnd()
 
 void WinApp::TermD3D()
 {
-	CloseHandle(FenceControl.Getter_FenceEvent());
+	CloseHandle(fenceControl.Getter_FenceEvent());
 
 
 	ImGui_ImplDX12_Shutdown();
@@ -267,10 +267,10 @@ bool WinApp::InitApp()
 	//テクスチャ読み込み（コマンド積む）
 	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,vpShaders.Getter_VPShaderTable(),&allPipelineSet);
 
-	CommandControl.Getter_commandList()->Close();
-	ID3D12CommandList* commandLists[] = { CommandControl.Getter_commandList() };
-	CommandControl.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
-	FenceControl.WaitFenceEvent(CommandControl.Getter_CommandQueue(), SwapChainControl.Getter_SwapChain());
+	commandControl.Getter_commandList()->Close();
+	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };
+	commandControl.Getter_CommandQueue()->ExecuteCommandLists(1, commandLists);
+	fenceControl.WaitFenceEvent(commandControl.Getter_CommandQueue(), swapChainControl.Getter_SwapChain());
 
 	return true;
 }
