@@ -1,8 +1,8 @@
 #pragma once
-#include "../../../utilities/Transform/Transform.h"
-#include "../../../utilities/UVTransform/UVTransform.h"
-#include "../Mesh/meshStructure/vertexData/VertexData.h"
-#include "../allPipelineSet/pipelineSet/pipelineCreators/pipelineComponents.h"
+#include "../../../../utilities/Transform/Transform.h"
+#include "../../../../utilities/UVTransform/UVTransform.h"
+#include "../../Mesh/meshStructure/vertexData/VertexData.h"
+#include "../../PSO/pipelineCreators/pipelineComponents.h"
 
 class AllPipelineSet;
 class AllMesh;

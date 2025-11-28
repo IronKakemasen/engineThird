@@ -1,5 +1,5 @@
 #include "depthBuffer.h"
-#include "../../../../allDescriptorHeap/dsvDescriptorHeap/dsvDescriptorHeap.h"
+#include "../../../../DescriptorHeap/dsvDescriptorHeap/dsvDescriptorHeap.h"
 #include <assert.h>
 
 [[nodiscard]] D3D12_DEPTH_STENCIL_VIEW_DESC DepthBuffer::CreateDepthStencilViewDesc(

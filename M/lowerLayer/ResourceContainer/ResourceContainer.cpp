@@ -1,5 +1,5 @@
 #include "ResourceContainer.h"
-#include "../engineCore/textureSystems/textureDataManager/textureDataManager.h"
+#include "../engineCore/Render/textureSystems/textureDataManager/textureDataManager.h"
 #include "../engineCore/WinApp.h"
 
 void ResourceContainer::LoadAllTextureFile()

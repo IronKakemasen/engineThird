@@ -1,7 +1,7 @@
 #include "allPipelineSet.h"
 #include "../../../utilities/benriTemplateFunc/benriTempFunc.h"
 #include <assert.h>
-#include "../allShaderData/vpShaders.h"
+#include "../VpShader/vpShaders.h"
 
 
 void AllPipelineSet::Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12GraphicsCommandList* commandList_)

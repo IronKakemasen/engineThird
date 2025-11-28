@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../utilities/vectorAndMatrix/vectorAndMatrix.h"
-#include "../allPipelineSet/pipelineSet/pipelineCreators/pipelineComponents.h"
+#include "../../../../utilities/vectorAndMatrix/vectorAndMatrix.h"
+#include "../../PSO/pipelineCreators/pipelineComponents.h"
 
 struct CommonDrawingSystem
 {

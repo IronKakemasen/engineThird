@@ -63,40 +63,40 @@
     <ClCompile Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\descriptorHeapBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Essential\BarrierControl\BarrierControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\VpShader\shaderData\pixelShaderData\pixelShaderData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\VpShader\shaderData\vertexShaderData\vertexShaderData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineSet\pipelineSet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\VpShader\vpShaderTable\vpShaderTable.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaders.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\VpShader\vpShaders.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\allPipelineSet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp">
@@ -114,28 +114,28 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rootSignatureCreator\rootSignatureCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineCreators.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineCreators.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineComponents.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\VpShader\shaderData\shaderDataBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui.cpp">
@@ -177,7 +177,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp">
@@ -213,7 +213,7 @@
     <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\Camera\CameraBehavior.cpp">
@@ -228,7 +228,7 @@
     <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp">
@@ -338,40 +338,40 @@
     <ClInclude Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.h">
+    <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\descriptorHeapBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.h">
+    <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.h">
+    <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h">
+    <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Essential\BarrierControl\BarrierControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.h">
+    <ClInclude Include="M\lowerLayer\engineCore\VpShader\shaderData\pixelShaderData\pixelShaderData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\vertexShaderData\vertexShaderData.h">
+    <ClInclude Include="M\lowerLayer\engineCore\VpShader\shaderData\vertexShaderData\vertexShaderData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineSet.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineSet\pipelineSet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h">
+    <ClInclude Include="M\lowerLayer\engineCore\VpShader\vpShaderTable\vpShaderTable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaders.h">
+    <ClInclude Include="M\lowerLayer\engineCore\VpShader\vpShaders.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\allPipelineSet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h">
@@ -389,31 +389,31 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rootSignatureCreator\rootSignatureCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineCreators.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineCreators.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\blendDescCreator\blendDescCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\pipelineComponents.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineComponents.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\utilities\benriTemplateFunc\benriTempFunc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\shaderDataBehavior.h">
+    <ClInclude Include="M\lowerLayer\engineCore\VpShader\shaderData\shaderDataBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="external\imgui\imconfig.h">
@@ -458,7 +458,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h">
@@ -494,7 +494,7 @@
     <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\ExclusiveDraw\ExclusiveDraw.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Camera\CameraBehavior.h">
@@ -509,7 +509,7 @@
     <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\CommonDrawingSystem\CommonDrawSystem.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h">
