@@ -1,8 +1,8 @@
 #include "ExclusiveDraw.h"
 #include "../allPipelineSet/allPipelineSet.h"
-#include "../allMesh/allMesh.h"
-#include "../gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
-#include "../BarrierControl/BarrierControl.h"
+#include "../Mesh/allMesh/allMesh.h"
+#include "../Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
+#include "..//Essential/BarrierControl/BarrierControl.h"
 
 void ExclusiveDraw::ResetDrawIndexes()
 {
@@ -180,9 +180,9 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 
 	for (int i = 0; i < numParticles_; ++i)
 	{
-		pMesh->transformMatrixBuffer.matrix.buffMap[i].world = trans_[i].GetWorldMatrix();
-		pMesh->transformMatrixBuffer.matrix.buffMap[i].world =
-			pMesh->transformMatrixBuffer.matrix.buffMap[i].world.Multiply(*vpMat_);
+		//pMesh->transformMatrixBuffer.matrix.buffMap[i].world = trans_[i].GetWorldMatrix();
+		//pMesh->transformMatrixBuffer.matrix.buffMap[i].world =
+		//	pMesh->transformMatrixBuffer.matrix.buffMap[i].world.Multiply(*vpMat_);
 
 		Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255};
 

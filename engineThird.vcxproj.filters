@@ -33,34 +33,34 @@
     <ClCompile Include="M\lowerLayer\engineCore\WinApp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\SwapChainControl\SwapChainControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\logAndException\detectException.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\logAndException\detectException.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\logAndException\outputDebugLog.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\leakChecker\leakChecker.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\leakChecker\leakChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\FenceControl\FenceControl.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\FenceControl\FenceControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\deviceSetUp\deviceSetUp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\CommandControl\CommandControl.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\CommandControl\CommandControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\gpuResourcesBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\gpuResourcesBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\colorBuffer\colorBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\colorBuffer\colorBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\dxCompile\dxCompile.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.cpp">
@@ -75,7 +75,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Essential\BarrierControl\BarrierControl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.cpp">
@@ -90,7 +90,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\allShaderData\vpShaders.cpp">
@@ -99,19 +99,19 @@
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\material\material.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\vertexDataForLine\vertexDataForLine.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\bufferAndMap.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.cpp">
@@ -159,28 +159,28 @@
     <ClCompile Include="external\imgui\imgui_draw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\MatrixBuffer\MatrixBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\MaterialBuffer\MaterialBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\depthBuffer\depthBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\allMesh\allMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\utilities\convertString\convertString.cpp">
@@ -252,22 +252,22 @@
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\ParticleMesh2D\ParticleMesh2DCommon.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Data\ShaderBufferData\ShaderBufferData.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Data\ShaderBufferData\ShaderBufferData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\meshStructure\TransformMatrix\TransformMatrix.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.cpp">
@@ -276,16 +276,19 @@
     <ClCompile Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\StructuredBuffer\StructuredBufferAndMap.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -305,34 +308,34 @@
     <ClInclude Include="M\lowerLayer\engineCore\WinApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\SwapChainControl\SwapChainControl.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\SwapChainControl\SwapChainControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\logAndException\detectException.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\logAndException\detectException.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\logAndException\outputDebugLog.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\logAndException\outputDebugLog.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\leakChecker\leakChecker.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\leakChecker\leakChecker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\FenceControl\FenceControl.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\FenceControl\FenceControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\deviceSetUp\deviceSetUp.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\deviceSetUp\deviceSetUp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\CommandControl\CommandControl.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\CommandControl\CommandControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\gpuResourcesBehavior.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\gpuResourcesBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\colorBuffer\colorBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\colorBuffer\colorBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\dxCompile\dxCompile.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\descriptorHeapBehavior.h">
@@ -347,7 +350,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\allDescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\BarrierControl\BarrierControl.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Essential\BarrierControl\BarrierControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\shaderData\pixelShaderData\pixelShaderData.h">
@@ -362,7 +365,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaderTable\vpShaderTable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexData\VertexData.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\allShaderData\vpShaders.h">
@@ -371,19 +374,19 @@
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\allPipelineSet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\material\material.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\materialForLine\materialForLine.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\vertexDataForLine\vertexDataForLine.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\PrimitiveMeshCommon.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\bufferAndMap.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\allPipelineSet\pipelineSet\pipelineCreators\rootSignatureCreator\rootSignatureCreator.h">
@@ -437,28 +440,28 @@
     <ClInclude Include="external\imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\MatrixBuffer\MatrixBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\MaterialBuffer\MaterialBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\triangleMesh\triangleMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\primitiveMeshes\quadMesh\quadMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\depthBuffer\depthBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\allMesh\allMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\textureSystems\textureDataManager\textureDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Resource\shaderBuffer\shaderBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\utilities\convertString\convertString.h">
@@ -530,22 +533,22 @@
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\ParticleMesh2D\ParticleMesh2DCommon.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Data\ShaderBufferData\ShaderBufferData.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Data\ShaderBufferData\ShaderBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\meshStructure\TransformMatrix\TransformMatrix.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.h">
@@ -554,16 +557,19 @@
     <ClInclude Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\gpuResources\Creator\SrvCreator\SrvCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\StructuredBuffer\StructuredBufferAndMap.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
