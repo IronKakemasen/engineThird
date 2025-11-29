@@ -49,17 +49,22 @@ void MobileQuadBehavior::SetVertex(float width_, float height_)
 	//左上の頂点
 	leftTop.position.x = -width_ * 0.5f;
 	leftTop.position.y = height_ * 0.5f;
+	leftTop.position.z = 0.0f;
 	//右上の頂点
 	rightTop.position.x = width_ * 0.5f;
 	rightTop.position.y = height_ * 0.5f;
+	rightTop.position.z = 0.0f;
 
 	//左下の頂点
 	leftBottom.position.x = -width_ * 0.5f;
 	leftBottom.position.y = -height_ * 0.5f;
+	leftBottom.position.z = 0.0f;
 
 	//右下の頂点
 	rightBottom.position.x = width_ * 0.5f;
 	rightBottom.position.y = -height_ * 0.5f;
+	rightBottom.position.z = 0.0f;
+
 }
 
 

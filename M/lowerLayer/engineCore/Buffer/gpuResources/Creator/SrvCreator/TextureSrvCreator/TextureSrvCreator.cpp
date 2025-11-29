@@ -21,7 +21,7 @@ int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderB
 
 	uint16_t ret_index = CreateSRV(srvDesc, &data);
 
-	shaderBufferData->data.emplace_back(data.handleGPU);
+	shaderBufferData->gpuHandleContainer.emplace_back(data.handleGPU);
 
 
 #ifdef USE_IMGUI

@@ -76,7 +76,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		//IBV
 		cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_]);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -144,7 +144,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 		//VBV
 		cList->IASetVertexBuffers(0, 1, triangleMesh->Getter_VertexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_]);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
 		
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -167,10 +167,10 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	auto* pMesh = allMesh->Getter_TestParticleMesh();
 	pMesh->DetectOverDrawing(numParticles_);
 
+	//PSO
 	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
 	auto* cList = src_pipeline->Getter_CommandList();
 	
-	//PSO
 	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	src_pipeline->SetGraphicsRootSignature();
 	src_pipeline->SetPipelineState();
@@ -180,6 +180,7 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	//IBV
 	cList->IASetIndexBuffer(pMesh->Getter_IndexBufferView());
 
+	//行列データの入力
 	for (int i = 0; i < numParticles_; ++i)
 	{
 		pMesh->transformMatrixStructuredBuffer.matrix.buffMap[i].world = trans_[i].GetWorldMatrix();
@@ -187,20 +188,20 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 			pMesh->transformMatrixStructuredBuffer.matrix.buffMap[i].world.Multiply(*vpMat_);
 	}
 
+	//Material
 	float const i255 = CommonV::inv_255;
 	Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
-	
 	pMesh->materialBuffer.material.buffMap->color = color;
 	pMesh->materialBuffer.material.buffMap->uvTransform = uvTrans_->GetUVMat();
 
 	//トランスフォーム
-	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[pMesh->srvIndex]);
+	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[pMesh->srvIndex]);
 	//テクスチャ
-	cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->data[texHandle_]);
+	//cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->data[texHandle_]);
 	//Cバッファの場所を指定
-	cList->SetGraphicsRootConstantBufferView(2, pMesh->materialBuffer.material.GetVirtualGPUAddress());
+	cList->SetGraphicsRootConstantBufferView(1, pMesh->materialBuffer.material.GetVirtualGPUAddress());
 
+	//DrawCall
 	cList->DrawIndexedInstanced(pMesh->indexCnt, numParticles_, 0, 0,0);
-
 }
 
