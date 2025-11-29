@@ -4,6 +4,7 @@
 
 struct ShaderBufferData
 {
-	std::vector<ShaderBuffer> data;
+	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> data;
+
 };
 

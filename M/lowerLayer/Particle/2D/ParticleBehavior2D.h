@@ -16,7 +16,7 @@ public:
 	std::vector<Transform> trans;
 	UVTransform uvTrans;
 
-private:
+protected:
 	int numParticle;
 
 protected:

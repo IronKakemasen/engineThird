@@ -9,7 +9,7 @@ void ExclusiveDraw::ResetDrawIndexes()
 	allMesh->ResetDrawIndexes();
 }
 
-void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std::vector<ShaderBuffer >* shaderBufferData_)
+void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_)
 {
 	allMesh = allMesh_;
 	allPipelineSet = allPipelineSet_;
@@ -76,7 +76,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		//IBV
 		cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[texHandle_].handleGPU);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_]);
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -144,7 +144,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 		//VBV
 		cList->IASetVertexBuffers(0, 1, triangleMesh->Getter_VertexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[texHandle_].handleGPU);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_]);
 		
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -167,12 +167,14 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	auto* pMesh = allMesh->Getter_TestParticleMesh();
 	pMesh->DetectOverDrawing(numParticles_);
 
-	float const i255 = CommonV::inv_255;
 	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
 	auto* cList = src_pipeline->Getter_CommandList();
+	
+	//PSO
 	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	src_pipeline->SetGraphicsRootSignature();
 	src_pipeline->SetPipelineState();
+
 	//VBV
 	cList->IASetVertexBuffers(0, 1, pMesh->Getter_VertexBufferView());
 	//IBV
@@ -180,25 +182,25 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 
 	for (int i = 0; i < numParticles_; ++i)
 	{
-		//pMesh->transformMatrixBuffer.matrix.buffMap[i].world = trans_[i].GetWorldMatrix();
-		//pMesh->transformMatrixBuffer.matrix.buffMap[i].world =
-		//	pMesh->transformMatrixBuffer.matrix.buffMap[i].world.Multiply(*vpMat_);
-
-		Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255};
-
-		pMesh->materialBuffer.material.buffMap->color = color;
-		pMesh->materialBuffer.material.buffMap->uvTransform = uvTrans_->GetUVMat();
+		pMesh->transformMatrixStructuredBuffer.matrix.buffMap[i].world = trans_[i].GetWorldMatrix();
+		pMesh->transformMatrixStructuredBuffer.matrix.buffMap[i].wvp =
+			pMesh->transformMatrixStructuredBuffer.matrix.buffMap[i].world.Multiply(*vpMat_);
 	}
 
+	float const i255 = CommonV::inv_255;
+	Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
+	
+	pMesh->materialBuffer.material.buffMap->color = color;
+	pMesh->materialBuffer.material.buffMap->uvTransform = uvTrans_->GetUVMat();
+
 	//トランスフォーム
-	cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[pMesh->srvIndex].handleGPU);
+	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[pMesh->srvIndex]);
 	//テクスチャ
-	cList->SetGraphicsRootDescriptorTable(1, (*shaderBufferData)[texHandle_].handleGPU);
+	cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->data[texHandle_]);
 	//Cバッファの場所を指定
 	cList->SetGraphicsRootConstantBufferView(2, pMesh->materialBuffer.material.GetVirtualGPUAddress());
 
-	//描画(DrawCall)。3インデックスで一つのインスタンス
-	cList->DrawInstanced(pMesh->vertexCnt, numParticles_, 0, 0);
+	cList->DrawIndexedInstanced(pMesh->indexCnt, numParticles_, 0, 0,0);
 
 }
 

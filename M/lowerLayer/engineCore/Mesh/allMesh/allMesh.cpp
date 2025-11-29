@@ -13,11 +13,11 @@ void AllMesh::Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSr
 	{
 		triangleMesh.reset(new TriangleMesh);
 		quadMesh.reset(new QuadMesh);
-		//testParticleMesh.reset(new TestParticleMesh);
+		testParticleMesh.reset(new TestParticleMesh);
 
 		triangleMesh->Create(device_);
 		quadMesh->Create(device_);
-		//testParticleMesh->Create(device_,ParticleMeshSrvCreator_);
+		testParticleMesh->Create(device_,ParticleMeshSrvCreator_);
 
 		initOnlyOnce = false;
 	}

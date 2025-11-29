@@ -17,7 +17,7 @@ class TextureSrvCreator:public SrvCreatorBehavior
 	DirectX::ScratchImage LoadTextureFile(std::string const& filePath_);
 
 public:
-	int CreateShaderBufferFromFile(std::string filePath_);
+	int CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data);
 	TextureSrvCreator();
 
 };

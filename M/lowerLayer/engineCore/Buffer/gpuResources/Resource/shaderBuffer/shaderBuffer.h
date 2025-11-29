@@ -6,7 +6,6 @@
 struct SrvDescriptorHeap;
 class CommandControl;
 
-
 struct ShaderBuffer :GPUResourceBehavior
 {
 	//[ currentDescriptorUsingIndex ]

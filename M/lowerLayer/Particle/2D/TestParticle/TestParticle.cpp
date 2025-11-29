@@ -19,6 +19,12 @@ void TestParticle::Draw(Matrix4* vpMat_)
 
 void TestParticle::Init()
 {
+	for (int i = 0; i < numParticle; ++i)
+	{
+		trans[i].translate = { 640.0f,360.0f,0.0f };
+	}
+	
+
 	shaderSetIndex = M::GetInstance()->
 		GetShaderSetIndexFromFileName("TestParticle2D.VS", "TestParticle2D.PS");
 }

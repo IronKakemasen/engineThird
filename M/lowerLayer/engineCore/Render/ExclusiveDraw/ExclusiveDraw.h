@@ -6,16 +6,16 @@
 
 class AllPipelineSet;
 class AllMesh;
-struct ShaderBuffer;
+struct ShaderBufferData;
 
 class ExclusiveDraw
 {
 	AllPipelineSet* allPipelineSet = nullptr;
 	AllMesh* allMesh = nullptr;
-	std::vector<ShaderBuffer >* shaderBufferData;
+	ShaderBufferData* shaderBufferData = nullptr;
 
 public:
-	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std::vector<ShaderBuffer >* shaderBufferData_);
+	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_);
 
 	void DrawMobileTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ ,CullMode cullMode_,int shaderSet_,

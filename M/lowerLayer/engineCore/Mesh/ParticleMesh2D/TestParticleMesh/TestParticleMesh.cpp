@@ -48,19 +48,15 @@ void TestParticleMesh::Create(ID3D12Device* device_, ParticleMeshSrvCreator* par
 	std::memcpy(&indexMap[0], indices, sizeof(uint32_t) * indexCnt);
 	//indexBuff->Unmap();
 
-	//for (UINT i = 0; i < kMaxDraw; ++i)
-	//{
-	//	// 行列バッファ生成
-	//	transformMatrixBuffer[i].matrix.CreateAndMapping(device_);
-	//}
+	// 行列バッファ生成
+	transformMatrixStructuredBuffer.matrix.CreateAndMapping(device_, (UINT)kMaxDraw);
 
-	//transformMatrixBuffer.matrix.CreateAndMapping2(device_, (UINT)sizeof(TransformMatrix));
+	// マテリアルバッファ作成
+	materialBuffer.material.CreateAndMapping(device_);
 
-	//// マテリアルバッファ作成
-	//materialBuffer.material.CreateAndMapping(device_);
-
-	////SRVの作成
-	//srvIndex = particleMeshSrvCreator_->CreateSRVForParticle(transformMatrixBuffer.matrix.Geter_Resource(), kMaxDraw);
+	//SRVの作成
+	srvIndex = particleMeshSrvCreator_->CreateSRVForParticle(kMaxDraw,
+		transformMatrixStructuredBuffer.matrix.shaderBuffer);
 
 }
 

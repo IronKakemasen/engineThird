@@ -10,8 +10,6 @@ struct VertexShaderInput
 
 StructuredBuffer<TransformMatrixBuffer> gTransformMatrices : register(t0);
 
-//ConstantBuffer<WorldMatrix> gWorldMatrix : register(b0);
-//ConstantBuffer<WVPMatrix> gWVPMatrix : register(b1);
 
 VertexShaderOutput main(VertexShaderInput input , uint instanceId : SV_InstanceID)
 {

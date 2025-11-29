@@ -7,10 +7,8 @@
 template <typename T>
 struct StructuredBufferAndMap
 {
-private:
-	std::unique_ptr<ShaderBuffer> shaderBuffer;
-
 public:
+	ShaderBuffer shaderBuffer;
 	T* buffMap = nullptr;
 
 	void CreateAndMapping(ID3D12Device* device_,UINT maxCreateNum_)
@@ -18,9 +16,9 @@ public:
 		//リソースのサイズ
 		UINT sizeOfBuffer = static_cast<UINT>(sizeof(T)* maxCreateNum_);
 		//Resourceの生成
-		shaderBuffer = CreateBufferResource(device_, sizeOfBuffer);
+		shaderBuffer.resource = CreateBufferResource(device_, sizeOfBuffer);
 		//書き込むためのアドレスを取得
-		HRESULT hr = shaderBuffer->Map(0, nullptr, reinterpret_cast<void**>(&buffMap));
+		HRESULT hr = shaderBuffer.resource->Map(0, nullptr, reinterpret_cast<void**>(&buffMap));
 		SUCCEEDED(hr);
 	}
 

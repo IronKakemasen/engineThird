@@ -1,6 +1,8 @@
 #include "ParticleMeshSrvCreator.h"
 #include "../../../Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../../../../Mesh/meshStructure/TransformMatrix/TransformMatrix.h"
+#include "../../../../StructuredBuffer/TransformMatrixStructuredBuffer/TransformMatrixStructuredBuffer.h"
+
 #pragma comment(lib,"d3d12.lib")
 
 
@@ -20,15 +22,12 @@ D3D12_SHADER_RESOURCE_VIEW_DESC ParticleMeshSrvCreator::CreateSRVDesc(UINT maxPa
 	return ret_desc;
 }
 
-uint16_t ParticleMeshSrvCreator::CreateSRVForParticle(ShaderBuffer* shaderBuffer_,UINT maxParticle_)
+uint16_t ParticleMeshSrvCreator::CreateSRVForParticle(UINT maxParticle_,ShaderBuffer& data_)
 {
-	ShaderBuffer shaderBuffer;
-	shaderBuffer.resource = CreateBufferResource(device, sizeof(TransformMatrix) * maxParticle_);
-
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc = CreateSRVDesc(maxParticle_);
-	uint16_t ret_index = CreateSRV(desc, &shaderBuffer);
+	uint16_t ret_index = CreateSRV(desc, &data_);
 
-	shaderBufferData->data.emplace_back(shaderBuffer);
+	shaderBufferData->data.emplace_back(data_.handleGPU);
 
 #ifdef USE_IMGUI
 	return ret_index - 1;

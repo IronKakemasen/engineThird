@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "../../../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 
-struct SrvDescriptorHeap;
-class CommandControl;
 class TextureSrvCreator;
 
 class TextureDataManager
 {
-	TextureSrvCreator* textureSrvCreator = nullptr;;
+	TextureSrvCreator* textureSrvCreator = nullptr;
+	std::vector<ShaderBuffer> data;
 
 public:
 

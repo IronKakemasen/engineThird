@@ -1,7 +1,7 @@
 #include "textureDataManager.h"
 #include "../../../DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
 #include "../../../Buffer/gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
-
+#include "../../../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 
 void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_)
 {
@@ -10,5 +10,6 @@ void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_)
 
 int TextureDataManager::CreateTextureFromFile( std::string filePath_)
 {
-	return textureSrvCreator->CreateShaderBufferFromFile(filePath_);
+	auto& dst = data.emplace_back();
+	return textureSrvCreator->CreateShaderBufferFromFile(filePath_, dst);
 }
