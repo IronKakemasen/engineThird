@@ -1,4 +1,5 @@
 #include "SampleScene.h"
+#include "../../engineCore/Render/CommonDrawingSystem/CommonDrawSystem.h"
 
 SampleScene::SampleScene()
 {

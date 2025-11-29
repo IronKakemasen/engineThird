@@ -56,7 +56,7 @@ bool WinApp::InitD3D()
 	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator());
 
 	//exclusiveDrawの初期化
-	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData.data);
+	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData);
 
 #ifdef USE_IMGUI
 	//ImGuiの初期化

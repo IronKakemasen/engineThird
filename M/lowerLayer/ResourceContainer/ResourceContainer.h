@@ -13,7 +13,6 @@ enum class TextureTag
 	kCount
 };
 
-
 class ResourceContainer
 {
 	std::unordered_map<TextureTag, int> map_textureID;

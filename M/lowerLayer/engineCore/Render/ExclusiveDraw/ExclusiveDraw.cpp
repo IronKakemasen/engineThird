@@ -9,7 +9,7 @@ void ExclusiveDraw::ResetDrawIndexes()
 	allMesh->ResetDrawIndexes();
 }
 
-void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, std::vector<ShaderBuffer >* shaderBufferData_)
+void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_)
 {
 	allMesh = allMesh_;
 	allPipelineSet = allPipelineSet_;
@@ -76,7 +76,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		//IBV
 		cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[texHandle_].handleGPU);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_].handleGPU);
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -144,7 +144,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 		//VBV
 		cList->IASetVertexBuffers(0, 1, triangleMesh->Getter_VertexBufferView());
 
-		cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[texHandle_].handleGPU);
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[texHandle_].handleGPU);
 		
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -191,9 +191,9 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	}
 
 	//トランスフォーム
-	cList->SetGraphicsRootDescriptorTable(0, (*shaderBufferData)[pMesh->srvIndex].handleGPU);
+	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->data[pMesh->srvIndex].handleGPU);
 	//テクスチャ
-	cList->SetGraphicsRootDescriptorTable(1, (*shaderBufferData)[texHandle_].handleGPU);
+	cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->data[texHandle_].handleGPU);
 	//Cバッファの場所を指定
 	cList->SetGraphicsRootConstantBufferView(2, pMesh->materialBuffer.material.GetVirtualGPUAddress());
 

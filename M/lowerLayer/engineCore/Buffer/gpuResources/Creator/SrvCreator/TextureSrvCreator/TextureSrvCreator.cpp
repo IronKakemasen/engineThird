@@ -9,19 +9,19 @@
 
 int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_)
 {
-	ShaderBuffer texData;
+	ShaderBuffer data;
 
 	auto mipImages = LoadTextureFile(filePath_);
 	auto metaData = mipImages.GetMetadata();
 
-	CreateTextureResourceFromMetaData(metaData,&texData);
-	UploadTextureData(mipImages,&texData);
+	CreateTextureResourceFromMetaData(metaData,&data);
+	UploadTextureData(mipImages,&data);
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = CreateSRVDescFromTexture(metaData.format, metaData.mipLevels);
 
-	uint16_t ret_index = CreateSRV(srvDesc, &texData);
+	uint16_t ret_index = CreateSRV(srvDesc, &data);
 
-	shaderBufferData->data.emplace_back(texData);
+	shaderBufferData->data.emplace_back(data);
 
 #ifdef USE_IMGUI
 	return ret_index - 1;
