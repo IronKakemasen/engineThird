@@ -19,7 +19,7 @@ public:
 		shaderBuffer.resource = CreateBufferResource(device_, sizeOfBuffer);
 		//書き込むためのアドレスを取得
 		HRESULT hr = shaderBuffer.resource->Map(0, nullptr, reinterpret_cast<void**>(&buffMap));
-		SUCCEEDED(hr);
+		assert(SUCCEEDED(hr));
 	}
 
 };

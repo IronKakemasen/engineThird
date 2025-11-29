@@ -23,8 +23,9 @@ void TestParticleMesh::Create(ID3D12Device* device_, ParticleMeshSrvCreator* par
 
 	VertexData vData[4] =
 	{
-		mQuad.leftTop,	mQuad.rightTop,mQuad.rightBottom,mQuad.leftBottom
+		mQuad.leftBottom,mQuad.leftTop,mQuad.rightBottom,mQuad.rightTop
 	};
+
 
 	HRESULT result = vertexBuff->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
@@ -42,7 +43,7 @@ void TestParticleMesh::Create(ID3D12Device* device_, ParticleMeshSrvCreator* par
 	indexBufferView.SizeInBytes = sizeOfIndexBuffer;
 
 	// インデックスバッファのマッピング
-	uint32_t indices[6] = { 0,1,2,2,1,3 };
+	uint32_t indices[6] = { 0,1,2,2,1,3};
 	result = indexBuff->Map(0, nullptr, reinterpret_cast<void**>(&indexMap));
 	assert(SUCCEEDED(result));
 	std::memcpy(&indexMap[0], indices, sizeof(uint32_t) * indexCnt);
@@ -62,5 +63,5 @@ void TestParticleMesh::Create(ID3D12Device* device_, ParticleMeshSrvCreator* par
 
 TestParticleMesh::TestParticleMesh()
 {
-	Init(10, 32, 32);
+	Init(10, 1.0f, 1.0f);
 }

@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\PSOInstance.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp" />
     <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp" />

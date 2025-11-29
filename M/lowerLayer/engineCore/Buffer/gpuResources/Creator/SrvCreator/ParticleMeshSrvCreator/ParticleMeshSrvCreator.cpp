@@ -27,7 +27,7 @@ uint16_t ParticleMeshSrvCreator::CreateSRVForParticle(UINT maxParticle_,ShaderBu
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc = CreateSRVDesc(maxParticle_);
 	uint16_t ret_index = CreateSRV(desc, &data_);
 
-	shaderBufferData->data.emplace_back(data_.handleGPU);
+	shaderBufferData->gpuHandleContainer.emplace_back(data_.handleGPU);
 
 #ifdef USE_IMGUI
 	return ret_index - 1;
