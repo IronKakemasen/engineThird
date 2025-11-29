@@ -182,11 +182,13 @@ void WinApp::EndFrame()
 
 LRESULT CALLBACK WinApp::WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_)
 {
+#ifdef USE_IMGUI
 	//ImGuiにメッセージを渡す
 	if (ImGui_ImplWin32_WndProcHandler(hWnd_, msg_, wParam_, lParam_))
 	{
 		return true;
 	}
+#endif
 
 	//メッセージに応じてゲーム固有の処理を行う
 	switch (msg_)
@@ -220,11 +222,11 @@ void WinApp::TermD3D()
 {
 	CloseHandle(fenceControl.Getter_FenceEvent());
 
-
+#ifdef USE_IMGUI
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-
+#endif
 
 	CloseWindow(m_hWnd);
 
