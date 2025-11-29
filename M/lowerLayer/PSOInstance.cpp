@@ -100,15 +100,15 @@ void M::CreateTestParticle2DPipeline()
 		std::vector<D3D12_ROOT_PARAMETER> meters;
 
 		static D3D12_DESCRIPTOR_RANGE descriptorRangeForMatrices[1] = {};
-		//static D3D12_DESCRIPTOR_RANGE descriptorRangeForTexture[1] = {};
+		static D3D12_DESCRIPTOR_RANGE descriptorRangeForTexture[1] = {};
 
 		RootSignatureCreator::SetDescriptorRange(&descriptorRangeForMatrices[0],
 			D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
 			0);
 
-		//RootSignatureCreator::SetDescriptorRange(&descriptorRangeForTexture[0],
-		//	D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-		//	1);
+		RootSignatureCreator::SetDescriptorRange(&descriptorRangeForTexture[0],
+			D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+			1);
 
 		//matrices
 		meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
@@ -116,11 +116,11 @@ void M::CreateTestParticle2DPipeline()
 			D3D12_SHADER_VISIBILITY_VERTEX,
 			1));
 
-		////テクスチャ
-		//meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
-		//	descriptorRange2,
-		//	D3D12_SHADER_VISIBILITY_PIXEL,
-		//	1));
+		//テクスチャ
+		meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
+			descriptorRangeForTexture,
+			D3D12_SHADER_VISIBILITY_PIXEL,
+			1));
 
 		//Material
 		meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(0));

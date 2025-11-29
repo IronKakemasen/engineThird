@@ -197,9 +197,9 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	//トランスフォーム
 	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[pMesh->srvIndex]);
 	//テクスチャ
-	//cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->data[texHandle_]);
+	cList->SetGraphicsRootDescriptorTable(1, shaderBufferData->gpuHandleContainer[texHandle_]);
 	//Cバッファの場所を指定
-	cList->SetGraphicsRootConstantBufferView(1, pMesh->materialBuffer.material.GetVirtualGPUAddress());
+	cList->SetGraphicsRootConstantBufferView(2, pMesh->materialBuffer.material.GetVirtualGPUAddress());
 
 	//DrawCall
 	cList->DrawIndexedInstanced(pMesh->indexCnt, numParticles_, 0, 0,0);

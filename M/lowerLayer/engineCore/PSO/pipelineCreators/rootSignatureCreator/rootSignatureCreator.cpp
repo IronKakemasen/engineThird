@@ -19,22 +19,18 @@ void RootSignatureCreator::CopyFromIndex(int funcIndex_)
 	}
 }
 
-
 void RootSignatureCreator::AddToFuncs_RootParametersCreate(std::function<std::vector<D3D12_ROOT_PARAMETER>()> func_)
 {
 	sum_created++;
 	if (sum_created >= AllPipelineSet::kNumShaderSet) assert(false);
 
 	funcs_rootParametersCreate.emplace_back(func_);
-
 }
-
 
 void RootSignatureCreator::SetRootParameters(int index_)
 {
 	CopyFromIndex(index_);
 }
-
 
 D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterPixelShader(int registerNum_)
 {
@@ -47,7 +43,6 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterPixelShader(int regis
 	ret_rootParameter.Descriptor.ShaderRegister = registerNum_;
 
 	return ret_rootParameter;
-
 }
 
 D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterVertexShader(int registerNum_)
@@ -73,7 +68,6 @@ void RootSignatureCreator::RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER
 	{
 		dst_.emplace_back((*itr));
 	}
-
 }
 
 void RootSignatureCreator::SetDescriptorRange(D3D12_DESCRIPTOR_RANGE* dst_,

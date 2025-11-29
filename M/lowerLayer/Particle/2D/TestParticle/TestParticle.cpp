@@ -26,4 +26,6 @@ void TestParticle::Init()
 
 	shaderSetIndex = M::GetInstance()->
 		GetShaderSetIndexFromFileName("TestParticle2D.VS", "TestParticle2D.PS");
+
+	texHandle = M::GetInstance()->GetTexIndex(TextureTag::kPlayer);
 }
