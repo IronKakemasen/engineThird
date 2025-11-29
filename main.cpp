@@ -8,7 +8,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_CHECK_ALWAYS_DF);
 
-	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"Title");
+	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"LE2A_17_ミヤジテンマ");
 
 	std::unique_ptr<SceneController> sceneController = std::make_unique<SceneController>();
 	sceneController->Init();
