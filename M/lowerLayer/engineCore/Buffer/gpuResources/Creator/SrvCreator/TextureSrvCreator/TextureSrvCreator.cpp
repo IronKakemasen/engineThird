@@ -7,9 +7,9 @@
 #pragma comment(lib,"d3d12.lib")
 
 
-int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_)
+int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data)
 {
-	ShaderBuffer data;
+	//ShaderBuffer data;
 
 	auto mipImages = LoadTextureFile(filePath_);
 	auto metaData = mipImages.GetMetadata();
@@ -21,7 +21,8 @@ int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_)
 
 	uint16_t ret_index = CreateSRV(srvDesc, &data);
 
-	shaderBufferData->data.emplace_back(data);
+	shaderBufferData->data.emplace_back(data.handleGPU);
+
 
 #ifdef USE_IMGUI
 	return ret_index - 1;

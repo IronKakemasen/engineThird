@@ -13,8 +13,8 @@ void SampleScene::Draw()
 	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
 
-	//particles->Draw(&m);
-	drawExecutor->DrawRegistered(vpMat);
+	particles->Draw(&m);
+	//drawExecutor->DrawRegistered(vpMat);
 }
 
 void SampleScene::Reset()

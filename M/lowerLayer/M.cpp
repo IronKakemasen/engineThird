@@ -14,7 +14,6 @@ void M::DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandl
 		trans_, uvTrans_, vpMat_);
 }
 
-
 void M::DrawMTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_,int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
@@ -87,7 +86,7 @@ void M::LogM(std::string message_)
 void M::CreatePresetOfPipelines()
 {
 	CreateMobilePrimitiveMeshPipeline();
-	//CreateTestParticle2DPipeline();
+	CreateTestParticle2DPipeline();
 }
 
 void M::CreateMobilePrimitiveMeshPipeline()
