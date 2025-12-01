@@ -133,6 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\Audio\AudioHandle.cpp" />
+    <ClCompile Include="M\lowerLayer\Audio\AudioManager.cpp" />
+    <ClCompile Include="M\lowerLayer\Audio\AudioPlayer.cpp" />
+    <ClCompile Include="M\lowerLayer\Audio\MediaAudioDecoder.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\PSOInstance.cpp" />
@@ -242,6 +246,10 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\Audio\AudioHandle.h" />
+    <ClInclude Include="M\lowerLayer\Audio\AudioManager.h" />
+    <ClInclude Include="M\lowerLayer\Audio\AudioPlayer.h" />
+    <ClInclude Include="M\lowerLayer\Audio\MediaAudioDecoder.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
