@@ -419,3 +419,22 @@ Vector2 ConvertToScreen(Vector3 dst_, Matrix4& viewProjectionMat_)
 
 	return Vector2{ tmp.x ,tmp.y };
 }
+
+Matrix4 GetRotateAxisMat(Vector3 axis_, float radian_)
+{
+	Vector3 n = axis_.GetNormalized();
+	float cosT = cosf(radian_);
+	float sinT = sinf(radian_);
+	float contradictionCosT = 1.0f - cosT;
+	float cc = contradictionCosT;
+
+	Matrix4 mat =
+	{
+		n.x * n.x * cc + cosT,n.x * n.y * cc + n.z * sinT,n.x * n.z * cc - n.y * sinT,0.0f,
+		n.x * n.y * cc - n.z * sinT,n.y * n.y * cc + cosT,n.y * n.z * cc + n.x * sinT,0.0f,
+		n.x * n.z * cc + n.y * sinT,n.y * n.z * cc - n.x * sinT,n.z * n.z * cc + cosT,0.0f,
+		0.0f,0.0f,0.0f,1.0f
+	};
+
+	return mat;
+}
