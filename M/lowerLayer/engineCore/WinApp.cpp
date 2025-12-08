@@ -77,7 +77,7 @@ bool WinApp::InitD3D()
 #endif
 
 	//メッシュの初期化、生成
-	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator());
+	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator(),&allPipelineSet);
 
 
 

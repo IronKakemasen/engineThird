@@ -32,15 +32,6 @@ void M::DrawMQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& right
 		trans_, uvTrans_, vpMat_);
 }
 
-void M::CreateNewPipelineSet(
-	std::string vsFileName_,std::string psFileName_,
-	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
-	std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_)
-{
-	allPipelineSet->CreateNewPipeline(vsFileName_, psFileName_,
-		inputElementDescCreateFunc_, rootParameterCreateFunc_);
-}
-
 M* M::GetInstance()
 {
 	static M m;
@@ -68,8 +59,6 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
 		exclusiveDraw = exclusiveDraw_;
 		vpShaderTable = vpShaderTable_;
 		allPipelineSet = allPipelineSet_;
-
-		CreatePresetOfPipelines();
 
 		initOnlyOnce = false;
 	}

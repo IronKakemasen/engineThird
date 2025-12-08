@@ -13,6 +13,7 @@ void AllPipelineSet::Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID
 }
 
 void AllPipelineSet::CreateNewPipeline(
+	std::string folderPath_,
 	std::string vsFileName_,
 	std::string psFileName_,
 	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
@@ -20,8 +21,8 @@ void AllPipelineSet::CreateNewPipeline(
 {
 	std::string tableName = vsFileName_ + " + " + psFileName_;
 
-	vpShaders->AddPixelShader(psFileName_);
-	vpShaders->AddVertexShader(vsFileName_);
+	vpShaders->AddPixelShader(folderPath_,psFileName_);
+	vpShaders->AddVertexShader(folderPath_,vsFileName_);
 	vpShaders->AddToTable(tableName, psFileName_, vsFileName_);
 	pipelineSets[0][0][0]->Activate_InputLayoutCreateFunc(inputElementDescCreateFunc_);
 	pipelineSets[0][0][0]->Activate_RootparameterCreateFunc(rootParameterCreateFunc_);
@@ -64,7 +65,6 @@ void AllPipelineSet::Add(std::string shaderSetName_, bool isTopologyLine)
 		pipelineSets[shaderSetIndex][kBlendModeAdd][kCullModeNone] =
 			PipelineSet::CreateGraphicsPipelineSet(device, shaderSetName_, vpShaderTable,
 				kBlendModeNormal, CullMode::kCullModeNone, isTopologyLine);
-
 
 		//CommandListSetter
 		for (int k = 0; k < kCountOfBlendMode; ++k)

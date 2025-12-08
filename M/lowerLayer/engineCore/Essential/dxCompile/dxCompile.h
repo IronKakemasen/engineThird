@@ -22,6 +22,7 @@ public:
 	void Initialize();
 
 	[[nodiscard]] Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(
+		std::string  const& folderPath_,
 		std::string const& fileName_,
 		const wchar_t* profile_);
 

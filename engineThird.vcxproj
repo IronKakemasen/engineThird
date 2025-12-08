@@ -133,13 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.cpp" />
     <ClCompile Include="M\lowerLayer\Audio\AudioHandle.cpp" />
     <ClCompile Include="M\lowerLayer\Audio\AudioManager.cpp" />
     <ClCompile Include="M\lowerLayer\Audio\AudioPlayer.cpp" />
     <ClCompile Include="M\lowerLayer\Audio\MediaAudioDecoder.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
-    <ClCompile Include="M\lowerLayer\PSOInstance.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp" />
     <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp" />
@@ -181,7 +181,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\allPipelineSet.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp" />
@@ -219,8 +219,8 @@
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\VpShader\shaderData\shaderDataBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
@@ -246,12 +246,13 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.h" />
     <ClInclude Include="M\lowerLayer\Audio\AudioHandle.h" />
     <ClInclude Include="M\lowerLayer\Audio\AudioManager.h" />
     <ClInclude Include="M\lowerLayer\Audio\AudioPlayer.h" />
     <ClInclude Include="M\lowerLayer\Audio\MediaAudioDecoder.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.h" />
     <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h" />
@@ -280,7 +281,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\allPipelineSet.h" />
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h" />
@@ -318,8 +319,8 @@
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rasterizerDescCreator\rasterizerDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\VpShader\shaderData\shaderDataBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h" />
     <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />

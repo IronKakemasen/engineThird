@@ -8,10 +8,11 @@
 
 
 [[nodiscard]] Microsoft::WRL::ComPtr<IDxcBlob> DxCompile::CompileShader(
+	std::string const& folderPath_,
 	std::string const& fileName_,
 	const wchar_t* profile_)
 {
-	std::string const filePath = "./M/resource/preset/shader/";
+	std::string const filePath = "./M/resource/preset/shader/"+ folderPath_;
 	std::string const fileType  = ".hlsl";
 	std::string compositePath = filePath + fileName_ + fileType;
 

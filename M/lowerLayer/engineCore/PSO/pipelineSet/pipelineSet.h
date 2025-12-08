@@ -30,7 +30,6 @@ public:
 		uint8_t length = sizeof...(args_);
 		D3D12_GPU_VIRTUAL_ADDRESS virtualGpuAdress[] = { args_... };
 
-
 		for (int i = 0; i < length; i++)
 		{
 			commandList->SetGraphicsRootConstantBufferView(i + 1, virtualGpuAdress[i]);

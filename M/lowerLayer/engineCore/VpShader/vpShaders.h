@@ -15,7 +15,7 @@ class VpShaders
 	//[ vpShadertable ]
 	VPShaderTable vpShaderTable;
 
-	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(std::string fileName_, const wchar_t* profile_);
+	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(std::string folderPath_, std::string fileName_, const wchar_t* profile_);
 
 public:
 
@@ -37,8 +37,8 @@ public:
 
 
 	void Init(DxCompile* shaderCompiler_);
-	void AddPixelShader(std::string fileName_);
-	void AddVertexShader(std::string fileName_);
+	void AddPixelShader(std::string folderPath_ ,std::string fileName_);
+	void AddVertexShader(std::string folderPath_, std::string fileName_);
 	void AddToTable(std::string shaderSetName_, std::string pixName_, std::string vertexName_);
 
 

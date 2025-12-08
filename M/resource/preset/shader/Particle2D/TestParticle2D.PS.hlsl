@@ -1,5 +1,5 @@
-#include "./HLSLI/Material.hlsli"
-#include "./HLSLI/VertexOutput.hlsli"
+#include "../HLSLI/Material.hlsli"
+#include "../HLSLI/VertexOutput.hlsli"
 
 Texture2D<float4> gTexture : register(t1);
 SamplerState gSampler : register(s0);

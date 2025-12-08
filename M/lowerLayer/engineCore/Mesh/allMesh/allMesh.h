@@ -1,9 +1,10 @@
 #pragma once
-#include "../primitiveMeshes/triangleMesh/triangleMesh.h"
-#include "../primitiveMeshes/quadMesh/quadMesh.h"
-#include "../ParticleMesh2D/TestParticleMesh/TestParticleMesh.h"
+#include "./primitiveMeshes/triangleMesh/triangleMesh.h"
+#include "./primitiveMeshes/quadMesh/quadMesh.h"
+#include "./ParticleMesh2D/TestParticleMesh/TestParticleMesh.h"
 
 class ParticleMeshSrvCreator;
+class AllPipelineSet;
 
 class AllMesh
 {
@@ -14,7 +15,7 @@ class AllMesh
 public:
 
 	void ResetDrawIndexes();
-	void Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSrvCreator_);
+	void Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSrvCreator_, AllPipelineSet* allPipelineSet_);
 
 	inline auto* Getter_TestParticleMesh()
 	{

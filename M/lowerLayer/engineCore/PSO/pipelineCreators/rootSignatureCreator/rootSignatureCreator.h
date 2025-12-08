@@ -21,7 +21,6 @@ class RootSignatureCreator
 
 public:
 
-	void RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER>& dst_ , int funcIndex_);
 
 	static D3D12_ROOT_PARAMETER GetRootParameterWithDescriptorRange(
 		D3D12_DESCRIPTOR_RANGE* descriptorRange_,

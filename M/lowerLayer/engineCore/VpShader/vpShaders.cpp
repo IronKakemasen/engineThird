@@ -12,9 +12,9 @@ void VpShaders::AddToTable(std::string shaderSetName_, std::string pixName_, std
 		pixelShaderData.data[pixName_].Get());
 }
 
-Microsoft::WRL::ComPtr<IDxcBlob> VpShaders::CompileShader(std::string fileName_, const wchar_t* profile_)
+Microsoft::WRL::ComPtr<IDxcBlob> VpShaders::CompileShader(std::string folderPath_, std::string fileName_, const wchar_t* profile_)
 {
-	return shaderCompiler->CompileShader(fileName_, profile_);
+	return shaderCompiler->CompileShader(folderPath_,fileName_, profile_);
 }
 
 
@@ -25,17 +25,17 @@ void VpShaders::Init(DxCompile* shaderCompiler_)
 }
 
 
-void VpShaders::AddPixelShader(std::string fileName_)
+void VpShaders::AddPixelShader(std::string folderPath_ , std::string fileName_)
 {
 	auto profile = L"ps_6_0";
 
-	pixelShaderData.data[fileName_] = CompileShader(fileName_, profile);
+	pixelShaderData.data[fileName_] = CompileShader(folderPath_,fileName_, profile);
 }
 
-void VpShaders::AddVertexShader(std::string fileName_)
+void VpShaders::AddVertexShader(std::string folderPath_, std::string fileName_)
 {
 	auto profile = L"vs_6_0";
-	vertexShaderData.data[fileName_] = CompileShader(fileName_, profile);
+	vertexShaderData.data[fileName_] = CompileShader(folderPath_,fileName_, profile);
 
 }
 

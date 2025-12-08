@@ -59,16 +59,6 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterVertexShader(int regi
 
 }
 
-void RootSignatureCreator::RecordRootparameters(std::vector<D3D12_ROOT_PARAMETER>& dst_, int funcIndex_)
-{
-	std::vector<D3D12_ROOT_PARAMETER> rootParameters = funcs_rootParametersCreate[funcIndex_]();
-
-	int index = 0;
-	for (auto itr = rootParameters.begin(); itr != rootParameters.end(); ++itr, index++)
-	{
-		dst_.emplace_back((*itr));
-	}
-}
 
 void RootSignatureCreator::SetDescriptorRange(D3D12_DESCRIPTOR_RANGE* dst_,
 	D3D12_DESCRIPTOR_RANGE_TYPE rangeType_,

@@ -2,9 +2,7 @@
 #include "./pipelineSet/pipelineSet.h"
 #include <memory>
 
-
 class VpShaders;
-
 
 class AllPipelineSet
 {
@@ -19,17 +17,17 @@ private:
 	ID3D12Device* device = nullptr;
 	ID3D12GraphicsCommandList* commandList = nullptr;
 
+	void Add(std::string shaderSetName_, bool isTopologyLine = false);
 
 public:
 
 	void Initialize(ID3D12Device* device_, VpShaders* vpShaders_, ID3D12GraphicsCommandList* commandList_);
 	void CreateNewPipeline(
+		std::string folderPath_,
 		std::string vsFileName_,
 		std::string psFileName_,
 		std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
 		std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_);
-
-	void Add(std::string shaderSetName_, bool isTopologyLine = false);
 
 	inline auto* Getter_pipelineSet(int shaderSetIndex_,BlendMode blendMode_,CullMode cullMode_)
 	{

@@ -6,10 +6,11 @@
 #include <assert.h>
 #include <vector>
 
-#include "../meshStructure/vertexData/VertexData.h"
-#include "../meshStructure/vertexDataForLine/vertexDataForLine.h"
-#include "../../Buffer/constantBuffer/MatrixBuffer/MatrixBuffer.h"
-#include "../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
+#include "../../meshStructure/vertexData/VertexData.h"
+#include "../../../Buffer/constantBuffer/MatrixBuffer/MatrixBuffer.h"
+#include "../../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
+
+class AllPipelineSet;
 
 struct PrimitiveMeshCommon
 {
@@ -47,8 +48,8 @@ protected:
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
-	virtual void Create(ID3D12Device* device_) = 0;
-	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_);
+	virtual void CreateMesh(ID3D12Device* device_) = 0;
+	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_, AllPipelineSet* allPipelineset_);
 
 public:
 
@@ -69,6 +70,10 @@ public:
 	{
 		return &indexBufferView;
 	}
+
+private:
+
+	void CreatePSO(AllPipelineSet* allPipelineset_);
 
 };
 

@@ -108,7 +108,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.cpp">
@@ -165,10 +165,10 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.cpp">
@@ -252,10 +252,10 @@
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Data\ShaderBufferData\ShaderBufferData.cpp">
@@ -291,9 +291,6 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\PSOInstance.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="M\lowerLayer\Audio\AudioHandle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\Audio\MediaAudioDecoder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -398,7 +398,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\PrimitiveMeshCommon.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.h">
@@ -461,10 +461,10 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\triangleMesh\triangleMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\primitiveMeshes\quadMesh\quadMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.h">
@@ -548,10 +548,10 @@
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\ParticleMesh2D\ParticleMesh2DCommon.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Data\ShaderBufferData\ShaderBufferData.h">
@@ -597,6 +597,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Audio\MediaAudioDecoder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

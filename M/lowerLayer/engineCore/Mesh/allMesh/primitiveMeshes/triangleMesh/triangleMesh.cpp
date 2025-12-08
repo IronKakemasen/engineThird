@@ -1,12 +1,11 @@
 #include "triangleMesh.h"
 
-TriangleMesh::TriangleMesh()
+TriangleMesh::TriangleMesh(AllPipelineSet* allPipelineset_)
 {
-	Init((int)MaxDraw::kTriangle, 3, 0);
+	Init((int)MaxDraw::kTriangle, 3, 0, allPipelineset_);
 }
 
-
-void TriangleMesh::Create(ID3D12Device* device_)
+void TriangleMesh::CreateMesh(ID3D12Device* device_)
 {
 	// 頂点データのサイズ
 	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(VertexData) * vertexCnt);

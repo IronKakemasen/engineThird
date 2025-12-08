@@ -45,23 +45,12 @@ public:
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 
-	//パイプラインセットの生成
-	void CreateNewPipelineSet(std::string vsFileName_,
-		std::string psFileName_,
-		std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
-		std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_);
-
 	void DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
 
 
 private:
-
-	//俺が作った既存のパイプラインを生成
-	void CreatePresetOfPipelines();
-	void CreateMobilePrimitiveMeshPipeline();
-	void CreateTestParticle2DPipeline();
 
 	M() = default;
 	~M() = default;

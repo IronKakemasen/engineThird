@@ -5,11 +5,11 @@
 #include <memory>
 #include <assert.h>
 #include <vector>
-#include "../meshStructure/vertexData/VertexData.h"
-#include "../meshStructure/vertexDataForLine/vertexDataForLine.h"
-#include "../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
-#include "../../Buffer/StructuredBuffer/TransformMatrixStructuredBuffer/TransformMatrixStructuredBuffer.h"
+#include "../../meshStructure/vertexData/VertexData.h"
+#include "../../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
+#include "../../../Buffer/StructuredBuffer/TransformMatrixStructuredBuffer/TransformMatrixStructuredBuffer.h"
 
+class AllPipelineSet;
 class ParticleMeshSrvCreator;
 
 struct ParticleMesh2DCommon
@@ -44,13 +44,12 @@ protected:
 	// インデックスバッファマップ
 	uint32_t* indexMap = nullptr;
 
-	virtual void Create(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSrvCreator_) = 0;
-	void Init(uint16_t kMaxDraw_, float width_, float height_);
+	virtual void CreateMesh(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSrvCreator_) = 0;
+	void Init(uint16_t kMaxDraw_, float width_, float height_, AllPipelineSet* allPipelineset_);
 
 public:
 
 	ParticleMesh2DCommon();
-
 	void DetectOverDrawing(int sum_draw_);
 
 	auto* Getter_VertexBufferView()
@@ -67,5 +66,9 @@ public:
 	{
 		return &indexBufferView;
 	}
+
+private:
+	void CreatePSO(AllPipelineSet* allPipelineset_);
+
 
 };
