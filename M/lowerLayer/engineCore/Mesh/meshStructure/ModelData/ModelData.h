@@ -22,3 +22,8 @@ struct ResMesh
     uint32_t materialId;   //!< マテリアル番号です.
 };
 
+struct ModelData
+{
+    std::vector < ResMaterial > resMaterial;
+    std::vector < ResMesh > resMesh;
+};

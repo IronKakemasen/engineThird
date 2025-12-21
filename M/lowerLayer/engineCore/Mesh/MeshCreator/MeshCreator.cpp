@@ -14,12 +14,21 @@ void MeshCreator::Init(AllPipelineSet* allPipelineset_, ID3D12Device* device_)
 std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 {
 	std::unique_ptr<ModelSimple> model;
-	model.reset(new ModelSimple(allPipelineset));
+	model = std::make_unique<ModelSimple>(allPipelineset);
+
 
 	std::wstring converted_filePath = ConvertString(filePath_);
-	assert(LoadMesh((wchar_t*)(&converted_filePath), model->resMesh, model->resMaterial));
+	const wchar_t* tmp  = converted_filePath.c_str();
+	assert(LoadMesh(tmp, model->Getter_ModelData().resMesh, 
+		model->Getter_ModelData().resMaterial));
+	
+	int size = (int)model->Getter_ModelData().resMesh.size();
+	model->ResizeMeshSize(size);
 
-	model->CreateMesh(device);
+	for (int i = 0; i < size; ++i)
+	{
+		model->CreateMesh(device,i);
+	}
 
 	return std::move(model);
 }

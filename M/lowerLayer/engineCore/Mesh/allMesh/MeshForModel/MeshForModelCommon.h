@@ -14,40 +14,58 @@
 
 class AllPipelineSet;
 
-struct MeshForModelCommon
+struct MeshForModel
 {
 	//マテリアルバッファ
 	MaterialBuffer materialBuffer;
 	//World,WVP
 	TransformMatrixBuffer transformMatrixBuffer;
-	std::vector<ResMaterial> resMaterial;
-	std::vector<ResMesh> resMesh;
-
-protected:
 	// 頂点バッファとそのびゅー
 	VertexBuffer veretxBuffer;
 	// インデックスバッファとそのびゅー
 	IndexBuffer indexBuffer;
-
-	virtual void CreateMesh(ID3D12Device* device_) = 0;
-	void Init(AllPipelineSet* allPipelineset_);
-
-public:
-
-	auto* Getter_VertexBufferView()
-	{
-		return &veretxBuffer.view;
-	}
-
-	auto* Getter_IndexBufferView()
-	{
-		return &indexBuffer.view;
-	}
-
-
-private:
-
-	void CreatePSO(AllPipelineSet* allPipelineset_);
+	Vertex* vertexMap = nullptr;
+	uint32_t* indexMap = nullptr;
 
 };
 
+struct MeshAndDataCommon
+{
+private:
+
+	std::vector<MeshForModel> meshForModel;
+	ModelData modelData;
+	void CreatePSO(AllPipelineSet* allPipelineset_);
+
+public:
+
+	virtual void CreateMesh(ID3D12Device* device_, int meshIndex_) = 0;
+	void Init(AllPipelineSet* allPipelineset_);
+
+	void ResizeMeshSize(int size_)
+	{
+		meshForModel.resize(size_);
+	}
+
+	auto* Getter_MeshForModel(int index_)
+	{
+		return &meshForModel[index_];
+	}
+
+	auto* Getter_ModelDataOfResMeshes(int index_)
+	{
+		return &modelData.resMesh[index_];
+	}
+
+	auto* Getter_ModelDataOfResMaterials(int index_)
+	{
+		return &modelData.resMaterial[index_];
+	}
+
+	auto& Getter_ModelData()
+	{
+		return modelData;
+	}
+
+
+};

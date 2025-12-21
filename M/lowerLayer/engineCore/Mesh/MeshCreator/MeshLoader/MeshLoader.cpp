@@ -136,6 +136,7 @@ void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
         dstMesh.indices[i * 3 + 1] = face.mIndices[1];
         dstMesh.indices[i * 3 + 2] = face.mIndices[2];
     }
+
 }
 
 void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcMaterial)

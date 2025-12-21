@@ -2,7 +2,7 @@
 #include "../../../PSO/allPipelineSet.h"
 #include <assert.h>
 
-void MeshForModelCommon::CreatePSO(AllPipelineSet* allPipelineset_)
+void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 {
 	static bool onlyOnce = true;
 
@@ -72,7 +72,7 @@ void MeshForModelCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 }
 
-void MeshForModelCommon::Init(AllPipelineSet* allPipelineset_)
+void MeshAndDataCommon::Init(AllPipelineSet* allPipelineset_)
 {
 	CreatePSO(allPipelineset_);
 }

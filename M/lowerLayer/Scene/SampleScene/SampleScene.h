@@ -15,14 +15,14 @@ public:
 	std::unique_ptr<TestParticle> particles;
 	std::unique_ptr<SamplePlayer> sPlayer;
 	std::vector<std::unique_ptr<SampleEnemy>> sEnemies;
-
+	std::unique_ptr<ModelSimple> model;
 
 	virtual void Update() override;
 	virtual void Draw() override;
 	virtual void Reset() override;
 	virtual void Debug() override;
 
-protected:
+private:
 
 	virtual void Instantiate() override;
 	virtual void Init() override;

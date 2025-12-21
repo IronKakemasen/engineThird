@@ -1,10 +1,10 @@
 #pragma once
 #include "../MeshForModelCommon.h"
 
-class ModelSimple :public MeshForModelCommon
+class ModelSimple :public MeshAndDataCommon
 {
 public:
-	virtual void CreateMesh(ID3D12Device* device_) override;
+	virtual void CreateMesh(ID3D12Device* device_, int meshIndex_) override;
 	ModelSimple(AllPipelineSet* allPipelineset_);
 
 };

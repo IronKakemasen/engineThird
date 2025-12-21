@@ -9,6 +9,7 @@ SampleScene::SampleScene()
 
 void SampleScene::Instantiate()
 {
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/Ground/Ground.obj");
 	triangle.reset(new MTriangle);
 	quad.reset(new MQuad);
 	particles.reset(new TestParticle);
