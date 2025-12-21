@@ -102,7 +102,7 @@ bool MeshLoader::Load
 void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
 {
     // マテリアル番号を設定.
-    dstMesh.albedoTextureIndex = pSrcMesh->mMaterialIndex;
+    dstMesh.materialId = pSrcMesh->mMaterialIndex;
 
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 

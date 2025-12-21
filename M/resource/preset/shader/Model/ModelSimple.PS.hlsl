@@ -4,7 +4,7 @@
 Texture2D<float4> albedoTex : register(t0);
 SamplerState gSampler : register(s0);
 
-ConstantBuffer<Material> gMaterial : register(b2);
+ConstantBuffer<Material> gMaterial : register(b1);
 
 
 struct PixcelShaderOutput

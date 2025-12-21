@@ -1,7 +1,7 @@
 #include "textureDataManager.h"
-#include "../../DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
-#include "../../Buffer/gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
-#include "../../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
+#include "../DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
+#include "../Buffer/gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
+#include "../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 
 void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_)
 {

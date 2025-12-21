@@ -140,9 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\FPSControll\FPSController.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Input\Input.cpp" />
     <ClCompile Include="M\lowerLayer\GameObject\GameObjectBehavior.cpp" />
@@ -234,7 +236,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\textureDataManager\textureDataManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
     <ClCompile Include="M\utilities\Transform\Transform.cpp" />
@@ -262,9 +264,11 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.h" />
     <ClInclude Include="M\lowerLayer\engineCore\FPSControll\FPSController.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Input\Input.h" />
     <ClInclude Include="M\lowerLayer\GameObject\GameObjectBehavior.h" />
@@ -343,7 +347,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\textureDataManager\textureDataManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h" />
     <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />
     <ClInclude Include="M\utilities\Transform\Transform.h" />

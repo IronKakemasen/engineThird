@@ -59,8 +59,7 @@ void MeshForModelCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 				1));
 
 			meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
+			meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(1));
 
 			return meters;
 			};

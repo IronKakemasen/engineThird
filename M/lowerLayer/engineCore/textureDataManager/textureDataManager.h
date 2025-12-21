@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
+#include "../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 
 class TextureSrvCreator;
 

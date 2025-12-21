@@ -8,10 +8,11 @@
 
 #include "../../../Buffer/constantBuffer/TransformMatrixBuffer/TransformMatrixBuffer.h"
 #include "../../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
+#include "../../../Buffer/VertexBuffer/VertexBuffer.h"
+#include "../../../Buffer/IndexBuffer/IndexBuffer.h"
+#include "../../meshStructure/ModelData/ModelData.h"
 
 class AllPipelineSet;
-
-
 
 struct MeshForModelCommon
 {
@@ -19,17 +20,14 @@ struct MeshForModelCommon
 	MaterialBuffer materialBuffer;
 	//World,WVP
 	TransformMatrixBuffer transformMatrixBuffer;
+	std::vector<ResMaterial> resMaterial;
+	std::vector<ResMesh> resMesh;
 
 protected:
-	// 頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuff;
-	// インデックスバッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff;
-
-	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
-	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
+	// 頂点バッファとそのびゅー
+	VertexBuffer veretxBuffer;
+	// インデックスバッファとそのびゅー
+	IndexBuffer indexBuffer;
 
 	virtual void CreateMesh(ID3D12Device* device_) = 0;
 	void Init(AllPipelineSet* allPipelineset_);
@@ -38,18 +36,14 @@ public:
 
 	auto* Getter_VertexBufferView()
 	{
-		return &vertexBufferView;
+		return &veretxBuffer.view;
 	}
 
 	auto* Getter_IndexBufferView()
 	{
-		return &indexBufferView;
+		return &indexBuffer.view;
 	}
 
-	auto* IndexBufferView()
-	{
-		return &indexBufferView;
-	}
 
 private:
 

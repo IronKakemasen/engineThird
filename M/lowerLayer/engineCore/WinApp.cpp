@@ -59,6 +59,9 @@ bool WinApp::InitD3D()
 	//exclusiveDrawの初期化
 	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData);
 
+	//meshCreatorの初期化
+	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device());
+
 #ifdef USE_IMGUI
 	//ImGuiの初期化
 	IMGUI_CHECKVERSION();
@@ -70,7 +73,7 @@ bool WinApp::InitD3D()
 		swapChainControl.Ref_SwapChainDesc().BufferCount,
 		swapChainControl.Ref_RenderTargetDesc().Format,
 		srvDescHeap.Getter_Descriptorheap(),
-		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		//SRVHeap上の０番目
+		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
 
 	ShaderBuffer::cur_index++;
@@ -271,8 +274,9 @@ bool WinApp::InitApp()
 		return false;
 	}
 
-	//テクスチャ読み込み（コマンド積む）
-	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,vpShaders.Getter_VPShaderTable(),&allPipelineSet);
+	//テクスチャ読み込み含む（コマンド積む）
+	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
+		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator);
 
 	commandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };

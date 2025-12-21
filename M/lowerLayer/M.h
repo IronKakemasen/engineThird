@@ -4,6 +4,8 @@
 #include "../utilities/Transform/Transform.h"
 #include "../utilities/UVTransform/UVTransform.h"
 #include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
+#include "./engineCore/Mesh/MeshCreator/MeshCreator.h"
+
 #include <functional>
 #include <d3d12.h>
 
@@ -14,17 +16,20 @@ struct CommonDrawingSystem;
 class VPShaderTable;
 class AllPipelineSet;
 
+
 class M
 {
 	ResourceContainer resourceContainer;
 	ExclusiveDraw* exclusiveDraw = nullptr;
 	VPShaderTable* vpShaderTable = nullptr;
 	AllPipelineSet* allPipelineSet = nullptr;
+	MeshCreator* meshCreator = nullptr;
 
 public:
 	static M* GetInstance();
 
-	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_);
+	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
+		VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_);
 
 	//Logを出力
 	void LogM(std::string message_);
@@ -34,6 +39,9 @@ public:
 
 	//shaderSetのインデックスをストリングで取得
 	int GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixelShader_);
+
+	//モデルの生成
+	std::unique_ptr<ModelSimple> CreateModel(std::string filePath_);
 
 	//モバイルトライアングルの描画
 	void DrawMTriangle(Vertex& left_, Vertex& top_, Vertex& right_,

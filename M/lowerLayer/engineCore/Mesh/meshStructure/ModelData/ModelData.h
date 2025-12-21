@@ -19,6 +19,6 @@ struct ResMesh
 {
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
-	int albedoTextureIndex = 0;
+    uint32_t materialId;   //!< マテリアル番号です.
 };
 

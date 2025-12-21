@@ -177,7 +177,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\textureDataManager\textureDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp">
@@ -321,7 +321,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Input\Input.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.cpp">
@@ -331,6 +331,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -500,7 +506,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.h">
+    <ClInclude Include="M\lowerLayer\engineCore\textureDataManager\textureDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h">
@@ -644,7 +650,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Input\Input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.h">
@@ -654,6 +660,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

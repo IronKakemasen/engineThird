@@ -5,6 +5,12 @@
 #include "./engineCore/VpShader/vpShaderTable/vpShaderTable.h"
 #include "./engineCore/PSO/allPipelineSet.h"
 
+std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)
+{
+	return std::move(meshCreator->CreateModel(filePath_));
+}
+
+
 void M::DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 	BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 	std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_)
@@ -48,7 +54,8 @@ int M::GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixe
 	return vpShaderTable->GetIDFromTableName(vertexShader_ + " + " +  pixelShader_);
 }
 
-void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_)
+void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
+	VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_)
 {
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
@@ -59,6 +66,7 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
 		exclusiveDraw = exclusiveDraw_;
 		vpShaderTable = vpShaderTable_;
 		allPipelineSet = allPipelineSet_;
+		meshCreator = meshCreator_;
 
 		initOnlyOnce = false;
 	}

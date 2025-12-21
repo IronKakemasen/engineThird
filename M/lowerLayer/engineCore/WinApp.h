@@ -35,8 +35,14 @@
 //===================================================================
 
 //=================================================================== textureSystem
-#include "./TextureMap/textureDataManager/textureDataManager.h"
+#include "./textureDataManager/textureDataManager.h"
 //===================================================================
+
+
+//=================================================================== MeshCreator
+#include "./Mesh/MeshCreator/MeshCreator.h"
+//===================================================================
+
 
 //=================================================================== BufferData,Creator
 #include "./Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
@@ -118,6 +124,10 @@ private:
 	//[ TextureDataManager ] 
 	TextureDataManager textureDataManager;
 
+	//[ MeshCreator ]
+	MeshCreator meshCreator;
+
+	//[ FpsController ]
 	FPSController fpsController;
 
 	bool InitApp();
