@@ -3,10 +3,10 @@
 
 struct MobileQuadBehavior:MobileBehavior
 {
-	VertexData leftTop;
-	VertexData rightTop;
-	VertexData leftBottom;
-	VertexData rightBottom;
+	Vertex leftTop;
+	Vertex rightTop;
+	Vertex leftBottom;
+	Vertex rightBottom;
 
 	static inline int count = -1;
 

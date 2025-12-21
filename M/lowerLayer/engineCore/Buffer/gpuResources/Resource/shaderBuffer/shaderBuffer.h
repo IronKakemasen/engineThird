@@ -1,5 +1,5 @@
 #pragma once
-#include "../gpuResourcesBehavior.h"
+#include "../../../gpuResourcesBehavior.h"
 #include "../../../../../../../external/DirectXTex/d3dx12.h"
 #include "../../../../../../../external/DirectXTex/DirectXTex.h"
 

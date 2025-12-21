@@ -1,5 +1,5 @@
 #include "ResourceContainer.h"
-#include "../engineCore/Render/textureSystems/textureDataManager/textureDataManager.h"
+#include "../engineCore/TextureMap/textureDataManager/textureDataManager.h"
 #include "../engineCore/WinApp.h"
 
 void ResourceContainer::LoadAllTextureFile()
@@ -9,6 +9,7 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
 	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
+	LoadTextureFile(TextureTag::kNothing, pathToPresetTex + "header.jpg");
 
 
 }

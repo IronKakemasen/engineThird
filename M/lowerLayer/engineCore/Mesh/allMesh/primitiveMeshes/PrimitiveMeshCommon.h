@@ -6,9 +6,12 @@
 #include <assert.h>
 #include <vector>
 
-#include "../../meshStructure/vertexData/VertexData.h"
+#include "../../meshStructure/Vertex/Vertex.h"
 #include "../../../Buffer/constantBuffer/MatrixBuffer/MatrixBuffer.h"
 #include "../../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
+#include "../../../Buffer/VertexBuffer/VertexBuffer.h"
+#include "../../../Buffer/IndexBuffer/IndexBuffer.h"
+
 
 class AllPipelineSet;
 
@@ -21,7 +24,7 @@ struct PrimitiveMeshCommon
 	};
 
 	// 頂点バッファマップ
-	VertexData* vertexMap = nullptr;
+	Vertex* vertexMap = nullptr;
 	// インデックスバッファマップ
 	uint32_t* indexMap = nullptr;
 
@@ -38,15 +41,11 @@ struct PrimitiveMeshCommon
 	UINT indexCnt = 0;
 
 protected:
-	// 頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuff;
-	// インデックスバッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff;
+	// 頂点バッファとそのびゅー
+	VertexBuffer veretxBuffer;
+	// インデックスバッファとそのびゅー
+	IndexBuffer indexBuffer;
 
-	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
-	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
 	virtual void CreateMesh(ID3D12Device* device_) = 0;
 	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_, AllPipelineSet* allPipelineset_);
@@ -58,18 +57,14 @@ public:
 
 	auto* Getter_VertexBufferView()
 	{
-		return &vertexBufferView;
+		return &veretxBuffer.view;
 	}
 
 	auto* Getter_IndexBufferView()
 	{
-		return &indexBufferView;
+		return &indexBuffer.view;
 	}
 
-	auto* IndexBufferView()
-	{
-		return &indexBufferView;
-	}
 
 private:
 

@@ -8,17 +8,12 @@ TriangleMesh::TriangleMesh(AllPipelineSet* allPipelineset_)
 void TriangleMesh::CreateMesh(ID3D12Device* device_)
 {
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(VertexData) * vertexCnt);
+	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vertex) * vertexCnt);
 	// 頂点バッファ生成
-	vertexBuff = CreateBufferResource(device_,sizeOfVertexBuffer);
-
-	// 頂点バッファビューの作成
-	vertexBufferView.BufferLocation = vertexBuff->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeOfVertexBuffer;
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
+	veretxBuffer.Create(device_, sizeOfVertexBuffer);
 
 	// 頂点バッファのマッピング
-	HRESULT result = vertexBuff->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
+	HRESULT result = veretxBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
 
 	for (UINT i = 0; i < kMaxDraw; ++i)

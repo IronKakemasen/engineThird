@@ -81,12 +81,15 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4049 /ignore:4048 %(AdditionalOptions)</AdditionalOptions>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\assimp\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,12 +104,15 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\assimp\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
@@ -123,6 +129,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,11 +140,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.cpp" />
-    <ClCompile Include="M\lowerLayer\Audio\AudioHandle.cpp" />
-    <ClCompile Include="M\lowerLayer\Audio\AudioManager.cpp" />
-    <ClCompile Include="M\lowerLayer\Audio\AudioPlayer.cpp" />
-    <ClCompile Include="M\lowerLayer\Audio\MediaAudioDecoder.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\FPSControll\FPSController.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Input\Input.cpp" />
+    <ClCompile Include="M\lowerLayer\GameObject\GameObjectBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModel.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioHandle.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioManager.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioPlayer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Audio\MediaAudioDecoder.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
@@ -195,7 +208,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Essential\deviceSetUp\deviceSetUp.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Essential\FenceControl\FenceControl.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\gpuResourcesBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResourcesBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\colorBuffer\colorBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Essential\leakChecker\leakChecker.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Essential\logAndException\detectException.cpp" />
@@ -203,7 +216,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineSet\pipelineSet.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Essential\SwapChainControl\SwapChainControl.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\Vertex\Vertex.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\VpShader\vpShaderTable\vpShaderTable.cpp" />
     <ClCompile Include="M\lowerLayer\math\matrix\matrix.cpp" />
     <ClCompile Include="M\lowerLayer\math\vector\vector.cpp" />
@@ -212,7 +225,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\VpShader\vpShaders.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rootSignatureCreator\rootSignatureCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineCreators.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineComponents.cpp" />
@@ -221,7 +234,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\ResourceContainer\ResourceContainer.cpp" />
     <ClCompile Include="M\utilities\Transform\Transform.cpp" />
@@ -244,13 +257,22 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\GameObject\Sample\SamplePlayer\SamplePlayer.cpp" />
+    <ClCompile Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.h" />
-    <ClInclude Include="M\lowerLayer\Audio\AudioHandle.h" />
-    <ClInclude Include="M\lowerLayer\Audio\AudioManager.h" />
-    <ClInclude Include="M\lowerLayer\Audio\AudioPlayer.h" />
-    <ClInclude Include="M\lowerLayer\Audio\MediaAudioDecoder.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshLoader\MeshLoader.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\FPSControll\FPSController.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Input\Input.h" />
+    <ClInclude Include="M\lowerLayer\GameObject\GameObjectBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModel.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioHandle.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioManager.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioPlayer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Audio\MediaAudioDecoder.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\ParticleMesh2DCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
@@ -294,7 +316,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Essential\deviceSetUp\deviceSetUp.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Essential\dxCompile\dxCompile.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Essential\FenceControl\FenceControl.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\gpuResourcesBehavior.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResourcesBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\colorBuffer\colorBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Essential\leakChecker\leakChecker.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Essential\logAndException\detectException.h" />
@@ -302,7 +324,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineSet\pipelineSet.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Essential\SwapChainControl\SwapChainControl.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexData\VertexData.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\Vertex\Vertex.h" />
     <ClInclude Include="M\lowerLayer\engineCore\VpShader\vpShaderTable\vpShaderTable.h" />
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h" />
     <ClInclude Include="M\lowerLayer\math\vector\vector.h" />
@@ -312,7 +334,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\srvDescriptorHeap\srvDescriptorHeap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\VpShader\vpShaders.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\vertexDataForLine\vertexDataForLine.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\rootSignatureCreator\rootSignatureCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineCreators.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\pipelineComponents.h" />
@@ -321,7 +343,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MatrixBuffer\MatrixBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\triangleMesh\triangleMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\quadMesh\quadMesh.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Render\textureSystems\textureDataManager\textureDataManager.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\TextureMap\textureDataManager\textureDataManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\shaderBuffer\shaderBuffer.h" />
     <ClInclude Include="M\lowerLayer\ResourceContainer\ResourceContainer.h" />
     <ClInclude Include="M\utilities\Transform\Transform.h" />
@@ -344,10 +366,14 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.h" />
+    <ClInclude Include="M\lowerLayer\GameObject\Sample\SamplePlayer\SamplePlayer.h" />
+    <ClInclude Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />
     <None Include="external\imgui\imgui.vcxproj.filters" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
@@ -356,5 +382,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets" Condition="Exists('packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets'))" />
+  </Target>
 </Project>

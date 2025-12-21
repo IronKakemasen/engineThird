@@ -30,3 +30,19 @@ std::string ConvertString(const std::wstring& str)
 	WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), sizeNeeded, NULL, NULL);
 	return result;
 }
+
+std::string ToUTF8(const std::wstring& value)
+{
+	auto length = WideCharToMultiByte(
+		CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
+	auto buffer = new char[length];
+
+	WideCharToMultiByte(
+		CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
+
+	std::string result(buffer);
+	delete[] buffer;
+	buffer = nullptr;
+
+	return result;
+}

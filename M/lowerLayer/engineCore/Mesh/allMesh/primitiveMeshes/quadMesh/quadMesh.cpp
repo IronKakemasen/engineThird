@@ -8,31 +8,19 @@ QuadMesh::QuadMesh(AllPipelineSet* allPipelineset_)
 void QuadMesh::CreateMesh(ID3D12Device* device_)
 {
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(VertexData) * vertexCnt);
+	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vertex) * vertexCnt);
 	// 頂点バッファ生成
-	vertexBuff = CreateBufferResource(device_, sizeOfVertexBuffer);
-
-	// 頂点バッファビューの作成
-	vertexBufferView.BufferLocation = vertexBuff->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeOfVertexBuffer;
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
-
+	veretxBuffer.Create(device_, sizeOfVertexBuffer);
 	// 頂点バッファのマッピング
-	HRESULT result = vertexBuff->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
+	HRESULT result = veretxBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
 
 	// インデックスデータのサイズ
 	UINT sizeOfIndexBuffer = static_cast<UINT>(sizeof(uint32_t) * indexCnt);
-	// インデックスバッファ生成
-	indexBuff = CreateBufferResource(device_,sizeOfIndexBuffer);
-
-	// インデックスバッファビューの作成
-	indexBufferView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-	indexBufferView.Format = DXGI_FORMAT_R32_UINT;
-	indexBufferView.SizeInBytes = sizeOfIndexBuffer;
+	indexBuffer.Create(device_, sizeOfIndexBuffer);
 
 	// インデックスバッファのマッピング
-	result = indexBuff->Map(0, nullptr, reinterpret_cast<void**>(&indexMap));
+	result = indexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&indexMap));
 	assert(SUCCEEDED(result));
 
 

@@ -5,7 +5,9 @@
 void SampleScene::Update()
 {
 	mainCamera->Update();
-	triangle->Update();
+
+	sPlayer->Update();
+
 
 }
 
@@ -14,7 +16,8 @@ void SampleScene::Draw()
 	Matrix4* vpMat = &mainCamera->vpMat;
 	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
-	particles->Draw(vpMat);
+	sPlayer->Draw(vpMat);
+
 	drawExecutor->DrawRegistered(vpMat);
 }
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../gpuResourcesBehavior.h"
+#include "../../../gpuResourcesBehavior.h"
 
 struct DsvDescriptorHeap;
 

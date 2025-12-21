@@ -16,7 +16,7 @@ void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, Sha
 	shaderBufferData = shaderBufferData_;
 }
 
-void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
 {
@@ -32,7 +32,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		uint32_t const usingIndex_index = i * quadMesh->indexCnt;
 		uint32_t const usingVertex_index = i * quadMesh->vertexCnt;
 
-		VertexData vData[4] =
+		Vertex vData[4] =
 		{
 			leftBottom_,leftTop_,rightBottom_,rightTop_
 		};
@@ -47,7 +47,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		std::memcpy(&quadMesh->indexMap[usingIndex_index], indices, sizeof(uint32_t) * quadMesh->indexCnt);
 		
 		//[ 頂点 ]
-		std::memcpy(&quadMesh->vertexMap[usingVertex_index], vData, sizeof(VertexData) * quadMesh->vertexCnt);
+		std::memcpy(&quadMesh->vertexMap[usingVertex_index], vData, sizeof(Vertex) * quadMesh->vertexCnt);
 		
 		//[ 行列 ]
 		Matrix4 wMat = trans_.GetWorldMatrix();
@@ -58,7 +58,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 		//[ マテリアル ]
 		//色
 		Matrix4 uvMat = uvTrans_.GetUVMat();
-		quadMesh->materialBuffer[i].material.buffMap->color = color;
+		quadMesh->materialBuffer[i].material.buffMap->albedoColor = color;
 		quadMesh->materialBuffer[i].material.buffMap->uvTransform = uvMat;
 
 		//< データの転送 >
@@ -93,7 +93,7 @@ void ExclusiveDraw::DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, 
 	}
 }
 
-void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
+void ExclusiveDraw::DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ , CullMode cullMode_, int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
 {
@@ -107,7 +107,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 		uint16_t i = triangleMesh->cur_drawIndex;
 		uint32_t usingVertex_index = i * triangleMesh->vertexCnt;
 
-		VertexData vData[3] =
+		Vertex vData[3] =
 		{
 			left_,top_,right_
 		};
@@ -117,7 +117,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 
 		//< データのコピー>
 		//[ 頂点 ]
-		std::memcpy(&triangleMesh->vertexMap[usingVertex_index], vData, sizeof(VertexData) * triangleMesh->vertexCnt);
+		std::memcpy(&triangleMesh->vertexMap[usingVertex_index], vData, sizeof(Vertex) * triangleMesh->vertexCnt);
 		
 		//[ 行列 ]
 		Matrix4 wMat = trans_.GetWorldMatrix();
@@ -128,7 +128,7 @@ void ExclusiveDraw::DrawMobileTriangle(VertexData& left_, VertexData& top_, Vert
 		//[ マテリアル ]
 		//色
 		Matrix4 uvMat = uvTrans_.GetUVMat();
-		triangleMesh->materialBuffer[i].material.buffMap->color = color;
+		triangleMesh->materialBuffer[i].material.buffMap->albedoColor = color;
 		triangleMesh->materialBuffer[i].material.buffMap->uvTransform = uvMat;
 
 		//< データの転送 >
@@ -191,7 +191,7 @@ void ExclusiveDraw::DrawInstancingParticle2D(int numParticles_,Vector4 color_, i
 	//Material
 	float const i255 = CommonV::inv_255;
 	Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
-	pMesh->materialBuffer.material.buffMap->color = color;
+	pMesh->materialBuffer.material.buffMap->albedoColor = color;
 	pMesh->materialBuffer.material.buffMap->uvTransform = uvTrans_->GetUVMat();
 
 	//トランスフォーム

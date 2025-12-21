@@ -1,0 +1,31 @@
+#pragma once
+#include "../../utilities/Transform/Transform.h"
+
+struct Collider;
+
+struct GameObjectBehavior
+{
+	enum class ObjectStatus
+	{
+		kActive,
+		kInActive,
+	};
+
+	Transform trans;
+	Collider* collider = nullptr;
+
+	virtual void Update() = 0;
+	virtual void Init() = 0;
+	virtual void Reset() = 0;
+	virtual void Draw(Matrix4* vpMat_) = 0;
+};
+
+struct GameObject:GameObjectBehavior
+{
+	virtual void Update()override {};
+	virtual void Init() override {};
+	virtual void Reset() override {};
+	virtual void Draw(Matrix4* vpMat_)override {};
+
+};
+

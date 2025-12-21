@@ -3,9 +3,9 @@
 
 struct MobileTrianglebehavior:MobileBehavior 
 {
-	VertexData left;
-	VertexData top;
-	VertexData right;
+	Vertex left;
+	Vertex top;
+	Vertex right;
 	static inline int count = -1;
 	static inline Vector2 const kCentroid_equilateraltriangle = { 0.5f,0.70710678118f };
 

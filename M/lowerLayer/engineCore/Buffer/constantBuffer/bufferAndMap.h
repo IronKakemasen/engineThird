@@ -2,7 +2,7 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <assert.h>
-#include "../gpuResources/Resource/gpuResourcesBehavior.h"
+#include "../gpuResourcesBehavior.h"
 
 template <typename T>
 struct BufferAndMap

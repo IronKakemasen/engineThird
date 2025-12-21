@@ -14,7 +14,7 @@ void M::DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandl
 		trans_, uvTrans_, vpMat_);
 }
 
-void M::DrawMTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
+void M::DrawMTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_,int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
 {
@@ -23,7 +23,7 @@ void M::DrawMTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
 		trans_, uvTrans_, vpMat_);
 }
 
-void M::DrawMQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+void M::DrawMQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
 {

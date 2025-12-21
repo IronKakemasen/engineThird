@@ -1,6 +1,6 @@
 #pragma once
 #include "../gpuResources/Resource/shaderBuffer/shaderBuffer.h"
-#include "../gpuResources/Resource/gpuResourcesBehavior.h"
+#include "../gpuResourcesBehavior.h"
 #include <assert.h>
 #include <memory>
 

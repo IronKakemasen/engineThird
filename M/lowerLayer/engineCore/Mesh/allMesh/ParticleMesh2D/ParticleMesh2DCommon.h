@@ -5,9 +5,11 @@
 #include <memory>
 #include <assert.h>
 #include <vector>
-#include "../../meshStructure/vertexData/VertexData.h"
+#include "../../meshStructure/Vertex/Vertex.h"
 #include "../../../Buffer/constantBuffer/MaterialBuffer/MaterialBuffer.h"
 #include "../../../Buffer/StructuredBuffer/TransformMatrixStructuredBuffer/TransformMatrixStructuredBuffer.h"
+#include "../../../Buffer/VertexBuffer/VertexBuffer.h"
+#include "../../../Buffer/IndexBuffer/IndexBuffer.h"
 
 class AllPipelineSet;
 class ParticleMeshSrvCreator;
@@ -29,18 +31,13 @@ struct ParticleMesh2DCommon
 
 protected:
 
-	// 頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexBuff;
-	// インデックスバッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff;
-
-	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
-	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
+	// 頂点バッファとそのびゅー
+	VertexBuffer veretxBuffer;
+	// インデックスバッファとそのびゅー
+	IndexBuffer indexBuffer;
 
 	// 頂点バッファマップ
-	VertexData* vertexMap = nullptr;
+	Vertex* vertexMap = nullptr;
 	// インデックスバッファマップ
 	uint32_t* indexMap = nullptr;
 
@@ -54,18 +51,14 @@ public:
 
 	auto* Getter_VertexBufferView()
 	{
-		return &vertexBufferView;
+		return &veretxBuffer.view;
 	}
 
 	auto* Getter_IndexBufferView()
 	{
-		return &indexBufferView;
+		return &indexBuffer.view;
 	}
 
-	auto* IndexBufferView()
-	{
-		return &indexBufferView;
-	}
 
 private:
 	void CreatePSO(AllPipelineSet* allPipelineset_);

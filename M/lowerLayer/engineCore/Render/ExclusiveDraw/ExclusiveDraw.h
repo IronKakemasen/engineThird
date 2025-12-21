@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../../utilities/Transform/Transform.h"
 #include "../../../../utilities/UVTransform/UVTransform.h"
-#include "../../Mesh/meshStructure/vertexData/VertexData.h"
+#include "../../Mesh/meshStructure/Vertex/Vertex.h"
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
 
 class AllPipelineSet;
@@ -17,11 +17,11 @@ class ExclusiveDraw
 public:
 	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_);
 
-	void DrawMobileTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
+	void DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ ,CullMode cullMode_,int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 
-	void DrawMobileQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+	void DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 	

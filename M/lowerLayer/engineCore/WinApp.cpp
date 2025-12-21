@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "./PSO/pipelineCreators/pipelineCreators.h"
 #include "../M.h"
+//#include <timeapi.h>
 
 bool WinApp::InitD3D()
 {
@@ -86,6 +87,9 @@ bool WinApp::InitD3D()
 
 void WinApp::BeginFrame()
 {
+	QueryPerformanceFrequency(&fpsController.mTimeFreq);
+	QueryPerformanceCounter(&fpsController.mTimeStart);
+
 	//Imguiにここからフレームが始まる旨を告げる
 #ifdef USE_IMGUI
 	ImGui_ImplDX12_NewFrame();
@@ -177,6 +181,7 @@ void WinApp::EndFrame()
 	//イベントを待つ
 	fenceControl.WaitFenceEvent(commandControl.Getter_CommandQueue(), swapChainControl.Getter_SwapChain());
 
+	fpsController.TimeAdjust();
 
 }
 

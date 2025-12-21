@@ -7,20 +7,15 @@ Matrix4 Transform::GetWorldMatrix()
 	Benri::Adjust(quaternion.axis.z, -0.00001f, 0.00001f, 0.00001f);
 	Vector4 tmp = quaternion.LookAt();
 
-	Matrix4 ret_world;
+	Matrix4 ret_world = Get_SQrTMat3D(scale, tmp, translate);
 
 	if (parent)
 	{
-		Matrix4 parentMat = GetWorldMatrix();
+		Matrix4 parentMat = parent->GetWorldMatrix();
 		ret_world = ret_world.Multiply(parentMat);
-	}
-	else
-	{
-		ret_world = Get_SQrTMat3D(scale, tmp, translate);
 	}
 
 	return ret_world;
-
 }
 
 void Transform::BeChildren(Transform* parent_)

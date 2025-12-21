@@ -3,7 +3,7 @@
 #include "./ResourceContainer/ResourceContainer.h"
 #include "../utilities/Transform/Transform.h"
 #include "../utilities/UVTransform/UVTransform.h"
-#include "./engineCore/Mesh/meshStructure/vertexData/VertexData.h"
+#include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include <functional>
 #include <d3d12.h>
 
@@ -36,12 +36,12 @@ public:
 	int GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixelShader_);
 
 	//モバイルトライアングルの描画
-	void DrawMTriangle(VertexData& left_, VertexData& top_, VertexData& right_,
+	void DrawMTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 
 	//モバイルクアッドの描画
-	void DrawMQuad(VertexData& leftTop_, VertexData& rightTop_, VertexData& rightBottom_, VertexData& leftBottom_,
+	void DrawMQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 

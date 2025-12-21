@@ -35,7 +35,7 @@
 //===================================================================
 
 //=================================================================== textureSystem
-#include "./Render/textureSystems/textureDataManager/textureDataManager.h"
+#include "./TextureMap/textureDataManager/textureDataManager.h"
 //===================================================================
 
 //=================================================================== BufferData,Creator
@@ -52,6 +52,7 @@
 #endif 
 //===================================================================
 
+#include "./FPSControll/FPSController.h"
 
 class WinApp
 {
@@ -116,6 +117,8 @@ private:
 
 	//[ TextureDataManager ] 
 	TextureDataManager textureDataManager;
+
+	FPSController fpsController;
 
 	bool InitApp();
 	bool InitWnd();
