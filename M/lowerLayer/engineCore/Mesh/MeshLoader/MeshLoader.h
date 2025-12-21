@@ -22,10 +22,17 @@ private:
     void ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh);
     void ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcMaterial);
     std::wstring Convert(const aiString& path);
+    std::string ToUTF8(const std::wstring& value);
 
 };
 
-bool LoadMesh(
+inline bool LoadMesh
+(
     const wchar_t* filename,
     std::vector<ResMesh>& meshes,
-    std::vector<ResMaterial>& materials);
+    std::vector<ResMaterial>& materials
+)
+{
+    MeshLoader loader;
+    return loader.Load(filename, meshes, materials);
+}

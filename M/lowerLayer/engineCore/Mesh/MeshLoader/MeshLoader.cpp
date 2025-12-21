@@ -1,5 +1,31 @@
 #include "MeshLoader.h"
 #include <assert.h>
+#include <Windows.h>
+
+MeshLoader::MeshLoader()
+    : m_pScene(nullptr)
+{ 
+}
+
+MeshLoader::~MeshLoader()
+{ 
+}
+
+std::string MeshLoader::ToUTF8(const std::wstring& value)
+{
+    auto length = WideCharToMultiByte(
+        CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
+    auto buffer = new char[length];
+
+    WideCharToMultiByte(
+        CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
+
+    std::string result(buffer);
+    delete[] buffer;
+    buffer = nullptr;
+
+    return result;
+}
 
 std::wstring MeshLoader::Convert(const aiString& path)
 {
@@ -7,6 +33,70 @@ std::wstring MeshLoader::Convert(const aiString& path)
     size_t  size;
     mbstowcs_s(&size, temp, path.C_Str(), 256);
     return std::wstring(temp);
+}
+
+bool MeshLoader::Load
+(
+    const wchar_t* filename,
+    std::vector<ResMesh>& meshes,
+    std::vector<ResMaterial>& materials
+)
+{
+    if (filename == nullptr)
+    {
+        return false;
+    }
+
+    // wchar_t から char型(UTF-8)に変換します.
+    auto path = ToUTF8(filename);
+
+    Assimp::Importer importer;
+    unsigned int flag = 0;
+    flag |= aiProcess_Triangulate;
+    flag |= aiProcess_PreTransformVertices;
+    flag |= aiProcess_CalcTangentSpace;
+    flag |= aiProcess_GenSmoothNormals;
+    flag |= aiProcess_GenUVCoords;
+    flag |= aiProcess_RemoveRedundantMaterials;
+    flag |= aiProcess_OptimizeMeshes;
+
+    // ファイルを読み込み.
+    m_pScene = importer.ReadFile(path, flag);
+
+    // チェック.
+    if (m_pScene == nullptr)
+    {
+        return false;
+    }
+
+    // メッシュのメモリを確保.
+    meshes.clear();
+    meshes.resize(m_pScene->mNumMeshes);
+
+    // メッシュデータを変換.
+    for (size_t i = 0; i < meshes.size(); ++i)
+    {
+        const auto pMesh = m_pScene->mMeshes[i];
+        ParseMesh(meshes[i], pMesh);
+    }
+
+    // マテリアルのメモリを確保.
+    materials.clear();
+    materials.resize(m_pScene->mNumMaterials);
+
+    // マテリアルデータを変換.
+    for (size_t i = 0; i < materials.size(); ++i)
+    {
+        const auto pMaterial = m_pScene->mMaterials[i];
+        ParseMaterial(materials[i], pMaterial);
+    }
+
+    // 不要になったのでクリア.
+    importer.FreeScene();
+    m_pScene = nullptr;
+
+    // 正常終了.
+    return true;
 }
 
 void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)

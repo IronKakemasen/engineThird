@@ -13,7 +13,6 @@ struct VertexShaderInput
 
 ConstantBuffer<WorldMatrix> gWorldMatrix : register(b0);
 ConstantBuffer<WVPMatrix> gWVPMatrix : register(b1);
-//ConstantBuffer<CameraParameters> gCameraParameters : register(b2);
 
 
 VertexShaderOutput main(VertexShaderInput input)

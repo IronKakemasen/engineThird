@@ -4,10 +4,7 @@
 Texture2D<float4> albedoTex : register(t0);
 SamplerState gSampler : register(s0);
 
-//コンスタントバッファの定義
-//b = constantBuffer,0 = shader上でのresourceナンバー
 ConstantBuffer<Material> gMaterial : register(b2);
-//ConstantBuffer<DirectionalLight> gDirectionalLight : register(b3);
 
 
 struct PixcelShaderOutput
@@ -25,8 +22,6 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float4 textureColor = albedoTex.Sample(gSampler, transformedUV.xy);
     
     output.color = gMaterial.albedoColor * textureColor;
-
-   //output.color = gMaterial.color;
 
     return output;
 

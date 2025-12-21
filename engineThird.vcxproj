@@ -146,7 +146,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\FPSControll\FPSController.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Input\Input.cpp" />
     <ClCompile Include="M\lowerLayer\GameObject\GameObjectBehavior.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModel.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioHandle.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioPlayer.cpp" />
@@ -268,7 +268,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\FPSControll\FPSController.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Input\Input.h" />
     <ClInclude Include="M\lowerLayer\GameObject\GameObjectBehavior.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModel.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioHandle.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioPlayer.h" />

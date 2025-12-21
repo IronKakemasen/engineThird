@@ -13,7 +13,7 @@ class AllPipelineSet;
 
 
 
-struct MeshForModel
+struct MeshForModelCommon
 {
 	//マテリアルバッファ
 	MaterialBuffer materialBuffer;
@@ -32,7 +32,7 @@ protected:
 	D3D12_INDEX_BUFFER_VIEW indexBufferView{};
 
 	virtual void CreateMesh(ID3D12Device* device_) = 0;
-	void Init(uint16_t kMaxDraw_, UINT vertexCnt_, UINT indexCnt_, AllPipelineSet* allPipelineset_);
+	void Init(AllPipelineSet* allPipelineset_);
 
 public:
 
