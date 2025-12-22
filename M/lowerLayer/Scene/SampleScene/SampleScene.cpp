@@ -18,7 +18,6 @@ void SampleScene::Draw()
 
 	sPlayer->Draw(vpMat);
 
-	drawExecutor->DrawRegistered(vpMat);
 }
 
 void SampleScene::Reset()

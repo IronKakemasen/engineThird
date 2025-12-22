@@ -4,13 +4,14 @@
 #include "../../../utilities/UVTransform/UVTransform.h"
 #include "../../M.h"
 #include "../../../lowerLayer/engineCore/Mesh/meshStructure/Vertex/Vertex.h"
-#include "../../../lowerLayer/engineCore/Render/CommonDrawingSystem/CommonDrawSystem.h"
 
-struct ParticleBehavior2D :CommonDrawingSystem
+struct ParticleBehavior2D
 {
 public:
 	virtual void Update() = 0;
 	virtual void Init() = 0;
+	virtual void Draw(Matrix4* vpMat_)= 0;
+
 	ParticleBehavior2D();
 
 	std::vector<Transform> trans;

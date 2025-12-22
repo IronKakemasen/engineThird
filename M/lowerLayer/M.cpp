@@ -1,6 +1,5 @@
 #include "M.h"
 #include "./engineCore/Render/ExclusiveDraw/ExclusiveDraw.h"
-#include "./engineCore/Render/CommonDrawingSystem/CommonDrawSystem.h"
 #include "./engineCore/WinApp.h"
 #include "./engineCore/VpShader/vpShaderTable/vpShaderTable.h"
 #include "./engineCore/PSO/allPipelineSet.h"

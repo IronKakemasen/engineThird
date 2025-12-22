@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\Model\FromFile\ModelBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.cpp" />
@@ -157,8 +158,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp" />
-    <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.cpp" />
     <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp" />
     <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\CameraBehavior.cpp" />
@@ -252,8 +252,6 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp" />
-    <ClCompile Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.cpp" />
-    <ClCompile Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp" />
@@ -262,8 +260,10 @@
     <ClCompile Include="M\lowerLayer\GameObject\Sample\SamplePlayer\SamplePlayer.cpp" />
     <ClCompile Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\Model\FromFile\ModelBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\ModelSimple\ModelSimple.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\IndexBuffer\IndexBuffer.h" />
@@ -281,8 +281,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\ParticleMesh2D\TestParticleMesh\TestParticleMesh.h" />
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.h" />
-    <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.h" />
     <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h" />
     <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.h" />
     <ClInclude Include="M\lowerLayer\Camera\CameraBehavior.h" />
@@ -363,8 +362,6 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\ParticleMeshSrvCreator\ParticleMeshSrvCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h" />
-    <ClInclude Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.h" />
-    <ClInclude Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h" />
@@ -373,6 +370,7 @@
     <ClInclude Include="M\lowerLayer\GameObject\Sample\SamplePlayer\SamplePlayer.h" />
     <ClInclude Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.h" />
+    <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
 
+
 struct Collider;
 
 struct GameObjectBehavior
@@ -11,7 +12,10 @@ struct GameObjectBehavior
 		kInActive,
 	};
 
+	ObjectStatus status = ObjectStatus::kActive;
 	Transform trans;
+	int id;
+
 	Collider* collider = nullptr;
 
 	virtual void Update() = 0;

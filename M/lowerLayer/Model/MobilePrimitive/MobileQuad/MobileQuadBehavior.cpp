@@ -6,7 +6,7 @@ void MobileQuadBehavior::ResetTexcoord()
 	rightTop.texcoord = { 1.0f,0.0f };
 	rightBottom.texcoord = { 1.0f,1.0f };
 	leftBottom.texcoord = { 0.0f,1.0f };
-	uvTrans.translate = { 0.5f,0.5f };
+	appearance.uvTrans.translate = { 0.5f,0.5f };
 }
 
 MobileQuadBehavior::MobileQuadBehavior()
@@ -20,9 +20,9 @@ void MobileQuadBehavior::Initialize(float width_, float height_, Vector3 world_p
 	SetVertex(width_, height_);
 	SetNormal();
 	SetTexcoord();
-	trans.translate = world_pos_;
-	color = color_;
-	texHandle = (int)texHandle_;
+	appearance.trans.translate = world_pos_;
+	appearance.color = color_;
+	appearance.texHandle = (int)texHandle_;
 }
 
 void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightTop_, Vector3 local_leftBottom_, Vector3 local_rightBottom_,
@@ -31,9 +31,9 @@ void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightT
 	SetVertex(local_leftTop_, local_rightTop_, local_rightBottom_, local_leftBottom_);
 	SetNormal();
 	SetTexcoord();
-	trans.translate = world_pos_;
-	color = color_;
-	texHandle = (int)texHandle_;
+	appearance.trans.translate = world_pos_;
+	appearance.color = color_;
+	appearance.texHandle = (int)texHandle_;
 }
 
 

@@ -16,7 +16,6 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	std::unique_ptr<ModelSimple> model;
 	model = std::make_unique<ModelSimple>(allPipelineset);
 
-
 	std::wstring converted_filePath = ConvertString(filePath_);
 	const wchar_t* tmp  = converted_filePath.c_str();
 	assert(LoadMesh(tmp, model->Getter_ModelData().resMesh, 

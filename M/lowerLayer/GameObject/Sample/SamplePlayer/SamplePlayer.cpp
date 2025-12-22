@@ -17,12 +17,12 @@ void SamplePlayer::Reset()
 
 void SamplePlayer::Draw(Matrix4* vpMat_)
 {
-
+	quadModel.Draw(vpMat_);
 }
 
 
 SamplePlayer::SamplePlayer()
 {
-	quadModel.trans.parent = &trans;
-	quadModel.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kSouhei));
+	quadModel.appearance.trans.parent = &trans;
+	quadModel.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kPlayer));
 }

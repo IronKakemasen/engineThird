@@ -6,7 +6,6 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 	auto* resMaterials = Getter_ModelDataOfResMaterials(meshIndex_);
 	auto* meshForModel = Getter_MeshForModel(meshIndex_);
 
-
 	// 頂点データのサイズ
 	UINT sizeOfVertexBuffer =
 		static_cast<UINT>(sizeof(Vertex) * resMeshes->vertices.size());

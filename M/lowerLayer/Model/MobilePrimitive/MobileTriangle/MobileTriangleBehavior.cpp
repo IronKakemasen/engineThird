@@ -4,31 +4,31 @@
 MobileTrianglebehavior::MobileTrianglebehavior()
 {
 	MobileTrianglebehavior::count++;
-	uvTrans.translate = kCentroid_equilateraltriangle;
+	appearance.uvTrans.translate = kCentroid_equilateraltriangle;
 
 }
 
 void MobileTrianglebehavior::Initialize(float width_, float height_, Vector3 pos_, int texHandle_, Vector4 color_)
 {
-	trans.translate = pos_;
+	appearance.trans.translate = pos_;
 	SetVertex(width_, height_);
 	SetNormal();
 	SetTexcoord();
 
-	texHandle = texHandle_;
-	color = color_;
+	appearance.texHandle = texHandle_;
+	appearance.color = color_;
 }
 
 void MobileTrianglebehavior::Initialize(Vector3 local_leftPos_, Vector3 local_topPos_, Vector3 local_rightPos_,
 	Vector3 pos_, int texHandle_, Vector4 color_)
 {
-	trans.translate = pos_;
+	appearance.trans.translate = pos_;
 	SetVertex(local_leftPos_, local_topPos_, local_rightPos_);
 	SetNormal();
 	SetTexcoord();
 
-	texHandle = texHandle_;
-	color = color_;
+	appearance.texHandle = texHandle_;
+	appearance.color = color_;
 }
 
 void MobileTrianglebehavior::SetTexcoord(Vector2 left_, Vector2 top_, Vector2 right_)

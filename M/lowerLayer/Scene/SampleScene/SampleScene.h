@@ -12,7 +12,6 @@ public:
 
 	std::unique_ptr<MTriangle> triangle;
 	std::unique_ptr<MQuad> quad;
-	std::unique_ptr<TestParticle> particles;
 	std::unique_ptr<SamplePlayer> sPlayer;
 	std::vector<std::unique_ptr<SampleEnemy>> sEnemies;
 	std::unique_ptr<ModelSimple> model;

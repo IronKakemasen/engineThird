@@ -22,6 +22,6 @@ void SampleEnemy::Draw(Matrix4* vpMat_)
 
 SampleEnemy::SampleEnemy()
 {
-	triangleModel.trans.parent = &trans;
+	triangleModel.appearance.trans.parent = &trans;
 
 }

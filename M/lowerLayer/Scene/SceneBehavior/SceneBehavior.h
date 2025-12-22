@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include "../../DrawExecutor/DrawExecutor.h"
 #include "../../Camera/NormalCamera/NormalCamera.h"
 #include "../../Model/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
 #include "../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
@@ -21,8 +20,6 @@ protected:
 	virtual void Init() = 0;
 
 	std::unique_ptr< CameraBehavior > mainCamera;
-	std::unique_ptr< DrawExecutor >drawExecutor;
-	void RegisterForDrawExecutor(CommonDrawingSystem* dst_);
 
 };
 

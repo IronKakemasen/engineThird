@@ -228,10 +228,7 @@
     <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="M\lowerLayer\DrawExecutor\DrawExecutor.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.cpp">
@@ -268,12 +265,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp">
@@ -337,6 +328,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Model\FromFile\ModelBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -557,10 +554,7 @@
     <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Render\CommonDrawingSystem\CommonDrawSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="M\lowerLayer\DrawExecutor\DrawExecutor.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.h">
@@ -597,12 +591,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="M\lowerLayer\Particle\2D\ParticleBehavior2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="M\lowerLayer\Particle\2D\TestParticle\TestParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h">
@@ -666,6 +654,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshCreator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Model\FromFile\ModelBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

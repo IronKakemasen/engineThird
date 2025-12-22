@@ -20,7 +20,6 @@ void TestParticleMesh::CreateMesh(ID3D12Device* device_, ParticleMeshSrvCreator*
 		mQuad.leftBottom,mQuad.leftTop,mQuad.rightBottom,mQuad.rightTop
 	};
 
-
 	HRESULT result = veretxBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
 	std::memcpy(&vertexMap[0], vData, sizeof(Vertex) * vertexCnt);
