@@ -3,6 +3,7 @@
 #include "../../../../utilities/UVTransform/UVTransform.h"
 #include "../../Mesh/meshStructure/Vertex/Vertex.h"
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
+#include "../../Mesh/allMesh/MeshForModel/MeshForModelCommon.h"
 
 class AllPipelineSet;
 class AllMesh;
@@ -28,6 +29,8 @@ public:
 	void DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
+
+	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
 
 
 	void ResetDrawIndexes();

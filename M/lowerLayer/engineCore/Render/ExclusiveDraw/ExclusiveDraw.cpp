@@ -4,6 +4,55 @@
 #include "../../Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../Essential/BarrierControl/BarrierControl.h"
 
+void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
+{
+	int n = (int)meshAndData_->Getter_ModelData().resMesh.size();
+
+	for (int i = 0; i < n; ++i)
+	{
+		auto* mesh = meshAndData_->Getter_MeshForModel(i);
+		auto* appearance = &meshAndData_->Getter_ModelData().appearance[i];
+		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex, 
+			appearance->blendMode, appearance->cullMode);
+		auto* cList = src_pipeline->Getter_CommandList();
+
+		//Pipeline
+		cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		src_pipeline->SetGraphicsRootSignature();
+		src_pipeline->SetPipelineState();
+
+		//VBV
+		cList->IASetVertexBuffers(0, 1, &mesh->veretxBuffer.view);
+		//IBV
+		cList->IASetIndexBuffer(&mesh->indexBuffer.view);
+
+		//[ 行列 ]
+		Matrix4 wMat = appearance->trans.GetWorldMatrix();
+		Matrix4 wvp = wMat.Multiply(*vpMat_);
+		mesh->transformMatrixBuffer.matrix.buffMap->world = wMat;
+		mesh->transformMatrixBuffer.matrix.buffMap->wvp = wvp;
+
+		//[ material ] 
+		Vector4 color = appearance->color * CommonV::inv_255;
+		mesh->materialBuffer.material.buffMap->albedoColor = color;
+		mesh->materialBuffer.material.buffMap->uvTransform = appearance->uvTrans.GetUVMat();
+
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[appearance->texHandle]);
+
+		//Cバッファの場所を指定
+		src_pipeline->SetConstantBufferViews(
+			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
+			mesh->materialBuffer.material.GetVirtualGPUAddress());
+
+		//描画
+		UINT indexCnt = (UINT)meshAndData_->Getter_ModelData().resMesh[i].indices.size();
+		cList->DrawIndexedInstanced(indexCnt, 1, 0, 0,0);
+	}
+
+
+}
+
+
 void ExclusiveDraw::ResetDrawIndexes()
 {
 	allMesh->ResetDrawIndexes();

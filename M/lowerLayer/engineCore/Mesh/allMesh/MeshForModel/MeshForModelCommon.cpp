@@ -72,7 +72,3 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 }
 
-void MeshAndDataCommon::Init(AllPipelineSet* allPipelineset_)
-{
-	CreatePSO(allPipelineset_);
-}

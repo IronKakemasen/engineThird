@@ -38,5 +38,10 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 
 ModelSimple::ModelSimple(AllPipelineSet* allPipelineset_)
 {
-	Init(allPipelineset_);
+	CreatePSO(allPipelineset_);
+}
+
+ModelSimple::ModelSimple()
+{
+
 }

@@ -9,8 +9,6 @@
 
 int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data)
 {
-	//ShaderBuffer data;
-
 	auto mipImages = LoadTextureFile(filePath_);
 	auto metaData = mipImages.GetMetadata();
 

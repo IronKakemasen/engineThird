@@ -12,16 +12,18 @@ struct GameObjectBehavior
 		kInActive,
 	};
 
-	ObjectStatus status = ObjectStatus::kActive;
-	Transform trans;
-	int id;
-
-	Collider* collider = nullptr;
-
 	virtual void Update() = 0;
 	virtual void Init() = 0;
 	virtual void Reset() = 0;
 	virtual void Draw(Matrix4* vpMat_) = 0;
+
+protected:
+
+	ObjectStatus status = ObjectStatus::kActive;
+	Transform trans;
+	int id;
+	Collider* collider = nullptr;
+
 };
 
 struct GameObject:GameObjectBehavior
@@ -30,6 +32,11 @@ struct GameObject:GameObjectBehavior
 	virtual void Init() override {};
 	virtual void Reset() override {};
 	virtual void Draw(Matrix4* vpMat_)override {};
+
+	inline auto* Getter_Trans()
+	{
+		return &trans;
+	}
 
 };
 

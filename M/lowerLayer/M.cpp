@@ -9,6 +9,10 @@ std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)
 	return std::move(meshCreator->CreateModel(filePath_));
 }
 
+void M::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
+{
+	exclusiveDraw->DrawModel(meshAndData_, vpMat_);
+}
 
 void M::DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 	BlendMode blendMode_, CullMode cullMode_, int shaderSet_,

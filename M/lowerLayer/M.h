@@ -15,6 +15,7 @@ class DrawExecutor;
 struct CommonDrawingSystem;
 class VPShaderTable;
 class AllPipelineSet;
+struct MeshAndDataCommon;
 
 
 class M
@@ -42,6 +43,9 @@ public:
 
 	//モデルの生成
 	std::unique_ptr<ModelSimple> CreateModel(std::string filePath_);
+
+	//モデルの描画
+	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
 
 	//モバイルトライアングルの描画
 	void DrawMTriangle(Vertex& left_, Vertex& top_, Vertex& right_,

@@ -1,5 +1,6 @@
 #pragma once
 #include "../../meshStructure/Vertex/Vertex.h"
+#include "../../../Render/Appearance/Appearance.h"
 #include <vector>
 #include <string>
 
@@ -26,4 +27,6 @@ struct ModelData
 {
     std::vector < ResMaterial > resMaterial;
     std::vector < ResMesh > resMesh;
+    std::vector <Appearance> appearance;
+
 };

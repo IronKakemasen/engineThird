@@ -35,16 +35,16 @@ private:
 
 	std::vector<MeshForModel> meshForModel;
 	ModelData modelData;
-	void CreatePSO(AllPipelineSet* allPipelineset_);
 
 public:
 
 	virtual void CreateMesh(ID3D12Device* device_, int meshIndex_) = 0;
-	void Init(AllPipelineSet* allPipelineset_);
+	void CreatePSO(AllPipelineSet* allPipelineset_);
 
 	void ResizeMeshSize(int size_)
 	{
 		meshForModel.resize(size_);
+		modelData.appearance.resize(size_);
 	}
 
 	auto* Getter_MeshForModel(int index_)
@@ -65,6 +65,11 @@ public:
 	auto& Getter_ModelData()
 	{
 		return modelData;
+	}
+
+	auto* Getter_MeshForModel()
+	{
+		return &meshForModel;
 	}
 
 

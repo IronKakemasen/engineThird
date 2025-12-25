@@ -261,6 +261,7 @@
     <ClCompile Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.cpp" />
+    <ClCompile Include="M\lowerLayer\GameObject\Sample\SampleObj\SampleObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\Model\FromFile\ModelBehavior.h" />
@@ -371,6 +372,7 @@
     <ClInclude Include="M\lowerLayer\GameObject\Sample\SampleEnemy\SampleEnemy.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.h" />
+    <ClInclude Include="M\lowerLayer\GameObject\Sample\SampleObj\SampleObj.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -293,7 +293,7 @@ Vector4 operator-(Vector4 const& lVec, Vector4 const& rVec2)
 
 Vector4 operator*(Vector4 const& dst_vec, float const multipleNum)
 {
-	Vector4 ret_vec = { dst_vec.x * multipleNum,dst_vec.y * multipleNum ,dst_vec.z * multipleNum ,1 };
+	Vector4 ret_vec = { dst_vec.x * multipleNum,dst_vec.y * multipleNum ,dst_vec.z * multipleNum ,dst_vec.w * multipleNum };
 
 	return ret_vec;
 }

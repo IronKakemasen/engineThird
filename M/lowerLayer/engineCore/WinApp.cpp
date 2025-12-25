@@ -60,7 +60,8 @@ bool WinApp::InitD3D()
 	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData);
 
 	//meshCreatorの初期化
-	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device());
+	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),
+		&textureDataManager,&commandControl,&fenceControl,swapChainControl.Getter_SwapChain());
 
 #ifdef USE_IMGUI
 	//ImGuiの初期化
@@ -82,8 +83,6 @@ bool WinApp::InitD3D()
 
 	//メッシュの初期化、生成
 	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator(),&allPipelineSet);
-
-
 
 	return true;
 }

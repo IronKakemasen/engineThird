@@ -59,6 +59,9 @@ bool MeshLoader::Load
     flag |= aiProcess_GenUVCoords;
     flag |= aiProcess_RemoveRedundantMaterials;
     flag |= aiProcess_OptimizeMeshes;
+    flag |= aiProcess_FlipWindingOrder;
+    flag |= aiProcess_MakeLeftHanded;
+    flag |= aiProcess_FixInfacingNormals;
 
     // ファイルを読み込み.
     m_pScene = importer.ReadFile(path, flag);
@@ -118,7 +121,7 @@ void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
 
         dstMesh.vertices[i] = Vertex(
             Vector3(pPosition->x, pPosition->y, pPosition->z),
-            Vector2(pTexCoord->x, pTexCoord->y),
+            Vector2(pTexCoord->x, 1.0f - pTexCoord->y),
             Vector3(pNormal->x, pNormal->y, pNormal->z),
             Vector3(pTangent->x, pTangent->y, pTangent->z)
         );
@@ -141,7 +144,7 @@ void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
 
 void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcMaterial)
 {
-    // 拡散反射成分.
+    // 拡散反射成分
     {
         aiColor3D color(0.0f, 0.0f, 0.0f);
 
@@ -159,7 +162,7 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // 鏡面反射成分.
+    // 鏡面反射成分
     {
         aiColor3D color(0.0f, 0.0f, 0.0f);
 
@@ -173,7 +176,7 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // 鏡面反射強度.
+    // 鏡面反射強度
     {
         auto shininess = 0.0f;
         if (pSrcMaterial->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS)
@@ -186,7 +189,7 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // ディフューズマップ.
+    // ディフューズマップ
     {
         aiString path;
         if (pSrcMaterial->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
@@ -199,7 +202,7 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // スペキュラーマップ.
+    // スペキュラーマップ
     {
         aiString path;
         if (pSrcMaterial->Get(AI_MATKEY_TEXTURE_SPECULAR(0), path) == AI_SUCCESS)
@@ -212,7 +215,7 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // シャイネスマップ.
+    // シャイネスマップ
     {
         aiString path;
         if (pSrcMaterial->Get(AI_MATKEY_TEXTURE_SHININESS(0), path) == AI_SUCCESS)
