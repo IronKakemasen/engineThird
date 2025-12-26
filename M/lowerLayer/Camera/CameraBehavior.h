@@ -3,13 +3,18 @@
 
 struct CameraBehavior
 {
-	Transform trans;
 	Matrix4 vpMat;
 
 	virtual void Update() = 0;
 
 protected:
 	void SetViewProjectionMat();
+	Transform trans;
 
+public:
+	inline auto* Getter_Trans()
+	{
+		return &trans;
+	}
 };
 

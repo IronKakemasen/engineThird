@@ -5,8 +5,9 @@
 
 struct Transform
 {
-	Vector3 translate;
+	Vector3 pos;
 	Vector3 scale;
+	Vector3 rotation;
 	Quaternion quaternion;
 
 	Transform* parent = nullptr;

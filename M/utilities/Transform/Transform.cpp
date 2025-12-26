@@ -2,12 +2,25 @@
 
 Matrix4 Transform::GetWorldMatrix()
 {
+	//3軸クォータニオンの合成
+	Vector4 composite;
+
+	Vector4 rightQua = GetQuaternion(V_Vector::kRight, rotation.x);
+	Vector4 upQua = GetQuaternion(V_Vector::kUp, rotation.y);
+	Vector4 beyondQua = GetQuaternion(V_Vector::kBeyond, rotation.z);
+
+	composite = GetCompositeQuaternion(upQua, rightQua);
+	composite = GetCompositeQuaternion(composite, beyondQua);
+
+
+
 	//ターゲット方向のクォータニオン
 	quaternion.axis = quaternion.axis.GetNormalized();
 	Benri::Adjust(quaternion.axis.z, -0.00001f, 0.00001f, 0.00001f);
-	Vector4 tmp = quaternion.LookAt();
+	Vector4 lookAtQua = quaternion.LookAt();
+	composite = GetCompositeQuaternion(composite, lookAtQua);
 
-	Matrix4 ret_world = Get_SQrTMat3D(scale, tmp, translate);
+	Matrix4 ret_world = Get_SQrTMat3D(scale, composite, pos);
 
 	if (parent)
 	{

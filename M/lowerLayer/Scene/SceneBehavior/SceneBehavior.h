@@ -10,6 +10,8 @@ class SceneBehavior
 public:
 	SceneBehavior();
 
+	std::unique_ptr< CameraBehavior > mainCamera;
+
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Reset() = 0;
@@ -18,8 +20,6 @@ protected:
 
 	virtual void Instantiate() = 0;
 	virtual void Init() = 0;
-
-	std::unique_ptr< CameraBehavior > mainCamera;
 
 };
 

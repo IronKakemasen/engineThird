@@ -9,9 +9,6 @@ void SampleScene::Update()
 	sPlayer->Update();
 	sObj->Update();
 
-	ImGui::Begin("oh");
-	ImGui::DragFloat3("trans", reinterpret_cast<float*>(&sObj->Getter_Trans()->translate));
-	ImGui::End();
 
 }
 
@@ -31,6 +28,23 @@ void SampleScene::Reset()
 
 void SampleScene::Debug()
 {
+	ImGui::Begin("oh");
+
+	if (ImGui::TreeNode("obj"))
+	{
+		ImGui::DragFloat3("trans", reinterpret_cast<float*>(&sObj->Getter_Trans()->pos), 0.1f);
+		ImGui::DragFloat3("rotate", reinterpret_cast<float*>(&sObj->Getter_Trans()->rotation), 0.1f);
+		ImGui::DragFloat3("scale", reinterpret_cast<float*>(&sObj->Getter_Trans()->scale), 0.1f);
+
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("camera"))
+	{
+		ImGui::DragFloat3("trans", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->pos),0.1f);
+		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->quaternion.axis),0.025f);
+		ImGui::TreePop();
+	}
+	ImGui::End();
 
 }
 

@@ -7,7 +7,7 @@ void SamplePlayer::Update()
 
 void SamplePlayer::Init()
 {
-	trans.translate = {-3.0f,0.0f,0.0f};
+	trans.pos = {-3.0f,0.0f,0.0f};
 }
 
 void SamplePlayer::Reset()

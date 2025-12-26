@@ -18,10 +18,10 @@ namespace V_Vector
 
 //SRT行列の作成・取得
 Matrix4 Get_SRTMat3D(const Vector3& scale_, const Vector3& rotateTheta_,
-	const Vector3& translate_);
+	const Vector3& pos_);
 //STR行列の作成・取得
 Matrix4 Get_STRMat3D(const Vector3& scale_, const Vector3& movementTheta_,
-	const Vector3& translate_);
+	const Vector3& pos_);
 //正射影行列3D
 Matrix4 Get_Orthographic3D(
 	const float l_, const float r_,
@@ -41,10 +41,10 @@ Matrix3 Get_SRTMat2D(const float& delta_scaleX_, const float& delta_scaleY_, con
 	const Vector3& delta_pos_);
 Matrix4 GetQuaternionRotateMat(Vector4 quaternion_);
 Vector4 GetQuaternion(Vector3 v_, float deltaTheta_);
-Matrix4 Get_SQrTMat3D(const Vector3& scale_, Vector4 quaternion_, const Vector3& translate_);
+Matrix4 Get_SQrTMat3D(const Vector3& scale_, Vector4 quaternion_, const Vector3& pos_);
 Vector4 GetCompositeQuaternion(Vector4 p_, Vector4 q_);
 Matrix4 GetScaleMat(Vector3 scale_);
-Matrix4 GetTranslateMat(Vector3 translate_);
+Matrix4 GetTranslateMat(Vector3 pos_);
 Vector4 GetPerpendiculer(Vector4 point_);
 Vector3 ConvertToRectangularCoordinate(Vector3& sphereCoord_);
 Vector2 ConvertToScreen(Vector3 dst_, Matrix4& viewProjectionMat_);

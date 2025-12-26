@@ -121,7 +121,7 @@ Matrix4 GetScaleMat(Vector3 scale_)
 	};
 }
 
-Matrix4 GetTranslateMat(Vector3 translate_)
+Matrix4 GetTranslateMat(Vector3 pos_)
 {
 	//TranslateMat
 	return
@@ -129,12 +129,12 @@ Matrix4 GetTranslateMat(Vector3 translate_)
 		1.0f,0.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,0.0f,
 		0.0f,0.0f,1.0f,0.0f,
-		translate_.x,translate_.y,translate_.z,1.0f
+		pos_.x,pos_.y,pos_.z,1.0f
 	};
 
 }
 
-Matrix4 Get_SQrTMat3D(const Vector3& scale_, Vector4 quaternion_, const Vector3& translate_)
+Matrix4 Get_SQrTMat3D(const Vector3& scale_, Vector4 quaternion_, const Vector3& pos_)
 {
 	Matrix4 ret;
 
@@ -142,18 +142,18 @@ Matrix4 Get_SQrTMat3D(const Vector3& scale_, Vector4 quaternion_, const Vector3&
 	Matrix4 scaleMat = GetScaleMat(scale_);
 	Matrix4 rotateMat = GetQuaternionRotateMat(quaternion_);
 	//TranslateMat
-	Matrix4 translateMat = GetTranslateMat(translate_);
+	Matrix4 posMat = GetTranslateMat(pos_);
 
 	//S⇔R
 	ret = scaleMat.Multiply(rotateMat);
 	//SR⇔T
-	ret = ret.Multiply(translateMat);
+	ret = ret.Multiply(posMat);
 
 	return ret;		//SRT
 
 }
 
-Matrix4 Get_SRTMat3D(const Vector3& scale_, const Vector3& rotateTheta_, const Vector3& translate_)
+Matrix4 Get_SRTMat3D(const Vector3& scale_, const Vector3& rotateTheta_, const Vector3& pos_)
 {
 	Matrix4 ret_mat;
 
@@ -209,24 +209,24 @@ Matrix4 Get_SRTMat3D(const Vector3& scale_, const Vector3& rotateTheta_, const V
 		0.0f,0.0f,0.0f,1.0f
 	};
 	//TranslateMat
-	Matrix4 translateMat =
+	Matrix4 posMat =
 	{
 		1.0f,0.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,0.0f,
 		0.0f,0.0f,1.0f,0.0f,
-		translate_.x,translate_.y,translate_.z,1.0f
+		pos_.x,pos_.y,pos_.z,1.0f
 	};
 
 	//S⇔R
 	ret_mat = scaleMat.Multiply(concentratedRotateMat);
 	//SR⇔T
-	ret_mat = ret_mat.Multiply(translateMat);
+	ret_mat = ret_mat.Multiply(posMat);
 
 	return ret_mat;		//SRT
 
 }//SRT行列の作成・取得
 
-Matrix4 Get_STRMat3D(const Vector3& scale_, const Vector3& movementTheta_, const Vector3& translate_)
+Matrix4 Get_STRMat3D(const Vector3& scale_, const Vector3& movementTheta_, const Vector3& pos_)
 {
 	Matrix4 ret_mat;
 
@@ -283,16 +283,16 @@ Matrix4 Get_STRMat3D(const Vector3& scale_, const Vector3& movementTheta_, const
 		0.0f,0.0f,0.0f,1.0f
 	};
 	//TranslateMat
-	Matrix4 translateMat =
+	Matrix4 posMat =
 	{
 		1.0f,0.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,0.0f,
 		0.0f,0.0f,1.0f,0.0f,
-		translate_.x,translate_.y,translate_.z,1.0f
+		pos_.x,pos_.y,pos_.z,1.0f
 	};
 
 	//S⇔T
-	ret_mat = scaleMat.Multiply(translateMat);
+	ret_mat = scaleMat.Multiply(posMat);
 	//ST⇔R
 	ret_mat = ret_mat.Multiply(concentratedRotateMat);
 
@@ -329,7 +329,7 @@ Matrix3 Get_SRTMat2D(const float& delta_scaleX_, const float& delta_scaleY_, con
 	};
 
 	//TranslateMat
-	Matrix3 translateMat =
+	Matrix3 posMat =
 	{
 		1.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,
@@ -339,7 +339,7 @@ Matrix3 Get_SRTMat2D(const float& delta_scaleX_, const float& delta_scaleY_, con
 	//S⇔R
 	ret_mat = scaleMat.GetMultiply(&rotateMat);
 	//ST⇔R
-	ret_mat = ret_mat.GetMultiply(&translateMat);
+	ret_mat = ret_mat.GetMultiply(&posMat);
 
 	return ret_mat;		//STR
 

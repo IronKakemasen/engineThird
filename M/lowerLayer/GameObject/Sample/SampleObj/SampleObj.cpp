@@ -7,7 +7,7 @@ void SampleObj::Update()
 
 void SampleObj::Init()
 {
-	trans.translate = { 0.0f,0.0f,2.0f };
+	trans.pos = { 0.0f,0.0f,2.0f };
 }
 
 void SampleObj::Reset()

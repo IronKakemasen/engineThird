@@ -3,7 +3,7 @@
 
 struct UVTransform
 {
-	Vector2 translate = { 0.0f,0.0f };
+	Vector2 pos = { 0.0f,0.0f };
 	Vector2 scale = { 1.0f,1.0f };
 	float rotate = 0.0f;
 
