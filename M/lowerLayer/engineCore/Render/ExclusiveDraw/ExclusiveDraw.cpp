@@ -11,7 +11,6 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 	dirLightBuffer = dirLightBuffer_;
 }
 
-
 void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 {
 	int n = (int)meshAndData_->Getter_ModelData().resMesh.size();
@@ -49,11 +48,17 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
 		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
 
-		//colorMap
-		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[appearance->texHandles[0]]);
+		//texture
+		int k = 0;
+		for (; k < (int)appearance->texHandles.size(); ++k)
+		{
+			cList->SetGraphicsRootDescriptorTable(k,
+				shaderBufferData->gpuHandleContainer[appearance->texHandles[k ]]);
+		}
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
+			k,
 			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
 			mesh->materialBuffer.material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
@@ -143,6 +148,7 @@ void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& 
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
+			1,
 			quadMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->materialBuffer[i].material.GetVirtualGPUAddress());
@@ -211,6 +217,7 @@ void ExclusiveDraw::DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& righ
 		
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
+			1,
 			triangleMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			triangleMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			triangleMesh->materialBuffer[i].material.GetVirtualGPUAddress());

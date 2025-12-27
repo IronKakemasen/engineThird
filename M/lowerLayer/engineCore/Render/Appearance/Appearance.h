@@ -20,7 +20,7 @@ struct Appearance
 	CullMode cullMode;
 	BlendMode blendMode;
 	int shaderSetIndex;
-	int texHandles[TextureType::kCount];
+	std::vector < int > texHandles;
 
 	bool doDraw;
 

@@ -13,4 +13,6 @@ void SampleModel::Draw(Matrix4* vpMat_)
 SampleModel::SampleModel()
 {
 	model = M::GetInstance()->CreateModel("./M/resource/preset/model/teapot.obj");
+	model->Getter_ModelData().appearance[0].shaderSetIndex =
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 }

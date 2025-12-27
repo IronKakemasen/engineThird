@@ -7,6 +7,7 @@ Appearance::Appearance()
 	blendMode = kBlendModeNormal;
 	shaderSetIndex = 0;
 	doDraw = true;
+	texHandles.resize(1);
 	texHandles[0] = 0;		//(White2x2)
 }
 

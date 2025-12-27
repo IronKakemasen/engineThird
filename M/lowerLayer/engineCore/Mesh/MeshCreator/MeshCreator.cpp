@@ -80,9 +80,16 @@ void MeshCreator::InputTextureIndex(ModelSimple* model_,int index_,int textureHa
 		return;
 	}
 
+	int numtexHandlesSlot = (int)model_->Getter_ModelData().appearance[index_].texHandles.size();
+
+	if (numtexHandlesSlot < textureHandleIndex_ + 1)
+	{
+		model_->Getter_ModelData().appearance[index_].texHandles.resize(textureHandleIndex_ + 1);
+	}
+
 	//colorMapのインデックスの読み込み
 	std::string texMapFilePath = dirPath_ + ConvertString(textureFile_);
-	model_->Getter_ModelData().appearance[index_].texHandles[textureHandleIndex_] =
+	model_->Getter_ModelData().appearance[index_].texHandles[textureHandleIndex_] = 
 		textureDataManager->CreateTextureFromFile(texMapFilePath);
 
 }
