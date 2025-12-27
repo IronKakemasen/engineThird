@@ -56,12 +56,20 @@ bool WinApp::InitD3D()
 	//textureDataManager,textureDataCreatorの初期化
 	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator());
 
-	//exclusiveDrawの初期化
-	exclusiveDraw.Init(&allPipelineSet, &allMesh, &shaderBufferData);
-
 	//meshCreatorの初期化
 	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),
 		&textureDataManager,&commandControl,&fenceControl,swapChainControl.Getter_SwapChain());
+
+	//lightCreatorの初期化
+	lightCreator.Init(&exclusiveDraw, deviceSetUp.Getter_Device());
+
+	//cameraParameterSetterの初期化
+	cameraParameterSetter.Init(deviceSetUp.Getter_Device());
+
+	//exclusiveDrawの初期化
+	exclusiveDraw.Init(&allPipelineSet, &allMesh, 
+		&shaderBufferData, cameraParameterSetter.Getter_Buffer());
+
 
 #ifdef USE_IMGUI
 	//ImGuiの初期化
@@ -275,7 +283,7 @@ bool WinApp::InitApp()
 
 	//テクスチャ読み込み含む（コマンド積む）
 	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
-		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator);
+		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightCreator,&cameraParameterSetter);
 
 	commandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };

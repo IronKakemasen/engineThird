@@ -1,7 +1,7 @@
 #pragma once
 #include "../CameraBehavior.h"
 
-struct NormalCamera:CameraBehavior
+struct NormalCamera:Camera
 {
 	virtual void Update()override;
 

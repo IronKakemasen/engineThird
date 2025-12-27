@@ -3,6 +3,14 @@
 #include "../../Mesh/allMesh/allMesh.h"
 #include "../../Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../Essential/BarrierControl/BarrierControl.h"
+#include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
+#include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
+
+void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_)
+{
+	dirLightBuffer = dirLightBuffer_;
+}
+
 
 void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 {
@@ -12,6 +20,7 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 	{
 		auto* mesh = meshAndData_->Getter_MeshForModel(i);
 		auto* appearance = &meshAndData_->Getter_ModelData().appearance[i];
+		auto* modelData = meshAndData_->Getter_ModelDataOfResMaterials(i);
 		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex, 
 			appearance->blendMode, appearance->cullMode);
 		auto* cList = src_pipeline->Getter_CommandList();
@@ -36,33 +45,38 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		Vector4 color = appearance->color * CommonV::inv_255;
 		mesh->materialBuffer.material.buffMap->albedoColor = color;
 		mesh->materialBuffer.material.buffMap->uvTransform = appearance->uvTrans.GetUVMat();
+		mesh->materialBuffer.material.buffMap->diffuse = modelData->diffuse;
+		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
+		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
+
 
 		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[appearance->texHandle]);
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
 			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
-			mesh->materialBuffer.material.GetVirtualGPUAddress());
+			mesh->materialBuffer.material.GetVirtualGPUAddress(),
+			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
 
 		//描画
 		UINT indexCnt = (UINT)meshAndData_->Getter_ModelData().resMesh[i].indices.size();
 		cList->DrawIndexedInstanced(indexCnt, 1, 0, 0,0);
 	}
-
-
 }
-
 
 void ExclusiveDraw::ResetDrawIndexes()
 {
 	allMesh->ResetDrawIndexes();
 }
 
-void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_)
+void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, 
+	ShaderBufferData* shaderBufferData_, CameraParaBuffer* cameraParaBuffer_)
 {
 	allMesh = allMesh_;
 	allPipelineSet = allPipelineSet_;
 	shaderBufferData = shaderBufferData_;
+	cameraParaBuffer = cameraParaBuffer_;
 }
 
 void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,

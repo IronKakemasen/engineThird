@@ -12,5 +12,5 @@ void SampleModel::Draw(Matrix4* vpMat_)
 
 SampleModel::SampleModel()
 {
-	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/axis.obj");
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/teapot.obj");
 }

@@ -1,6 +1,7 @@
 struct DirectionalLight
 {
-    float4 color;
-    float3 direction;
+    float3 pos;
+    float3 color;
     float intensity;
+
 };

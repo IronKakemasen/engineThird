@@ -5,18 +5,24 @@
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
 #include "../../Mesh/allMesh/MeshForModel/MeshForModelCommon.h"
 
+
 class AllPipelineSet;
 class AllMesh;
 struct ShaderBufferData;
+struct DirectionalLightBuffer;
+struct CameraParaBuffer;
 
 class ExclusiveDraw
 {
 	AllPipelineSet* allPipelineSet = nullptr;
 	AllMesh* allMesh = nullptr;
 	ShaderBufferData* shaderBufferData = nullptr;
+	DirectionalLightBuffer* dirLightBuffer = nullptr;
+	CameraParaBuffer* cameraParaBuffer = nullptr;
 
 public:
-	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, ShaderBufferData* shaderBufferData_);
+	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, 
+		ShaderBufferData* shaderBufferData_, CameraParaBuffer* cameraParaBuffer_);
 
 	void DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_ ,CullMode cullMode_,int shaderSet_,
@@ -32,7 +38,8 @@ public:
 
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
 
-
 	void ResetDrawIndexes();
+
+	void Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_);
 };
 

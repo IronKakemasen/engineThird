@@ -1,20 +1,22 @@
 #include "SampleScene.h"
 #include "../../../../external/imgui/imgui.h"
+#include "../../engineCore/Light/DirectionalLight/DirectionalLight.h"
 
 
 void SampleScene::Update()
 {
+	dirLight->Update();
+	cameraController->Update();
 	mainCamera->Update();
+	
 
 	sPlayer->Update();
 	sObj->Update();
-
-
 }
 
 void SampleScene::Draw()
 {
-	Matrix4* vpMat = &mainCamera->vpMat;
+	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
 	sPlayer->Draw(vpMat);
@@ -32,7 +34,7 @@ void SampleScene::Debug()
 
 	if (ImGui::TreeNode("obj"))
 	{
-		ImGui::DragFloat3("trans", reinterpret_cast<float*>(&sObj->Getter_Trans()->pos), 0.1f);
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&sObj->Getter_Trans()->pos), 0.1f);
 		ImGui::DragFloat3("rotate", reinterpret_cast<float*>(&sObj->Getter_Trans()->rotation), 0.1f);
 		ImGui::DragFloat3("scale", reinterpret_cast<float*>(&sObj->Getter_Trans()->scale), 0.1f);
 
@@ -40,10 +42,18 @@ void SampleScene::Debug()
 	}
 	if (ImGui::TreeNode("camera"))
 	{
-		ImGui::DragFloat3("trans", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->pos),0.1f);
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->pos),0.1f);
 		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->quaternion.axis),0.025f);
 		ImGui::TreePop();
 	}
+	if (ImGui::TreeNode("dirLight"))
+	{
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(dirLight->Getter_Pos()), 0.1f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(dirLight->Getter_Color()), 0.1f);
+		ImGui::DragFloat("intensity", reinterpret_cast<float*>(dirLight->Getter_Intensity()), 0.025f);
+		ImGui::TreePop();
+	}
+
 	ImGui::End();
 
 }

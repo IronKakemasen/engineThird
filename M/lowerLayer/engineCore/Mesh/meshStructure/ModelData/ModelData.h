@@ -20,7 +20,7 @@ struct ResMesh
 {
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
-    uint32_t materialId;   //!< マテリアル番号です.
+    uint32_t materialId;   
 };
 
 struct ModelData

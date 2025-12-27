@@ -32,7 +32,7 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 
 	// ワールド行列バッファ生成
 	meshForModel->transformMatrixBuffer.matrix.CreateAndMapping(device_);
-	// マテリアルバッファ作成
+	// マテリアルバッファ作成1
 	meshForModel->materialBuffer.material.CreateAndMapping(device_);
 }
 

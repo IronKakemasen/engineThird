@@ -47,7 +47,14 @@
 //=================================================================== BufferData,Creator
 #include "./Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 #include "./Buffer/gpuResources/Creator/SrvCreator/SrvCreator.h"
+//===================================================================
 
+//=================================================================== LightCreator
+#include "./Light/LightCreator/LightCreator.h"
+//===================================================================
+
+//=================================================================== CameraParaBufferSetter
+#include "./Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
 //===================================================================
 
 //=================================================================== Imgui
@@ -129,6 +136,12 @@ private:
 
 	//[ FpsController ]
 	FPSController fpsController;
+
+	//[ LightCreator ]
+	LightCreator lightCreator;
+
+	//[ CameraParameterSetter ]
+	CameraParameterSetter cameraParameterSetter;
 
 	bool InitApp();
 	bool InitWnd();

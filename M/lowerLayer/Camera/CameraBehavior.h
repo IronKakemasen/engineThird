@@ -1,6 +1,7 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
 
+
 struct CameraBehavior
 {
 	Matrix4 vpMat;
@@ -16,5 +17,10 @@ public:
 	{
 		return &trans;
 	}
+};
+
+struct Camera:CameraBehavior
+{
+
 };
 
