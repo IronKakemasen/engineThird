@@ -22,7 +22,7 @@ void MobileQuadBehavior::Initialize(float width_, float height_, Vector3 world_p
 	SetTexcoord();
 	appearance.trans.pos = world_pos_;
 	appearance.color = color_;
-	appearance.texHandle = (int)texHandle_;
+	appearance.texHandles[0] = (int)texHandle_;
 }
 
 void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightTop_, Vector3 local_leftBottom_, Vector3 local_rightBottom_,
@@ -33,7 +33,7 @@ void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightT
 	SetTexcoord();
 	appearance.trans.pos = world_pos_;
 	appearance.color = color_;
-	appearance.texHandle = (int)texHandle_;
+	appearance.texHandles[0] = (int)texHandle_;
 }
 
 

@@ -10,7 +10,7 @@ struct ResMaterial
     Vector3 specular;
     float alpha{};
     float shininess{};
-    std::wstring diffuseMap;    
+    std::wstring colorMap;    
     std::wstring specularMap; 
     std::wstring shininessMap; 
     std::wstring normalMap;   

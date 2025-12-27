@@ -23,5 +23,8 @@ private:
 	CommandControl* commandControl = nullptr;
 	FenceControl* fenceControl = nullptr;
 	IDXGISwapChain4* swapChain = nullptr;
+
+	void InputTextureIndex(ModelSimple* model_, int index_, int textureHandleIndex_,
+		std::string dirPath_, std::wstring textureFile_);
 };
 

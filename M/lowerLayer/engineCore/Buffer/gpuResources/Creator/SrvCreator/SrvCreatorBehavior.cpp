@@ -15,7 +15,7 @@ void SrvCreatorBehavior::Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Devic
 
 uint16_t SrvCreatorBehavior::CreateSRV(D3D12_SHADER_RESOURCE_VIEW_DESC desc_, ShaderBuffer* shaderBuffer_)
 {
-	//テクスチャハンドル
+	//ハンドル
 	if (ShaderBuffer::cur_index > 0)
 	{
 		

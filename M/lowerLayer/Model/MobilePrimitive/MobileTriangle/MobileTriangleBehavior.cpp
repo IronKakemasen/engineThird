@@ -15,7 +15,7 @@ void MobileTrianglebehavior::Initialize(float width_, float height_, Vector3 pos
 	SetNormal();
 	SetTexcoord();
 
-	appearance.texHandle = texHandle_;
+	appearance.texHandles[0] = texHandle_;
 	appearance.color = color_;
 }
 
@@ -27,7 +27,7 @@ void MobileTrianglebehavior::Initialize(Vector3 local_leftPos_, Vector3 local_to
 	SetNormal();
 	SetTexcoord();
 
-	appearance.texHandle = texHandle_;
+	appearance.texHandles[0] = texHandle_;
 	appearance.color = color_;
 }
 

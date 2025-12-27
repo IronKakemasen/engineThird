@@ -5,6 +5,7 @@
 #include "../HLSLI/CameraPara.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
+Texture2D<float4> normalMap : register(t1);
 
 SamplerState gSampler : register(s0);
 

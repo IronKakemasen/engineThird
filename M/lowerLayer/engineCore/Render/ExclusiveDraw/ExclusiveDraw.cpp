@@ -49,8 +49,8 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
 		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
 
-
-		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[appearance->texHandle]);
+		//colorMap
+		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[appearance->texHandles[0]]);
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(

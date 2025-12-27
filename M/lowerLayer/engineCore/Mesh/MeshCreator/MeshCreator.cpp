@@ -45,14 +45,18 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 		//メッシュの生成
 		model->CreateMesh(device,i);
 
-		//diffuseMapのインデックスの読み込み
+		//texMapのインデックスの読み込み
 		std::filesystem::path fullPath = filePath_;
 		std::filesystem::path dirPath = fullPath.parent_path();
 		std::string cnv = dirPath.string() + "/";
-		std::string diffuseMapFilePath = cnv + ConvertString(
-			model->Getter_ModelData().resMaterial[i].diffuseMap);
-		model->Getter_ModelData().appearance[i].texHandle =
-			textureDataManager->CreateTextureFromFile(diffuseMapFilePath);
+
+		//カラーマップ
+		InputTextureIndex(model.get(), i, Appearance::kColormap,
+			cnv, model->Getter_ModelData().resMaterial[i].colorMap);
+
+		//法線マップ
+		InputTextureIndex(model.get(), i, Appearance::kNormalmap,
+			cnv, model->Getter_ModelData().resMaterial[i].normalMap);
 
 		//shaderSetの初期化
 		model->Getter_ModelData().appearance[i].shaderSetIndex = 
@@ -66,4 +70,19 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	fenceControl->WaitFenceEvent(commandControl->Getter_CommandQueue(), swapChain);
 
 	return std::move(model);
+}
+
+void MeshCreator::InputTextureIndex(ModelSimple* model_,int index_,int textureHandleIndex_,
+	std::string dirPath_,std::wstring textureFile_)
+{
+	if (textureFile_.empty())
+	{
+		return;
+	}
+
+	//colorMapのインデックスの読み込み
+	std::string texMapFilePath = dirPath_ + ConvertString(textureFile_);
+	model_->Getter_ModelData().appearance[index_].texHandles[textureHandleIndex_] =
+		textureDataManager->CreateTextureFromFile(texMapFilePath);
+
 }

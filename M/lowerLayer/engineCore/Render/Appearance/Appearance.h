@@ -5,13 +5,23 @@
 
 struct Appearance
 {
+	enum TextureType
+	{
+		kColormap,
+		kNormalmap,
+
+
+		kCount
+	};
+
 	Transform trans;
 	UVTransform uvTrans;
 	Vector4 color;
 	CullMode cullMode;
 	BlendMode blendMode;
 	int shaderSetIndex;
-	int texHandle;
+	int texHandles[TextureType::kCount];
+
 	bool doDraw;
 
 	Appearance();

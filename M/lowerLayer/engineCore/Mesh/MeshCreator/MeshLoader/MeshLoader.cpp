@@ -189,16 +189,16 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
         }
     }
 
-    // ディフューズマップ
+    // colorマップ
     {
         aiString path;
         if (pSrcMaterial->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
         {
-            dstMaterial.diffuseMap = Convert(path);
+            dstMaterial.colorMap = Convert(path);
         }
         else
         {
-            dstMaterial.diffuseMap.clear();
+            dstMaterial.colorMap.clear();
         }
     }
 
