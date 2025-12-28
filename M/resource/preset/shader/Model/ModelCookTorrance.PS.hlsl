@@ -4,7 +4,6 @@
 #include "../HLSLI/CameraPara.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
-Texture2D<float4> normalMap : register(t1);
 
 SamplerState gSampler : register(s0);
 
@@ -24,9 +23,7 @@ struct VertexShaderOutput
     float2 texcoord : TEXCOORD0;
     float3 normal : NORMAL0;
     float3 worldPosition : POSITOIN0;
-    float3x3 invTangentBasis : INV_TANGENT_BASIS; //接線空間への基底変換行列の逆行列
 };
-
 
 PixcelShaderOutput main(VertexShaderOutput input)
 {
@@ -34,18 +31,30 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(gSampler, transformedUV.xy);
-    float3 color = gMaterial.albedoColor.rgb * textureColor.rgb;
 
     float3 dirLightDir = normalize(float3(dirLight.pos.x, dirLight.pos.y, dirLight.pos.z));
-    float3 normal = normalMap.Sample(gSampler, input.texcoord).xyz * 2.0 - 1.0;
-    normal = mul(input.invTangentBasis, normal);
+    float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
+
+    float3 H = normalize(toCamera + dirLightDir);
     
-    float3 diffuse = DiffuseModelLambert(normal, dirLightDir, gMaterial.diffuse, dirLight.color, dirLight.intensity);
-    //float3 specular = SpecularModelPhong(normal, dirLightDir, toCamera, gMaterial.specular,
-    //dirLight.color, dirLight.intensity, gMaterial.shininess);
+    float NH = saturate(dot(normal, H));
+    float NV = saturate(dot(normal, toCamera));
+    float NL = saturate(dot(normal, dirLightDir));
+    float VH = saturate(dot(toCamera, H));
     
-    output.color = float4(color.rgb * diffuse , gMaterial.albedoColor.a * textureColor.a);
+    float3 diffuse = DiffuseModelNormalizedLambert(gMaterial.albedoColor.rgb, gMaterial.metallic);
+    
+    float3 Ks = gMaterial.albedoColor.rgb * gMaterial.metallic;
+    float a = gMaterial.roughness;
+    float D = Distribution_Beckmann(a, NH);
+    float G2 = ShadowMasking_Vcavity(NH, NV, NL, VH);
+    float3 Fr = SchlickFrensnel(normal, dirLightDir, toCamera, Ks);
+        
+    float3 specular = (D * G2 * Fr) / (4.0f * NV * NL);
+    
+    output.color = float4(dirLight.color * dirLight.intensity * textureColor.rgb *
+        (diffuse + specular) * NL , gMaterial.albedoColor.a * textureColor.a);
     return output;
 
 }

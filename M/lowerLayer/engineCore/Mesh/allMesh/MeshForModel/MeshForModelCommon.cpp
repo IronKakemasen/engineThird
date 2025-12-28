@@ -106,10 +106,16 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 		//modelSimple
 		allPipelineset_->CreateNewPipeline(folderPath, "ModelSimple.VS", "ModelSimple.PS", inputLayOutFunc, modelSimpleRP);
-
+		//modelPhong
+		allPipelineset_->CreateNewPipeline(folderPath, "ModelPhong.VS", "ModelPhong.PS", inputLayOutFunc, modelSimpleRP);
+		//modelNormalizedPhong
+		allPipelineset_->CreateNewPipeline(folderPath, "ModelNormalizedPhong.VS", "ModelNormalizedPhong.PS", inputLayOutFunc, modelSimpleRP);
 		//modelBump
 		allPipelineset_->CreateNewPipeline(folderPath, "ModelBump.VS", "ModelBump.PS", inputLayOutFunc, modelBumpRP);
+		//ModelCookTorrance
+		allPipelineset_->CreateNewPipeline(folderPath, "ModelCookTorrance.VS", "ModelCookTorrance.PS", inputLayOutFunc, modelSimpleRP);
 
+		
 		onlyOnce = false;
 	}
 

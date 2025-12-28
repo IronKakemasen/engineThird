@@ -10,6 +10,8 @@ struct ResMaterial
     Vector3 specular;
     float alpha{};
     float shininess{};
+    float metalic = 0.5f;
+    float roughness = 0.1f;
     std::wstring colorMap;    
     std::wstring specularMap; 
     std::wstring shininessMap; 
@@ -27,6 +29,6 @@ struct ModelData
 {
     std::vector < ResMaterial > resMaterial;
     std::vector < ResMesh > resMesh;
-    std::vector <Appearance> appearance;
+    std::vector < Appearance > appearance;
 
 };

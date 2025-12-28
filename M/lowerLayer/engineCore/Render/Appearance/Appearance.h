@@ -2,6 +2,7 @@
 #include "../../../../utilities/UVTransform/UVTransform.h"
 #include "../../../../utilities/Transform/Transform.h"
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
+#include <unordered_map>
 
 struct Appearance
 {
@@ -11,6 +12,7 @@ struct Appearance
 		kNormalmap,
 
 
+		kNone,
 		kCount
 	};
 
@@ -20,9 +22,11 @@ struct Appearance
 	CullMode cullMode;
 	BlendMode blendMode;
 	int shaderSetIndex;
-	std::vector < int > texHandles;
-
+	std::unordered_map < TextureType ,int > texHandlesContainer;
+	std::vector < int > use_texHandles;
 	bool doDraw;
+
+	void SetUsingTextureFromContainer(TextureType colorMap_, TextureType normalMap_);
 
 	Appearance();
 };

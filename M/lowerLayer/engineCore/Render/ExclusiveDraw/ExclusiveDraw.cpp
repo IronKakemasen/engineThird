@@ -47,13 +47,15 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		mesh->materialBuffer.material.buffMap->diffuse = modelData->diffuse;
 		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
 		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
+		mesh->materialBuffer.material.buffMap->metallic = modelData->metalic;
+		mesh->materialBuffer.material.buffMap->roughness = modelData->roughness;
 
 		//texture
 		int k = 0;
-		for (; k < (int)appearance->texHandles.size(); ++k)
+		for (; k < (int)appearance->use_texHandles.size(); ++k)
 		{
 			cList->SetGraphicsRootDescriptorTable(k,
-				shaderBufferData->gpuHandleContainer[appearance->texHandles[k ]]);
+				shaderBufferData->gpuHandleContainer[appearance->use_texHandles[k]]);
 		}
 
 		//Cバッファの場所を指定

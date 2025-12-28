@@ -1,5 +1,4 @@
 #include "../HLSLI/Material.hlsli"
-#include "../HLSLI/VertexOutput.hlsli"
 
 Texture2D<float4> albedoTex : register(t0);
 SamplerState gSampler : register(s0);
@@ -8,6 +7,14 @@ SamplerState gSampler : register(s0);
 //b = constantBuffer,0 = shader上でのresourceナンバー
 ConstantBuffer<Material>gMaterial : register(b2);
 //ConstantBuffer<DirectionalLight> gDirectionalLight : register(b3);
+
+struct VertexShaderOutput
+{
+    float4 position : SV_POSITION;
+    float2 texcoord : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float3 worldPosition : POSITOIN0;
+};
 
 
 struct PixcelShaderOutput

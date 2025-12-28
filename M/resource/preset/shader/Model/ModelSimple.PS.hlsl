@@ -1,5 +1,4 @@
 #include "../HLSLI/Material.hlsli"
-#include "../HLSLI/VertexOutput.hlsli"
 #include "../HLSLI/DirectionalLight.hlsli"
 #include "../HLSLI/ComputeLight.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
@@ -18,6 +17,13 @@ struct PixcelShaderOutput
     float4 color : SV_TARGET0;
 };
 
+struct VertexShaderOutput
+{
+    float4 position : SV_POSITION;
+    float2 texcoord : TEXCOORD0;
+    float3 normal : NORMAL0;
+    float3 worldPosition : POSITOIN0;
+};
 
 PixcelShaderOutput main(VertexShaderOutput input)
 {
@@ -31,11 +37,9 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
     
-    float3 diffuse = Diffuse(normal, dirLightDir, gMaterial.diffuse, dirLight.color, dirLight.intensity);
-    float3 specular = Specular(normal, dirLightDir, toCamera, gMaterial.specular,
-    dirLight.color, dirLight.intensity, gMaterial.shininess);
+    float3 diffuse = DiffuseModelLambert(normal, dirLightDir, gMaterial.diffuse, dirLight.color, dirLight.intensity);
     
-    output.color = float4(color.rgb * (diffuse + specular), gMaterial.albedoColor.a * textureColor.a);
+    output.color = float4(color.rgb * diffuse, gMaterial.albedoColor.a * textureColor.a);
     return output;
 
 }

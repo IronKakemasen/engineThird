@@ -1,14 +1,12 @@
 #include "../HLSLI/TransformMatrix.hlsli"
-#include "../HLSLI/VertexOutput.hlsli"
+#include "../HLSLI/VertexShaderInput.hlsli"
 
-
-struct VertexShaderInput
+struct VertexShaderOutput
 {
-	float3 position : POSITION0;
+    float4 position : SV_POSITION;
     float2 texcoord : TEXCOORD0;
     float3 normal : NORMAL0;
-    float3 tangent : TANGENT;
-
+    float3 worldPosition : POSITOIN0;
 };
 
 ConstantBuffer<WorldMatrix> gWorldMatrix : register(b0);

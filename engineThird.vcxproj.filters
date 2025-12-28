@@ -360,6 +360,9 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h">
@@ -708,6 +711,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
