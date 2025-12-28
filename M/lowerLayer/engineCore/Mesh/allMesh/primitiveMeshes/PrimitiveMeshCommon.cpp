@@ -76,6 +76,9 @@ void PrimitiveMeshCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
 			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 1));
 			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 2));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 3));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 4));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 5));
 
 			return meters;
 			};

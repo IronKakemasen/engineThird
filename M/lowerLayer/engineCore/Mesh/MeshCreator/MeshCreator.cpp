@@ -51,21 +51,22 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 		std::filesystem::path dirPath = fullPath.parent_path();
 		std::string cnv = dirPath.string() + "/";
 
+		auto* resMaterial = model->Getter_ModelDataOfResMaterials(i);
+		auto* mesh = model->Getter_MeshForModel(i);
+
 		//カラーマップ
-		InputTextureIndex(model.get(), i, Appearance::kColormap,
-			cnv, model->Getter_ModelData().resMaterial[i].colorMap);
-
+		InputTextureIndex(model.get(), i, Appearance::kColormap, cnv, resMaterial->colorMap);
 		//法線マップ
-		InputTextureIndex(model.get(), i, Appearance::kNormalmap,
-			cnv, model->Getter_ModelData().resMaterial[i].normalMap);
-
+		InputTextureIndex(model.get(), i, Appearance::kNormalmap, cnv, resMaterial->normalMap);
 		//スペキュラーマップ
-		InputTextureIndex(model.get(), i, Appearance::kSpecularMap,
-			cnv, model->Getter_ModelData().resMaterial[i].specularMap);
-
+		InputTextureIndex(model.get(), i, Appearance::kSpecularMap, cnv, resMaterial->specularMap);
 		//シャインネスマップ
-		InputTextureIndex(model.get(), i, Appearance::kShininessMap,
-			cnv, model->Getter_ModelData().resMaterial[i].shininessMap);
+		InputTextureIndex(model.get(), i, Appearance::kShininessMap, cnv, resMaterial->shininessMap);
+
+		mesh->materialBuffer.material.buffMap->diffuse = resMaterial->diffuse;
+		mesh->materialBuffer.material.buffMap->shininess = resMaterial->shininess;
+		mesh->materialBuffer.material.buffMap->specular = resMaterial->specular;
+
 	}
 
 	commandControl->Getter_commandList()->Close();

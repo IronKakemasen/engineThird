@@ -17,6 +17,7 @@ class AllPipelineSet;
 struct MeshAndDataCommon;
 class LightCreator;
 class DirectionalLight;
+class PointLight;
 class CameraParameterSetter;
 struct CameraPara;
 
@@ -68,6 +69,7 @@ public:
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
 
 	DirectionalLight* CreateDirLight();
+	PointLight* CreatePointLight();
 
 	void SetCameraPara(CameraPara cameraPara_);
 

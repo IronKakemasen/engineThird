@@ -1,12 +1,12 @@
 #pragma once
 #include "../LightBehavior.h"
 
-struct DirectionalLightBuffer;
+struct PointLightBuffer;
 
-class DirectionalLight:LightBehavior,LightBasePara
+class PointLight :LightBehavior, PointLightPara
 
 {
-	DirectionalLightBuffer* dirLightBuffer = nullptr;
+	PointLightBuffer* pLightBuffer = nullptr;
 
 public:
 	virtual void Update() override;
@@ -26,7 +26,7 @@ public:
 	}
 
 
-	DirectionalLight(DirectionalLightBuffer* dirLightBuffer_);
+	PointLight(PointLightBuffer* pLightBuffer_);
 
 };
 

@@ -1,15 +1,21 @@
 #include "../HLSLI/Material.hlsli"
+#include "../HLSLI/DirectionalLight.hlsli"
+#include "../HLSLI/ComputeLight.hlsli"
+#include "../HLSLI/CameraPara.hlsli"
+#include "../HLSLI/PointLight.hlsli"
 
-Texture2D<float4> albedoTex : register(t0);
+
+Texture2D<float4> colorMap : register(t0);
+
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
-SamplerState metalicMap : register(s2);
-SamplerState roughnessMap : register(s3);
+SamplerState specularMap : register(s2);
+SamplerState shininessMap : register(s3);
 
-//コンスタントバッファの定義
-//b = constantBuffer,0 = shader上でのresourceナンバー
-ConstantBuffer<Material>gMaterial : register(b2);
-//ConstantBuffer<DirectionalLight> gDirectionalLight : register(b3);
+ConstantBuffer<Material> gMaterial : register(b2);
+ConstantBuffer<DirectionalLight> dirLight : register(b3);
+ConstantBuffer<CameraPara> cameraPara : register(b4);
+ConstantBuffer<PointLight> pLight : register(b5);
 
 struct VertexShaderOutput
 {
@@ -30,14 +36,32 @@ PixcelShaderOutput main(VertexShaderOutput input)
 {
     PixcelShaderOutput output;
 
-
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
-    float4 textureColor = albedoTex.Sample(baseColorSmp, transformedUV.xy);
+    float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
+
+    float3 dirLightDir = normalize(float3(dirLight.pos.x, dirLight.pos.y, dirLight.pos.z));
+    float3 normal = normalize(input.normal);
+    float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
+
+    float3 H = normalize(toCamera + dirLightDir);
     
-    output.color = gMaterial.albedoColor * textureColor;
-
-   //output.color = gMaterial.color;
-
+    float NH = saturate(dot(normal, H));
+    float NV = saturate(dot(normal, toCamera));
+    float NL = saturate(dot(normal, dirLightDir));
+    float VH = saturate(dot(toCamera, H));
+    
+    float3 diffuse = DiffuseModelNormalizedLambert(gMaterial.albedoColor.rgb, gMaterial.metallic);
+    
+    float3 Ks = gMaterial.albedoColor.rgb * gMaterial.metallic;
+    float a = gMaterial.roughness * gMaterial.roughness;
+    float D = Distribution_GGX(a, NH);
+    float G2 = G2_Smith(NL, NV, a);
+    float3 Fr = SchlickFrensnel(normal, dirLightDir, toCamera, Ks);
+        
+    float3 specular = (D * G2 * Fr) / (4.0f * NV * NL);
+    
+    output.color = float4(dirLight.color * dirLight.intensity * textureColor.rgb *
+        (diffuse + specular) * NL, gMaterial.albedoColor.a * textureColor.a);
     return output;
 
 }

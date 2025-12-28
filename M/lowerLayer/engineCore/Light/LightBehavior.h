@@ -7,12 +7,16 @@ struct LightBasePara
 	float pad1;
 	Vector3 color;
 	float intensity;
-
 };
 
-struct LightBehavior : LightBasePara
+struct PointLightPara:LightBasePara
 {
+	float radius;
+};
 
+
+struct LightBehavior 
+{
 	virtual void Update() = 0;
 	virtual void Init() = 0;
 	virtual void Reset() = 0;

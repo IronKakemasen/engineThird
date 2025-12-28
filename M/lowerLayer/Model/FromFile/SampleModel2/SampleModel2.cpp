@@ -30,13 +30,13 @@ SampleModel2::SampleModel2()
 	////使用するテクスチャの選択
 	//model->Getter_ModelData().appearance[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
-	//モデルの生成
-	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
-	//使用するシェーダーの選択
-	(*model->Getter_Appearance())[0].shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelPhong.VS", "ModelPhong.PS");
-	//使用するテクスチャの選択
-	(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	////モデルの生成
+	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
+	////使用するシェーダーの選択
+	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelPhong.VS", "ModelPhong.PS");
+	////使用するテクスチャの選択
+	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
@@ -45,6 +45,14 @@ SampleModel2::SampleModel2()
 	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelCookTorrance.VS", "ModelCookTorrance.PS");
 	////使用するテクスチャの選択
 	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+
+	//モデルの生成
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
+	//使用するシェーダーの選択
+	(*model->Getter_Appearance())[0].shaderSetIndex =
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+	//使用するテクスチャの選択
+	(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 }
 

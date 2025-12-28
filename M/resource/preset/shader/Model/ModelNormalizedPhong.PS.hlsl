@@ -2,17 +2,20 @@
 #include "../HLSLI/DirectionalLight.hlsli"
 #include "../HLSLI/ComputeLight.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
+#include "../HLSLI/PointLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
-SamplerState metalicMap : register(s2);
-SamplerState roughnessMap : register(s3);
+SamplerState specularMap : register(s2);
+SamplerState shininessMap : register(s3);
+
 
 ConstantBuffer<Material> gMaterial : register(b1);
 ConstantBuffer<DirectionalLight> dirLight : register(b2);
 ConstantBuffer<CameraPara> cameraPara : register(b3);
+ConstantBuffer<PointLight> pLight : register(b4);
 
 
 struct PixcelShaderOutput

@@ -13,7 +13,7 @@ void DirectionalLight::Update()
 
 void DirectionalLight::Init()
 {
-	color = { 255,255,255};
+	color = { 25,28,50};
 	intensity = 1.0f;
 	pos = { 1,1,1 };
 

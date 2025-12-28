@@ -5,11 +5,14 @@
 #include "../../GameObject/Sample/SampleEnemy/SampleEnemy.h"
 #include "../../GameObject/Sample/SampleObj/SampleObj.h"
 
+class PointLight;
 
 class SampleScene final : public SceneBehavior
 {
 public:
 	SampleScene();
+
+	PointLight* pointLight;
 
 	std::unique_ptr<MTriangle> triangle;
 	std::unique_ptr<MQuad> quad;

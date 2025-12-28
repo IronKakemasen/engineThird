@@ -1,11 +1,7 @@
 
-static const float kPi = 3.14159265359f;
-static const float kInv_pi = 1.0f / 3.14159265359f;
-
-
 float3 DiffuseModelNormalizedLambert(float3 baseColor_, float metalic_)
 {
-    return baseColor_ * (1.0f - metalic_) * kInv_pi;
+    return baseColor_ * (1.0f - metalic_) * 0.31830988618;
 }
 
 float3 DiffuseModelLambert(float3 normal_ , float3 lightDir_, float3 diffuse_,
@@ -30,7 +26,7 @@ float3 SpecularModelNormalizedPhong(float3 baseColor_ , float metalic_,
     float3 reflection = normalize(-toCamera_ + 2.0f * dot(normal_, toCamera_) * normal_);
     float LR = saturate(dot(lightDir_, reflection));
     
-    return baseColor_ * metalic_ * ((shininess_ + 2.0f) / (2.0f * kPi)) * pow(LR, shininess_);
+    return baseColor_ * metalic_ * ((shininess_ + 2.0f) / (2.0f * 3.14159265359f)) * pow(LR, shininess_);
 }
 
 float3 SchlickFrensnel(float3 normal_, float3 lightDir_,float3 toCamera_ , float3 specularColor_)
@@ -54,7 +50,7 @@ float Distribution_GGX(float m_, float NH_)
     float m2 = m_ * m_;
 
     float f = (NH_ * m2 - NH_) * NH_ + 1;
-    return m2 / (kPi * f * f);    
+    return m2 / (3.14159265359f * f * f);
 }
 
 

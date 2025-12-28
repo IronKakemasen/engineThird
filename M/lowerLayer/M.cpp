@@ -11,9 +11,14 @@ void M::SetCameraPara(CameraPara cameraPara_)
 	cameraParameterSetter->SetCameraPara(cameraPara_);
 }
 
+PointLight* M::CreatePointLight()
+{
+	return lightCreator->CreatePointLight();
+}
+
 DirectionalLight* M::CreateDirLight()
 {
-	return lightCreator->CreateDirecctoinalLight();
+	return lightCreator->CreateDirectionalLight();
 }
 
 std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)

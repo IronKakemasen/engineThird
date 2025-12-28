@@ -4,7 +4,13 @@
 #include "../../Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../Essential/BarrierControl/BarrierControl.h"
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
+#include "../../Buffer/constantBuffer/PointLightBuffer/PointLightBuffer.h"
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
+
+void ExclusiveDraw::Setter_PointLightBuffer(PointLightBuffer* pLightBuffer_)
+{
+	pLightBuffer = pLightBuffer_;
+}
 
 void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_)
 {
@@ -44,9 +50,6 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		Vector4 color = appearance->color * CommonV::inv_255;
 		mesh->materialBuffer.material.buffMap->albedoColor = color;
 		mesh->materialBuffer.material.buffMap->uvTransform = appearance->uvTrans.GetUVMat();
-		mesh->materialBuffer.material.buffMap->diffuse = modelData->diffuse;
-		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
-		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
 		mesh->materialBuffer.material.buffMap->metalic = appearance->metalic;
 		mesh->materialBuffer.material.buffMap->roughness = appearance->roughness;
 
@@ -64,7 +67,8 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
 			mesh->materialBuffer.material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
+			pLightBuffer->pLight.GetVirtualGPUAddress());
 
 		//描画
 		UINT indexCnt = (UINT)meshAndData_->Getter_ModelData().resMesh[i].indices.size();
@@ -153,7 +157,10 @@ void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& 
 			1,
 			quadMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
-			quadMesh->materialBuffer[i].material.GetVirtualGPUAddress());
+			quadMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
+			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
+
 
 		//描画(DrawCall)。6インデックスで一つのインスタンス
 		cList->DrawIndexedInstanced(quadMesh->indexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);

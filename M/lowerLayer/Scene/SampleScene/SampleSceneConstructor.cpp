@@ -1,5 +1,6 @@
 #include "SampleScene.h"
 #include "../../engineCore/Light/DirectionalLight/DirectionalLight.h"
+#include "../../engineCore/Light/PointLight/PointLight.h"
 
 
 SampleScene::SampleScene()
@@ -10,6 +11,7 @@ SampleScene::SampleScene()
 
 void SampleScene::Instantiate()
 {
+	pointLight = M::GetInstance()->CreatePointLight();
 	triangle.reset(new MTriangle);
 	quad.reset(new MQuad);
 	sPlayer.reset(new SamplePlayer);
@@ -24,7 +26,10 @@ void SampleScene::Instantiate()
 
 void SampleScene::Init()
 {
+	pointLight->Init();
 	dirLight->Init();
+	*dirLight->Getter_Intensity() = 0.0f;
+
 	mainCamera->Getter_Trans()->pos = { 0.0f,3.0f,-1.0f };
 	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
 	triangle->Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kPlayer));

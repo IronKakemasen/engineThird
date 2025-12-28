@@ -13,7 +13,6 @@ void SampleModel::Draw(Matrix4* vpMat_)
 	ImGui::DragFloat("metalic", &(*model->Getter_Appearance())[0].metalic, 0.01f);
 	ImGui::DragFloat("roughness", &(*model->Getter_Appearance())[0].roughness, 0.01f);
 	ImGui::End();
-
 }
 
 SampleModel::SampleModel()

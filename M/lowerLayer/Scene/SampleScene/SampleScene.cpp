@@ -1,11 +1,14 @@
 #include "SampleScene.h"
 #include "../../../../external/imgui/imgui.h"
 #include "../../engineCore/Light/DirectionalLight/DirectionalLight.h"
+#include "../../engineCore/Light/PointLight/PointLight.h"
 
 
 void SampleScene::Update()
 {
 	dirLight->Update();
+	pointLight->Update();
+
 	cameraController->Update();
 	mainCamera->Update();
 	

@@ -4,8 +4,8 @@ Texture2D<float4> albedoTex : register(t1);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
-SamplerState metalicMap : register(s2);
-SamplerState roughnessMap : register(s3);
+SamplerState specularMap : register(s2);
+SamplerState shininessMap : register(s3);
 
 ConstantBuffer<Material> gMaterial : register(b0);
 

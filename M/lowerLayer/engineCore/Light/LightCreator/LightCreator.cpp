@@ -1,7 +1,24 @@
 #include "LightCreator.h"
 #include "../../Render/ExclusiveDraw/ExclusiveDraw.h"
 
-DirectionalLight* LightCreator::CreateDirecctoinalLight()
+PointLight* LightCreator::CreatePointLight()
+{
+	static int createNum = 0;
+	if (createNum > pLightCreationLimit) assert(false);
+
+	pLightSet.first.reset(new PointLightBuffer);
+	pLightSet.second.reset(new PointLight(pLightSet.first.get()));
+
+	pLightSet.first->pLight.CreateAndMapping(device);
+
+	exclusiveDraw->Setter_PointLightBuffer(pLightSet.first.get());
+	createNum++;
+
+	return pLightSet.second.get();
+}
+
+
+DirectionalLight* LightCreator::CreateDirectionalLight()
 {
 	static int createNum = 0;
 	if (createNum > 0) assert(false);

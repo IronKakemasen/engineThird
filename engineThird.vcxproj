@@ -270,6 +270,8 @@
     <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.cpp" />
     <ClCompile Include="M\lowerLayer\GameObject\Sample\SampleObj\SampleObj.cpp" />
     <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Light\PointLight\PointLight.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h" />
@@ -389,6 +391,8 @@
     <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel\SampleModel.h" />
     <ClInclude Include="M\lowerLayer\GameObject\Sample\SampleObj\SampleObj.h" />
     <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Light\PointLight\PointLight.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />
