@@ -47,32 +47,11 @@ void ParticleMesh2DCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 			std::vector<D3D12_ROOT_PARAMETER> meters;
 
-			static D3D12_DESCRIPTOR_RANGE descriptorRangeForMatrices[1] = {};
-			static D3D12_DESCRIPTOR_RANGE descriptorRangeForTexture[1] = {};
-
-			RootSignatureCreator::SetDescriptorRange(&descriptorRangeForMatrices[0],
-				D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-				0);
-
-			RootSignatureCreator::SetDescriptorRange(&descriptorRangeForTexture[0],
-				D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-				1);
-
-			//matrices
-			meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
-				descriptorRangeForMatrices,
-				D3D12_SHADER_VISIBILITY_VERTEX,
-				1));
-
-			//テクスチャ
-			meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
-				descriptorRangeForTexture,
-				D3D12_SHADER_VISIBILITY_PIXEL,
-				1));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::VS, 0));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 1));
 
 			//Material
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(0));
-
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 0));
 			return meters;
 			};
 
@@ -82,7 +61,6 @@ void ParticleMesh2DCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 		onlyOnce = false;
 	}
 }
-
 
 ParticleMesh2DCommon::ParticleMesh2DCommon()
 {

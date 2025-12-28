@@ -33,7 +33,8 @@ struct MeshAndDataCommon
 {
 private:
 
-	std::vector<MeshForModel> meshForModel;
+	std::vector < Appearance > appearance;
+	std::vector < MeshForModel > meshForModel;
 	ModelData modelData;
 
 public:
@@ -44,7 +45,12 @@ public:
 	void ResizeMeshSize(int size_)
 	{
 		meshForModel.resize(size_);
-		modelData.appearance.resize(size_);
+		appearance.resize(size_);
+	}
+
+	auto* Getter_Appearance()
+	{
+		return &appearance;
 	}
 
 	auto* Getter_MeshForModel(int index_)
@@ -71,6 +77,5 @@ public:
 	{
 		return &meshForModel;
 	}
-
 
 };

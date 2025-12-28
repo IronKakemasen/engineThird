@@ -1,4 +1,5 @@
 #include "Appearance.h"
+#include <assert.h>
 
 Appearance::Appearance()
 {
@@ -7,23 +8,37 @@ Appearance::Appearance()
 	blendMode = kBlendModeNormal;
 	shaderSetIndex = 0;
 	doDraw = true;
-	use_texHandles.resize(1);
+	use_texHandles.resize((int)kCount);
 	use_texHandles[0] = 0;		//(White2x2)
 	texHandlesContainer[kColormap] = 0;		//(White2x2)
+	texHandlesContainer[kNormalmap] = kNone;		
+	texHandlesContainer[kMetalicMap] = kNone;		
+	texHandlesContainer[kRoughnessMap] = kNone;		
+	roughness = 1.0f;
+	metalic = 0.75f;
+
 }
 
-void Appearance::SetUsingTextureFromContainer(TextureType colorMap_, TextureType normalMap_)
+void Appearance::SetUsingTextureFromContainer(bool colorMap_, bool normalMap_,
+	bool metalicMap_, bool roughnessMap_)
 {
+	bool useArray[Appearance::kCount] =
+	{
+		colorMap_,normalMap_,metalicMap_,roughnessMap_
+	};
+
 	use_texHandles.clear();
 
-	if (colorMap_ != kNone)
+	for (int i = 0; i < Appearance::kCount; ++i)
 	{
-		use_texHandles.emplace_back(texHandlesContainer[colorMap_]);
-	}
+		if (!useArray[i]) continue;
 
-	if (normalMap_ != kNone)
-	{
-		use_texHandles.emplace_back(texHandlesContainer[normalMap_]);
+		if (texHandlesContainer[Appearance::TextureType(i)] == (int)kNone)
+		{
+			assert(false);
+		}
+
+		use_texHandles.emplace_back(texHandlesContainer[Appearance::TextureType(i)]);
 	}
 
 }

@@ -40,18 +40,40 @@ float3 SchlickFrensnel(float3 normal_, float3 lightDir_,float3 toCamera_ , float
     return specularColor_ + (1.0f - specularColor_) * pow((1.0f - VH), 5.0f);
 }
 
-
-float Distribution_Beckmann(float m, float NH)
+float Distribution_Beckmann(float m_, float NH_)
 {
-    float c2 = NH * NH;
+    float c2 = NH_ * NH_;
     float c4 = c2 * c2;
-    float m2 = m * m;
+    float m2 = m_ * m_;
 
     return (1.0f / (m2 * c4)) * exp((-1.0f / m2) * (1.0f - c2) / c2);
 }
 
-float ShadowMasking_Vcavity(float NH, float NV, float NL, float VH)
+float Distribution_GGX(float m_, float NH_)
 {
-    return min(1.0f, min(2.0f * NH * NV / VH, 2.0f * NH * NL / VH));
+    float m2 = m_ * m_;
+
+    float f = (NH_ * m2 - NH_) * NH_ + 1;
+    return m2 / (kPi * f * f);    
 }
+
+
+float ShadowMasking_Vcavity(float NH_, float NV_, float NL_, float VH_)
+{
+    return min(1.0f, min(2.0f * NH_ * NV_ / VH_, 2.0f * NH_ * NL_ / VH_));
+}
+
+float G2_Smith(float NL_, float NV_, float m_)
+{
+    float m2 = m_ * m_;
+
+    float NL2 = NL_ * NL_;
+    float NV2 = NV_ * NV_;
+
+    float lambdaV = (-1.0f + sqrt(m2 * (1.0f - NL2) / NL2 + 1.0f)) * 0.5f;
+    float lambdaL = (-1.0f + sqrt(m2 * (1.0f - NV2) / NV2 + 1.0f)) * 0.5f;
+    
+    return 1.0f / (1.0f + lambdaV + lambdaL);
+}
+
 

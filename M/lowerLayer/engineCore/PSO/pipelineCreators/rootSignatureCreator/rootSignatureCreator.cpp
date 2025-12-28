@@ -1,9 +1,96 @@
 #include "rootSignatureCreator.h"
 #include "../../../WinApp.h"
 #include "../../allPipelineSet.h"
+
 #include <assert.h>
 
 #pragma comment(lib,"d3d12.lib")
+
+RootSignatureCreator::RootSignatureCreator()
+{
+	heap_staticSamplers = new D3D12_STATIC_SAMPLER_DESC[Appearance::kCount];
+}
+
+RootSignatureCreator::~RootSignatureCreator()
+{
+	delete[] heap_staticSamplers;
+}
+
+D3D12_STATIC_SAMPLER_DESC RootSignatureCreator::CreateStaticSmp(ShaderStage shaderStage_, 
+	uint32_t registerNum_, SamplerState state)
+{
+	D3D12_STATIC_SAMPLER_DESC desc = {};
+
+	desc.MipLODBias = D3D12_DEFAULT_MIP_LOD_BIAS;
+	desc.MaxAnisotropy = 1;
+	desc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	desc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+	desc.MinLOD = 0.0f;
+	desc.MaxLOD = D3D12_FLOAT32_MAX;
+	desc.ShaderRegister = registerNum_;
+	desc.RegisterSpace = 0;
+	desc.ShaderVisibility = D3D12_SHADER_VISIBILITY(shaderStage_);
+
+	switch (state)
+	{
+	case SamplerState::PointWrap:
+	{
+		desc.Filter = D3D12_FILTER_MIN_MAG_MIP_POINT;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	}
+	break;
+
+	case SamplerState::PointClamp:
+	{
+		desc.Filter = D3D12_FILTER_MIN_MAG_MIP_POINT;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	}
+	break;
+
+	case SamplerState::LinearWrap:
+	{
+		desc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	}
+	break;
+
+	case SamplerState::LinearClamp:
+	{
+		desc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	}
+	break;
+
+	case SamplerState::AnisotropicWrap:
+	{
+		desc.Filter = D3D12_FILTER_ANISOTROPIC;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		desc.MaxAnisotropy = D3D12_MAX_MAXANISOTROPY;
+	}
+	break;
+
+	case SamplerState::AnisotropicClamp:
+	{
+		desc.Filter = D3D12_FILTER_ANISOTROPIC;
+		desc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+		desc.MaxAnisotropy = D3D12_MAX_MAXANISOTROPY;
+	}
+	break;
+	}
+	return desc;
+}
 
 
 void RootSignatureCreator::CopyFromIndex(int funcIndex_)
@@ -32,28 +119,43 @@ void RootSignatureCreator::SetRootParameters(int index_)
 	CopyFromIndex(index_);
 }
 
-D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterPixelShader(int registerNum_)
+D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootparameterCBV(ShaderStage stage_, int registerNum_)
 {
 	D3D12_ROOT_PARAMETER ret_rootParameter = {};
 
 	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	//PixcelShaderで使う
-	ret_rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	//レジスタ番号0とバインド
+	ret_rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY(stage_);
+	//レジスタ番号
 	ret_rootParameter.Descriptor.ShaderRegister = registerNum_;
 
 	return ret_rootParameter;
 }
 
-D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParaMeterVertexShader(int registerNum_)
+D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootparameterSRV(ShaderStage stage_, int registerNum_)
 {
 	D3D12_ROOT_PARAMETER ret_rootParameter = {};
+	std::unique_ptr < RootSignatureCreator::DescriptoRangeArray > dst;
+	dst.reset(new RootSignatureCreator::DescriptoRangeArray);
 
-	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	//PixcelShaderで使う
-	ret_rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	//レジスタ番号0とバインド
-	ret_rootParameter.Descriptor.ShaderRegister = registerNum_;
+	dst->range[0].BaseShaderRegister = registerNum_;
+	//数は1つ
+	dst->range[0].NumDescriptors = 1;
+	//SRVを使う
+	dst->range[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	//offsetを自動計算
+	dst->range[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	//Descriptortableを使う
+	ret_rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	//pixcelShaderを使う
+	ret_rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY(stage_);
+	//tableの中身の配列を指定
+	ret_rootParameter.DescriptorTable.pDescriptorRanges = dst->range;
+	//tableで利用する
+	ret_rootParameter.DescriptorTable.NumDescriptorRanges = 1;
+
+	auto& n = RootSignatureCreator::descriptorRanges.emplace_back(std::move(dst));
 
 	return ret_rootParameter;
 
@@ -103,23 +205,14 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
 	D3D12_ROOT_SIGNATURE_DESC signatureDesc = {};
 
 	//バイリニアフィルター
-	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-	//0～1の範囲外をリピート
-	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	//比較しない
-	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	//ありったけのmipMapを使う
-	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
-	//レジスタ番号0を使う
-	staticSamplers[0].ShaderRegister = 0;
-	//PixcelShaderで使う
-	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	signatureDesc.pStaticSamplers = staticSamplers;
-	signatureDesc.NumStaticSamplers = _countof(staticSamplers);
+	heap_staticSamplers[Appearance::kColormap] = CreateStaticSmp(ShaderStage::PS, 0, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kNormalmap] = CreateStaticSmp(ShaderStage::PS, 1, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kMetalicMap] = CreateStaticSmp(ShaderStage::PS, 2, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kRoughnessMap] = CreateStaticSmp(ShaderStage::PS, 3, SamplerState::LinearWrap);
 
-	//std::pair<D3D12_ROOT_PARAMETER*, UINT> rootParameters = GetRootParameters(shaderSetName_);
+	signatureDesc.pStaticSamplers = heap_staticSamplers;
+	signatureDesc.NumStaticSamplers = UINT(Appearance::kCount);
+
 	SetRootParameters(index_);
 
 	//ルートパラメータ配列へのポインタ

@@ -5,7 +5,10 @@
 
 Texture2D<float4> colorMap : register(t0);
 
-SamplerState gSampler : register(s0);
+SamplerState baseColorSmp : register(s0);
+SamplerState nomalSmp : register(s1);
+SamplerState metalicMap : register(s2);
+SamplerState roughnessMap : register(s3);
 
 ConstantBuffer<Material> gMaterial : register(b1);
 ConstantBuffer<DirectionalLight> dirLight : register(b2);
@@ -30,7 +33,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     PixcelShaderOutput output;
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
-    float4 textureColor = colorMap.Sample(gSampler, transformedUV.xy);
+    float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
 
     float3 dirLightDir = normalize(dirLight.pos);
     float3 normal = normalize(input.normal);

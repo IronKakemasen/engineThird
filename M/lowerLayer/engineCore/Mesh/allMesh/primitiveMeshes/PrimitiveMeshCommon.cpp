@@ -71,22 +71,11 @@ void PrimitiveMeshCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 			std::vector<D3D12_ROOT_PARAMETER> meters;
 
-			static D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
-			RootSignatureCreator::SetDescriptorRange(&descriptorRange[0],
-				D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-				0);
+			meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 0));
 
-			meters.emplace_back(RootSignatureCreator::GetRootParameterWithDescriptorRange(
-				descriptorRange,
-				D3D12_SHADER_VISIBILITY_PIXEL,
-				1));
-
-			//meters.emplace_back(RootSignatureCreator::GetRootParaMeterDescriptorRange());
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(0));
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(1));
-			//meters.emplace_back(RootSignatureCreator::GetRootParaMeterVertexShader(2));
-			meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(2));
-			//meters.emplace_back(RootSignatureCreator::GetRootParaMeterPixelShader(4));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 1));
+			meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 2));
 
 			return meters;
 			};

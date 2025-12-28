@@ -30,6 +30,7 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	//ファイルからメッシュと、マテリアルデータを読み込む
 	std::wstring converted_filePath = ConvertString(filePath_);
 	const wchar_t* tmp  = converted_filePath.c_str();
+
 	assert(LoadMesh(tmp, model->Getter_ModelData().resMesh, 
 		model->Getter_ModelData().resMaterial));
 	
@@ -59,7 +60,7 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 			cnv, model->Getter_ModelData().resMaterial[i].normalMap);
 
 		//shaderSetの初期化
-		model->Getter_ModelData().appearance[i].shaderSetIndex = 
+		(*model->Getter_Appearance())[i].shaderSetIndex =
 			M::GetInstance()->
 			GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
 	}
@@ -83,7 +84,7 @@ void MeshCreator::InputTextureIndex(ModelSimple* model_,int index_,
 
 	//colorMapのインデックスの読み込み
 	std::string texMapFilePath = dirPath_ + ConvertString(textureFile_);
-	model_->Getter_ModelData().appearance[index_].texHandlesContainer[textureHandleIndex_] =
+	(*model_->Getter_Appearance())[index_].texHandlesContainer[textureHandleIndex_] =
 		textureDataManager->CreateTextureFromFile(texMapFilePath);
 
 }

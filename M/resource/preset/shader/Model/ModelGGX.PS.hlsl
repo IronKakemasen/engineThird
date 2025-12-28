@@ -14,7 +14,6 @@ ConstantBuffer<Material> gMaterial : register(b1);
 ConstantBuffer<DirectionalLight> dirLight : register(b2);
 ConstantBuffer<CameraPara> cameraPara : register(b3);
 
-
 struct PixcelShaderOutput
 {
     float4 color : SV_TARGET0;
@@ -50,8 +49,8 @@ PixcelShaderOutput main(VertexShaderOutput input)
     
     float3 Ks = gMaterial.albedoColor.rgb * gMaterial.metallic;
     float a = gMaterial.roughness * gMaterial.roughness;
-    float D = Distribution_Beckmann(a, NH);
-    float G2 = ShadowMasking_Vcavity(NH, NV, NL, VH);
+    float D = Distribution_GGX(a, NH);
+    float G2 = G2_Smith(NL, NV, a);
     float3 Fr = SchlickFrensnel(normal, dirLightDir, toCamera, Ks);
         
     float3 specular = (D * G2 * Fr) / (4.0f * NV * NL);

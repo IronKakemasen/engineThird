@@ -18,7 +18,7 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 	for (int i = 0; i < n; ++i)
 	{
 		auto* mesh = meshAndData_->Getter_MeshForModel(i);
-		auto* appearance = &meshAndData_->Getter_ModelData().appearance[i];
+		auto* appearance = &(*meshAndData_->Getter_Appearance())[i];
 		auto* modelData = meshAndData_->Getter_ModelDataOfResMaterials(i);
 		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex, 
 			appearance->blendMode, appearance->cullMode);
@@ -47,8 +47,8 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		mesh->materialBuffer.material.buffMap->diffuse = modelData->diffuse;
 		mesh->materialBuffer.material.buffMap->shininess = modelData->shininess;
 		mesh->materialBuffer.material.buffMap->specular = modelData->specular;
-		mesh->materialBuffer.material.buffMap->metallic = modelData->metalic;
-		mesh->materialBuffer.material.buffMap->roughness = modelData->roughness;
+		mesh->materialBuffer.material.buffMap->metalic = appearance->metalic;
+		mesh->materialBuffer.material.buffMap->roughness = appearance->roughness;
 
 		//texture
 		int k = 0;

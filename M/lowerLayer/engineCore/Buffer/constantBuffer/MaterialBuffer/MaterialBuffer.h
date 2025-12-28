@@ -4,7 +4,7 @@
 
 struct MaterialBuffer
 {
-	BufferAndMap<Material> material;
+	BufferAndMap < Material > material;
 
 };
 

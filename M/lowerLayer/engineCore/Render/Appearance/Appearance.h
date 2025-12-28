@@ -10,15 +10,18 @@ struct Appearance
 	{
 		kColormap,
 		kNormalmap,
+		kMetalicMap,
+		kRoughnessMap,
 
-
-		kNone,
-		kCount
+		kCount,
+		kNone = 999
 	};
 
 	Transform trans;
 	UVTransform uvTrans;
 	Vector4 color;
+	float roughness;
+	float metalic;
 	CullMode cullMode;
 	BlendMode blendMode;
 	int shaderSetIndex;
@@ -26,7 +29,8 @@ struct Appearance
 	std::vector < int > use_texHandles;
 	bool doDraw;
 
-	void SetUsingTextureFromContainer(TextureType colorMap_, TextureType normalMap_);
+	void SetUsingTextureFromContainer(bool colorMap_, bool normalMap_,
+		bool metalicMap_, bool roughnessMap_);
 
 	Appearance();
 };

@@ -1,7 +1,10 @@
 #include "../HLSLI/Material.hlsli"
 
 Texture2D<float4> albedoTex : register(t0);
-SamplerState gSampler : register(s0);
+SamplerState baseColorSmp : register(s0);
+SamplerState nomalSmp : register(s1);
+SamplerState metalicMap : register(s2);
+SamplerState roughnessMap : register(s3);
 
 //コンスタントバッファの定義
 //b = constantBuffer,0 = shader上でのresourceナンバー
@@ -29,7 +32,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
-    float4 textureColor = albedoTex.Sample(gSampler, transformedUV.xy);
+    float4 textureColor = albedoTex.Sample(baseColorSmp, transformedUV.xy);
     
     output.color = gMaterial.albedoColor * textureColor;
 
