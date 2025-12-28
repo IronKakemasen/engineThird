@@ -12,8 +12,8 @@ Appearance::Appearance()
 	use_texHandles[0] = 0;		//(White2x2)
 	texHandlesContainer[kColormap] = 0;		//(White2x2)
 	texHandlesContainer[kNormalmap] = kNone;		
-	texHandlesContainer[kMetalicMap] = kNone;		
-	texHandlesContainer[kRoughnessMap] = kNone;		
+	texHandlesContainer[kSpecularMap] = kNone;		
+	texHandlesContainer[kShininessMap] = kNone;		
 	roughness = 1.0f;
 	metalic = 0.75f;
 

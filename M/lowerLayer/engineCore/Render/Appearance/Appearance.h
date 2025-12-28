@@ -10,8 +10,8 @@ struct Appearance
 	{
 		kColormap,
 		kNormalmap,
-		kMetalicMap,
-		kRoughnessMap,
+		kSpecularMap,
+		kShininessMap,
 
 		kCount,
 		kNone = 999

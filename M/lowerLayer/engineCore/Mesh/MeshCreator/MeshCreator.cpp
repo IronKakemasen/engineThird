@@ -59,10 +59,13 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 		InputTextureIndex(model.get(), i, Appearance::kNormalmap,
 			cnv, model->Getter_ModelData().resMaterial[i].normalMap);
 
-		//shaderSetの初期化
-		(*model->Getter_Appearance())[i].shaderSetIndex =
-			M::GetInstance()->
-			GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
+		//スペキュラーマップ
+		InputTextureIndex(model.get(), i, Appearance::kSpecularMap,
+			cnv, model->Getter_ModelData().resMaterial[i].specularMap);
+
+		//シャインネスマップ
+		InputTextureIndex(model.get(), i, Appearance::kShininessMap,
+			cnv, model->Getter_ModelData().resMaterial[i].shininessMap);
 	}
 
 	commandControl->Getter_commandList()->Close();

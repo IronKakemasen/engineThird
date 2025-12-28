@@ -218,8 +218,10 @@ void MeshLoader::ParseMaterial(ResMaterial& dstMaterial, const aiMaterial* pSrcM
     // シャイネスマップ
     {
         aiString path;
+        
         if (pSrcMaterial->Get(AI_MATKEY_TEXTURE_SHININESS(0), path) == AI_SUCCESS)
         {
+            
             dstMaterial.shininessMap = Convert(path);
         }
         else

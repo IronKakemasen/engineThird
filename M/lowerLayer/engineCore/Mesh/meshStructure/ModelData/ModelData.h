@@ -27,5 +27,4 @@ struct ModelData
 {
     std::vector < ResMaterial > resMaterial;
     std::vector < ResMesh > resMesh;
-
 };
