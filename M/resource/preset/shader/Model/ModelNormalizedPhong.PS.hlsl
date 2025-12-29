@@ -42,13 +42,14 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
     float NL = saturate(dot(normal, dirLightDir));
+    float3 H = normalize(toCamera + dirLightDir);
     
     float3 diffuse = DiffuseModelNormalizedLambert(gMaterial.albedoColor.rgb, gMaterial.metallic);
     float3 specular =
     SpecularModelNormalizedPhong(gMaterial.albedoColor.rgb, gMaterial.metallic,
     gMaterial.shininess, dirLightDir, normal, toCamera);
     
-    specular = SchlickFrensnel(normal, dirLightDir, toCamera, specular);
+    specular = SchlickFrensnel(H, toCamera, specular);
 
     output.color = float4(dirLight.color * dirLight.intensity* textureColor.rgb *
         (diffuse + specular) * NL, gMaterial.albedoColor.a * textureColor.a);

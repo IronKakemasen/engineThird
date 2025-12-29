@@ -1,22 +1,24 @@
 struct PointLight
 {
     float3 pos;
-    float3 color;
     float intensity;
+    float3 color;
     float invSqrRadius; 
+    int isActive;
+
 };
 
 float SmoothDistanceAttenuation(float sqrtDistance_, float invSqrtRadius_)
 {
     float factor = sqrtDistance_ * invSqrtRadius_;
-    float smoothFactor = saturate(1.0f - factor * factor);
+    float smoothFactor = saturate(1.0f - (factor * factor));
     return smoothFactor * smoothFactor;
 }
 
 float GetDistanceAttenuation(float3 unnormalizedToObject_,float invSqrtRadius_ )
 {
-
     const float minDistance = 0.01f;
+    
     float sqrDist = dot(unnormalizedToObject_, unnormalizedToObject_);
     float attenuation = 1.0f / max(sqrDist, minDistance * minDistance);
 

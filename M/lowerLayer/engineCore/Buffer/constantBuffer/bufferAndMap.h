@@ -27,6 +27,7 @@ public:
 		//書き込むためのアドレスを取得
 		HRESULT hr = buff->Map(0, nullptr, reinterpret_cast<void**>(&buffMap));
 		SUCCEEDED(hr);
+		buff->Unmap(0, nullptr);
 	}
 
 	inline auto* Geter_Resource()

@@ -29,10 +29,9 @@ float3 SpecularModelNormalizedPhong(float3 baseColor_ , float metalic_,
     return baseColor_ * metalic_ * ((shininess_ + 2.0f) / (2.0f * 3.14159265359f)) * pow(LR, shininess_);
 }
 
-float3 SchlickFrensnel(float3 normal_, float3 lightDir_,float3 toCamera_ , float3 specularColor_)
+float3 SchlickFrensnel(float3 H_ ,float3 toCamera_ , float3 specularColor_)
 {
-    float3 H = normalize(toCamera_ + lightDir_);
-    float VH = saturate(dot(toCamera_, H));
+    float VH = saturate(dot(toCamera_, H_));
     return specularColor_ + (1.0f - specularColor_) * pow((1.0f - VH), 5.0f);
 }
 
@@ -71,5 +70,24 @@ float G2_Smith(float NL_, float NV_, float m_)
     
     return 1.0f / (1.0f + lambdaV + lambdaL);
 }
+
+float3 ComputeBRDF(float3 diffuse_, float3 lightDir_, float3 toCamera_, float3 normal_,
+        float NV_, float3 Ks_, float a_)
+{
+    float3 H = normalize(toCamera_+ lightDir_);
+    float NH = saturate(dot(normal_, H));
+    float NL = saturate(dot(normal_, lightDir_));
+    
+    float D = Distribution_GGX(a_ , NH);
+    float G2 = G2_Smith(NL, NV_, a_);
+    float3 Fr = SchlickFrensnel(H, toCamera_, Ks_);
+        
+    float3 specular = (D * G2 * Fr) / (4.0f * NV_ * NL);
+    
+    return (diffuse_ + specular) ;
+
+}
+    
+
 
 

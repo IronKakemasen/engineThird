@@ -1,6 +1,7 @@
 struct DirectionalLight
 {
     float3 pos;
-    float3 color;
     float intensity;
+    float3 color;
+    int isActive;
 };

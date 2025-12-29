@@ -64,8 +64,8 @@ SampleModel::SampleModel()
 void SampleModel::Init()
 {
 	(*model->Getter_Appearance())[0].trans.pos.x = -0.5f;
-	(*model->Getter_Appearance())[0].metalic = 0.72f;
-	(*model->Getter_Appearance())[0].roughness = 0.4f;
+	(*model->Getter_Appearance())[0].metalic = 0.1f;
+	(*model->Getter_Appearance())[0].roughness = 1.0f;
 
 }
 

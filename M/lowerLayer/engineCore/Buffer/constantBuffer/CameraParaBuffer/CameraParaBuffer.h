@@ -6,6 +6,7 @@
 struct CameraPara
 {
 	Vector3 cameraWorld;
+	float pad;
 };
 
 struct CameraParaBuffer

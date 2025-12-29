@@ -47,7 +47,7 @@ SampleModel2::SampleModel2()
 	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	//モデルの生成
-	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/bunny.obj");
 	//使用するシェーダーの選択
 	(*model->Getter_Appearance())[0].shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
@@ -58,9 +58,15 @@ SampleModel2::SampleModel2()
 
 void SampleModel2::Init()
 {
-	(*model->Getter_Appearance())[0].trans.pos.x = 0.5f;
-	(*model->Getter_Appearance())[0].metalic = 0.72f;
-	(*model->Getter_Appearance())[0].roughness = 0.4f;
+	(*model->Getter_Appearance())[0].trans.pos.x = 1.0f;
+	(*model->Getter_Appearance())[0].trans.pos.z = 3.0f;
+
+	(*model->Getter_Appearance())[0].trans.pos.y = -1.0f;
+
+	(*model->Getter_Appearance())[0].metalic = 0.1f;
+	(*model->Getter_Appearance())[0].roughness = 1.0f;
+
+	//0.72 0.4
 }
 
 void SampleModel2::Reset()

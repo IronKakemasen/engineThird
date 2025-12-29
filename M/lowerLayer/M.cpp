@@ -6,6 +6,7 @@
 #include "./engineCore/Light/LightCreator/LightCreator.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
 
+
 void M::SetCameraPara(CameraPara cameraPara_)
 {
 	cameraParameterSetter->SetCameraPara(cameraPara_);

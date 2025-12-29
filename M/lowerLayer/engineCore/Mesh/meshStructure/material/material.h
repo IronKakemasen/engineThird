@@ -4,13 +4,11 @@
 struct Material
 {
 	Vector3 diffuse;
-	float pad1;
+	float roughness = 0.0f;
 	Vector3 specular;
-	float pad2;
+	float metalic = 0.0f;
 	Vector4 albedoColor;
 	Matrix4 uvTransform;
-	float roughness = 0.0f;
-	float metalic = 0.0f;
 	float shininess = 0.0f;
 
 };

@@ -2,7 +2,7 @@
 #include "../../GameObjectBehavior.h"
 #include "../../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 
-class SamplePlayer :GameObject
+class SamplePlayer :public GameObject
 {
 	MQuad quadModel;
 	Vector3 velocity;

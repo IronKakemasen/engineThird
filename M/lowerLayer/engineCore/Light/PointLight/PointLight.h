@@ -4,7 +4,6 @@
 struct PointLightBuffer;
 
 class PointLight :LightBehavior, PointLightPara
-
 {
 	PointLightBuffer* pLightBuffer = nullptr;
 
@@ -23,6 +22,14 @@ public:
 	inline auto* Getter_Color()
 	{
 		return &color;
+	}
+	inline auto* Getter_Radius()
+	{
+		return &invSqrRadius;
+	}
+	inline auto* Getter_IsActive()
+	{
+		return &isActive;
 	}
 
 

@@ -54,7 +54,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float a = gMaterial.roughness * gMaterial.roughness;
     float D = Distribution_Beckmann(a, NH);
     float G2 = ShadowMasking_Vcavity(NH, NV, NL, VH);
-    float3 Fr = SchlickFrensnel(normal, dirLightDir, toCamera, Ks);
+    float3 Fr = SchlickFrensnel(H, toCamera, Ks);
         
     float3 specular = (D * G2 * Fr) / (4.0f * NV * NL);
     

@@ -38,29 +38,33 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
 
-    float3 dirLightDir = normalize(float3(dirLight.pos.x, dirLight.pos.y, dirLight.pos.z));
+    float3 dirLightDir = normalize(dirLight.pos);
+    float3 pointLightDir = normalize(pLight.pos - input.worldPosition);
+
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
 
-    float3 H = normalize(toCamera + dirLightDir);
-    
-    float NH = saturate(dot(normal, H));
     float NV = saturate(dot(normal, toCamera));
-    float NL = saturate(dot(normal, dirLightDir));
-    float VH = saturate(dot(toCamera, H));
-    
-    float3 diffuse = DiffuseModelNormalizedLambert(gMaterial.albedoColor.rgb, gMaterial.metallic);
-    
-    float3 Ks = gMaterial.albedoColor.rgb * gMaterial.metallic;
+    float3 diffuse = DiffuseModelNormalizedLambert(textureColor.rgb, gMaterial.metallic);
+    float3 Ks = textureColor.rgb * gMaterial.metallic;
     float a = gMaterial.roughness * gMaterial.roughness;
-    float D = Distribution_GGX(a, NH);
-    float G2 = G2_Smith(NL, NV, a);
-    float3 Fr = SchlickFrensnel(normal, dirLightDir, toCamera, Ks);
-        
-    float3 specular = (D * G2 * Fr) / (4.0f * NV * NL);
+
+    //ポイントライト
+    float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition, 
+        pLight.pos, pLight.invSqrRadius, pLight.color) * pLight.intensity * pLight.isActive;
+    float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
+    poinghtLightColor = poinghtLightColor * pointLightBRDF;
     
-    output.color = float4(dirLight.color * dirLight.intensity * textureColor.rgb *
-        (diffuse + specular) * NL , gMaterial.albedoColor.a * textureColor.a);
+    //直接光
+    float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
+    float NL = saturate(dot(normal, dirLightDir));
+    float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
+    dirColor = dirColor * dirLightBRDF * NL;
+    
+    float3 lightColors = poinghtLightColor + dirColor;
+
+    output.color = float4(lightColors , gMaterial.albedoColor.a * textureColor.a);
+    
     return output;
 
 }

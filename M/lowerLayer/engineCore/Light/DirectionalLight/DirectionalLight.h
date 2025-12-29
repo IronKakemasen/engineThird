@@ -24,6 +24,11 @@ public:
 	{
 		return &color;
 	}
+	inline auto* Getter_IsActive()
+	{
+		return &isActive;
+	}
+
 
 
 	DirectionalLight(DirectionalLightBuffer* dirLightBuffer_);

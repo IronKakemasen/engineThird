@@ -16,7 +16,6 @@ ConstantBuffer<DirectionalLight> dirLight : register(b2);
 ConstantBuffer<CameraPara> cameraPara : register(b3);
 ConstantBuffer<PointLight> pLight : register(b4);
 
-
 struct PixcelShaderOutput
 {
     float4 color : SV_TARGET0;

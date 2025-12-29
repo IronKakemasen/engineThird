@@ -17,6 +17,7 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 	//頂点データの入力
 	std::memcpy(meshForModel->vertexMap, resMeshes->vertices.data(),
 		sizeof(Vertex) * resMeshes->vertices.size());
+	meshForModel->veretxBuffer.buffer->Unmap(0, nullptr);
 
 
 	// インデックスデータのサイズ
@@ -26,9 +27,12 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 	//インデックスバッファのマッピング
 	result = meshForModel->indexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&meshForModel->indexMap));
 	assert(SUCCEEDED(result));
+
 	//インデックスデータの入力
 	std::memcpy(meshForModel->indexMap, resMeshes->indices.data(),
 		sizeof(uint32_t) * resMeshes->indices.size());
+	meshForModel->indexBuffer.buffer->Unmap(0, nullptr);
+
 
 	// ワールド行列バッファ生成
 	meshForModel->transformMatrixBuffer.matrix.CreateAndMapping(device_);

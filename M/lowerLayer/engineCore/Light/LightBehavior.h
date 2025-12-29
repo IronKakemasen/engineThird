@@ -4,14 +4,18 @@
 struct LightBasePara
 {
 	Vector3 pos;
-	float pad1;
-	Vector3 color;
 	float intensity;
+	Vector3 color;
+	int isActive;
 };
 
-struct PointLightPara:LightBasePara
+struct PointLightPara
 {
-	float radius;
+	Vector3 pos;
+	float intensity;
+	Vector3 color;
+	float invSqrRadius;
+	int isActive;
 };
 
 

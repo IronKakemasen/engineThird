@@ -28,9 +28,8 @@ void SampleScene::Init()
 {
 	pointLight->Init();
 	dirLight->Init();
-	*dirLight->Getter_Intensity() = 0.0f;
 
-	mainCamera->Getter_Trans()->pos = { 0.0f,3.0f,-1.0f };
+	mainCamera->Getter_Trans()->pos = { 1.3f,3.0f,-1.0f};
 	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
 	triangle->Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kPlayer));
 	quad->Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kNothing));

@@ -12,6 +12,7 @@ void SampleScene::Update()
 	cameraController->Update();
 	mainCamera->Update();
 	
+	sPlayer->Getter_Trans()->pos = *pointLight->Getter_Pos();
 
 	sPlayer->Update();
 	sObj->Update();
@@ -54,8 +55,22 @@ void SampleScene::Debug()
 		ImGui::DragFloat3("pos", reinterpret_cast<float*>(dirLight->Getter_Pos()), 0.1f);
 		ImGui::DragFloat3("color", reinterpret_cast<float*>(dirLight->Getter_Color()), 0.1f);
 		ImGui::DragFloat("intensity", reinterpret_cast<float*>(dirLight->Getter_Intensity()), 0.025f);
+		ImGui::Checkbox("isActive", reinterpret_cast<bool*>(dirLight->Getter_IsActive()));
+
 		ImGui::TreePop();
 	}
+	if (ImGui::TreeNode("pointLight"))
+	{
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(pointLight->Getter_Pos()), 0.1f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(pointLight->Getter_Color()), 0.1f);
+		ImGui::DragFloat("intensity", reinterpret_cast<float*>(pointLight->Getter_Intensity()), 0.025f);
+		ImGui::DragFloat("radius", reinterpret_cast<float*>(pointLight->Getter_Radius()), 0.025f);
+		ImGui::Checkbox("isActive",reinterpret_cast<bool*>(pointLight->Getter_IsActive()));
+
+
+		ImGui::TreePop();
+	}
+
 
 	ImGui::End();
 

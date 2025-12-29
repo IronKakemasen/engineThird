@@ -159,7 +159,8 @@ void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& 
 			quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
+			pLightBuffer->pLight.GetVirtualGPUAddress());
 
 
 		//描画(DrawCall)。6インデックスで一つのインスタンス
@@ -229,7 +230,10 @@ void ExclusiveDraw::DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& righ
 			1,
 			triangleMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			triangleMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
-			triangleMesh->materialBuffer[i].material.GetVirtualGPUAddress());
+			triangleMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
+			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
+			pLightBuffer->pLight.GetVirtualGPUAddress());
 
 		//描画(DrawCall)。3インデックスで一つのインスタンス
 		cList->DrawInstanced(triangleMesh->vertexCnt, 1, static_cast<UINT>(usingVertex_index), 0);
