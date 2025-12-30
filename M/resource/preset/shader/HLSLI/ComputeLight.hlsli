@@ -48,7 +48,7 @@ float Distribution_GGX(float m_, float NH_)
 {
     float m2 = m_ * m_;
 
-    float f = (NH_ * m2 - NH_) * NH_ + 1;
+    float f = (NH_ * m2 - NH_) * NH_ + 1.0f;
     return m2 / (3.14159265359f * f * f);
 }
 
@@ -82,9 +82,9 @@ float3 ComputeBRDF(float3 diffuse_, float3 lightDir_, float3 toCamera_, float3 n
     float G2 = G2_Smith(NL, NV_, a_);
     float3 Fr = SchlickFrensnel(H, toCamera_, Ks_);
         
-    float3 specular = (D * G2 * Fr) / (4.0f * NV_ * NL);
+    float3 specular = float3((Fr * D * G2 ) / (4.0f * NV_ * NL));
     
-    return (diffuse_ + specular) ;
+    return saturate((diffuse_ + specular) * NV_);
 
 }
     

@@ -3,7 +3,8 @@
 #include <assert.h>
 #include "./PSO/pipelineCreators/pipelineCreators.h"
 #include "../M.h"
-//#include <timeapi.h>
+#include <dxgidebug.h>
+
 
 bool WinApp::InitD3D()
 {
@@ -126,9 +127,6 @@ void WinApp::BeginFrame()
 	commandControl.Getter_commandList()->OMSetRenderTargets(1,
 		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Handle(), false,
 		swapChainControl.Getter_DepthBuffer()->Getter_Handle());
-	//CommandControl.Getter_commandList()->OMSetRenderTargets(1,
-	//	SwapChainControl.Getter_ColorBuffer(SwapChainControl.frameIndex)->Getter_Handle(), FALSE, nullptr);
-
 	
 	//指定した深度で画面クリアする
 	commandControl.Getter_commandList()->ClearDepthStencilView(*swapChainControl.Getter_DepthBuffer()->Getter_Handle(),
@@ -148,8 +146,6 @@ void WinApp::BeginFrame()
 
 	commandControl.Getter_commandList()->RSSetScissorRects(1,
 		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->ScissorRect());
-
-
 }
 
 void WinApp::EndFrame()

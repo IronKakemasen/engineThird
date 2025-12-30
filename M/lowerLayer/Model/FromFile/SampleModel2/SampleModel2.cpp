@@ -63,8 +63,8 @@ void SampleModel2::Init()
 
 	(*model->Getter_Appearance())[0].trans.pos.y = -1.0f;
 
-	(*model->Getter_Appearance())[0].metalic = 0.1f;
-	(*model->Getter_Appearance())[0].roughness = 1.0f;
+	(*model->Getter_Appearance())[0].metalic = 0.72f;
+	(*model->Getter_Appearance())[0].roughness = 0.4f;
 
 	//0.72 0.4
 }

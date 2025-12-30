@@ -158,7 +158,6 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootparameterSRV(ShaderStage stage
 	auto& n = RootSignatureCreator::descriptorRanges.emplace_back(std::move(dst));
 
 	return ret_rootParameter;
-
 }
 
 
@@ -205,10 +204,14 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
 	D3D12_ROOT_SIGNATURE_DESC signatureDesc = {};
 
 	//バイリニアフィルター
-	heap_staticSamplers[Appearance::kColormap] = CreateStaticSmp(ShaderStage::PS, 0, SamplerState::LinearWrap);
-	heap_staticSamplers[Appearance::kNormalmap] = CreateStaticSmp(ShaderStage::PS, 1, SamplerState::LinearWrap);
-	heap_staticSamplers[Appearance::kSpecularMap] = CreateStaticSmp(ShaderStage::PS, 2, SamplerState::LinearWrap);
-	heap_staticSamplers[Appearance::kShininessMap] = CreateStaticSmp(ShaderStage::PS, 3, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kColormap] = 
+		CreateStaticSmp(ShaderStage::PS, 0, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kNormalmap] = 
+		CreateStaticSmp(ShaderStage::PS, 1, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kSpecularMap] = 
+		CreateStaticSmp(ShaderStage::PS, 2, SamplerState::LinearWrap);
+	heap_staticSamplers[Appearance::kShininessMap] = 
+		CreateStaticSmp(ShaderStage::PS, 3, SamplerState::LinearWrap);
 
 	signatureDesc.pStaticSamplers = heap_staticSamplers;
 	signatureDesc.NumStaticSamplers = UINT(Appearance::kCount);

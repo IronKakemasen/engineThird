@@ -12,11 +12,10 @@ SamplerState nomalSmp : register(s1);
 SamplerState specularMap : register(s2);
 SamplerState shininessMap : register(s3);
 
-
-ConstantBuffer<Material> gMaterial : register(b1);
-ConstantBuffer<DirectionalLight> dirLight : register(b2);
-ConstantBuffer<CameraPara> cameraPara : register(b3);
-ConstantBuffer<PointLight> pLight : register(b4);
+ConstantBuffer< Material > gMaterial : register(b1);
+ConstantBuffer< DirectionalLight > dirLight : register(b2);
+ConstantBuffer< CameraPara > cameraPara : register(b3);
+ConstantBuffer< PointLight > pLight : register(b4);
 
 struct PixcelShaderOutput
 {
@@ -59,7 +58,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
     float NL = saturate(dot(normal, dirLightDir));
     float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
-    dirColor = dirColor * dirLightBRDF * NL;
+    dirColor = dirColor * dirLightBRDF ;
     
     float3 lightColors = poinghtLightColor + dirColor;
 

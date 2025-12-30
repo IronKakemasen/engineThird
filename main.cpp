@@ -1,12 +1,15 @@
 #include "./M/lowerLayer/engineCore/WinApp.h"
 #include "./M/lowerLayer/M.h"
 #include "M/lowerLayer/Scene/SceneController/SceneController.h"
+#include "./M/lowerLayer/engineCore/Essential/leakChecker/leakChecker.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	////＜ポインタ破壊などを検知するためのもの＞
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_CHECK_ALWAYS_DF);
+
+	ResourceLeakChecker r;
 
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"LE2A_17_ミヤジテンマ");
 

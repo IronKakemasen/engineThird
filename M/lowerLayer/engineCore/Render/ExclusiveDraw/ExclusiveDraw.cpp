@@ -59,7 +59,10 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		{
 			cList->SetGraphicsRootDescriptorTable(k,
 				shaderBufferData->gpuHandleContainer[appearance->use_texHandles[k]]);
+			
 		}
+
+		
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
