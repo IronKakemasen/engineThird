@@ -12,7 +12,7 @@ class SampleScene final : public SceneBehavior
 public:
 	SampleScene();
 
-	PointLight* pointLight;
+	PointLight* pointLights[3];
 
 	std::unique_ptr<MTriangle> triangle;
 	std::unique_ptr<MQuad> quad;

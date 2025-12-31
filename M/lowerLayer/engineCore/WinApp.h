@@ -49,8 +49,8 @@
 #include "./Buffer/gpuResources/Creator/SrvCreator/SrvCreator.h"
 //===================================================================
 
-//=================================================================== LightCreator
-#include "./Light/LightCreator/LightCreator.h"
+//=================================================================== LightManager,LightCreator
+#include "./Light/LightManager/LightManager.h"
 //===================================================================
 
 //=================================================================== CameraParaBufferSetter
@@ -138,8 +138,8 @@ private:
 	//[ FpsController ]
 	FPSController fpsController;
 
-	//[ LightCreator ]
-	LightCreator lightCreator;
+	//[ LightManager ]
+	LightManager lightManager;
 
 	//[ CameraParameterSetter ]
 	CameraParameterSetter cameraParameterSetter;

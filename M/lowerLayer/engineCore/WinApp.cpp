@@ -61,9 +61,6 @@ bool WinApp::InitD3D()
 	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),
 		&textureDataManager,&commandControl,&fenceControl,swapChainControl.Getter_SwapChain());
 
-	//lightCreatorの初期化
-	lightCreator.Init(&exclusiveDraw, deviceSetUp.Getter_Device());
-
 	//cameraParameterSetterの初期化
 	cameraParameterSetter.Init(deviceSetUp.Getter_Device());
 
@@ -92,6 +89,9 @@ bool WinApp::InitD3D()
 
 	//メッシュの初期化、生成
 	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator(),&allPipelineSet);
+	//lightManager,lightCreatorの初期化
+	lightManager.Init(&exclusiveDraw, deviceSetUp.Getter_Device(), srvCreator
+		.Getter_StBufferCretaor());
 
 	return true;
 }
@@ -107,6 +107,9 @@ void WinApp::BeginFrame()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 #endif
+
+	//ライトの更新処理
+	lightManager.Update();
 
 	// コマンドの記録を開始.
 	commandControl.PrepareForNextCommandList();
@@ -279,7 +282,7 @@ bool WinApp::InitApp()
 
 	//テクスチャ読み込み含む（コマンド積む）
 	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
-		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightCreator,&cameraParameterSetter);
+		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightManager,&cameraParameterSetter);
 
 	commandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };

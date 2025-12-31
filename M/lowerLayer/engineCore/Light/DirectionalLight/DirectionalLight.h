@@ -1,37 +1,21 @@
 #pragma once
 #include "../LightBehavior.h"
 
-struct DirectionalLightBuffer;
 
-class DirectionalLight:LightBehavior,LightBasePara
-
+class DirectionalLight:LightBehavior
 {
-	DirectionalLightBuffer* dirLightBuffer = nullptr;
 
+	LightBasePara para;
 public:
 	virtual void Update() override;
 	virtual void Init() override;
 	virtual void Reset() override;
-	inline auto* Getter_Pos()
+	
+	inline auto* Getter_Para()
 	{
-		return &pos;
-	}
-	inline auto* Getter_Intensity()
-	{
-		return &intensity;
-	}
-	inline auto* Getter_Color()
-	{
-		return &color;
-	}
-	inline auto* Getter_IsActive()
-	{
-		return &isActive;
+		return &para;
 	}
 
-
-
-	DirectionalLight(DirectionalLightBuffer* dirLightBuffer_);
-
+	DirectionalLight();
 };
 

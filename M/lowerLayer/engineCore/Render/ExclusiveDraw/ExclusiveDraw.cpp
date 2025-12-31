@@ -4,12 +4,11 @@
 #include "../../Buffer/gpuResources/Data/ShaderBufferData/ShaderBufferData.h"
 #include "../../Essential/BarrierControl/BarrierControl.h"
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
-#include "../../Buffer/constantBuffer/PointLightBuffer/PointLightBuffer.h"
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
 
-void ExclusiveDraw::Setter_PointLightBuffer(PointLightBuffer* pLightBuffer_)
+void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 {
-	pLightBuffer = pLightBuffer_;
+	pLightSrvIndex = pLightSrvIndex_;
 }
 
 void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_)
@@ -58,11 +57,14 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		for (; k < (int)appearance->use_texHandles.size(); ++k)
 		{
 			cList->SetGraphicsRootDescriptorTable(k,
-				shaderBufferData->gpuHandleContainer[appearance->use_texHandles[k]]);
-			
+				shaderBufferData->gpuHandleContainer[appearance->use_texHandles[k]]);			
 		}
 
-		
+		//pointLight
+		cList->SetGraphicsRootDescriptorTable(k,
+			shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
+		++k;
+
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -70,8 +72,7 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
 			mesh->materialBuffer.material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
-			pLightBuffer->pLight.GetVirtualGPUAddress());
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
 
 		//描画
 		UINT indexCnt = (UINT)meshAndData_->Getter_ModelData().resMesh[i].indices.size();
@@ -153,17 +154,21 @@ void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& 
 		//IBV
 		cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
 
+		//texture
 		cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
+		//pointLight
+		cList->SetGraphicsRootDescriptorTable(1,
+			shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
+
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
-			1,
+			2,
 			quadMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			quadMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
-			pLightBuffer->pLight.GetVirtualGPUAddress());
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
 
 
 		//描画(DrawCall)。6インデックスで一つのインスタンス
@@ -235,8 +240,7 @@ void ExclusiveDraw::DrawMobileTriangle(Vertex& left_, Vertex& top_, Vertex& righ
 			triangleMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
 			triangleMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
 			dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-			cameraParaBuffer->cameraPara.GetVirtualGPUAddress(),
-			pLightBuffer->pLight.GetVirtualGPUAddress());
+			cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
 
 		//描画(DrawCall)。3インデックスで一つのインスタンス
 		cList->DrawInstanced(triangleMesh->vertexCnt, 1, static_cast<UINT>(usingVertex_index), 0);

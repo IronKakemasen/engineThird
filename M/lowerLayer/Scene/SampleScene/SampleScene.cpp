@@ -6,14 +6,9 @@
 
 void SampleScene::Update()
 {
-	dirLight->Update();
-	pointLight->Update();
-
 	cameraController->Update();
 	mainCamera->Update();
 	
-	sPlayer->Getter_Trans()->pos = *pointLight->Getter_Pos();
-
 	sPlayer->Update();
 	sObj->Update();
 }
@@ -52,23 +47,27 @@ void SampleScene::Debug()
 	}
 	if (ImGui::TreeNode("dirLight"))
 	{
-		ImGui::DragFloat3("pos", reinterpret_cast<float*>(dirLight->Getter_Pos()), 0.1f);
-		ImGui::DragFloat3("color", reinterpret_cast<float*>(dirLight->Getter_Color()), 0.1f);
-		ImGui::DragFloat("intensity", reinterpret_cast<float*>(dirLight->Getter_Intensity()), 0.025f);
-		ImGui::Checkbox("isActive", reinterpret_cast<bool*>(dirLight->Getter_IsActive()));
+		auto* para = dirLight->Getter_Para();
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&para->pos), 0.1f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(&para->color), 0.1f);
+		ImGui::DragFloat("intensity", reinterpret_cast<float*>(&para->intensity), 0.025f);
+		ImGui::Checkbox("isActive", reinterpret_cast<bool*>(&para->isActive));
 
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("pointLight"))
+	for (int i = 0; i < 3; ++i)
 	{
-		ImGui::DragFloat3("pos", reinterpret_cast<float*>(pointLight->Getter_Pos()), 0.1f);
-		ImGui::DragFloat3("color", reinterpret_cast<float*>(pointLight->Getter_Color()), 0.1f);
-		ImGui::DragFloat("intensity", reinterpret_cast<float*>(pointLight->Getter_Intensity()), 0.025f);
-		ImGui::DragFloat("radius", reinterpret_cast<float*>(pointLight->Getter_Radius()), 0.025f);
-		ImGui::Checkbox("isActive",reinterpret_cast<bool*>(pointLight->Getter_IsActive()));
+		if (ImGui::TreeNode(std::to_string(i).c_str()))
+		{
+			auto* para = pointLights[i]->Getter_Para();
+			ImGui::DragFloat3("pos", reinterpret_cast<float*>(&para->pos), 0.1f);
+			ImGui::DragFloat3("color", reinterpret_cast<float*>(&para->color), 0.1f);
+			ImGui::DragFloat("intensity", reinterpret_cast<float*>(&para->intensity), 0.025f);
+			ImGui::DragFloat("radius", reinterpret_cast<float*>(&para->invSqrRadius), 1.0f);
+			ImGui::Checkbox("isActive", reinterpret_cast<bool*>(&para->isActive));
 
-
-		ImGui::TreePop();
+			ImGui::TreePop();
+		}
 	}
 
 

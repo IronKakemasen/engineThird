@@ -1,39 +1,25 @@
 #pragma once
 #include "../LightBehavior.h"
 
-struct PointLightBuffer;
-
-class PointLight :LightBehavior, PointLightPara
+class PointLight :LightBehavior
 {
-	PointLightBuffer* pLightBuffer = nullptr;
+	PointLightPara para;
 
 public:
 	virtual void Update() override;
 	virtual void Init() override;
 	virtual void Reset() override;
-	inline auto* Getter_Pos()
+
+	inline auto* Getter_Para()
 	{
-		return &pos;
-	}
-	inline auto* Getter_Intensity()
-	{
-		return &intensity;
-	}
-	inline auto* Getter_Color()
-	{
-		return &color;
-	}
-	inline auto* Getter_Radius()
-	{
-		return &invSqrRadius;
-	}
-	inline auto* Getter_IsActive()
-	{
-		return &isActive;
+		return &para;
 	}
 
+	inline auto IsActive()
+	{
+		return para.isActive;
+	}
 
-	PointLight(PointLightBuffer* pLightBuffer_);
-
+	PointLight();
 };
 

@@ -11,6 +11,7 @@ class AllMesh;
 struct ShaderBufferData;
 struct DirectionalLightBuffer;
 struct PointLightBuffer;
+
 struct CameraParaBuffer;
 
 class ExclusiveDraw
@@ -19,8 +20,8 @@ class ExclusiveDraw
 	AllMesh* allMesh = nullptr;
 	ShaderBufferData* shaderBufferData = nullptr;
 	DirectionalLightBuffer* dirLightBuffer = nullptr;
-	PointLightBuffer* pLightBuffer = nullptr;
 	CameraParaBuffer* cameraParaBuffer = nullptr;
+	uint16_t* pLightSrvIndex = nullptr;
 
 public:
 	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, 
@@ -43,7 +44,7 @@ public:
 	void ResetDrawIndexes();
 
 	void Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_);
-	void Setter_PointLightBuffer(PointLightBuffer* pLightBuffer_);
+	void Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_);
 
 };
 
