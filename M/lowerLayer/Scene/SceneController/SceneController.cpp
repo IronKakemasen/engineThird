@@ -6,14 +6,16 @@
 
 void SceneController::Update()
 {
-	allScene[runningScene]->Debug();
+	SceneBehavior* cur_Scene = allScene[runningScene];
+
+	cur_Scene->Debug();
 
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
-		allScene[runningScene]->Update();
+		cur_Scene->Update();
 	}
 
-	allScene[runningScene]->Draw();
+	cur_Scene->Draw();
 }
 
 

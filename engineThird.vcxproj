@@ -155,6 +155,7 @@
     <ClCompile Include="Application\Model\GreenModel.cpp" />
     <ClCompile Include="Application\Scene\InGameScene.cpp" />
     <ClCompile Include="Application\GameObject\InGameController.cpp" />
+    <ClCompile Include="M\lowerLayer\GameObjectManager\GameObjectManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="Application\Model\GreenModel.h" />
     <ClInclude Include="Application\Scene\InGameScene.h" />
     <ClInclude Include="Application\GameObject\InGameController.h" />
+    <ClInclude Include="M\lowerLayer\GameObjectManager\GameObjectManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h" />

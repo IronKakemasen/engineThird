@@ -4,7 +4,6 @@
 class SampleModel:public ModelBehavior
 {
 
-
 public:
 	SampleModel();
 	virtual void Update()override;

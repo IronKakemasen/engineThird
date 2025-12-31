@@ -38,5 +38,10 @@ struct GameObject:GameObjectBehavior
 		return &trans;
 	}
 
+	inline ObjectStatus GetStatus()
+	{
+		return status;
+	}
+
 };
 
