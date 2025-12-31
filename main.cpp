@@ -37,8 +37,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 	}
 
-
-
 	winApp.TermApp();
 
     return 0;

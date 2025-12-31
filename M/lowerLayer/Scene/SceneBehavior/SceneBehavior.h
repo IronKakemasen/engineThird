@@ -4,8 +4,13 @@
 #include "../../Camera/CameraController/CameraController.h"
 #include "../../Model/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
 #include "../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
+#include "../../engineCore/Light/DirectionalLight/DirectionalLight.h"
+#include "../../engineCore/Light/PointLight/PointLight.h"
 
-class DirectionalLight;
+#ifdef USE_IMGUI
+#include "../../../../external/imgui/imgui.h"
+#endif // USE_IMGUI
+
 
 
 class SceneBehavior

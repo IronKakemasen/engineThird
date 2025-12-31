@@ -47,7 +47,7 @@ SampleModel2::SampleModel2()
 	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	//モデルの生成
-	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/bunny.obj");
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/axis.obj");
 	//使用するシェーダーの選択
 	(*model->Getter_Appearance())[0].shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");

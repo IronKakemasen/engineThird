@@ -140,6 +140,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\GameObject\BlackBlock.cpp" />
+    <ClCompile Include="Application\Model\BlackModel.cpp" />
+    <ClCompile Include="Application\GameObject\BlockManager.cpp" />
+    <ClCompile Include="Application\Scene\InGameConstructor.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\imgui\imgui_draw.cpp" />
@@ -147,6 +151,10 @@
     <ClCompile Include="external\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Application\GameObject\GreenBlock.cpp" />
+    <ClCompile Include="Application\Model\GreenModel.cpp" />
+    <ClCompile Include="Application\Scene\InGameScene.cpp" />
+    <ClCompile Include="Application\GameObject\InGameController.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.cpp" />
@@ -262,8 +270,16 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.cpp" />
+    <ClCompile Include="Application\GameObject\Player.cpp" />
+    <ClCompile Include="Application\GameObject\NormalBlock.cpp" />
+    <ClCompile Include="Application\Model\NormalModel.cpp" />
+    <ClCompile Include="Application\Model\PlayerModel.cpp" />
+    <ClCompile Include="Application\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\GameObject\BlackBlock.h" />
+    <ClInclude Include="Application\Model\BlackModel.h" />
+    <ClInclude Include="Application\GameObject\BlockManager.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
     <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
@@ -272,6 +288,10 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="Application\GameObject\GreenBlock.h" />
+    <ClInclude Include="Application\Model\GreenModel.h" />
+    <ClInclude Include="Application\Scene\InGameScene.h" />
+    <ClInclude Include="Application\GameObject\InGameController.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h" />
@@ -387,6 +407,11 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.h" />
+    <ClInclude Include="Application\GameObject\Player.h" />
+    <ClInclude Include="Application\GameObject\NormalBlock.h" />
+    <ClInclude Include="Application\Model\NormalModel.h" />
+    <ClInclude Include="Application\Model\PlayerModel.h" />
+    <ClInclude Include="Application\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -25,7 +25,7 @@ void SceneController::Init()
 	{
 		InstantiateScenes();
 		SetScenesToArray();
-		ChangeScene(SceneType::kSample);
+		ChangeScene(SceneType::kInGame);
 	}
 
 }
@@ -33,11 +33,15 @@ void SceneController::Init()
 void SceneController::SetScenesToArray()
 {
 	allScene[SceneType::kSample] = sampleScene.get();
+	allScene[SceneType::kInGame] = inGameScene.get();
+	allScene[SceneType::kTitle] = titleScene.get();
 
 }
 
 void SceneController::InstantiateScenes()
 {
+	inGameScene.reset(new InGameScene);
+	titleScene.reset(new TitleScene);
 	sampleScene.reset(new SampleScene);
 }
 
