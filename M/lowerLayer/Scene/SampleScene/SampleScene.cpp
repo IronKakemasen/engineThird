@@ -7,7 +7,6 @@
 void SampleScene::Update()
 {
 	cameraController->Update();
-	mainCamera->Update();
 	
 	sPlayer->Update();
 	sObj->Update();

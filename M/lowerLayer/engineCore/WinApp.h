@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../../commonVariables.h"
 
 //=================================================================== debugSystems
@@ -30,9 +29,11 @@
 #include "./Render/ExclusiveDraw/ExclusiveDraw.h"
 //===================================================================
 
+
 //=================================================================== allMesh,ParticleMeshSrvCreator
 #include "./Mesh/allMesh/allMesh.h"
 //===================================================================
+
 
 //=================================================================== textureSystem
 #include "./textureDataManager/textureDataManager.h"
@@ -49,13 +50,21 @@
 #include "./Buffer/gpuResources/Creator/SrvCreator/SrvCreator.h"
 //===================================================================
 
+
 //=================================================================== LightManager,LightCreator
 #include "./Light/LightManager/LightManager.h"
 //===================================================================
 
+
 //=================================================================== CameraParaBufferSetter
 #include "./Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
 //===================================================================
+
+
+//=================================================================== Input
+#include "./Input/InputInterface/InputInterface.h"
+//===================================================================
+
 
 //=================================================================== Imgui
 #ifdef USE_IMGUI
@@ -143,6 +152,9 @@ private:
 
 	//[ CameraParameterSetter ]
 	CameraParameterSetter cameraParameterSetter;
+
+	//[ Input ]
+	InputInterface inputInterface;
 
 	bool InitApp();
 	bool InitWnd();

@@ -237,7 +237,7 @@
 //
 //      key:
 //          call this for keyboard inputs sent to the textfield. you can use it
-//          for "key down" events or for "posd" key events. if you need to
+//          for "key down" events or for "translated" key events. if you need to
 //          do both (as in Win32), or distinguish Unicode characters from control
 //          inputs, set a high bit to distinguish the two; then you can define the
 //          various definitions like STB_TEXTEDIT_K_LEFT have the is-key-event bit
