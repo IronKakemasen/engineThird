@@ -34,7 +34,5 @@ public:
 
 	void CreateRTV(ID3D12Device* device_, RtvDescriptorHeap* rtvDescHeap_, D3D12_RENDER_TARGET_VIEW_DESC desc_);
 
-
-
 };
 

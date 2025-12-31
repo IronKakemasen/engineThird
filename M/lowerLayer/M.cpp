@@ -3,7 +3,7 @@
 #include "./engineCore/WinApp.h"
 #include "./engineCore/VpShader/vpShaderTable/vpShaderTable.h"
 #include "./engineCore/PSO/allPipelineSet.h"
-#include "./engineCore/Light/LightCreator/LightCreator.h"
+#include "./engineCore/Light/LightManager/LightManager.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
 
 
@@ -12,15 +12,17 @@ void M::SetCameraPara(CameraPara cameraPara_)
 	cameraParameterSetter->SetCameraPara(cameraPara_);
 }
 
-PointLight* M::CreatePointLight()
+DirectionalLight* M::ImportDirLight()
 {
-	return lightCreator->CreatePointLight();
+	return lightManager->ExportDirectionalLight();
 }
 
-DirectionalLight* M::CreateDirLight()
+PointLight* M::ImportPointLight()
 {
-	return lightCreator->CreateDirectionalLight();
+	return lightManager->ExportPointLight();
+
 }
+
 
 std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)
 {
@@ -77,7 +79,7 @@ int M::GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixe
 
 void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 	VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
-	LightCreator* lightCreator_, CameraParameterSetter* cameraParameterSetter_)
+	LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_)
 {
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
@@ -89,7 +91,7 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
 		vpShaderTable = vpShaderTable_;
 		allPipelineSet = allPipelineSet_;
 		meshCreator = meshCreator_;
-		lightCreator = lightCreator_;
+		lightManager = lightManager_;
 		cameraParameterSetter = cameraParameterSetter_;
 		initOnlyOnce = false;
 	}

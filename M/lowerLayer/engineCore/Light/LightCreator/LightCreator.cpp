@@ -1,41 +1,44 @@
 #include "LightCreator.h"
 #include "../../Render/ExclusiveDraw/ExclusiveDraw.h"
+#include "../../Buffer/gpuResources/Creator/SrvCreator/StructuredBufferSrvCreator/StructuredBufferSrvCreator.h"
 
-PointLight* LightCreator::CreatePointLight()
+LightCreator::LightCreator()
 {
-	static int createNum = 0;
-	if (createNum > pLightCreationLimit) assert(false);
 
-	pLightSet.first.reset(new PointLightBuffer);
-	pLightSet.second.reset(new PointLight(pLightSet.first.get()));
-
-	pLightSet.first->pLight.CreateAndMapping(device);
-
-	exclusiveDraw->Setter_PointLightBuffer(pLightSet.first.get());
-	createNum++;
-
-	return pLightSet.second.get();
 }
 
-
-DirectionalLight* LightCreator::CreateDirectionalLight()
+void LightCreator::CreatePointLight(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_, 
+	StructuredBufferSrvCreator* srvCreator_)
 {
-	static int createNum = 0;
-	if (createNum > 0) assert(false);
+	pLightStructuredBuffer.reset(new PointLightStructuredBuffer);
+	pLightStructuredBuffer->pLight.CreateAndMapping(device_, kSumPLight);
+
+	for (int i = 0; i < kSumPLight; ++i)
+	{
+		pointLightContainer.emplace_back(std::make_unique<PointLight>());
+	}
+
+	//SRVの作成
+	srvIndex = srvCreator_->CreateSRVForParticle(kSumPLight, sizeof(PointLightPara),
+		pLightStructuredBuffer->pLight.shaderBuffer);
+
+	exclusiveDraw_->Setter_PLightSrvIndex(&srvIndex);
+
+}
+
+void LightCreator::CreateDirectionalLight(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_)
+{
 
 	dirLightSet.first.reset(new DirectionalLightBuffer);
-	dirLightSet.second.reset(new DirectionalLight(dirLightSet.first.get()));
+	dirLightSet.second.reset(new DirectionalLight());
 
-	dirLightSet.first->dirLight.CreateAndMapping(device);
-
-	exclusiveDraw->Setter_DirectionalLightBuffer(dirLightSet.first.get());
-	createNum++;
-
-	return dirLightSet.second.get();
+	dirLightSet.first->dirLight.CreateAndMapping(device_);
+	exclusiveDraw_->Setter_DirectionalLightBuffer(dirLightSet.first.get());
 }
 
-void LightCreator::Init(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_)
+void LightCreator::Init(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_,
+	StructuredBufferSrvCreator* srvCreator_)
 {
-	exclusiveDraw = exclusiveDraw_;
-	device = device_;
+	CreatePointLight(exclusiveDraw_,device_,srvCreator_);
+	CreateDirectionalLight(exclusiveDraw_, device_);
 }

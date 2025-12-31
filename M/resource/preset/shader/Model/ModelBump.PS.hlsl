@@ -15,8 +15,6 @@ SamplerState shininessMap : register(s3);
 ConstantBuffer<Material> gMaterial : register(b1);
 ConstantBuffer<DirectionalLight> dirLight : register(b2);
 ConstantBuffer<CameraPara> cameraPara : register(b3);
-ConstantBuffer<PointLight> pLight : register(b4);
-
 
 struct PixcelShaderOutput
 {
@@ -34,6 +32,7 @@ struct VertexShaderOutput
 
 
 PixcelShaderOutput main(VertexShaderOutput input)
+
 {
     PixcelShaderOutput output;
 

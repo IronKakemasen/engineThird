@@ -1,6 +1,7 @@
 #pragma once
 #include "./TextureSrvCreator/TextureSrvCreator.h"
 #include "./ParticleMeshSrvCreator/ParticleMeshSrvCreator.h"
+#include "./StructuredBufferSrvCreator/StructuredBufferSrvCreator.h"
 
 struct ShaderBuffer;
 struct SrvDescriptorHeap;
@@ -12,6 +13,7 @@ class SrvCreator
 {
 	TextureSrvCreator textureSrvCreator;
 	ParticleMeshSrvCreator particleMeshSrvCreator;
+	StructuredBufferSrvCreator stBufferCretaor;
 
 public:
 	void Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_,
@@ -25,6 +27,11 @@ public:
 	auto* Getter_TextureSrvCreator()
 	{
 		return &textureSrvCreator;
+	}
+
+	auto* Getter_StBufferCretaor()
+	{
+		return &stBufferCretaor;
 	}
 
 };

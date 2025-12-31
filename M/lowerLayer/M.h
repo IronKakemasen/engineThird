@@ -15,7 +15,7 @@ struct CommonDrawingSystem;
 class VPShaderTable;
 class AllPipelineSet;
 struct MeshAndDataCommon;
-class LightCreator;
+class LightManager;
 class DirectionalLight;
 class PointLight;
 class CameraParameterSetter;
@@ -28,7 +28,7 @@ class M
 	VPShaderTable* vpShaderTable = nullptr;
 	AllPipelineSet* allPipelineSet = nullptr;
 	MeshCreator* meshCreator = nullptr;
-	LightCreator* lightCreator = nullptr;
+	LightManager* lightManager = nullptr;
 	CameraParameterSetter* cameraParameterSetter = nullptr;
 
 
@@ -37,7 +37,7 @@ public:
 
 	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 		VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
-		LightCreator* lightCreator_, CameraParameterSetter* cameraParameterSetter_);
+		LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_);
 
 	//Logを出力
 	void LogM(std::string message_);
@@ -68,8 +68,8 @@ public:
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
 
-	DirectionalLight* CreateDirLight();
-	PointLight* CreatePointLight();
+	DirectionalLight* ImportDirLight();
+	PointLight* ImportPointLight();
 
 	void SetCameraPara(CameraPara cameraPara_);
 

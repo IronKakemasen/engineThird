@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\CameraController\CameraController.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParaBuffer.cpp" />
@@ -272,8 +273,11 @@
     <ClCompile Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\PointLight\PointLight.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h" />
     <ClInclude Include="M\lowerLayer\Camera\CameraController\CameraController.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParaBuffer.h" />
@@ -393,6 +397,8 @@
     <ClInclude Include="M\lowerLayer\Model\FromFile\SampleModel2\SampleModel2.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\PointLight\PointLight.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\PointLightBuffer\PointLightBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

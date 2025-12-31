@@ -7,6 +7,8 @@ struct LightBasePara
 	float intensity;
 	Vector3 color;
 	int isActive;
+
+	LightBasePara();
 };
 
 struct PointLightPara
@@ -16,6 +18,8 @@ struct PointLightPara
 	Vector3 color;
 	float invSqrRadius;
 	int isActive;
+
+	PointLightPara();
 };
 
 

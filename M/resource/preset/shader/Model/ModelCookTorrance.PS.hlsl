@@ -5,6 +5,7 @@
 #include "../HLSLI/PointLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
+StructuredBuffer<PointLight> pointLights : register(t1);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
@@ -14,7 +15,6 @@ SamplerState shininessMap : register(s3);
 ConstantBuffer<Material> gMaterial : register(b1);
 ConstantBuffer<DirectionalLight> dirLight : register(b2);
 ConstantBuffer<CameraPara> cameraPara : register(b3);
-ConstantBuffer<PointLight> pLight : register(b4);
 
 
 struct PixcelShaderOutput

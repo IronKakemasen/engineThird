@@ -6,6 +6,7 @@
 
 
 Texture2D<float4> colorMap : register(t0);
+StructuredBuffer<PointLight> pointLights : register(t1);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
@@ -15,7 +16,6 @@ SamplerState shininessMap : register(s3);
 ConstantBuffer<Material> gMaterial : register(b2);
 ConstantBuffer<DirectionalLight> dirLight : register(b3);
 ConstantBuffer<CameraPara> cameraPara : register(b4);
-ConstantBuffer<PointLight> pLight : register(b5);
 
 struct VertexShaderOutput
 {
@@ -39,34 +39,41 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
 
-    float3 dirLightDir = normalize(dirLight.pos);
-    float3 pointLightDir = normalize(pLight.pos - input.worldPosition);
-
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
 
     float NV = saturate(dot(normal, toCamera));
-    float3 diffuse = DiffuseModelNormalizedLambert(gMaterial.albedoColor.rgb, gMaterial.metallic);
-    float3 Ks = gMaterial.albedoColor.rgb * gMaterial.metallic;
+    float3 diffuse = DiffuseModelNormalizedLambert(textureColor.rgb, gMaterial.metallic);
+    float3 Ks = textureColor.rgb * gMaterial.metallic;
     float a = gMaterial.roughness * gMaterial.roughness;
 
-    float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition,
-    pLight.pos, pLight.invSqrRadius, pLight.color) * pLight.intensity;
-    float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
-    poinghtLightColor = poinghtLightColor * pointLightBRDF;
+    float3 lightFinalColor = float3(0, 0, 0);
     
-    float3 dirColor = dirLight.color * dirLight.intensity;
+    //直接光
+    float3 dirLightDir = normalize(dirLight.pos);
+    float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
+    float NL = saturate(dot(normal, dirLightDir));
     float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
-    dirColor = dirColor * dirLightBRDF;
+    lightFinalColor += dirColor * dirLightBRDF;
 
-    float3 lightColor = dirColor + poinghtLightColor;
+    //ポイントライト
+    uint numLights, stride;
+    pointLights.GetDimensions(numLights, stride);
     
-    //output.color = float4(lightColor * textureColor.rgb ,
-    //    gMaterial.albedoColor.a * textureColor.a);
+    for (uint i = 0; i < numLights; ++i)
+    {
+        if (!pointLights[i].isActive) continue;
     
-    output.color = float4(textureColor.rgb,
-        gMaterial.albedoColor.a * textureColor.a);
+        float3 pointLightDir = normalize(pointLights[i].pos - input.worldPosition);
 
+        float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition,
+            pointLights[i].pos, pointLights[i].invSqrRadius,
+            pointLights[i].color) * pointLights[i].intensity;
+        float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
+        lightFinalColor += poinghtLightColor * pointLightBRDF;
+    }
+    
+    output.color = float4(lightFinalColor, gMaterial.albedoColor.a * textureColor.a);
     
     return output;
 }

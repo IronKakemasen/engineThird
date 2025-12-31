@@ -12,7 +12,7 @@ SceneBehavior::SceneBehavior()
 	static bool onlyOnce = true;
 	if (onlyOnce)
 	{
-		dirLight = M::GetInstance()->CreateDirLight();
+		dirLight = M::GetInstance()->ImportDirLight();
 		onlyOnce = false;
 	}
 }
