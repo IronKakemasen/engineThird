@@ -16,10 +16,11 @@ class VPShaderTable;
 class AllPipelineSet;
 struct MeshAndDataCommon;
 class LightManager;
-class DirectionalLight;
 class PointLight;
 class CameraParameterSetter;
 struct CameraPara;
+class DirectionalLight;
+class KeyboardKeys;
 
 class M
 {
@@ -30,14 +31,19 @@ class M
 	MeshCreator* meshCreator = nullptr;
 	LightManager* lightManager = nullptr;
 	CameraParameterSetter* cameraParameterSetter = nullptr;
-
+	KeyboardKeys* keyboardKeys = nullptr;
 
 public:
 	static M* GetInstance();
 
 	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 		VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
-		LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_);
+		LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
+		KeyboardKeys* keyboardKeys_);
+
+	//入力
+	bool IsKeyTriggered(int key_);
+	bool IsKeyPressed(int key_);
 
 	//Logを出力
 	void LogM(std::string message_);

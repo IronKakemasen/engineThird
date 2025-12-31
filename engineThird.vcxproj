@@ -140,6 +140,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="external\imgui\imgui.cpp" />
+    <ClCompile Include="external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\CameraController\CameraController.cpp" />
@@ -155,7 +163,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\FPSControll\FPSController.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Input\Input.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Input\InputInterface\InputInterface.cpp" />
     <ClCompile Include="M\lowerLayer\GameObject\GameObjectBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Audio\AudioHandle.cpp" />
@@ -178,27 +186,6 @@
     <ClCompile Include="M\utilities\convertString\convertString.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.cpp" />
-    <ClCompile Include="external\imgui\imgui.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_demo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_draw.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_impl_dx12.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_impl_win32.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_tables.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="external\imgui\imgui_widgets.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.cpp" />
@@ -277,6 +264,15 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="external\imgui\imconfig.h" />
+    <ClInclude Include="external\imgui\imgui.h" />
+    <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="external\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="external\imgui\imgui_internal.h" />
+    <ClInclude Include="external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\CameraParaBuffer\CameraParameterSetter\CameraParameterSetter.h" />
     <ClInclude Include="M\lowerLayer\Camera\CameraController\CameraController.h" />
@@ -292,7 +288,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\ModelData\ModelData.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\MeshCreator\MeshLoader\MeshLoader.h" />
     <ClInclude Include="M\lowerLayer\engineCore\FPSControll\FPSController.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Input\Input.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Input\InputInterface\InputInterface.h" />
     <ClInclude Include="M\lowerLayer\GameObject\GameObjectBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForModel\MeshForModelCommon.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Audio\AudioHandle.h" />
@@ -315,14 +311,6 @@
     <ClInclude Include="M\utilities\convertString\convertString.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\allMesh.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Resource\depthBuffer\depthBuffer.h" />
-    <ClInclude Include="external\imgui\imconfig.h" />
-    <ClInclude Include="external\imgui\imgui.h" />
-    <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
-    <ClInclude Include="external\imgui\imgui_impl_win32.h" />
-    <ClInclude Include="external\imgui\imgui_internal.h" />
-    <ClInclude Include="external\imgui\imstb_rectpack.h" />
-    <ClInclude Include="external\imgui\imstb_textedit.h" />
-    <ClInclude Include="external\imgui\imstb_truetype.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\MaterialBuffer\MaterialBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\depthStencilDescCreator\depthStencilDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\blendDescCreator\blendDescCreator.h" />
@@ -409,6 +397,9 @@
     <ProjectReference Include="external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="external\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

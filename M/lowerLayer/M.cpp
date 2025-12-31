@@ -5,7 +5,17 @@
 #include "./engineCore/PSO/allPipelineSet.h"
 #include "./engineCore/Light/LightManager/LightManager.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
+#include "./engineCore/Input/KeyboardKeys/KeyboardKeys.h"
 
+bool M::IsKeyTriggered(int key_)
+{
+	return keyboardKeys->IsKeyTrigger(key_);
+}
+
+bool M::IsKeyPressed(int key_)
+{
+	return keyboardKeys->IsKeyPress(key_);
+}
 
 void M::SetCameraPara(CameraPara cameraPara_)
 {
@@ -79,7 +89,8 @@ int M::GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixe
 
 void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 	VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
-	LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_)
+	LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
+	KeyboardKeys* keyboardKeys_)
 {
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
@@ -93,9 +104,9 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
 		meshCreator = meshCreator_;
 		lightManager = lightManager_;
 		cameraParameterSetter = cameraParameterSetter_;
+		keyboardKeys = keyboardKeys_;
 		initOnlyOnce = false;
 	}
-
 }
 
 void M::LogM(std::string message_)

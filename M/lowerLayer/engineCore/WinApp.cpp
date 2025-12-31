@@ -111,6 +111,9 @@ void WinApp::BeginFrame()
 	//ライトの更新処理
 	lightManager.Update();
 
+	//入力インターフェースの更新
+	inputInterface.Update();
+
 	// コマンドの記録を開始.
 	commandControl.PrepareForNextCommandList();
 
@@ -230,6 +233,8 @@ void WinApp::TermWnd()
 
 	m_hInst = nullptr;
 	m_hWnd = nullptr;
+
+	inputInterface.Finalize();
 }
 
 void WinApp::TermD3D()
@@ -282,7 +287,8 @@ bool WinApp::InitApp()
 
 	//テクスチャ読み込み含む（コマンド積む）
 	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
-		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightManager,&cameraParameterSetter);
+		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightManager,
+		&cameraParameterSetter,&inputInterface.keyboardKeys);
 
 	commandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };
@@ -369,6 +375,8 @@ bool WinApp::InitWnd()
 	//ウィンドウにフォーカスを設定
 	SetFocus(m_hWnd);
 
+	//入力インターフェースの初期化
+	inputInterface.Initialize(m_hInst,m_hWnd);
 
 	return true;
 }

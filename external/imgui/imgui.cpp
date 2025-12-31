@@ -1422,7 +1422,7 @@ ImGuiIO::ImGuiIO()
     BackendUsingLegacyNavInputArray = true; // assume using legacy array until proven wrong
 }
 
-// Pass in posd ASCII characters for text input.
+// Pass in translated ASCII characters for text input.
 // - with glfw you can get those from the callback set in glfwSetCharCallback()
 // - on Windows you can get those using ToAscii+keyboard state, or via the WM_CHAR message
 // FIXME: Should in theory be called "AddCharacterEvent()" to be consistent with new API
@@ -9141,7 +9141,7 @@ const char* ImGui::GetKeyName(ImGuiKey key)
     return GKeyNames[key - ImGuiKey_NamedKey_BEGIN];
 }
 
-// Return unposd names: on macOS, Cmd key will show as Ctrl, Ctrl key will show as super.
+// Return untranslated names: on macOS, Cmd key will show as Ctrl, Ctrl key will show as super.
 // Lifetime of return value: valid until next call to same function.
 const char* ImGui::GetKeyChordName(ImGuiKeyChord key_chord)
 {
@@ -15026,15 +15026,15 @@ void ImGui::TranslateWindowsInViewport(ImGuiViewportP* viewport, const ImVec2& o
     IM_ASSERT(viewport->Window == NULL && (viewport->Flags & ImGuiViewportFlags_CanHostOtherWindows));
 
     // 1) We test if ImGuiConfigFlags_ViewportsEnable was just toggled, which allows us to conveniently
-    // pos imgui windows from OS-window-local to absolute coordinates or vice-versa.
+    // translate imgui windows from OS-window-local to absolute coordinates or vice-versa.
     // 2) If it's not going to fit into the new size, keep it at same absolute position.
     // One problem with this is that most Win32 applications doesn't update their render while dragging,
     // and so the window will appear to teleport when releasing the mouse.
-    const bool pos_all_windows = (g.ConfigFlagsCurrFrame & ImGuiConfigFlags_ViewportsEnable) != (g.ConfigFlagsLastFrame & ImGuiConfigFlags_ViewportsEnable);
+    const bool translate_all_windows = (g.ConfigFlagsCurrFrame & ImGuiConfigFlags_ViewportsEnable) != (g.ConfigFlagsLastFrame & ImGuiConfigFlags_ViewportsEnable);
     ImRect test_still_fit_rect(old_pos, old_pos + viewport->Size);
     ImVec2 delta_pos = new_pos - old_pos;
     for (ImGuiWindow* window : g.Windows) // FIXME-OPT
-        if (pos_all_windows || (window->Viewport == viewport && test_still_fit_rect.Contains(window->Rect())))
+        if (translate_all_windows || (window->Viewport == viewport && test_still_fit_rect.Contains(window->Rect())))
             TranslateWindow(window, delta_pos);
 }
 
@@ -20083,7 +20083,7 @@ static int IMGUI_CDECL ViewportComparerByLastFocusedStampCount(const void* lhs, 
     return b->LastFocusedStampCount - a->LastFocusedStampCount;
 }
 
-// Draw an arbitrary US keyboard layout to visualize posd keys
+// Draw an arbitrary US keyboard layout to visualize translated keys
 void ImGui::DebugRenderKeyboardPreview(ImDrawList* draw_list)
 {
     const float scale = ImGui::GetFontSize() / 13.0f;
