@@ -36,13 +36,14 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
+    float4 baseColor = textureColor * gMaterial.albedoColor;
 
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
 
     float NV = saturate(dot(normal, toCamera));
-    float3 diffuse = DiffuseModelNormalizedLambert(textureColor.rgb, gMaterial.metallic);
-    float3 Ks = textureColor.rgb * gMaterial.metallic;
+    float3 diffuse = DiffuseModelNormalizedLambert(baseColor.rgb, gMaterial.metallic);
+    float3 Ks = baseColor.rgb * gMaterial.metallic;
     float a = gMaterial.roughness * gMaterial.roughness;
 
     float3 lightFinalColor = float3(0, 0, 0);
@@ -71,9 +72,8 @@ PixcelShaderOutput main(VertexShaderOutput input)
         lightFinalColor += poinghtLightColor * pointLightBRDF;
     }
     
-    output.color = float4(lightFinalColor, gMaterial.albedoColor.a * textureColor.a);
+    output.color = float4(lightFinalColor, baseColor.a);
     
     return output;
-
 }
 

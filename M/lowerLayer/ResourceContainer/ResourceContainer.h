@@ -11,6 +11,10 @@ enum class TextureTag
 	kPlayer,
 	kNothing,
 	kBlackNormal,
+	kGuruguru,
+	kNN,
+	kGridN,
+	kStarN,
 	kCount
 };
 

@@ -9,6 +9,7 @@ void Player::Init()
 {
 	SetIdentity(kPlayer);
 	model->Init();
+	trans.pos = { 102,109,101 };
 }
 
 void Player::Reset()

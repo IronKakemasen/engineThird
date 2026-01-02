@@ -12,7 +12,7 @@
 	std::string const& fileName_,
 	const wchar_t* profile_)
 {
-	std::string const filePath = "./M/resource/preset/shader/"+ folderPath_;
+	std::string const filePath = "./resource/preset/shader/"+ folderPath_;
 	std::string const fileType  = ".hlsl";
 	std::string compositePath = filePath + fileName_ + fileType;
 

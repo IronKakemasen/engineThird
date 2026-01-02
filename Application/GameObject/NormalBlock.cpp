@@ -26,7 +26,6 @@ void NormalBlock::Draw(Matrix4* vpMat_)
 NormalBlock::NormalBlock()
 {
 	model.reset(new NormalModel);
-	(*model->model->Getter_Appearance())[0].color = { 128,128,128,255 };
 	model->MakeAllPartsBeChildren(&trans);
 
 }

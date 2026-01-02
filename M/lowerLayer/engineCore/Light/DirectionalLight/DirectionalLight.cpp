@@ -10,8 +10,8 @@ void DirectionalLight::Update()
 void DirectionalLight::Init()
 {
 	para.color = { 100,100,100 };
-	para.intensity = 3.0f;
-	para.pos = { 1,1,1 };
+	para.intensity = 1.0f;
+	para.pos = { 1,14,1 };
 	para.isActive = 1;
 }
 
