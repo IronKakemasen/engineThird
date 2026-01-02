@@ -3,6 +3,6 @@
 
 struct RtvDescriptorHeap:DescriptorHeapBehavior
 {	
-	virtual void Init(ID3D12Device* device_, uint8_t numDescriptors_)override;
+	virtual void Init(ID3D12Device* device_, uint16_t numDescriptors_)override;
 };
 

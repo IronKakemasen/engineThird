@@ -15,7 +15,7 @@ protected:
 	uint32_t sizeOfDescriptor = 0;
 
 	//最大領域分割数
-	uint8_t kMaxDescriptor = 0;
+	uint16_t kMaxDescriptor = 0;
 
 public:
 
@@ -30,7 +30,7 @@ public:
 	}
 
 
-	virtual void Init(ID3D12Device* device_, uint8_t numDescriptors_) = 0;
+	virtual void Init(ID3D12Device* device_, uint16_t numDescriptors_) = 0;
 
 	[[nodiscard]] SIZE_T GetCPUDescriptorHandle(uint16_t index_);
 	[[nodiscard]] SIZE_T GetGPUDescriptorHandle(uint16_t index_);
