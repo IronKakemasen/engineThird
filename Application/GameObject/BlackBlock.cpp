@@ -26,5 +26,7 @@ BlackBlock::BlackBlock()
 {
 	model.reset(new BlackModel);
 	(*model->model->Getter_Appearance())[0].color = { 32,32,32,255 };
+	model->MakeAllPartsBeChildren(&trans);
+
 }
 

@@ -10,7 +10,7 @@ void PlayerModel::Draw(Matrix4* vpMat_)
 	M::GetInstance()->DrawModel(model.get(), vpMat_);
 }
 
-PlayerModel::PlayerModel(Transform* gameObject_)
+PlayerModel::PlayerModel()
 {
 	//モデルの生成
 	model = M::GetInstance()->CreateModel("./M/resource/preset/model/Block/Block.obj");
