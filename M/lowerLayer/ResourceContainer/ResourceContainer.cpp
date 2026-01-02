@@ -10,6 +10,9 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
 	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
 	LoadTextureFile(TextureTag::kNothing, pathToPresetTex + "header.jpg");
+	LoadTextureFile(TextureTag::kBlackNormal, pathToPresetTex + "normalForBlack.png");
+
+	
 }
 
 int ResourceContainer::GetTextureIndex(TextureTag tag_)

@@ -10,7 +10,7 @@ enum class TextureTag
 	kSouhei,
 	kPlayer,
 	kNothing,
-
+	kBlackNormal,
 	kCount
 };
 

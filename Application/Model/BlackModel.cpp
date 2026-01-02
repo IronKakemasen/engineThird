@@ -19,8 +19,12 @@ BlackModel::BlackModel()
 	//使用するシェーダーの選択
 	appearance0.shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+	
+	appearance0.texHandlesContainer[Appearance::kNormalmap] =
+		M::GetInstance()->GetTexIndex(TextureTag::kBlackNormal);
+
 	//使用するテクスチャの選択
-	appearance0.SetUsingTextureFromContainer(1, 0, 0, 0);
+	appearance0.SetUsingTextureFromContainer(1, 1, 0, 0);
 
 
 }
