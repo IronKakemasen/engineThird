@@ -29,5 +29,7 @@ GreenBlock::GreenBlock()
 {
 	model.reset(new GreenModel);
 	(*model->model->Getter_Appearance())[0].color = { 62,179,112,255 };
+	model->MakeAllPartsBeChildren(&trans);
+
 }
 

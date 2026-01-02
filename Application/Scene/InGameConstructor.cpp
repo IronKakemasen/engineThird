@@ -1,5 +1,4 @@
 #include "InGameScene.h"
-#include "../GameObject/BlockManager.h"
 
 InGameScene::InGameScene()
 {
@@ -35,7 +34,7 @@ void InGameScene::Instantiate()
 
 void InGameScene::Init()
 {
-	mainCamera->Getter_Trans()->pos = { 100,100,100 };
+	mainCamera->Getter_Trans()->pos = { 102,110,100 };
 	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
 
 	gameObjManager->RegisterForContainer(player.get(), blockManager.get(),

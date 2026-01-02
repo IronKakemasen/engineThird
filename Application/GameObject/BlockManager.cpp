@@ -4,7 +4,6 @@
 #include "GreenBlock.h"
 #include "InGameController.h"
 
-
 void BlockManager::Update()
 {
 
@@ -37,12 +36,15 @@ void BlockManager::SetGround()
 		{
 			for (float y = 0; y < float(height); ++y)
 			{
+				static float adjust = 1.5f;
 				normalBlocks[n]->SetStatus(Status::kActive);
 				normalBlocks[n++]->Getter_Trans()->pos = kStartPos +
-				Vector3{x, -y, z};
+				Vector3{x, -y, z} + Vector3{ adjust, -adjust ,adjust };
 			}
 		}
 	}
+
+
 }
 
 void BlockManager::TurnBlocksIsActiveOff()

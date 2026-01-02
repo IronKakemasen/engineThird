@@ -25,5 +25,6 @@ void Player::Draw(Matrix4* vpMat_)
 Player::Player()
 {
 	model.reset(new PlayerModel);
+	model->MakeAllPartsBeChildren(&trans);
 }
 
