@@ -7,6 +7,7 @@ void Player::Update()
 
 void Player::Init()
 {
+	SetIdentity(kPlayer);
 	model->Init();
 }
 

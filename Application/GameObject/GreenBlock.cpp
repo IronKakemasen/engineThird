@@ -8,8 +8,8 @@ void GreenBlock::Update()
 
 void GreenBlock::Init()
 {
+	SetIdentity(kGreen);
 	model->Init();
-
 }
 
 void GreenBlock::Reset()
@@ -20,6 +20,7 @@ void GreenBlock::Reset()
 
 void GreenBlock::Draw(Matrix4* vpMat_)
 {
+
 	model->Draw(vpMat_);
 
 }
@@ -27,6 +28,6 @@ void GreenBlock::Draw(Matrix4* vpMat_)
 GreenBlock::GreenBlock()
 {
 	model.reset(new GreenModel);
-
+	(*model->model->Getter_Appearance())[0].color = { 62,179,112,255 };
 }
 

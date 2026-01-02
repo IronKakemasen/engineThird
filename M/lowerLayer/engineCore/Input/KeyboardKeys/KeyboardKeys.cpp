@@ -1,19 +1,19 @@
 #include "KeyboardKeys.h"
 
-bool KeyboardKeys::IsKeyTrigger(int key_)
+bool KeyboardKeys::IsKeyTrigger(KeyType key_)
 {
 	bool ret = false;
 
-	if (keys[key_] && !preKeys[key_]) ret = true;
+	if (keys[(int)key_] && !preKeys[(int)key_]) ret = true;
 
 	return ret;
 }
 
-bool KeyboardKeys::IsKeyPress(int key_)
+bool KeyboardKeys::IsKeyPress(KeyType key_)
 {
 	bool ret = false;
 
-	if (keys[key_]) ret = true;
+	if (keys[(int)key_]) ret = true;
 
 	return ret;
 }

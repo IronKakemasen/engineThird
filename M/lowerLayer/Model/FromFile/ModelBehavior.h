@@ -13,6 +13,7 @@ struct ModelBehavior
 	virtual void Init() = 0;
 	virtual void Reset() = 0;
 
-	ModelBehavior();
+	ModelBehavior(Transform* gameObject_);
+
 };
 

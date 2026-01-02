@@ -13,7 +13,7 @@ void NormalModel::Draw(Matrix4* vpMat_)
 NormalModel::NormalModel()
 {
 	//モデルの生成
-	model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/axis.obj");
+	model = M::GetInstance()->CreateModel("./M/resource/preset/model/Block/Block.obj");
 	auto& appearance0 = (*model->Getter_Appearance())[0];
 
 	//使用するシェーダーの選択

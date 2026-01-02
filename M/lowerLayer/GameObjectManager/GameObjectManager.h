@@ -7,12 +7,13 @@ struct GameObject;
 class GameObjectManager
 {
 	std::vector< GameObject* > objContainer;
-
+	int createNum = 0;
 public:
 	void Init();
 	void Update();
 	void Render(Matrix4* vpMat_);
 	void Reset();
+	void Debug();
 
 	template<typename... objPointer>
 	void RegisterForContainer(objPointer... pointers_)
@@ -22,12 +23,11 @@ public:
 
 		for (int i = 0; i < length; i++)
 		{
+			pointers[i]->SetNumber(createNum++);
 			objContainer.emplace_back(pointers[i]);
 		}
 	}
 
 	void RegisterForContainer(GameObject* dst_);
-
-
 };
 

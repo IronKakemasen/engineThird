@@ -19,7 +19,7 @@ public:
 	}
 };
 
-struct Camera:CameraBehavior
+struct Camera:public CameraBehavior
 {
 
 };

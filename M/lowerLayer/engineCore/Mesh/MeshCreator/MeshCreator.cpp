@@ -67,6 +67,12 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 		mesh->materialBuffer.material.buffMap->shininess = resMaterial->shininess;
 		mesh->materialBuffer.material.buffMap->specular = resMaterial->specular;
 
+		//カラーマップがない場合
+		if (resMaterial->colorMap.empty())
+		{
+			(*model->Getter_Appearance())[i].texHandlesContainer[Appearance::kColormap] =
+				M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2);
+		}
 	}
 
 	commandControl->Getter_commandList()->Close();

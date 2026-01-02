@@ -1,6 +1,10 @@
 #include "ModelBehavior.h"
 
-ModelBehavior::ModelBehavior()
+ModelBehavior::ModelBehavior(Transform* gameObject_)
 {
-
+	auto appearance = model->Getter_Appearance()->begin();
+	for (; appearance != model->Getter_Appearance()->end(); ++appearance)
+	{
+		appearance->trans.BeChildren(gameObject_);
+	}
 }

@@ -28,6 +28,8 @@ void SampleScene::Reset()
 
 void SampleScene::Debug()
 {
+#ifdef USE_IMGUI
+
 	ImGui::Begin("oh");
 
 	if (ImGui::TreeNode("obj"))
@@ -54,23 +56,10 @@ void SampleScene::Debug()
 
 		ImGui::TreePop();
 	}
-	for (int i = 0; i < 3; ++i)
-	{
-		if (ImGui::TreeNode(std::to_string(i).c_str()))
-		{
-			auto* para = pointLights[i]->Getter_Para();
-			ImGui::DragFloat3("pos", reinterpret_cast<float*>(&para->pos), 0.1f);
-			ImGui::DragFloat3("color", reinterpret_cast<float*>(&para->color), 0.1f);
-			ImGui::DragFloat("intensity", reinterpret_cast<float*>(&para->intensity), 0.025f);
-			ImGui::DragFloat("radius", reinterpret_cast<float*>(&para->invSqrRadius), 1.0f);
-			ImGui::Checkbox("isActive", reinterpret_cast<bool*>(&para->isActive));
-
-			ImGui::TreePop();
-		}
-	}
-
-
 	ImGui::End();
+
+
+#endif // USE_IMGUI
 
 }
 

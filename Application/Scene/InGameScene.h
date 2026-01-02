@@ -14,11 +14,12 @@ public:
 	InGameScene();
 
 	std::unique_ptr<Player> player;
-	std::unique_ptr<BlackBlock> blackBlock;
-	std::unique_ptr<GreenBlock> greenBlock;
-	std::unique_ptr<NormalBlock> normalBlock;
+	std::vector<std::unique_ptr<BlackBlock>> blackBlocks;
+	std::vector<std::unique_ptr<GreenBlock>> greenBlocks;
+	std::vector<std::unique_ptr<NormalBlock>> normalBlocks;
 	std::unique_ptr<BlockManager> blockManager;
 	std::unique_ptr<InGameController> inGameController;
+	PointLight* pointLights[3];
 
 	virtual void Update() override;
 	virtual void Draw() override;

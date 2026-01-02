@@ -2,7 +2,7 @@
 #include "../../M/lowerLayer/GameObject/GameObjectBehavior.h"
 #include "../Model/NormalModel.h"
 
-struct NormalBlock : GameObject
+struct NormalBlock : public GameObject
 {
 
 public:

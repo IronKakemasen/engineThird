@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\imgui;$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,6 +144,8 @@
     <ClCompile Include="Application\Model\BlackModel.cpp" />
     <ClCompile Include="Application\GameObject\BlockManager.cpp" />
     <ClCompile Include="Application\Scene\InGameConstructor.cpp" />
+    <ClCompile Include="Application\GameObject\Controllers.cpp" />
+    <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\imgui\imgui_draw.cpp" />
@@ -226,6 +228,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\VpShader\vpShaderTable\vpShaderTable.cpp" />
     <ClCompile Include="M\lowerLayer\math\matrix\matrix.cpp" />
     <ClCompile Include="M\lowerLayer\math\vector\vector.cpp" />
+    <ClCompile Include="M\utilities\Counter\Counter.cpp" />
     <ClCompile Include="M\utilities\vectorAndMatrix\vectorAndMatrix.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\WinApp.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.cpp" />
@@ -281,6 +284,8 @@
     <ClInclude Include="Application\GameObject\BlackBlock.h" />
     <ClInclude Include="Application\Model\BlackModel.h" />
     <ClInclude Include="Application\GameObject\BlockManager.h" />
+    <ClInclude Include="Application\GameObject\Controllers.h" />
+    <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
     <ClInclude Include="external\imgui\imgui_impl_dx12.h" />
@@ -364,6 +369,7 @@
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h" />
     <ClInclude Include="M\lowerLayer\math\vector\vector.h" />
     <ClInclude Include="M\utilities\benriTemplateFunc\benriTempFunc.h" />
+    <ClInclude Include="M\utilities\Counter\Counter.h" />
     <ClInclude Include="M\utilities\vectorAndMatrix\vectorAndMatrix.h" />
     <ClInclude Include="M\lowerLayer\engineCore\WinApp.h" />
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\rtvDescriptorHeap\rtvDescriptorHeap.h" />

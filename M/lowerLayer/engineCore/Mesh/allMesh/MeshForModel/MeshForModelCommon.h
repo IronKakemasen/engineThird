@@ -52,6 +52,10 @@ public:
 	{
 		return &appearance;
 	}
+	auto* Getter_Appearance(int index_)
+	{
+		return &appearance[index_];
+	}
 
 	auto* Getter_MeshForModel(int index_)
 	{

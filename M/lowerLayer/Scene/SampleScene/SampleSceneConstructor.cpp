@@ -11,11 +11,6 @@ SampleScene::SampleScene()
 
 void SampleScene::Instantiate()
 {
-	for (int i = 0; i < 3; ++i)
-	{
-		pointLights[i] = M::GetInstance()->ImportPointLight();
-	}
-
 	triangle.reset(new MTriangle);
 	quad.reset(new MQuad);
 	sPlayer.reset(new SamplePlayer);

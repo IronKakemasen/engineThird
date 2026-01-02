@@ -5,7 +5,7 @@ struct PlayerModel :public ModelBehavior
 {
 
 public:
-	PlayerModel();
+	PlayerModel(Transform* gameObject_);
 	virtual void Update()override;
 	virtual void Draw(Matrix4* vpMat_)override;
 	virtual void Init()override;

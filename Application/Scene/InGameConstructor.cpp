@@ -1,4 +1,5 @@
 #include "InGameScene.h"
+#include "../GameObject/BlockManager.h"
 
 InGameScene::InGameScene()
 {
@@ -9,22 +10,52 @@ InGameScene::InGameScene()
 void InGameScene::Instantiate()
 {
 	player.reset(new Player);
-	blackBlock.reset(new BlackBlock);
-	greenBlock.reset(new GreenBlock);
-	normalBlock.reset(new NormalBlock);
-	blockManager.reset(new BlockManager);
 	inGameController.reset(new InGameController);
+	blockManager.reset(new BlockManager);
+
+	for (int i = 0; i < BlockManager::kNumGreenBlock; ++i)
+	{
+		auto* black = blackBlocks.emplace_back(std::make_unique<BlackBlock>()).get();
+		auto* green = greenBlocks.emplace_back(std::make_unique<GreenBlock>()).get();
+		blockManager->SetBlackBlock(black);
+		blockManager->SetGreenBlock(green);
+	}
+	for (int i = 0; i < BlockManager::kNumNormalBlock; ++i)
+	{
+		auto* normal = normalBlocks.emplace_back(std::make_unique<NormalBlock>()).get();
+		blockManager->SetNormalBlock(normal);
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		pointLights[i] = M::GetInstance()->ImportPointLight();
+	}
+
 }
 
 void InGameScene::Init()
 {
-	mainCamera->Getter_Trans()->pos = { 1.3f,3.0f,-1.0f };
+	mainCamera->Getter_Trans()->pos = { 100,100,100 };
 	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
 
-	gameObjManager->RegisterForContainer(
-		player.get(), blackBlock.get(),
-		greenBlock.get(), normalBlock.get(), blockManager.get(), 
+	gameObjManager->RegisterForContainer(player.get(), blockManager.get(),
 		inGameController.get());
+
+	for (int i = 0; i < BlockManager::kNumGreenBlock; ++i)
+	{
+		gameObjManager->RegisterForContainer(greenBlocks[i].get());
+	}
+
+	for (int i = 0; i < BlockManager::kNumBlackBlock; ++i)
+	{
+		gameObjManager->RegisterForContainer(blackBlocks[i].get());
+	}
+
+	for (int i = 0; i < BlockManager::kNumNormalBlock; ++i)
+	{
+		gameObjManager->RegisterForContainer(normalBlocks[i].get());
+	}
+
 
 	gameObjManager->Init();
 }

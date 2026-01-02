@@ -28,9 +28,8 @@ public:
 	virtual void Debug() = 0;
 
 protected:
-
 	virtual void Instantiate() = 0;
 	virtual void Init() = 0;
-
+	
 };
 

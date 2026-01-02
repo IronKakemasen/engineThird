@@ -1,33 +1,60 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
-
+#include "../../utilities/Counter/Counter.h"
+#include <string>
 
 struct Collider;
 
 struct GameObjectBehavior
 {
-	enum class ObjectStatus
+	enum class Status
 	{
 		kActive,
 		kInActive,
 	};
 
+	enum Tag
+	{
+		kPlayer,
+		kNormal,
+		kBlack,
+		kGreen,
+
+		kCount,
+		kNone,
+	};
+private :
+	struct Identity
+	{
+		std::string name;
+		Tag tag;
+		int number;
+		Identity();
+		Identity(std::string name_, Tag tag_, int number_);
+	};
+
+	Identity identity;
+
+public:
 	virtual void Update() = 0;
 	virtual void Init() = 0;
 	virtual void Reset() = 0;
 	virtual void Draw(Matrix4* vpMat_) = 0;
-
+	void SetStatus(Status dst_);
+	void SetNumber(int id_);
+	void SetIdentity(Tag tag_);
+	std::string Getter_Name();
 protected:
 
-	ObjectStatus status = ObjectStatus::kActive;
+	Status status;
 	Transform trans;
-	int id;
 	Collider* collider = nullptr;
 
 };
 
-struct GameObject:GameObjectBehavior
+struct GameObject:public GameObjectBehavior
 {
+	GameObject();
 	virtual void Update()override {};
 	virtual void Init() override {};
 	virtual void Reset() override {};
@@ -38,7 +65,7 @@ struct GameObject:GameObjectBehavior
 		return &trans;
 	}
 
-	inline ObjectStatus GetStatus()
+	inline Status GetStatus()
 	{
 		return status;
 	}

@@ -1,14 +1,17 @@
 #pragma once
-#include "../CameraBehavior.h"
+#include "../DebugCamera/DebugCamera.h"
 #include <unordered_map>
 #include <string>
-
+#include <memory>
 
 class CameraController
 {
 	Camera* cur_camera = nullptr;
+	Camera* preCamera = nullptr;
+	std::unique_ptr<DebugCamera> debugCamera;
 	std::unordered_map<std::string, Camera*> cameraContainer;
-	void OverrideCameraParameters();
+
+	void OverrideCameraBufferParameters();
 
 public:
 	CameraController();
@@ -16,6 +19,6 @@ public:
 	void ChangeCamera(std::string dstCameraName_);
 	void RegisterForContainer(std::string dstCameraName_, Camera* dstCamera_);
 	Camera* GetUsingCamera();
-
+	void QuickChange();
 };
 

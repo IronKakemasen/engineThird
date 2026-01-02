@@ -5,6 +5,7 @@
 #include "../utilities/UVTransform/UVTransform.h"
 #include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include "./engineCore/Mesh/MeshCreator/MeshCreator.h"
+#include "./engineCore/Input/InputInterface/InputInterface.h"
 
 #include <functional>
 #include <d3d12.h>
@@ -41,9 +42,10 @@ public:
 		LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
 		KeyboardKeys* keyboardKeys_);
 
+	float GetDeltaTime();
 	//入力
-	bool IsKeyTriggered(int key_);
-	bool IsKeyPressed(int key_);
+	bool IsKeyTriggered(KeyType key_);
+	bool IsKeyPressed(KeyType key_);
 
 	//Logを出力
 	void LogM(std::string message_);

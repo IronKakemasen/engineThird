@@ -2,7 +2,7 @@
 #include "../../M/lowerLayer/GameObject/GameObjectBehavior.h"
 #include "../Model/BlackModel.h"
 
-struct BlackBlock : GameObject
+struct BlackBlock : public GameObject
 {
 
 public:

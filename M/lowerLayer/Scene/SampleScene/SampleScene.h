@@ -12,8 +12,6 @@ class SampleScene final : public SceneBehavior
 public:
 	SampleScene();
 
-	PointLight* pointLights[3];
-
 	std::unique_ptr<MTriangle> triangle;
 	std::unique_ptr<MQuad> quad;
 	std::unique_ptr<SamplePlayer> sPlayer;

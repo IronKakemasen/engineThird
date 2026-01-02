@@ -5,14 +5,18 @@
 #include "./engineCore/PSO/allPipelineSet.h"
 #include "./engineCore/Light/LightManager/LightManager.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
-#include "./engineCore/Input/KeyboardKeys/KeyboardKeys.h"
 
-bool M::IsKeyTriggered(int key_)
+float M::GetDeltaTime()
+{
+	return 0.0166666666f;
+}
+
+bool M::IsKeyTriggered(KeyType key_)
 {
 	return keyboardKeys->IsKeyTrigger(key_);
 }
 
-bool M::IsKeyPressed(int key_)
+bool M::IsKeyPressed(KeyType key_)
 {
 	return keyboardKeys->IsKeyPress(key_);
 }
