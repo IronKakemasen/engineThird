@@ -21,9 +21,9 @@ bool M::IsKeyPressed(KeyType key_)
 	return keyboardKeys->IsKeyPress(key_);
 }
 
-void M::SetCameraPara(CameraPara cameraPara_)
+void M::SetCameraBufferPara(CameraBufferPara CameraBufferPara_)
 {
-	cameraParameterSetter->SetCameraPara(cameraPara_);
+	cameraParameterSetter->SetCameraPara(CameraBufferPara_);
 }
 
 DirectionalLight* M::ImportDirLight()

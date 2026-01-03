@@ -15,6 +15,7 @@ enum class TextureTag
 	kNN,
 	kGridN,
 	kStarN,
+	kPlayerN,
 	kCount
 };
 

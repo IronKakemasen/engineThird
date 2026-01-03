@@ -6,7 +6,7 @@
 #include "../GameObject/GreenBlock.h"
 #include "../GameObject/InGameController.h"
 #include "../GameObject/NormalBlock.h"
-
+#include "../InGameCamera.h"
 
 class InGameScene final : public SceneBehavior
 {
@@ -20,6 +20,7 @@ public:
 	std::unique_ptr<BlockManager> blockManager;
 	std::unique_ptr<InGameController> inGameController;
 	PointLight* pointLights[3];
+	InGameCamera camera;
 
 	virtual void Update() override;
 	virtual void Draw() override;

@@ -3,8 +3,8 @@
 
 DebugCamera::DebugCamera()
 {
-	trans.pos = { 0.0f,3.0f,-1.0f };
-	trans.quaternion.axis.y = -0.45f;
+	para.trans.pos = { 0.0f,3.0f,-1.0f };
+	para.trans.lookDir.y = -0.45f;
 }
 
 
@@ -23,32 +23,32 @@ void DebugCamera::ParallelMove()
 
 	if (m->IsKeyPressed(KeyType::LEFT))
 	{
-		trans.pos.x -= speed * deltaTime;
+		para.trans.pos.x -= speed * deltaTime;
 	}
 
 	if (m->IsKeyPressed(KeyType::UP))
 	{
-		trans.pos.y += speed * deltaTime;
+		para.trans.pos.y += speed * deltaTime;
 	}
 
 	if (m->IsKeyPressed(KeyType::DOWN))
 	{
-		trans.pos.y -= speed * deltaTime;
+		para.trans.pos.y -= speed * deltaTime;
 	}
 
 	if (m->IsKeyPressed(KeyType::RIGHT))
 	{
-		trans.pos.x += speed * deltaTime;
+		para.trans.pos.x += speed * deltaTime;
 	}
 
 	if (m->IsKeyPressed(KeyType::Z))
 	{
-		trans.pos.z += speed * deltaTime;
+		para.trans.pos.z += speed * deltaTime;
 	}
 
 	if (m->IsKeyPressed(KeyType::X))
 	{
-		trans.pos.z -= speed * deltaTime;
+		para.trans.pos.z -= speed * deltaTime;
 	}
 
 

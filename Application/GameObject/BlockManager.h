@@ -17,6 +17,11 @@ private:
 		void Init(Vector2 startSize_, Vector4 color_);
 	};
 	int const height = 3;
+	std::vector<NormalBlock* >normalBlocks;
+	std::vector<BlackBlock*> blackBlocks;
+	std::vector<GreenBlock*> greenBlocks;
+	std::vector<NormalBlock* > additions;
+	int const numAdd = 350;
 
 public:
 	virtual void Update()override;
@@ -24,16 +29,15 @@ public:
 	virtual void Reset() override;
 	virtual void Draw(Matrix4* vpMat_)override;
 
-	static inline int const kNumNormalBlock = 300;
+	static constexpr float kBlockSize = 1.0f;
+	static inline int const kNumNormalBlock = 450;
 	static inline int const kNumBlackBlock = 30;
 	static inline int const kNumGreenBlock = 30;
 	static inline Vector3 const kStartPos = { 100,100,100 };
 	static inline float curLastPosZ = kStartPos.z;
 	static inline WaveData waveData[2];
-
-	std::vector<GameObject* >normalBlocks;
-	std::vector<GameObject*> blackBlocks;
-	std::vector<GameObject*> greenBlocks;
+	static inline  int mapLast;
+	
 
 	void SetNormalBlock(NormalBlock* nomal_);
 	void SetBlackBlock(BlackBlock* black_);
@@ -44,5 +48,7 @@ public:
 private:
 	void SetGround();
 	void TurnBlocksIsActiveOff();
+	void SetAdditions();
+	void AddBlockToLast();
 };
 

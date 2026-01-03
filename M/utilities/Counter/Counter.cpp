@@ -53,7 +53,7 @@ bool Counter::IsEnd()
 	return ret;
 }
 
-float GetNormalizedCount(float cur_Cnt_, float st_, float end_)
+float Counter::GetNormalizedCount(float st_, float end_, float cur_Cnt_)
 {
 	return (cur_Cnt_ - st_) * (1.0f / (end_ - st_));
 }

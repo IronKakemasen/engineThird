@@ -6,7 +6,7 @@ struct NormalBlock : public GameObject
 {
 
 public:
-
+	bool forAddition = false;
 	std::unique_ptr<NormalModel> model;
 
 	virtual void Update()override;

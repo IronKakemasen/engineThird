@@ -13,7 +13,13 @@ void SceneController::Update()
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
 		cur_Scene->Update();
+		cur_Scene->cameraController->Update();
+		cur_Scene->gameObjManager->Update();
 	}
+
+	Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
+	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+	cur_Scene->gameObjManager->Render(vpMat);
 
 	cur_Scene->Draw();
 }

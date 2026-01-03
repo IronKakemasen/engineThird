@@ -3,7 +3,7 @@
 #include "../../../../math/vector/vector.h"
 
 
-struct CameraPara
+struct CameraBufferPara
 {
 	Vector3 cameraWorld;
 	float pad;
@@ -11,7 +11,7 @@ struct CameraPara
 
 struct CameraParaBuffer
 {
-	BufferAndMap<CameraPara> cameraPara;
+	BufferAndMap<CameraBufferPara> cameraPara;
 };
 
 

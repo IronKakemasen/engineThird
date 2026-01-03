@@ -12,6 +12,7 @@ struct Counter
 	void Substract(float deltaTime_);
 	void Initialize(float sumFrame_);
 	bool IsEnd();
+	static float GetNormalizedCount(float st_, float end_, float cur_Cnt_);
+
 };
 
-float GetNormalizedCount(float cur_Cnt_, float st_, float end_);

@@ -4,7 +4,13 @@
 
 struct Player : public GameObject
 {
-
+	void ClipPosition();
+	void Move();
+	float const moveSpeed = 2.75f;
+	Counter angleCnt;
+	float nextAngleY = 0.0f;
+	float preAngleY = 0.0f;
+	float const playerSize = 0.2f;
 public:
 	std::unique_ptr<PlayerModel> model;
 

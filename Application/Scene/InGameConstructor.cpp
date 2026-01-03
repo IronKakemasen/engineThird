@@ -34,8 +34,6 @@ void InGameScene::Instantiate()
 
 void InGameScene::Init()
 {
-	mainCamera->Getter_Trans()->pos = { 102,110,100 };
-	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
 
 	gameObjManager->RegisterForContainer(player.get(), blockManager.get(),
 		inGameController.get());
@@ -55,6 +53,7 @@ void InGameScene::Init()
 		gameObjManager->RegisterForContainer(normalBlocks[i].get());
 	}
 
-
 	gameObjManager->Init();
+	camera.Init(cameraController->GetUsingCamera()->Getter_Parameters(),
+		&player->Getter_Trans()->pos);
 }

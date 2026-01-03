@@ -11,9 +11,10 @@ CameraController::CameraController()
 
 void CameraController::OverrideCameraBufferParameters()
 {
-	CameraPara cameraPara;
-	cameraPara.cameraWorld = cur_camera->Getter_Trans()->GetWorldPos();
-	M::GetInstance()->SetCameraPara(cameraPara);
+	CameraBufferPara cameraBufferPara;
+	cameraBufferPara.cameraWorld = 
+		cur_camera->Getter_Parameters()->trans.GetWorldPos();
+	M::GetInstance()->SetCameraBufferPara(cameraBufferPara);
 }
 
 void CameraController::Update()
@@ -21,7 +22,11 @@ void CameraController::Update()
 	cur_camera->Update();
 
 	OverrideCameraBufferParameters();
+
+#ifdef USE_IMGUI
 	QuickChange();
+#endif // 
+
 }
 
 void CameraController::ChangeCamera(std::string dstCameraName_)

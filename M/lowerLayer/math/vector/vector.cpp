@@ -279,21 +279,24 @@ Vector4 Vector4::GetCross(Vector4 other)
 
 Vector4 operator+(Vector4 const& lVec, Vector4 const& rVec2)
 {
-	Vector4 ret_vec = { lVec.x + rVec2.x,lVec.y + rVec2.y ,lVec.z + rVec2.z ,1 };
+	Vector4 ret_vec = { lVec.x + rVec2.x,lVec.y + rVec2.y ,
+		lVec.z + rVec2.z ,lVec.w + rVec2.w };
 
 	return ret_vec;
 }
 
 Vector4 operator-(Vector4 const& lVec, Vector4 const& rVec2)
 {
-	Vector4 ret_vec = { lVec.x - rVec2.x,lVec.y - rVec2.y ,lVec.z - rVec2.z ,1 };
+	Vector4 ret_vec = { lVec.x - rVec2.x,lVec.y - rVec2.y ,
+		lVec.z - rVec2.z ,lVec.w - rVec2.w };
 
 	return ret_vec;
 }
 
 Vector4 operator*(Vector4 const& dst_vec, float const multipleNum)
 {
-	Vector4 ret_vec = { dst_vec.x * multipleNum,dst_vec.y * multipleNum ,dst_vec.z * multipleNum ,dst_vec.w * multipleNum };
+	Vector4 ret_vec = { dst_vec.x * multipleNum,dst_vec.y * multipleNum ,
+		dst_vec.z * multipleNum ,dst_vec.w * multipleNum };
 
 	return ret_vec;
 }

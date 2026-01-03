@@ -10,13 +10,13 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
 	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
 	LoadTextureFile(TextureTag::kNothing, pathToPresetTex + "header.jpg");
-	LoadTextureFile(TextureTag::kBlackNormal, pathToPresetTex + "normalForBlack.png");
+	LoadTextureFile(TextureTag::kBlackNormal, pathToPresetTex + "huwa2.png");
 	LoadTextureFile(TextureTag::kGuruguru, pathToPresetTex + "NormalMap.png");
 	LoadTextureFile(TextureTag::kNN, pathToPresetTex + "nNani_normal.png");
 	LoadTextureFile(TextureTag::kGridN, pathToPresetTex + "gridLine_normal.png");
 	LoadTextureFile(TextureTag::kStarN, pathToPresetTex + "selectStar_normal.png");
+	LoadTextureFile(TextureTag::kPlayerN, pathToPresetTex + "normalPlayer.png");
 
-	
 	
 }
 

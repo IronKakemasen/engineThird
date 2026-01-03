@@ -1,6 +1,8 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
 #include "../../utilities/Counter/Counter.h"
+#include "../../utilities/Easing/EasingFunctions.h"
+#include "../../utilities/ConvertToRadian/ConvertToRadian.h"
 #include <string>
 
 struct Collider;

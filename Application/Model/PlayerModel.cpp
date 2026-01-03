@@ -13,17 +13,15 @@ void PlayerModel::Draw(Matrix4* vpMat_)
 PlayerModel::PlayerModel()
 {
 	//モデルの生成
-	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.obj");
+	model = M::GetInstance()->CreateModel("./resource/preset/model/Player/Player.obj");
 
 	auto& appearance0 = (*model->Getter_Appearance())[0];
 
 	//使用するシェーダーの選択
 	appearance0.shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 	//使用するテクスチャの選択
-	appearance0.texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGuruguru);
-	appearance0.SetUsingTextureFromContainer(1, 1, 0, 0);
+	appearance0.SetUsingTextureFromContainer(1, 0, 0, 0);
 
 }
 
@@ -32,7 +30,7 @@ void PlayerModel::Init()
 	auto& appearance0 = (*model->Getter_Appearance())[0];
 	appearance0.metalic = 0.72f;
 	appearance0.roughness = 0.4f;
-	appearance0.color = { 62,179,112,255 };
+	appearance0.color = { 62,112,179,255 };
 
 }
 

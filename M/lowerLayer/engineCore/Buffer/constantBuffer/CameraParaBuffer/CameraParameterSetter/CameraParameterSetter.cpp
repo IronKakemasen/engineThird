@@ -16,7 +16,7 @@ void CameraParameterSetter::Create(ID3D12Device* device_)
 	cameraParaBuffer->cameraPara.CreateAndMapping(device_);
 }
 
-void CameraParameterSetter::SetCameraPara(CameraPara cameraPara_)
+void CameraParameterSetter::SetCameraPara(CameraBufferPara cameraPara_)
 {
 	*cameraParaBuffer->cameraPara.buffMap = cameraPara_;
 }

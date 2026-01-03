@@ -19,7 +19,7 @@ namespace GameController
 		virtual void Reset() override;
 		Enter()
 		{
-			time = 4.0f;
+			time = 5.0f;
 			cnt.Initialize(time);
 
 		}

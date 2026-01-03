@@ -1,21 +1,27 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
-
+#include "../../utilities/Easing/EasingFunctions.h"
+struct CameraPara
+{
+	Transform trans;
+	float fov = CommonV::FOVy;
+	CameraPara();
+};
 
 struct CameraBehavior
 {
 	Matrix4 vpMat;
-
 	virtual void Update() = 0;
 
 protected:
 	void SetViewProjectionMat();
-	Transform trans;
+	void DirectionInterpolate();
+	CameraPara para;
 
 public:
-	inline auto* Getter_Trans()
+	inline auto* Getter_Parameters()
 	{
-		return &trans;
+		return &para;
 	}
 };
 

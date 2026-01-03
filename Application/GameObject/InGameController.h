@@ -11,7 +11,8 @@ struct InGameController : GameObject
 		kPlayable,
 		kDeath,
 		kClear,
-		kResult
+		kResult,
+		kCount
 	};
 
 	GameController::Enter enter;
@@ -29,11 +30,13 @@ public:
 	static int const numStage = 2;
 	static inline Mode mode = kEnter;
 	static inline float cur_cnt;
+	static int inline numBreak = 1;
 
 	virtual void Update()override;
 	virtual void Init() override;
 	virtual void Reset() override;
 	virtual void Draw(Matrix4* vpMat_)override;
+	static std::string CurMode();
 
 	InGameController();
 

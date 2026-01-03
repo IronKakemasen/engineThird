@@ -8,14 +8,20 @@ struct Transform
 	Vector3 pos;
 	Vector3 scale;
 	Vector3 rotation;
-	Quaternion quaternion;
+	Vector3 lookDir;
+	float interpolationCoe;
 
 	Transform* parent = nullptr;
 
 	Matrix4 GetWorldMatrix();
 	void BeChildren(Transform* parent_);
 	Vector3 GetWorldPos();
-
+	void Init();
 	Transform();
+	void RotateUpdate();
+
+private:
+	Quaternion quaternion;
+
 };
 

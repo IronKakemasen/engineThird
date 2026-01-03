@@ -42,8 +42,10 @@ void SampleScene::Debug()
 	}
 	if (ImGui::TreeNode("camera"))
 	{
-		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->pos),0.1f);
-		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&mainCamera->Getter_Trans()->quaternion.axis),0.025f);
+		auto* cur_camera = cameraController->GetUsingCamera();
+		auto* para = cur_camera->Getter_Parameters();
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&para->trans.pos), 0.1f);
+		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&para->trans.lookDir), 0.025f);
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("dirLight"))

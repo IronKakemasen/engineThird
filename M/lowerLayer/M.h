@@ -19,7 +19,7 @@ struct MeshAndDataCommon;
 class LightManager;
 class PointLight;
 class CameraParameterSetter;
-struct CameraPara;
+struct CameraBufferPara;
 class DirectionalLight;
 class KeyboardKeys;
 
@@ -79,7 +79,7 @@ public:
 	DirectionalLight* ImportDirLight();
 	PointLight* ImportPointLight();
 
-	void SetCameraPara(CameraPara cameraPara_);
+	void SetCameraBufferPara(CameraBufferPara cameraBufferPara_);
 
 private:
 

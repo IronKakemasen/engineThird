@@ -11,7 +11,7 @@ class CameraParameterSetter
 
 public:
 	void Init(ID3D12Device* device_);
-	void SetCameraPara(CameraPara cameraPara_);
+	void SetCameraPara(CameraBufferPara cameraPara_);
 	inline auto* Getter_Buffer()
 	{
 		return cameraParaBuffer.get();

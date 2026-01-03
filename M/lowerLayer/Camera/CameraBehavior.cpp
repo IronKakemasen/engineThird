@@ -1,11 +1,22 @@
 #include "CameraBehavior.h"
 
+
+CameraPara::CameraPara()
+{
+	fov = CommonV::FOVy;
+}
+
+void CameraBehavior::DirectionInterpolate()
+{
+
+}
+
 void CameraBehavior::SetViewProjectionMat()
 {
-	Matrix4 worldMat = trans.GetWorldMatrix();
+	Matrix4 worldMat = para.trans.GetWorldMatrix();
 	Matrix4 viewMat = worldMat.GetInversed();
 	float aspectRatio = CommonV::kWindow_W / CommonV::kWindow_H;
-	Matrix4 projMat = Get_PerspectiveFOV(CommonV::FOVy, aspectRatio);
+	Matrix4 projMat = Get_PerspectiveFOV(para.fov, aspectRatio);
 
 	vpMat = viewMat.Multiply(projMat);
 }

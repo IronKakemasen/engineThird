@@ -1,18 +1,14 @@
 #include "InGameScene.h"
 
-
 void InGameScene::Update()
 {
-	cameraController->Update();
-	gameObjManager->Update();
+	camera.Update();
 }
 
 void InGameScene::Draw()
 {
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
-
-	gameObjManager->Render(vpMat);
 
 }
 
@@ -27,13 +23,24 @@ void InGameScene::Debug()
 
 	gameObjManager->Debug();
 
+	static float f = ImGui::GetIO().DeltaTime;
+	f = ImGui::GetIO().DeltaTime;
+
+	ImGui::Begin("InGame");
+	ImGui::Text(InGameController::CurMode().c_str());
+	ImGui::DragFloat("FPS", &f);
+	ImGui::DragFloat("cnt", &InGameController::cur_cnt);
+	ImGui::End();
+
+
 	ImGui::Begin("oh");
 
 	if (ImGui::TreeNode("camera"))
 	{
 		auto* cur_camera = cameraController->GetUsingCamera();
-		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&cur_camera->Getter_Trans()->pos), 0.1f);
-		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&cur_camera->Getter_Trans()->quaternion.axis), 0.025f);
+		auto* para = cur_camera->Getter_Parameters();
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&para->trans.pos), 0.1f);
+		ImGui::DragFloat3("tragerDir", reinterpret_cast<float*>(&para->trans.lookDir), 0.025f);
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("dirLight"))

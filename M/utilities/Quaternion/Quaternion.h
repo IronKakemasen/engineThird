@@ -1,20 +1,16 @@
 #pragma once
 #include "../vectorAndMatrix/vectorAndMatrix.h"
 
-
-
 struct Quaternion
 {
-	Vector3 axis = { 0.0f,0.0f,1.0f };
-	float deltaTheta = 0.0f;
+	Vector4 q;
 
-	Vector4 Get();
 	Matrix4 GetRotateMat();
-	Vector4 LookAt();
+	Vector4 GetNormalized();
+	float GetDot(Quaternion other_);
 
-private:
-	Vector4 ConvertToQuaternion(Matrix4 m);
-
-
+	static Vector4 CreateQuaternion(Vector3 lookDir_);
+	static Vector4 CreateQuaternion(Vector3 axis_, float theta_);
+	static Vector4 ConvertToQuaternion(Matrix4 m_);
 };
 

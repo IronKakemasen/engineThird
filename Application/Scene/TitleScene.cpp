@@ -37,6 +37,5 @@ void TitleScene::Instantiate()
 
 void TitleScene::Init()
 {
-	mainCamera->Getter_Trans()->pos = { 1.3f,3.0f,-1.0f };
-	mainCamera->Getter_Trans()->quaternion.axis.y = -0.45f;
+
 }

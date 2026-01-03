@@ -65,7 +65,6 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 			shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
 		++k;
 
-
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
 			k,
