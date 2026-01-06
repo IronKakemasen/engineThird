@@ -6,6 +6,7 @@ struct Player : public GameObject
 {
 	void ClipPosition();
 	void Move();
+	void SetStart();
 	float const moveSpeed = 2.75f;
 	Counter angleCnt;
 	float nextAngleY = 0.0f;
@@ -18,6 +19,7 @@ public:
 	virtual void Init() override;
 	virtual void Reset() override;
 	virtual void Draw(Matrix4* vpMat_)override;
+	virtual void SetCollisionBackTable()override;
 
 	Player();
 };

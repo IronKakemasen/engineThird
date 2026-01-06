@@ -158,6 +158,7 @@
     <ClCompile Include="Application\Model\GreenModel.cpp" />
     <ClCompile Include="Application\Scene\InGameScene.cpp" />
     <ClCompile Include="Application\GameObject\InGameController.cpp" />
+    <ClCompile Include="M\lowerLayer\Collision\CollisionDetection\CollisionDetection.cpp" />
     <ClCompile Include="M\lowerLayer\GameObjectManager\GameObjectManager.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.cpp" />
@@ -281,9 +282,11 @@
     <ClCompile Include="Application\Model\NormalModel.cpp" />
     <ClCompile Include="Application\Model\PlayerModel.cpp" />
     <ClCompile Include="Application\Scene\TitleScene.cpp" />
+    <ClCompile Include="M\lowerLayer\Collision\Shape\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObject\BlackBlock.h" />
+    <ClInclude Include="Application\GameObject\BlockBehavior.h" />
     <ClInclude Include="Application\Model\BlackModel.h" />
     <ClInclude Include="Application\GameObject\BlockManager.h" />
     <ClInclude Include="Application\GameObject\Controllers.h" />
@@ -301,6 +304,7 @@
     <ClInclude Include="Application\Model\GreenModel.h" />
     <ClInclude Include="Application\Scene\InGameScene.h" />
     <ClInclude Include="Application\GameObject\InGameController.h" />
+    <ClInclude Include="M\lowerLayer\Collision\CollisionDetection\CollisionDetection.h" />
     <ClInclude Include="M\lowerLayer\GameObjectManager\GameObjectManager.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Input\KeyboardKeys\KeyboardKeys.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\LightManager\LightManager.h" />
@@ -424,6 +428,7 @@
     <ClInclude Include="Application\Model\NormalModel.h" />
     <ClInclude Include="Application\Model\PlayerModel.h" />
     <ClInclude Include="Application\Scene\TitleScene.h" />
+    <ClInclude Include="M\lowerLayer\Collision\Shape\Rect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -1,6 +1,9 @@
 #include "GameObjectManager.h"
 #include "../GameObject/GameObjectBehavior.h"
+#include "../Collision/CollisionDetection/CollisionDetection.h"
+#ifdef USE_IMGUI
 #include "imgui.h"
+#endif
 
 void GameObjectManager::RegisterForContainer(GameObject* dst_)
 {
@@ -90,6 +93,8 @@ void GameObjectManager::Update()
 		}
 
 		(*itr)->Update();
+		ChackAllCollision((*itr));
+		(*itr)->UpdateCollisionBack();
 	}
 }
 
@@ -106,4 +111,47 @@ void GameObjectManager::Render(Matrix4* vpMat_)
 		(*itr)->Draw(vpMat_);
 	}
 
+}
+
+void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
+{
+	if (!thisObj_->IsCollisionActivated()) return;
+	else if (!thisObj_->HasCollider()) return;
+
+
+	for (auto* otherObj : objContainer)
+	{
+		if (!otherObj->HasCollider()) continue;
+
+		//衝突相手がアクティブでなければ
+		if (otherObj->GetStatus() == GameObject::Status::kInActive)
+		{
+			continue;
+		}
+		//マスク処理
+		else if ((thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity())))
+		{
+			continue;
+		}
+
+		//ワールド座標を取得
+		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
+		Vector3 otherWorldPos = otherObj->Getter_Trans()->GetWorldPos();
+
+		//クアッドコリジョン
+		if (CollisionDetections::C2D ::ObjectAABB(
+			thisObj_->Getter_Rect(), thisWorldPos,
+			otherObj->Getter_Rect(), otherWorldPos))
+		{
+			//双方のオブジェクトの衝突反応関数をアクティブ化する
+			thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+			otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
+
+			//双方のオブジェクトの衝突相手を登録する
+			thisObj_->SetCollidedObjPtr(otherObj);
+			otherObj->SetCollidedObjPtr(thisObj_);
+
+			continue;
+		}
+	}
 }

@@ -25,3 +25,8 @@ SampleEnemy::SampleEnemy()
 	triangleModel.appearance.trans.parent = &trans;
 
 }
+
+void SampleEnemy::SetCollisionBackTable()
+{
+
+}

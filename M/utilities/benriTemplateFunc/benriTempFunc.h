@@ -11,9 +11,14 @@ namespace Benri
 {
 	//MAXを超えたらMAXにする
 	template<typename T>
-	inline void Max(T& t_, T max_t_)
+	inline bool Max(T& t_, T max_t_)
 	{
-		if (t_ > max_t_) t_ = max_t_;
+		if (t_ > max_t_)
+		{
+			t_ = max_t_;
+			return 1;
+		}
+		return 0;
 	}
 
 	//値がMINを下回ったらMINにする

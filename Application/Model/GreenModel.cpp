@@ -19,11 +19,11 @@ GreenModel::GreenModel()
 
 	//使用するシェーダーの選択
 	appearance0.shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 	//使用するテクスチャの選択
 	appearance0.texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGuruguru);
-	appearance0.SetUsingTextureFromContainer(1, 1, 0, 0);
+		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
+	appearance0.SetUsingTextureFromContainer(1, 0, 0, 0);
 }
 
 void GreenModel::Init()
@@ -31,7 +31,7 @@ void GreenModel::Init()
 	auto& appearance0 = (*model->Getter_Appearance())[0];
 	appearance0.metalic = 0.72f;
 	appearance0.roughness = 0.4f;
-	appearance0.color = { 62,179,112,255 };
+	appearance0.color = { 0,169,104,255 };
 
 }
 

@@ -20,6 +20,7 @@ PlayerModel::PlayerModel()
 	//使用するシェーダーの選択
 	appearance0.shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+
 	//使用するテクスチャの選択
 	appearance0.SetUsingTextureFromContainer(1, 0, 0, 0);
 
@@ -28,9 +29,9 @@ PlayerModel::PlayerModel()
 void PlayerModel::Init()
 {
 	auto& appearance0 = (*model->Getter_Appearance())[0];
-	appearance0.metalic = 0.72f;
-	appearance0.roughness = 0.4f;
-	appearance0.color = { 62,112,179,255 };
+	appearance0.metalic = 0.1f;
+	appearance0.roughness = 0.8f;
+	appearance0.color = { 255,255,150,255 };
 
 }
 

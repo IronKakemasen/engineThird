@@ -3,6 +3,18 @@
 void InGameScene::Update()
 {
 	camera.Update();
+	
+	if (inGameController->cur_wave == 0)
+	{
+		dirLight->Getter_Para()->intensity = 2.0f;
+		dirLight->Getter_Para()->color = { 100,100,100};
+	}
+	else
+	{
+		dirLight->Getter_Para()->intensity = 3.0f;
+		dirLight->Getter_Para()->color = { 75,25,5};
+	}
+
 }
 
 void InGameScene::Draw()
@@ -15,6 +27,7 @@ void InGameScene::Draw()
 void InGameScene::Reset()
 {
 	gameObjManager->Reset();
+	camera.Reset();
 }
 
 void InGameScene::Debug()

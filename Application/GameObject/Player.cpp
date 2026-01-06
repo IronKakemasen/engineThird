@@ -10,7 +10,7 @@ void Player::Update()
 	switch (InGameController::mode)
 	{
 	case InGameController::kEnter:
-
+		SetStart();
 		break;
 
 	case InGameController::kPlayable:
@@ -40,16 +40,21 @@ void Player::Init()
 {
 	SetIdentity(kPlayer);
 	model->Init();
+	SetRectCollision(playerSize, playerSize);
+	
+}
 
+void Player::SetStart()
+{
 	float const blockSize = BlockManager::kBlockSize;
 	float const centerXOffset =
 		BlockManager::waveData[InGameController::cur_wave].startSize.x * 0.5f - blockSize * 0.5f;
-	float const zStartRate = 0.2f;
-	float const zOffset = 
+	float const zStartRate = 0.3f;
+	float const zOffset =
 		BlockManager::waveData[InGameController::cur_wave].startSize.y * zStartRate;
- 
-	trans.pos = BlockManager::kStartPos + 
-		Vector3{ centerXOffset,0.56f ,zOffset };
+
+	trans.pos = BlockManager::kStartPos +
+		Vector3{ centerXOffset,0.6f ,zOffset };
 
 	trans.rotation.y = 90.0f;
 	angleCnt.Initialize(5.0f);
@@ -90,9 +95,9 @@ void Player::ClipPosition()
 	Benri::AdjustMin(trans.pos.x, clipMin_X, clipMin_X + adjust);
 
 	float const clipMaxZ = BlockManager::kStartPos.z + 
-		BlockManager::waveData[InGameController::cur_wave].startSize.y -playerSize;
+		BlockManager::waveData[InGameController::cur_wave].startSize.y - blockSize * 0.5f - playerSize;
 	float const clipMinZ = BlockManager::kStartPos.z +
-		BlockManager::mapLast - playerSize;
+		(BlockManager::mapLast - blockSize * 0.5f) + playerSize * 0.5f;
 
 	Benri::AdjustMax(trans.pos.z, clipMaxZ, clipMaxZ - adjust);
 	Benri::AdjustMin(trans.pos.z, clipMinZ, clipMinZ + adjust);
@@ -183,4 +188,9 @@ void Player::Move()
 	trans.pos = trans.pos + moveDir * moveSpeed * pushed * deltaTime;
 
 	preAngleY = nextAngleY;
+}
+
+void Player::SetCollisionBackTable()
+{
+
 }

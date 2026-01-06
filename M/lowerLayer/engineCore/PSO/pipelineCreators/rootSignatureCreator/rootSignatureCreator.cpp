@@ -207,7 +207,7 @@ D3D12_ROOT_PARAMETER RootSignatureCreator::GetRootParameterWithDescriptorRange(
 	heap_staticSamplers[Appearance::kColormap] = 
 		CreateStaticSmp(ShaderStage::PS, 0, SamplerState::LinearWrap);
 	heap_staticSamplers[Appearance::kNormalmap] = 
-		CreateStaticSmp(ShaderStage::PS, 1, SamplerState::LinearWrap);
+		CreateStaticSmp(ShaderStage::PS, 1, SamplerState::AnisotropicWrap);
 	heap_staticSamplers[Appearance::kSpecularMap] = 
 		CreateStaticSmp(ShaderStage::PS, 2, SamplerState::LinearWrap);
 	heap_staticSamplers[Appearance::kShininessMap] = 

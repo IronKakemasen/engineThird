@@ -6,6 +6,7 @@
 struct Transform
 {
 	Vector3 pos;
+	Vector3 prePos;
 	Vector3 scale;
 	Vector3 rotation;
 	Vector3 lookDir;

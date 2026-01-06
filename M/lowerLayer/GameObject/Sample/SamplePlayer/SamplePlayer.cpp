@@ -31,3 +31,8 @@ SamplePlayer::SamplePlayer()
 	quadModel.appearance.metalic = 0.0f;
 
 }
+
+void SamplePlayer::SetCollisionBackTable()
+{
+
+}

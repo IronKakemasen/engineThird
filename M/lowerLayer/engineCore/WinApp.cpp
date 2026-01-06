@@ -11,6 +11,8 @@ bool WinApp::InitD3D()
 	//COMの初期化
 	CoInitializeEx(0, COINITBASE_MULTITHREADED);
 
+	srand(unsigned int(time(NULL)));
+
 	log = DebugLogInitialize();
 
 	//デバイス
@@ -303,11 +305,11 @@ bool WinApp::InitWnd()
 
 #ifdef _DEBUG
 
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	{
-		debugController->EnableDebugLayer();
-		debugController->SetEnableGPUBasedValidation(TRUE);
-	}
+	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+	//{
+	//	debugController->EnableDebugLayer();
+	//	debugController->SetEnableGPUBasedValidation(TRUE);
+	//}
 
 #endif // _DEBUG
 

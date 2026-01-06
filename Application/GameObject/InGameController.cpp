@@ -7,12 +7,14 @@ void InGameController::Update()
 
 void InGameController::Init()
 {
-
+	cur_wave = 0;
+	cur_phase = 0;
 }
 
 void InGameController::Reset()
 {
-	numBreak = 0;
+	cur_wave = 0;
+	cur_phase = 0;
 }
 
 void InGameController::Draw(Matrix4* vpMat_)
@@ -44,3 +46,7 @@ std::string InGameController::CurMode()
 	return ret[(int)mode];
 }
 
+void InGameController::SetCollisionBackTable()
+{
+
+}

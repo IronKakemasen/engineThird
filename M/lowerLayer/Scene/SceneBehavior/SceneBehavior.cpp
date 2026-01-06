@@ -10,7 +10,12 @@ SceneBehavior::SceneBehavior()
 	cameraController->RegisterForContainer("mainCamera", mainCamera.get());
 	cameraController->ChangeCamera("mainCamera");
 	dirLight = M::GetInstance()->ImportDirLight();
+	doReset = false;
 }
 
+void SceneBehavior::ActivateReset()
+{
+	doReset = true;
+}
 
 

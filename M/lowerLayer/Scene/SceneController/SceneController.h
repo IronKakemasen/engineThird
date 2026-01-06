@@ -29,6 +29,7 @@ private:
 public:
 	void Update();
 	void Init();
+	void Reset();
 
 private:
 	//稼働するシーンを切り替える

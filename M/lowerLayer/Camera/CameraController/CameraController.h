@@ -20,5 +20,9 @@ public:
 	void RegisterForContainer(std::string dstCameraName_, Camera* dstCamera_);
 	Camera* GetUsingCamera();
 	void QuickChange();
+	inline DebugCamera* Getter_DebugCamera()
+	{
+		return debugCamera.get();
+	}
 };
 

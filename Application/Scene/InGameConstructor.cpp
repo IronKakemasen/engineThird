@@ -14,11 +14,18 @@ void InGameScene::Instantiate()
 
 	for (int i = 0; i < BlockManager::kNumGreenBlock; ++i)
 	{
-		auto* black = blackBlocks.emplace_back(std::make_unique<BlackBlock>()).get();
 		auto* green = greenBlocks.emplace_back(std::make_unique<GreenBlock>()).get();
-		blockManager->SetBlackBlock(black);
+
 		blockManager->SetGreenBlock(green);
+		green->light = M::GetInstance()->ImportPointLight();
 	}
+
+	for (int i = 0; i < BlockManager::kNumBlackBlock; ++i)
+	{
+		auto* black = blackBlocks.emplace_back(std::make_unique<BlackBlock>()).get();
+		blockManager->SetBlackBlock(black);
+	}
+
 	for (int i = 0; i < BlockManager::kNumNormalBlock; ++i)
 	{
 		auto* normal = normalBlocks.emplace_back(std::make_unique<NormalBlock>()).get();
@@ -34,9 +41,8 @@ void InGameScene::Instantiate()
 
 void InGameScene::Init()
 {
-
-	gameObjManager->RegisterForContainer(player.get(), blockManager.get(),
-		inGameController.get());
+	cameraController->Getter_DebugCamera()->Getter_Parameters()->trans.pos =
+	{ 100,105,100 };
 
 	for (int i = 0; i < BlockManager::kNumGreenBlock; ++i)
 	{
@@ -53,7 +59,11 @@ void InGameScene::Init()
 		gameObjManager->RegisterForContainer(normalBlocks[i].get());
 	}
 
+	gameObjManager->RegisterForContainer(inGameController.get(),
+		blockManager.get(), player.get());
+
 	gameObjManager->Init();
+
 	camera.Init(cameraController->GetUsingCamera()->Getter_Parameters(),
 		&player->Getter_Trans()->pos);
 }

@@ -47,14 +47,13 @@ bool MeshLoader::Load
         return false;
     }
 
-    // wchar_t から char型(UTF-8)に変換します.
+    // wchar_t から char型(UTF-8)に変換
     auto path = ToUTF8(filename);
 
     Assimp::Importer importer;
     unsigned int flag = 0;
     flag |= aiProcess_Triangulate;
     flag |= aiProcess_PreTransformVertices;
-    flag |= aiProcess_CalcTangentSpace;
     flag |= aiProcess_GenSmoothNormals;
     flag |= aiProcess_GenUVCoords;
     flag |= aiProcess_RemoveRedundantMaterials;
@@ -104,12 +103,12 @@ bool MeshLoader::Load
 
 void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
 {
-    // マテリアル番号を設定.
+    // マテリアル番号を設定
     dstMesh.materialId = pSrcMesh->mMaterialIndex;
 
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 
-    // 頂点データのメモリを確保.
+    // 頂点データのメモリを確保
     dstMesh.vertices.resize(pSrcMesh->mNumVertices);
 
     for (auto i = 0u; i < pSrcMesh->mNumVertices; ++i)
@@ -118,7 +117,6 @@ void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
         auto pNormal = &(pSrcMesh->mNormals[i]);
         auto pTexCoord = (pSrcMesh->HasTextureCoords(0)) ? &(pSrcMesh->mTextureCoords[0][i]) : &zero3D;
         auto pTangent = (pSrcMesh->HasTangentsAndBitangents()) ? &(pSrcMesh->mTangents[i]) : &zero3D;
-
         dstMesh.vertices[i] = Vertex(
             Vector3(pPosition->x, pPosition->y, pPosition->z),
             Vector2(pTexCoord->x, 1.0f - pTexCoord->y),
@@ -127,7 +125,8 @@ void MeshLoader::ParseMesh(ResMesh& dstMesh, const aiMesh* pSrcMesh)
         );
     }
 
-    // 頂点インデックスのメモリを確保.
+
+    // 頂点インデックスのメモリを確保
     dstMesh.indices.resize(pSrcMesh->mNumFaces * 3);
 
     for (auto i = 0u; i < pSrcMesh->mNumFaces; ++i)

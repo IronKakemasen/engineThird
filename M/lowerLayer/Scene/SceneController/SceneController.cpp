@@ -22,8 +22,17 @@ void SceneController::Update()
 	cur_Scene->gameObjManager->Render(vpMat);
 
 	cur_Scene->Draw();
+
+	Reset();
 }
 
+void SceneController::Reset()
+{
+	SceneBehavior* cur_Scene = allScene[runningScene];
+
+	if(cur_Scene->doReset) cur_Scene->Reset();
+	cur_Scene->doReset = false;
+}
 
 void SceneController::Init()
 {

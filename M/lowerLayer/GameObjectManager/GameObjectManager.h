@@ -8,6 +8,9 @@ class GameObjectManager
 {
 	std::vector< GameObject* > objContainer;
 	int createNum = 0;
+	//ゲームオブジェクトすべての当たり判定をとる
+	void ChackAllCollision(GameObject* thisObj_);
+
 public:
 	void Init();
 	void Update();

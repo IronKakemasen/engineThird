@@ -10,8 +10,6 @@
 #include "../../../../external/imgui/imgui.h"
 #endif // USE_IMGUI
 
-
-
 class SceneBehavior
 {
 public:
@@ -21,11 +19,13 @@ public:
 	std::unique_ptr< NormalCamera > mainCamera;
 	std::unique_ptr< GameObjectManager > gameObjManager;
 	DirectionalLight* dirLight = nullptr;
+	bool doReset;
 
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Reset() = 0;
 	virtual void Debug() = 0;
+	void ActivateReset();
 
 protected:
 	virtual void Instantiate() = 0;

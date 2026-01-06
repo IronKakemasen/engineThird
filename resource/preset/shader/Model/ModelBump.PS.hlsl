@@ -40,9 +40,8 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
 
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
-    float3 normal = normalMap.Sample(nomalSmp, input.texcoord).xyz * 2.0 - 1.0;
+    float3 normal = normalMap.Sample(nomalSmp, input.texcoord).xyz * 2.0 - 1.0f;
     normal = mul(input.invTangentBasis, normal);
-    //float3 normal = normalize(input.normal);
 
     float4 baseColor = textureColor * gMaterial.albedoColor;
     float NV = saturate(dot(normal, toCamera));

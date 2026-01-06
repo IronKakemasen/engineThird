@@ -39,3 +39,7 @@ SampleObj::SampleObj()
 
 }
 
+void SampleObj::SetCollisionBackTable()
+{
+
+}

@@ -8,7 +8,7 @@ struct Counter
 
 	Counter(float performTime_);
 	Counter(){}
-	void Add(float deltaTime_);
+	void Add(float deltaTime_ = 0.016666666f);
 	void Substract(float deltaTime_);
 	void Initialize(float sumFrame_);
 	bool IsEnd();
