@@ -438,3 +438,23 @@ Matrix4 GetRotateAxisMat(Vector3 axis_, float radian_)
 
 	return mat;
 }
+
+Matrix4 GetRotateAxisMat(Vector3 v1_, Vector3 v2_)
+{
+	Vector3 n = v1_.GetCross(v2_);
+	float cosT = v1_.GetCos(v2_);
+	float sinT = n.GetMagnitutde();
+	float contradictionCosT = 1.0f - cosT;
+	float cc = contradictionCosT;
+
+	Matrix4 mat =
+	{
+		n.x * n.x * cc + cosT,n.x * n.y * cc + n.z * sinT,n.x * n.z * cc - n.y * sinT,0.0f,
+		n.x * n.y * cc - n.z * sinT,n.y * n.y * cc + cosT,n.y * n.z * cc + n.x * sinT,0.0f,
+		n.x * n.z * cc + n.y * sinT,n.y * n.z * cc - n.x * sinT,n.z * n.z * cc + cosT,0.0f,
+		0.0f,0.0f,0.0f,1.0f
+	};
+
+	return mat;
+
+}

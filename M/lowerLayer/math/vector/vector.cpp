@@ -120,7 +120,7 @@ Vector3 Vector3::GetCross(Vector3 other)
 	retCross.y = z * other.x - x * other.z;
 	retCross.z = x * other.y - y * other.x;
 
-	return retCross;
+	return retCross.GetNormalized();
 }
 
 float Vector3::GetDot(Vector3 other_)
