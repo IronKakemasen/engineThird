@@ -16,6 +16,11 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kGridN, pathToPresetTex + "gridLineNormal.png");
 	LoadTextureFile(TextureTag::kStarN, pathToPresetTex + "bokoboko.png");
 	LoadTextureFile(TextureTag::kPlayerN, pathToPresetTex + "normalPlayer.png");
+	LoadTextureFile(TextureTag::kF, pathToPresetTex + "f.png");
+	LoadTextureFile(TextureTag::kS, pathToPresetTex + "s.png");
+	LoadTextureFile(TextureTag::kI, pathToPresetTex + "t.png");
+	LoadTextureFile(TextureTag::kC, pathToPresetTex + "c.png");
+	LoadTextureFile(TextureTag::kD, pathToPresetTex + "d.png");
 
 	
 }

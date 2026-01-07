@@ -4,12 +4,15 @@
 #include "BlockBehavior.h"
 
 class PointLight;
+struct RedMark;
+
 struct GreenBlock : public GameObject
 {
 
 public:
 	PointLight* light = nullptr;
 	std::unique_ptr<GreenModel> model;
+	RedMark* redMark = nullptr;
 
 	virtual void Update()override;
 	virtual void Init() override;

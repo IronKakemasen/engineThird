@@ -6,6 +6,9 @@
 #include "../GameObject/GreenBlock.h"
 #include "../GameObject/InGameController.h"
 #include "../GameObject/NormalBlock.h"
+#include "../GameObject/BlueMark.h"
+#include "../GameObject/RedMark.h"
+
 #include "../InGameCamera.h"
 
 class InGameScene final : public SceneBehavior
@@ -19,6 +22,9 @@ public:
 	std::vector<std::unique_ptr<NormalBlock>> normalBlocks;
 	std::unique_ptr<BlockManager> blockManager;
 	std::unique_ptr<InGameController> inGameController;
+	std::vector<std::unique_ptr<RedMark>> redMarks;
+	std::unique_ptr<BlueMark> blueMark;
+
 	PointLight* pointLights[3];
 	InGameCamera camera;
 

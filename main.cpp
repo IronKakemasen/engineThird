@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	ResourceLeakChecker r;
 
-	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"LE2A_17_ミヤジテンマ");
+	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
 
 	std::unique_ptr<SceneController> sceneController = std::make_unique<SceneController>();
 	sceneController->Init();

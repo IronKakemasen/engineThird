@@ -8,7 +8,13 @@ void GameController::Enter::operator()(InGameController* ingC_)
 {
 	BlockManager::numFall = 0;
 	ingC_->cur_cnt = cnt.count;
+	
+
 	cnt.Add(M::GetInstance()->GetDeltaTime());
+	if (cnt.count <= 0.25f)
+	{
+	}
+
 
 	if (cnt.IsEnd())
 	{
@@ -68,7 +74,17 @@ void GameController::Death::operator()(InGameController* ingC_)
 
 	if (cnt.IsEnd())
 	{
+		BlockManager::doGenerate = true;
+		BlockManager::mapLast = 0;
+
 		ingC_->cur_wave = 0;
+		ingC_->cur_phase = 0;
+		ingC_->mode = ingC_->kEnter;
+		for (auto* block : BlockManager::additions)
+		{
+			block->SetStatus(GameObjectBehavior::Status::kInActive);
+			block->Getter_Trans()->pos = {};
+		}
 		ingC_->mode = ingC_->kEnter;
 		Reset();
 	}

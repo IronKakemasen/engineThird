@@ -21,6 +21,7 @@ struct GameObjectBehavior
 		kUsing,
 		kErase,
 		kFall,
+		kOk
 	};
 
 	enum Tag
@@ -60,8 +61,6 @@ private :
 	};
 
 	Identity identity;
-	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
-	std::unordered_map<Tag, CollisionBackSet> collisionBackActivationMap;
 	bool collisionActivate = false;
 
 public:
@@ -83,23 +82,24 @@ public:
 	std::string Getter_Name();
 	void SwitchCollisionActivation(bool bool_);
 	bool IsCollisionActivated();
-	void UpdateCollisionBack();
+	bool UpdateCollisionBack();
 protected:
 
 	Status status;
 	Transform trans;
 	std::unique_ptr <Rect> rect;
+	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
+	std::unordered_map<Tag, CollisionBackSet> collisionBackActivationMap;
 
 
 };
 
 struct GameObject:public GameObjectBehavior
 {
-private:
-	GameObject* colObj = nullptr;
 
 public:
 	Uwa uwa = Uwa::kNotUse;
+	std::vector<GameObject*> colObj;
 
 	GameObject();
 	virtual void Update()override {};

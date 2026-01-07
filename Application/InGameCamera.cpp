@@ -116,6 +116,7 @@ void InGameCamera::Init(CameraPara* cameraPara_, Vector3* playerPos_)
 	cameraPara->trans.RotateUpdate();
 	cameraPara->trans.interpolationCoe = 0.1f;
 	perfectCnt.Initialize(2.0f);
+
 }
 
 void InGameCamera::Reset()

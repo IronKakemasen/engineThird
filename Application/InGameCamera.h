@@ -5,7 +5,10 @@ struct CameraPara;
 
 struct InGameCamera
 {
+
 private :
+
+
 	Vector3 const fstLook = { -0.6f,-0.472f,0.646f};
 	CameraPara* cameraPara = nullptr;
 	Vector3* playerPos = nullptr;
@@ -16,6 +19,7 @@ private :
 	void Enter();
 	void Playable();
 	void WhenPerfect();
+
 public:
 	void Init(CameraPara* cameraPara_, Vector3* playerPos_);
 	void Update();

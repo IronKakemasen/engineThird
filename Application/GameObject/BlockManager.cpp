@@ -57,18 +57,22 @@ void BlockManager::Update()
 
 bool BlockManager::CheckVanish()
 {
-	if (doVanishRow)
-	{
-		doVanishRow = false;
-		return true;
-	}
-	if (numFall >= 4)
-	{
-		numFall = 0;
-		return true;
-	}
+	vanishNum = doVanishRow;
+	doVanishRow = 0;
 
 	if (M::GetInstance()->IsKeyTriggered(KeyType::O))
+	{
+		vanishNum++;
+	}
+
+	if (numFall >= 4)
+	{
+		int buff = numFall / 4;
+		vanishNum += buff;
+		numFall -= buff * 4;
+	}
+
+	if (vanishNum > 0)
 	{
 		return true;
 	}
@@ -78,26 +82,30 @@ bool BlockManager::CheckVanish()
 
 void BlockManager::Vanish()
 {
-	float const offsetZ = kStartPos.z + (mapLast) * kBlockSize;
-	float min = offsetZ - 0.2f;
-	float max = offsetZ + 0.2f;
+	float const offsetMaxZ = kStartPos.z + (mapLast + vanishNum - 1) * kBlockSize;
+	float const offsetMinZ = kStartPos.z + (mapLast) * kBlockSize;
+
+	float min = offsetMinZ - 0.2f;
+	float max = offsetMaxZ + 0.2f;
 
 	for (auto* block : additions)
 	{
 		if (block->GetStatus() == Status::kInActive) continue;
 
-		if (block->Getter_Trans()->pos.z >=min && block->Getter_Trans()->pos.z <= max )
+		if (block->Getter_Trans()->pos.z >= min && block->Getter_Trans()->pos.z <= max )
 		{
 			block->rakka = true;
 		}
+
 		else
 		{
 			continue;
 		}
 	}
 
-	mapLast++;
 
+	mapLast += vanishNum;
+	vanishNum = 0;
 }
 
 
@@ -178,9 +186,10 @@ void BlockManager::Init()
 	SetAdditions();
 	SetExceptAddtions();
 	geneCnt.Initialize(4.0f);
-	moveCnt.Initialize(1.25f); // 1.25f
+	moveCnt.Initialize(0.75f); // 0.75f
 	stopCnt.Initialize(0.5f);
 	addCnt.Initialize(2.0f);
+	sukoshiCnt.Initialize(1.25f);
 	SetGround();
 
 }
@@ -240,6 +249,8 @@ void BlockManager::GenerateBlocks()
 
 	for (auto* block : usingBlocks)
 	{
+		block->Getter_Trans()->scale = { 1,1,1 };
+		block->Getter_Trans()->rotation.x = 0.0f;
 		block->Getter_Trans()->pos = {};
 		block->SetStatus(Status::kInActive);
 		block->uwa = Uwa::kNotUse;
@@ -629,7 +640,7 @@ void BlockManager::WaveData::Init(Vector2 startSize_, Vector4 color_)
 BlockManager::BlockManager()
 {
 	waveData[0].Init({ 4,16 }, { 128,128,128,255 });//16
-	waveData[1].Init({ 5,15 }, { 128,128,128,255 }); // 26
+	waveData[1].Init({ 5,26 }, { 128,128,128,255 }); // 26
 
 }
 
@@ -666,6 +677,13 @@ bool BlockManager::CheckAllVanished()
 		if (block->uwa == Uwa::kUsing) return false ;
 	}
 
+	sukoshiCnt.Add();
+
+	if (sukoshiCnt.count<1.0f)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -697,6 +715,7 @@ bool BlockManager::AddPerformance()
 		if (cur_set >= maxSet)
 		{
 			cur_set = 0;
+			sukoshiCnt.count = 0.0f;
 			InGameController::canChangeMode = true;
 		}
 
@@ -724,6 +743,7 @@ bool BlockManager::AddPerformance()
 
 	if (addCnt.IsEnd())
 	{
+		sukoshiCnt.count = 0.0f;
 		addBlocks.clear();
 		mapLast--;
 		rotateNum = 0;

@@ -73,7 +73,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
         lightFinalColor += poinghtLightColor * pointLightBRDF;
     }
     
-    output.color = float4(lightFinalColor, gMaterial.albedoColor.a * textureColor.a);
+    output.color = gMaterial.albedoColor * textureColor;
     
     return output;
 }

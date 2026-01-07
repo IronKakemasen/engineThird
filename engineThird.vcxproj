@@ -146,6 +146,8 @@
     <ClCompile Include="Application\Scene\InGameConstructor.cpp" />
     <ClCompile Include="Application\GameObject\Controllers.cpp" />
     <ClCompile Include="Application\InGameCamera.cpp" />
+    <ClCompile Include="Application\GameObject\BlueMark.cpp" />
+    <ClCompile Include="Application\Model\KiiroModel.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
@@ -283,6 +285,8 @@
     <ClCompile Include="Application\Model\PlayerModel.cpp" />
     <ClCompile Include="Application\Scene\TitleScene.cpp" />
     <ClCompile Include="M\lowerLayer\Collision\Shape\Rect.cpp" />
+    <ClCompile Include="Application\GameObject\RedMark.cpp" />
+    <ClCompile Include="Application\Model\PlaneModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObject\BlackBlock.h" />
@@ -291,6 +295,8 @@
     <ClInclude Include="Application\GameObject\BlockManager.h" />
     <ClInclude Include="Application\GameObject\Controllers.h" />
     <ClInclude Include="Application\InGameCamera.h" />
+    <ClInclude Include="Application\GameObject\BlueMark.h" />
+    <ClInclude Include="Application\Model\KiiroModel.h" />
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
@@ -429,6 +435,8 @@
     <ClInclude Include="Application\Model\PlayerModel.h" />
     <ClInclude Include="Application\Scene\TitleScene.h" />
     <ClInclude Include="M\lowerLayer\Collision\Shape\Rect.h" />
+    <ClInclude Include="Application\GameObject\RedMark.h" />
+    <ClInclude Include="Application\Model\PlaneModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

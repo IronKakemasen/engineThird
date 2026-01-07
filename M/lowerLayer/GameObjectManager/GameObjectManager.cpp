@@ -71,6 +71,8 @@ void GameObjectManager::Init()
 	for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 	{
 		(*itr)->Init();
+		(*itr)->SetCollisionBackTable();
+
 	}
 }
 
@@ -95,6 +97,8 @@ void GameObjectManager::Update()
 		(*itr)->Update();
 		ChackAllCollision((*itr));
 		(*itr)->UpdateCollisionBack();
+		(*itr)->colObj.clear();
+
 	}
 }
 
@@ -122,6 +126,7 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 	for (auto* otherObj : objContainer)
 	{
 		if (!otherObj->HasCollider()) continue;
+		else if (!otherObj->IsCollisionActivated()) continue;
 
 		//衝突相手がアクティブでなければ
 		if (otherObj->GetStatus() == GameObject::Status::kInActive)
@@ -129,9 +134,15 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			continue;
 		}
 		//マスク処理
-		else if ((thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity())))
+		else if (!(thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity())))
 		{
 			continue;
+		}
+
+		int g = 0;
+		if (thisObj_->Getter_Identity()->tag == GameObject::Tag::kPlayer)
+		{
+			g = g;
 		}
 
 		//ワールド座標を取得
@@ -151,7 +162,6 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			thisObj_->SetCollidedObjPtr(otherObj);
 			otherObj->SetCollidedObjPtr(thisObj_);
 
-			continue;
 		}
 	}
 }

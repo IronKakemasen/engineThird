@@ -23,9 +23,15 @@ namespace Benri
 
 	//値がMINを下回ったらMINにする
 	template<typename T>
-	inline void Min(T& t_, T min_t_)
+	inline bool Min(T& t_, T min_t_)
 	{
-		if (t_ < min_t_) t_ = min_t_;
+		if (t_ < min_t_)
+		{
+			t_ = min_t_;
+			return true;
+		}
+
+		return false;
 	}
 
 	//値をMINからMAXのとき特定の値にする
