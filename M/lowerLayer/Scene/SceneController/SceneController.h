@@ -16,8 +16,6 @@ public:
 
 private:
 	std::unique_ptr<SampleScene> sampleScene;
-	std::unique_ptr<InGameScene> inGameScene;
-	std::unique_ptr<TitleScene> titleScene;
 
 	//現在稼働しているシーン
 	SceneType runningScene;
