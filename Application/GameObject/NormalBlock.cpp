@@ -7,6 +7,8 @@ void NormalBlock::Update()
 	if (uwa == Uwa::kUsing)
 	{
 		SwitchCollisionActivation(true);
+		SetRectCollision(1, 1);
+
 		if (BlockManager::IsFall(trans.pos.z))
 		{
 			trans.pos.y -= 6.0f * 0.0166666f;
@@ -18,6 +20,21 @@ void NormalBlock::Update()
 			}
 		}
 	}
+	else if (uwa == Uwa::kErase)
+	{
+		float t = 4.5f * 0.016666666f * 0.5f;
+		trans.scale.x -= t;
+		trans.scale.y -= t;
+		trans.scale.z -= t;
+
+		Benri::Min(trans.scale.x, 0.0f);
+		Benri::Min(trans.scale.y, 0.0f);
+		if (Benri::Min(trans.scale.z, 0.0f))
+		{
+			SetStatus(Status::kInActive);
+		}
+	}
+
 	else
 	{
 		SwitchCollisionActivation(false);
@@ -58,6 +75,7 @@ NormalBlock::NormalBlock()
 {
 	model.reset(new NormalModel);
 	model->MakeAllPartsBeChildren(&trans);
+	SetRectCollision(BlockManager::kBlockSize, BlockManager::kBlockSize);
 
 }
 

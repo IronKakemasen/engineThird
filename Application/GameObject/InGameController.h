@@ -2,7 +2,7 @@
 #include "../../M/lowerLayer/GameObject/GameObjectBehavior.h"
 #include "Controllers.h"
 #include <unordered_map>
-
+#include "../../M/lowerLayer/Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 struct InGameController : GameObject
 {
 	enum Mode
@@ -25,7 +25,7 @@ public:
 
 	std::unordered_map<Mode,GameController::ControllBehavior*>
 		behaviors;
-
+	MQuad mq;
 	static inline int cur_wave = 0;
 	static inline int cur_phase = 0;
 

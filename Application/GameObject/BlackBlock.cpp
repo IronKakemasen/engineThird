@@ -8,6 +8,7 @@ void BlackBlock::Update()
 	if (uwa == Uwa::kUsing)
 	{
 		SwitchCollisionActivation(true);
+		SetRectCollision(1, 1);
 
 		if (BlockManager::IsFall(trans.pos.z))
 		{
@@ -18,6 +19,21 @@ void BlackBlock::Update()
 				status = Status::kInActive;
 			}
 		}
+	}
+	else if (uwa == Uwa::kErase)
+	{
+		float t = 4.5f * 0.016666666f ;
+		trans.scale.x -= t;
+		trans.scale.y -= t;
+		trans.scale.z -= t;
+
+		Benri::Min(trans.scale.x, 0.0f);
+		Benri::Min(trans.scale.y, 0.0f);
+		if (Benri::Min(trans.scale.z, 0.0f))
+		{
+			SetStatus(Status::kInActive);
+		}
+
 	}
 	else
 	{
@@ -46,6 +62,7 @@ BlackBlock::BlackBlock()
 {
 	model.reset(new BlackModel);
 	model->MakeAllPartsBeChildren(&trans);
+	SetRectCollision(BlockManager::kBlockSize, BlockManager::kBlockSize);
 
 }
 

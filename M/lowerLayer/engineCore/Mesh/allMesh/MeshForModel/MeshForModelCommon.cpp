@@ -79,6 +79,8 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 	std::string folderPath = "Model/";
 
+	//modelNoLight
+	allPipelineset_->CreateNewPipeline(folderPath, "ModelNoLight.VS", "ModelNoLight.PS", inputLayOutFunc, modelSimpleRP);
 	//modelSimple
 	allPipelineset_->CreateNewPipeline(folderPath, "ModelSimple.VS", "ModelSimple.PS", inputLayOutFunc, modelSimpleRP);
 	//modelPhong

@@ -17,7 +17,7 @@ class LightCreator
 	//srvのインデックス
 	uint16_t srvIndex;
 
-	int const kSumPLight = 25;
+	int const kSumPLight = 50;
 	void CreatePointLight(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_,
 		StructuredBufferSrvCreator* srvCreator_);
 	void CreateDirectionalLight(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_);

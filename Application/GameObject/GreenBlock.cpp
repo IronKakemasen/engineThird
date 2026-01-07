@@ -8,6 +8,7 @@ void GreenBlock::Update()
 	if (uwa == Uwa::kUsing)
 	{
 		SwitchCollisionActivation(true);
+		SetRectCollision(1, 1);
 
 		light->Getter_Para()->isActive = true;
 		light->Getter_Para()->pos = trans.GetWorldPos();
@@ -23,15 +24,30 @@ void GreenBlock::Update()
 				status = Status::kInActive;
 			}
 		}
+	}
+	else if (uwa == Uwa::kErase)
+	{
+		light->Getter_Para()->isActive = false;
+
+		float t = 4.5f * 0.016666666f * 0.5f;
+		trans.scale.x -= t;
+		trans.scale.y -= t;
+		trans.scale.z -= t;
+
+		Benri::Min(trans.scale.x, 0.0f);
+		Benri::Min(trans.scale.y, 0.0f);
+		if (Benri::Min(trans.scale.z, 0.0f))
+		{
+			SetStatus(Status::kInActive);
+		}
 
 	}
+
 	else
 	{
 		SwitchCollisionActivation(false);
 
 		light->Getter_Para()->isActive = false;
-		light->Getter_Para()->pos = trans.GetWorldPos();
-		light->Getter_Para()->pos.y -= 0.5f;
 	}
 }
 
@@ -43,8 +59,8 @@ void GreenBlock::Init()
 	para->color = { 0,169,104};
 	para->intensity = 10;
 	para->invSqrRadius = 250;
-	SetRectCollision(BlockManager::kBlockSize, BlockManager::kBlockSize);
 
+	SetRectCollision(BlockManager::kBlockSize, BlockManager::kBlockSize);
 }
 
 void GreenBlock::Reset()
@@ -69,6 +85,7 @@ GreenBlock::GreenBlock()
 
 void GreenBlock::SetCollisionBackTable()
 {
+	//collisionBackActivationMap[ObjectID::Tag::kGoal] = { false, collisionGoal };
 
 }
 

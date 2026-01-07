@@ -198,6 +198,7 @@ private:
 	Counter geneCnt;
 	Counter moveCnt;
 	Counter stopCnt;
+	Counter sukoshiCnt;
 	int const numAdd = 425;
 	int const numUse = 125;
 	float mapOkuZ;
@@ -216,7 +217,7 @@ public:
 	static inline int const kNumNormalBlock = 550;
 	static inline int const kNumBlackBlock = 30;
 	static inline int const kNumGreenBlock = 20;
-	static inline Vector3 const kStartPos = { 100,100,100 };
+	static inline Vector3 const kStartPos = { 100.5f,100,100.5f };
 	static inline float curLastPosZ = kStartPos.z;
 	static inline WaveData waveData[2];
 	static inline int mapLast;
@@ -224,8 +225,9 @@ public:
 	static inline bool doGenerate = true;
 	static inline std::vector<NormalBlock* > additions;
 	static inline Counter addCnt;
-	static inline bool doVanishRow = false;
+	static inline int doVanishRow = 0;
 	static inline int numFall = 0;
+	static inline int vanishNum = 0;
 
 	void SetNormalBlock(NormalBlock* nomal_);
 	void SetBlackBlock(BlackBlock* black_);
