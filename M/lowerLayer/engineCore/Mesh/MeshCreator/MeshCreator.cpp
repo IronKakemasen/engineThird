@@ -31,8 +31,10 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	std::wstring converted_filePath = ConvertString(filePath_);
 	const wchar_t* tmp  = converted_filePath.c_str();
 
-	assert(LoadMesh(tmp, model->Getter_ModelData().resMesh, 
-		model->Getter_ModelData().resMaterial));
+	LoadMesh(tmp, model->Getter_ModelData().resMesh,
+		model->Getter_ModelData().resMaterial);
+	//assert(LoadMesh(tmp, model->Getter_ModelData().resMesh, 
+	//	model->Getter_ModelData().resMaterial));
 	
 	//モデルの個数分拡張する
 	int size = (int)model->Getter_ModelData().resMesh.size();

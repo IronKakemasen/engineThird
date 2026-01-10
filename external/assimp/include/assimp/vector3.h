@@ -54,9 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #else
 #   include <math.h>
 #endif
-
-#include <assimp/defs.h>
-
+#include "defs.h"
 #ifdef __cplusplus
 
 template<typename TReal> class aiMatrix3x3t;

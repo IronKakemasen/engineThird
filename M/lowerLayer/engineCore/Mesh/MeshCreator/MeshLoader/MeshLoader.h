@@ -1,9 +1,9 @@
 #pragma once
 #include "../../meshStructure/ModelData/ModelData.h"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/cimport.h>
+#include "../../../external/assimp/include/assimp/Importer.hpp"
+#include "../../../external/assimp/include/assimp/scene.h"
+#include "../../../external/assimp/include/assimp/postprocess.h"
+#include "../../../external/assimp/include/assimp/cimport.h"
 
 class MeshLoader
 {
@@ -26,13 +26,9 @@ private:
 
 };
 
-inline bool LoadMesh
+bool LoadMesh
 (
     const wchar_t* filename,
     std::vector<ResMesh>& meshes,
     std::vector<ResMaterial>& materials
-)
-{
-    MeshLoader loader;
-    return loader.Load(filename, meshes, materials);
-}
+);

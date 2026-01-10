@@ -8,11 +8,6 @@ void SampleModel2::Update()
 void SampleModel2::Draw(Matrix4* vpMat_)
 {
 	M::GetInstance()->DrawModel(model.get(), vpMat_);
-	ImGui::Begin("ioehc");
-	ImGui::DragFloat("metalic", &(*model->Getter_Appearance())[0].metalic, 0.01f);
-	ImGui::DragFloat("roughness", &(*model->Getter_Appearance())[0].roughness, 0.01f);
-
-	ImGui::End();
 }
 
 SampleModel2::SampleModel2()

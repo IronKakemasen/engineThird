@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\imgui;$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +129,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
@@ -268,6 +269,9 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\Collision\Shape\Rect.cpp" />
+    <ClCompile Include="Application\GameObjects\Shikoutei\Shikoutei.cpp" />
+    <ClCompile Include="Application\Models\Shikoutei\ShikouteiModel.cpp" />
+    <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouteiScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
@@ -399,6 +403,9 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\PointLightStructuredBuffer\PointLightStructuredBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\StructuredBufferSrvCreator\StructuredBufferSrvCreator.h" />
     <ClInclude Include="M\lowerLayer\Collision\Shape\Rect.h" />
+    <ClInclude Include="Application\GameObjects\Shikoutei\Shikoutei.h" />
+    <ClInclude Include="Application\Models\Shikoutei\ShikouteiModel.h" />
+    <ClInclude Include="Application\Scenes\ShikouteiScene\ShikouteiScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

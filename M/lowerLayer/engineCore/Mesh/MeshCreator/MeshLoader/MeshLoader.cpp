@@ -2,6 +2,18 @@
 #include <assert.h>
 #include <Windows.h>
 
+bool LoadMesh
+(
+    const wchar_t* filename,
+    std::vector<ResMesh>& meshes,
+    std::vector<ResMaterial>& materials
+)
+{
+    MeshLoader loader;
+    return loader.Load(filename, meshes, materials);
+}
+
+
 MeshLoader::MeshLoader()
     : m_pScene(nullptr)
 { 

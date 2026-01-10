@@ -6,8 +6,8 @@
 
 class SampleObj :public GameObject
 {
-	SampleModel sModel;
-	SampleModel2 sModel2;
+	std::unique_ptr<SampleModel> sModel;
+	std::unique_ptr<SampleModel2> sModel2;
 
 public:
 	virtual void Update()override;

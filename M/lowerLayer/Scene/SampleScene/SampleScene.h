@@ -5,9 +5,8 @@
 #include "../../GameObject/Sample/SampleEnemy/SampleEnemy.h"
 #include "../../GameObject/Sample/SampleObj/SampleObj.h"
 
-class PointLight;
 
-class SampleScene final : public SceneBehavior
+class SampleScene final : public Scene
 {
 public:
 	SampleScene();
@@ -23,9 +22,6 @@ public:
 	virtual void Draw() override;
 	virtual void Reset() override;
 	virtual void Debug() override;
-
-private:
-
 	virtual void Instantiate() override;
 	virtual void Init() override;
 

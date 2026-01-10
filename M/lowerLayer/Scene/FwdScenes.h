@@ -1,3 +1,2 @@
 #pragma once
-#include "./SampleScene/SampleScene.h"
-
+#include "../../../Application/Scenes/ShikouteiScene/ShikouteiScene.h"

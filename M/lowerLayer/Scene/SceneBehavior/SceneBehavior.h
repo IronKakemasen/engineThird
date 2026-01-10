@@ -25,11 +25,24 @@ public:
 	virtual void Draw() = 0;
 	virtual void Reset() = 0;
 	virtual void Debug() = 0;
-	void ActivateReset();
-
-protected:
 	virtual void Instantiate() = 0;
 	virtual void Init() = 0;
-	
+	void ActivateReset();
+
 };
+
+class Scene : public SceneBehavior
+{
+public:
+	Scene() {};
+
+	virtual void Update()override {};
+	virtual void Draw() override {};
+	virtual void Reset() override {};
+	virtual void Debug() override {};
+	virtual void Instantiate() override {};
+	virtual void Init() override {};
+};
+
+
 

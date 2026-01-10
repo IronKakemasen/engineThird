@@ -8,14 +8,14 @@ class SceneController
 public:
 	enum SceneType
 	{
-		kSample,
+		kShikouteiScene,
 		kInGame,
 		kTitle,
 		kCount
 	};
 
 private:
-	std::unique_ptr<SampleScene> sampleScene;
+	std::unique_ptr<ShikouteiScene> shikoScene;
 
 	//現在稼働しているシーン
 	SceneType runningScene;

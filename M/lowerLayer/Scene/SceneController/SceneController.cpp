@@ -40,22 +40,30 @@ void SceneController::Init()
 
 	if (initOnlyOnce)
 	{
+		initOnlyOnce = false;
 		InstantiateScenes();
 		SetScenesToArray();
-		ChangeScene(SceneType::kSample);
+		ChangeScene(SceneType::kShikouteiScene);
+		for (auto* scene : allScene)
+		{
+			if (!scene)continue;
+
+			scene->Instantiate();
+			scene->Init();
+		}
 	}
 
 }
 
 void SceneController::SetScenesToArray()
 {
-	allScene[SceneType::kSample] = sampleScene.get();
+	allScene[SceneType::kShikouteiScene] = shikoScene.get();
 
 }
 
 void SceneController::InstantiateScenes()
 {
-	sampleScene.reset(new SampleScene);
+	shikoScene.reset(new ShikouteiScene);
 }
 
 

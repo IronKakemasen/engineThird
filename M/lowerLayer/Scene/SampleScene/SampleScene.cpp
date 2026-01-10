@@ -6,7 +6,7 @@
 
 void SampleScene::Update()
 {	
-	sPlayer->Update();
+	//sPlayer->Update();
 	sObj->Update();
 }
 
@@ -15,7 +15,7 @@ void SampleScene::Draw()
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
-	sPlayer->Draw(vpMat);
+	//sPlayer->Draw(vpMat);
 	sObj->Draw(vpMat);
 }
 
