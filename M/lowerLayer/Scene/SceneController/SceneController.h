@@ -36,6 +36,9 @@ private:
 	void InstantiateScenes();
 	//シーンをセットする
 	void SetScenesToArray();
+	std::string GetName();
+	void Debug();
+
 
 };
 

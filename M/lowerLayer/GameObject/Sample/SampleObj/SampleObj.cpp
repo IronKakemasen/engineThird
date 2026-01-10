@@ -8,8 +8,8 @@ void SampleObj::Update()
 void SampleObj::Init()
 {
 	trans.pos = { 0.0f,2.2f,0.4f};
-	sModel->Init();
-	sModel2->Init();
+	sModel->Init(&trans);
+	sModel2->Init(&trans);
 
 }
 

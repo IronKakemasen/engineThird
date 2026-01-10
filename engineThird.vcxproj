@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yakii\OneDrive\文件\allForOne\engineThird\project\M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yakii\OneDrive\文件\allForOne\engineThird\project\M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +129,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yakii\OneDrive\文件\allForOne\engineThird\project\M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp" />
+    <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouteiScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />

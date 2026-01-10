@@ -1,6 +1,7 @@
 #pragma once
 #include "../../utilities/Transform/Transform.h"
 #include "../../utilities/Easing/EasingFunctions.h"
+
 struct CameraPara
 {
 	Transform trans;

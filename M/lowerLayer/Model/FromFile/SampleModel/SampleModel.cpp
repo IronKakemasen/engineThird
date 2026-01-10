@@ -57,7 +57,7 @@ SampleModel::SampleModel()
 
 }
 
-void SampleModel::Init()
+void SampleModel::Init(Transform* gameObjectTrans_)
 {
 	(*model->Getter_Appearance())[0].trans.pos.x = -0.5f;
 	(*model->Getter_Appearance())[0].metalic = 0.72f;

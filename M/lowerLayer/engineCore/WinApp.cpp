@@ -84,7 +84,8 @@ bool WinApp::InitD3D()
 		srvDescHeap.Getter_Descriptorheap(),
 		srvDescHeap.Getter_Descriptorheap()->GetCPUDescriptorHandleForHeapStart(),		
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
-
+	
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ShaderBuffer::cur_index++;
 
 #endif

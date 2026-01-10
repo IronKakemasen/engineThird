@@ -9,29 +9,17 @@
 
 struct GameObjectBehavior
 {
+	//オブジェクトのステータス
 	enum class Status
 	{
-		kActive,
-		kInActive,
+		kActive,	//更新や描画処理します
+		kInActive,	//しません
 	};
 
-	enum class Uwa
-	{
-		kNotUse,
-		kUsing,
-		kErase,
-		kFall,
-		kOk
-	};
-
+	//ゲームオブジェクトのタグ。適宜追加
 	enum Tag
 	{
-		kPlayer,
-		kNormal,
-		kBlack,
-		kGreen,
-		kBlueArea,
-		kGreenArea,
+		kShikoutei,
 
 
 		kCount,
@@ -61,7 +49,15 @@ private :
 	};
 
 	Identity identity;
-	bool collisionActivate = false;
+	bool collisionActivate = true;
+
+protected:
+	Status status;
+	Transform trans;
+	std::unique_ptr <Rect> rect;
+	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
+	std::unordered_map<Tag, CollisionBackSet> collisionBackActivationMap;
+	std::vector<GameObjectBehavior*> colObj;
 
 public:
 	virtual void Update() = 0;
@@ -77,20 +73,14 @@ public:
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
-	Rect* Getter_Rect();
 	bool HasCollider();
 	std::string Getter_Name();
 	void SwitchCollisionActivation(bool bool_);
 	bool IsCollisionActivated();
 	bool UpdateCollisionBack();
-protected:
-
-	Status status;
-	Transform trans;
-	std::unique_ptr <Rect> rect;
-	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
-	std::unordered_map<Tag, CollisionBackSet> collisionBackActivationMap;
-
+	void SetCollidedObjPtr(GameObjectBehavior* obj_);
+	std::vector<GameObjectBehavior*>* Getter_ColObj();
+	Rect* Getter_Rect();
 
 };
 
@@ -98,28 +88,22 @@ struct GameObject:public GameObjectBehavior
 {
 
 public:
-	Uwa uwa = Uwa::kNotUse;
-	std::vector<GameObject*> colObj;
 
 	GameObject();
 	virtual void Update()override {};
 	virtual void Init() override {};
 	virtual void Reset() override {};
 	virtual void Draw(Matrix4* vpMat_)override {};
-	void SetCollidedObjPtr(GameObject* obj_);
 
 	inline auto* Getter_Trans()
 	{
 		return &trans;
 	}
 
-
 	inline Status GetStatus()
 	{
 		return status;
 	}
-
-
 
 };
 

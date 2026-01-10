@@ -411,6 +411,9 @@
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h">
@@ -807,6 +810,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\ShikouteiScene\ShikouteiScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

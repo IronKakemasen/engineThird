@@ -51,7 +51,7 @@ SampleModel2::SampleModel2()
 
 }
 
-void SampleModel2::Init()
+void SampleModel2::Init(Transform* gameObjectTrans_)
 {
 	(*model->Getter_Appearance())[0].trans.pos.x = 1.0f;
 	(*model->Getter_Appearance())[0].trans.pos.z = 3.0f;

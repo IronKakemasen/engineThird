@@ -18,6 +18,6 @@ void ShikouteiScene::Instantiate()
 
 void ShikouteiScene::Init()
 {
-
+	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
 }

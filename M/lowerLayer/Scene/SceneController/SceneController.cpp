@@ -4,11 +4,33 @@
 #include "../../M.h"
 #include "../FwdScenes.h"
 
+
+void SceneController::Debug()
+{
+	SceneBehavior* cur_Scene = allScene[runningScene];
+
+#ifdef USE_IMGUI
+	static float deltaTime;
+	deltaTime = ImGui::GetIO().DeltaTime;
+	ImGui::Begin("SceneController");
+	ImGui::Text(GetName().c_str());
+	ImGui::DragFloat("deltaTime", &deltaTime);
+	ImGui::End();
+
+	cur_Scene->gameObjManager->Debug();
+	cur_Scene->cameraController->Debug();
+
+	cur_Scene->Debug();
+
+#endif // USE_IMGUI
+
+}
+
 void SceneController::Update()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	cur_Scene->Debug();
+	Debug();
 
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
@@ -50,6 +72,7 @@ void SceneController::Init()
 
 			scene->Instantiate();
 			scene->Init();
+			scene->gameObjManager->Init();
 		}
 	}
 
@@ -72,3 +95,14 @@ void SceneController::ChangeScene(SceneType startSceneType_)
 	runningScene = startSceneType_;
 }
 
+std::string SceneController::GetName()
+{
+	std::string names[SceneType::kCount]
+	{
+		"kShikouteiScene",
+		"kInGame",
+		"kTitle"
+	};
+
+	return names[(int)runningScene];
+}

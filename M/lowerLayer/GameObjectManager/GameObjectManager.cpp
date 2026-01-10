@@ -14,25 +14,36 @@ void GameObjectManager::RegisterForContainer(GameObject* dst_)
 void GameObjectManager::Debug()
 {
 #ifdef USE_IMGUI
+	static int selec = 0;
 
-	ImGui::Begin("ObjManager");
+	ImGui::Begin("ObjManager", nullptr, ImGuiWindowFlags_MenuBar);
 
-	if (ImGui::TreeNode("All"))
+	if (ImGui::BeginMenuBar()) 
 	{
-		for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
+		if (ImGui::BeginMenu("Select Status"))
 		{
-			if ((*itr) == nullptr) continue;
-
-			if (ImGui::TreeNode((*itr)->Getter_Name().c_str()))
+			if (ImGui::MenuItem("Active")) 
 			{
-				ImGui::DragFloat3("pos", reinterpret_cast<float*>(&(*itr)->Getter_Trans()->pos), 0.1f);
-				ImGui::TreePop();
+				selec = 0;
 			}
+			else if (ImGui::MenuItem("InActive"))
+			{
+				selec = 1;
+			}
+			else if (ImGui::MenuItem("All"))
+			{
+				selec = 2; 
+			}
+
+			ImGui::EndMenu();
 		}
-		ImGui::TreePop();
+		ImGui::EndMenuBar();
 	}
-	else if (ImGui::TreeNode("Active"))
+
+	if (selec == 0)
 	{
+		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 100), ImGuiWindowFlags_NoTitleBar);
+
 		for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 		{
 			if ((*itr) == nullptr) continue;
@@ -44,10 +55,12 @@ void GameObjectManager::Debug()
 				ImGui::TreePop();
 			}
 		}
-		ImGui::TreePop();
+		ImGui::EndChild();
 	}
-	else if (ImGui::TreeNode("inActive"))
+	else if (selec == 1)
 	{
+		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 100), ImGuiWindowFlags_NoTitleBar);
+
 		for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 		{
 			if ((*itr) == nullptr) continue;
@@ -59,9 +72,27 @@ void GameObjectManager::Debug()
 				ImGui::TreePop();
 			}
 		}
-		ImGui::TreePop();
+		ImGui::EndChild();
 
 	}
+	else
+	{
+		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 100), ImGuiWindowFlags_NoTitleBar);
+		for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
+		{
+			if ((*itr) == nullptr) continue;
+
+			if (ImGui::TreeNode((*itr)->Getter_Name().c_str()))
+			{
+				ImGui::DragFloat3("pos", reinterpret_cast<float*>(&(*itr)->Getter_Trans()->pos), 0.1f);
+				ImGui::TreePop();
+			}
+		}
+		ImGui::EndChild();
+
+
+	}
+
 	ImGui::End();
 
 #endif
@@ -72,7 +103,6 @@ void GameObjectManager::Init()
 	{
 		(*itr)->Init();
 		(*itr)->SetCollisionBackTable();
-
 	}
 }
 
@@ -97,7 +127,7 @@ void GameObjectManager::Update()
 		(*itr)->Update();
 		ChackAllCollision((*itr));
 		(*itr)->UpdateCollisionBack();
-		(*itr)->colObj.clear();
+		(*itr)->Getter_ColObj()->clear();
 
 	}
 }
@@ -137,12 +167,6 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 		else if (!(thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity())))
 		{
 			continue;
-		}
-
-		int g = 0;
-		if (thisObj_->Getter_Identity()->tag == GameObject::Tag::kPlayer)
-		{
-			g = g;
 		}
 
 		//ワールド座標を取得

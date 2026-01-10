@@ -1,5 +1,18 @@
 #include "GameObjectBehavior.h"
 
+//新しくゲームオブジェクトを作ったらテーブルに追加してほしい
+void GameObjectBehavior::SetIdentity(Tag tag_)
+{
+	int no = identity.number;
+
+	Identity identitiesTable[Tag::kCount]
+	{
+		Identity{ "[" + std::to_string(no) + "] : Shikoutei" ,tag_,no,0x0000000f,0x0000fff0},
+	};
+
+	identity = identitiesTable[(int)tag_];
+}
+
 std::string GameObjectBehavior::Getter_Name()
 {
 	return identity.name;
@@ -33,7 +46,7 @@ bool GameObjectBehavior::UpdateCollisionBack()
 
 GameObjectBehavior::Identity::Identity()
 {
-	name = "none";
+	name = "noName";
 	tag = kNone;
 	number = 0;
 	collisionAttribute = 0;
@@ -43,25 +56,6 @@ GameObjectBehavior::Identity::Identity()
 
 bool GameObjectBehavior::Identity::IsCollisionMaskMatched(Identity* other_)
 {
-	if (tag == kPlayer)
-	{
-		if (other_->tag == kGreen) return true;
-		else if (other_->tag == kBlack) return true;
-		else if (other_->tag == kNormal) return true;
-	}
-	else if (tag == kBlueArea)
-	{
-		if (other_->tag == kGreen) return true;
-		else if (other_->tag == kBlack) return true;
-		else if (other_->tag == kNormal) return true;
-	}
-	else if (tag == kGreenArea)
-	{
-		if (other_->tag == kGreen) return true;
-		else if (other_->tag == kBlack) return true;
-		else if (other_->tag == kNormal) return true;
-
-	}
 
 	return false;
 }
@@ -113,23 +107,6 @@ void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 	}
 }
 
-void GameObjectBehavior::SetIdentity(Tag tag_)
-{
-	int no = identity.number;
-
-	Identity identities[Tag::kCount]
-	{
-		Identity{ "[" + std::to_string(no) + "] : Player" ,tag_,no,0x0000000f,0x0000fff0},
-		Identity{ "[" + std::to_string(no) + "] : Normal" ,tag_,no ,0x000000f0,0x00ff000f},
-		Identity{ "[" + std::to_string(no) + "] : Black" ,tag_,no ,0x00000f00,0x00ff000f},
-		Identity{ "[" + std::to_string(no) + "] : Green" ,tag_,no ,0x0000f000,0x00ff000f},
-		Identity{ "[" + std::to_string(no) + "] : BlueArea" ,tag_,no ,0x000f0000,0x0000fff0},
-		Identity{ "[" + std::to_string(no) + "] : GreenArea" ,tag_,no ,0x00f00000,0x0000fff0}
-	};
-
-	identity = identities[(int)tag_];
-}
-
 void GameObjectBehavior::SetNumber(int number_)
 {
 	identity.number = number_;
@@ -145,7 +122,12 @@ GameObject::GameObject()
 	status = Status::kActive;
 }
 
-void GameObject::SetCollidedObjPtr(GameObject* obj_)
+void GameObjectBehavior::SetCollidedObjPtr(GameObjectBehavior* obj_)
 {
 	colObj.emplace_back(obj_);
+}
+
+std::vector<GameObjectBehavior*>* GameObjectBehavior::Getter_ColObj()
+{
+	return &colObj;
 }
