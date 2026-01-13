@@ -68,6 +68,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
         float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition, 
             pointLights[i].pos, pointLights[i].invSqrRadius,
             pointLights[i].color) * pointLights[i].intensity * pointLights[i].isActive;
+        
         float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
         lightFinalColor += poinghtLightColor * pointLightBRDF;
     }
