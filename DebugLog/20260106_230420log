@@ -1,0 +1,94 @@
+Use Adapter:NVIDIA GeForce RTX 5050 Laptop GPU
+
+FeatureLevel:12.2
+
+Complete create D3D12Device
+
+Complete create CommandQueue
+
+Complete create SwapChain
+
+Complete create rtvDescriptorHeap
+
+Complete pull Resource
+
+Complete create Allocators
+
+Complete create CommandList
+
+Complete built fence
+
+Complete creat event
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/MobilePrimitive/MobilePrimitiveMesh.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/MobilePrimitive/MobilePrimitiveMesh.VS.hlsl,profile:vs_6_0
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Particle2D/TestParticle2D.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Particle2D/TestParticle2D.VS.hlsl,profile:vs_6_0
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
