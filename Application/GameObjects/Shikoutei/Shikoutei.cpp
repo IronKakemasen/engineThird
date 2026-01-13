@@ -20,7 +20,7 @@ void Shikoutei::Init()
 	SwitchCollisionActivation(false);
 
 	//位置
-	trans.pos.z = 1.0f;
+	trans.pos.z = 2.0f;
 }
 
 void Shikoutei::Reset()

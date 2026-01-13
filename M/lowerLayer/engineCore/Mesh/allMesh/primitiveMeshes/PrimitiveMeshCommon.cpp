@@ -31,6 +31,8 @@ void PrimitiveMeshCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 	if (onlyOnce)
 	{
+		onlyOnce = false;
+
 		auto inputLayOutFunc = []()
 			{
 				std::vector<D3D12_INPUT_ELEMENT_DESC> descs;
@@ -87,6 +89,5 @@ void PrimitiveMeshCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 		std::string folderPath = "MobilePrimitive/";
 
 		allPipelineset_->CreateNewPipeline(folderPath, "MobilePrimitiveMesh.VS", "MobilePrimitiveMesh.PS", inputLayOutFunc, rootparameterFunc);
-		onlyOnce = false;
 	}
 }

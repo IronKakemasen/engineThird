@@ -2,6 +2,7 @@
 #include "./primitiveMeshes/triangleMesh/triangleMesh.h"
 #include "./primitiveMeshes/quadMesh/quadMesh.h"
 #include "./ParticleMesh2D/TestParticleMesh/TestParticleMesh.h"
+#include "./LineMesh/LineMesh.h"
 
 class ParticleMeshSrvCreator;
 class AllPipelineSet;
@@ -11,7 +12,8 @@ class AllMesh
 	std::unique_ptr<TriangleMesh> triangleMesh;
 	std::unique_ptr<QuadMesh> quadMesh;
 	std::unique_ptr<TestParticleMesh> testParticleMesh;
-
+	std::unique_ptr<LineMesh> lineMesh;
+	
 public:
 
 	void ResetDrawIndexes();
@@ -27,11 +29,14 @@ public:
 		return triangleMesh.get();
 	}
 
+	inline auto* Getter_LineMesh()
+	{
+		return lineMesh.get();
+	}
+
 	inline auto* Getter_QuadMesh()
 	{
 		return quadMesh.get();
 	}
-
-
 };
 

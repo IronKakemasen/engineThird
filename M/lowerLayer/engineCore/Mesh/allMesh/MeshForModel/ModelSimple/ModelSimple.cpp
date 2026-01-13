@@ -10,14 +10,14 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 	UINT sizeOfVertexBuffer =
 		static_cast<UINT>(sizeof(Vertex) * resMeshes->vertices.size());
 	// 頂点バッファ生成
-	meshForModel->veretxBuffer.Create(device_, sizeOfVertexBuffer);
+	meshForModel->vertexBuffer.Create(device_, sizeOfVertexBuffer);
 	//頂点バッファのマッピング
-	HRESULT result = meshForModel->veretxBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&meshForModel->vertexMap));
+	HRESULT result = meshForModel->vertexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&meshForModel->vertexMap));
 	assert(SUCCEEDED(result));
 	//頂点データの入力
 	std::memcpy(meshForModel->vertexMap, resMeshes->vertices.data(),
 		sizeof(Vertex) * resMeshes->vertices.size());
-	meshForModel->veretxBuffer.buffer->Unmap(0, nullptr);
+	meshForModel->vertexBuffer.buffer->Unmap(0, nullptr);
 
 
 	// インデックスデータのサイズ

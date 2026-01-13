@@ -32,7 +32,7 @@ struct ParticleMesh2DCommon
 protected:
 
 	// 頂点バッファとそのびゅー
-	VertexBuffer veretxBuffer;
+	VertexBuffer vertexBuffer;
 	// インデックスバッファとそのびゅー
 	IndexBuffer indexBuffer;
 
@@ -51,7 +51,7 @@ public:
 
 	auto* Getter_VertexBufferView()
 	{
-		return &veretxBuffer.view;
+		return &vertexBuffer.view;
 	}
 
 	auto* Getter_IndexBufferView()

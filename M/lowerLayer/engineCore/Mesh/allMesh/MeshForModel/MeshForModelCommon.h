@@ -21,7 +21,7 @@ struct MeshForModel
 	//World,WVP
 	TransformMatrixBuffer transformMatrixBuffer;
 	// 頂点バッファとそのびゅー
-	VertexBuffer veretxBuffer;
+	VertexBuffer vertexBuffer;
 	// インデックスバッファとそのびゅー
 	IndexBuffer indexBuffer;
 	Vertex* vertexMap = nullptr;

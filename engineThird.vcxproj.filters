@@ -102,7 +102,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.cpp">
@@ -414,6 +414,9 @@
     <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h">
@@ -500,7 +503,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\materialForLine.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.h">
@@ -813,6 +816,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

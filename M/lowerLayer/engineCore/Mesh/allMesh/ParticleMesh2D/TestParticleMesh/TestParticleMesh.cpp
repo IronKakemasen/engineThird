@@ -7,7 +7,7 @@ void TestParticleMesh::CreateMesh(ID3D12Device* device_, ParticleMeshSrvCreator*
 	// 頂点データのサイズ
 	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vertex) * vertexCnt);
 	// 頂点バッファ生成
-	veretxBuffer.Create(device_, sizeOfVertexBuffer);
+	vertexBuffer.Create(device_, sizeOfVertexBuffer);
 
 	// 頂点バッファのマッピング
 	MQuad mQuad;
@@ -20,7 +20,7 @@ void TestParticleMesh::CreateMesh(ID3D12Device* device_, ParticleMeshSrvCreator*
 		mQuad.leftBottom,mQuad.leftTop,mQuad.rightBottom,mQuad.rightTop
 	};
 
-	HRESULT result = veretxBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
+	HRESULT result = vertexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
 	std::memcpy(&vertexMap[0], vData, sizeof(Vertex) * vertexCnt);
 	//vertexBuff->Unmap();

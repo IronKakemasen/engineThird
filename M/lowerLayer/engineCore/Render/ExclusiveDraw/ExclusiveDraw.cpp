@@ -16,6 +16,70 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 	dirLightBuffer = dirLightBuffer_;
 }
 
+void ExclusiveDraw::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
+{
+	//auto* lineMesh = allMesh->Getter_LineMesh();
+	//int const vertexCnt = 2;
+	//UINT i = lineMesh->GetCurrentIndex();
+	//uint32_t const usingVertex_index = i * vertexCnt;
+
+	//Vector3 vertices[2] = { st_,ed_ };
+
+	//float const i255 = CommonV::inv_255;
+	//Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
+
+	////< データの入力 >
+	////[ 頂点 ]
+	//std::memcpy(&lineMesh->GetVertexMap()[usingVertex_index], vertices, sizeof(Vector3) * vertexCnt);
+
+	////[ 行列 ]
+	//lineMesh->SetViewProjectionMatrix(vpMat_);
+
+	////[ マテリアル ]
+	////色
+	//lineMesh->SetMaterial(&color, i);
+
+	////< データの転送 >
+	//auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
+	//auto* cList = src_pipeline->Getter_CommandList();
+
+	//cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//src_pipeline->SetGraphicsRootSignature();
+	//src_pipeline->SetPipelineState();
+
+	////VBV
+	//cList->IASetVertexBuffers(0, 1, quadMesh->Getter_VertexBufferView());
+
+	////IBV
+	//cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
+
+	////texture
+	//cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
+	////pointLight
+	//cList->SetGraphicsRootDescriptorTable(1,
+	//	shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
+
+
+	////Cバッファの場所を指定
+	//src_pipeline->SetConstantBufferViews(
+	//	2,
+	//	quadMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
+	//	quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
+	//	quadMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
+	//	dirLightBuffer->dirLight.GetVirtualGPUAddress(),
+	//	cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
+
+
+	////描画(DrawCall)。6インデックスで一つのインスタンス
+	//cList->DrawIndexedInstanced(quadMesh->indexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
+
+
+	////次の描画用にインクリメント
+	//quadMesh->cur_drawIndex++;
+
+}
+
 void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 {
 	int n = (int)meshAndData_->Getter_ModelData().resMesh.size();
@@ -35,7 +99,7 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		src_pipeline->SetPipelineState();
 
 		//VBV
-		cList->IASetVertexBuffers(0, 1, &mesh->veretxBuffer.view);
+		cList->IASetVertexBuffers(0, 1, &mesh->vertexBuffer.view);
 		//IBV
 		cList->IASetIndexBuffer(&mesh->indexBuffer.view);
 

@@ -11,14 +11,16 @@ void AllMesh::Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSr
 	static bool initOnlyOnce = true;
 	if (initOnlyOnce)
 	{
+		initOnlyOnce = false;
+
 		triangleMesh.reset(new TriangleMesh(allPipelineSet_));
 		quadMesh.reset(new QuadMesh(allPipelineSet_));
 		testParticleMesh.reset(new TestParticleMesh(allPipelineSet_));
+		//lineMesh.reset(new LineMesh(allPipelineSet_,device_));
 
 		triangleMesh->CreateMesh(device_);
 		quadMesh->CreateMesh(device_);
 		testParticleMesh->CreateMesh(device_,ParticleMeshSrvCreator_);
 
-		initOnlyOnce = false;
 	}
 }
