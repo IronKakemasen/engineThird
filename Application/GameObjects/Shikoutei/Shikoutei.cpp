@@ -4,6 +4,7 @@ void Shikoutei::Update()
 {
 	//モデルの更新処理（中身を書いていれば）
 	shikoModel->Update();
+
 }
 
 void Shikoutei::Init()
@@ -15,7 +16,7 @@ void Shikoutei::Init()
 	//タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kShikoutei);
 	//矩形コリジョンをアタッチ
-	SetRectCollision(1.0, 1.0f);
+	SetRectCollision(1.0f, 1.0f);
 	//衝突判定をするかどうか定める
 	SwitchCollisionActivation(false);
 

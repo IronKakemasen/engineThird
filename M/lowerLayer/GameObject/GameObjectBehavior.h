@@ -67,15 +67,18 @@ public:
 	virtual void SetCollisionBackTable() = 0;
 
 	void SetStatus(Status dst_);
-	void SetNumber(int id_);
 	void SetIdentity(Tag tag_);
-	void ActivateOnTriggerEnter(Tag tag_);
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
+	void SwitchCollisionActivation(bool bool_);
+
+
+
+	void SetNumber(int id_);
+	void ActivateOnTriggerEnter(Tag tag_);
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
 	bool HasCollider();
 	std::string Getter_Name();
-	void SwitchCollisionActivation(bool bool_);
 	bool IsCollisionActivated();
 	bool UpdateCollisionBack();
 	void SetCollidedObjPtr(GameObjectBehavior* obj_);

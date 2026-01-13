@@ -11,6 +11,8 @@ class ShikouteiScene final : public Scene
 	//使用するゲームオブジェクト
 	std::unique_ptr<Shikoutei> shikoutei;
 
+
+
 public:
 	ShikouteiScene();
 
