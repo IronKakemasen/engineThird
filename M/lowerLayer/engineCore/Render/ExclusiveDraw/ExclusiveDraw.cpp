@@ -5,6 +5,7 @@
 #include "../../Essential/BarrierControl/BarrierControl.h"
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
+#include "../../../M.h"
 
 void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 {
@@ -18,66 +19,54 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 
 void ExclusiveDraw::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
 {
-	//auto* lineMesh = allMesh->Getter_LineMesh();
-	//int const vertexCnt = 2;
-	//UINT i = lineMesh->GetCurrentIndex();
-	//uint32_t const usingVertex_index = i * vertexCnt;
+	auto* lineMesh = allMesh->Getter_LineMesh();
+	lineMesh->DetectOverDrawing();
+	int const vertexCnt = 2;
+	UINT i = lineMesh->GetCurrentIndex();
+	uint32_t const usingVertex_index = i * vertexCnt;
 
-	//Vector3 vertices[2] = { st_,ed_ };
+	Vector3 vertices[2] = { st_,ed_ };
 
-	//float const i255 = CommonV::inv_255;
-	//Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
+	float const i255 = CommonV::inv_255;
+	Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
 
-	////< データの入力 >
-	////[ 頂点 ]
-	//std::memcpy(&lineMesh->GetVertexMap()[usingVertex_index], vertices, sizeof(Vector3) * vertexCnt);
+	//< データの入力 >
+	//[ 頂点 ]
+	std::memcpy(&lineMesh->GetVertexMap()[usingVertex_index], vertices, sizeof(Vector3) * vertexCnt);
 
-	////[ 行列 ]
-	//lineMesh->SetViewProjectionMatrix(vpMat_);
+	//[ 行列 ]
+	lineMesh->SetViewProjectionMatrix(vpMat_);
 
-	////[ マテリアル ]
-	////色
-	//lineMesh->SetMaterial(&color, i);
+	//[ マテリアル ]
+	//色
+	lineMesh->SetMaterial(&color, i);
 
-	////< データの転送 >
-	//auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
-	//auto* cList = src_pipeline->Getter_CommandList();
+	//< データの転送 >
+	static int shaderSet = 
+		M::GetInstance()->GetShaderSetIndexFromFileName("Line.VS", "Line.PS");
+	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet, BlendMode::kBlendModeAdd, CullMode::kCullModeNone);
+	auto* cList = src_pipeline->Getter_CommandList();
 
-	//cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 
-	//src_pipeline->SetGraphicsRootSignature();
-	//src_pipeline->SetPipelineState();
+	src_pipeline->SetGraphicsRootSignature();
+	src_pipeline->SetPipelineState();
 
-	////VBV
-	//cList->IASetVertexBuffers(0, 1, quadMesh->Getter_VertexBufferView());
+	//VBV
+	cList->IASetVertexBuffers(0, 1, lineMesh->GetVertexBufferView());
 
-	////IBV
-	//cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
+	//Cバッファの場所を指定
+	src_pipeline->SetConstantBufferViews(
+		0,
+		lineMesh->GetViewProjectionVirtualPtr(),
+		lineMesh->GetMaterialVirtualPtr(i)
+		);
 
-	////texture
-	//cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
-	////pointLight
-	//cList->SetGraphicsRootDescriptorTable(1,
-	//	shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
+	//描画(DrawCall)。6インデックスで一つのインスタンス
+	cList->DrawInstanced(vertexCnt, 1, static_cast<UINT>(usingVertex_index), static_cast<UINT>(usingVertex_index));
 
-
-	////Cバッファの場所を指定
-	//src_pipeline->SetConstantBufferViews(
-	//	2,
-	//	quadMesh->worldMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
-	//	quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
-	//	quadMesh->materialBuffer[i].material.GetVirtualGPUAddress(),
-	//	dirLightBuffer->dirLight.GetVirtualGPUAddress(),
-	//	cameraParaBuffer->cameraPara.GetVirtualGPUAddress());
-
-
-	////描画(DrawCall)。6インデックスで一つのインスタンス
-	//cList->DrawIndexedInstanced(quadMesh->indexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
-
-
-	////次の描画用にインクリメント
-	//quadMesh->cur_drawIndex++;
-
+	//次の描画用にインクリメント
+	lineMesh->GetCurrentIndex()++;
 }
 
 void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)

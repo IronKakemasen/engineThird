@@ -71,7 +71,8 @@ void LineMesh::CreatePSO(AllPipelineSet* allPipelineset_)
 
 		std::string folderPath = "Line/";
 
-		allPipelineset_->CreateNewPipeline(folderPath, "Line.VS", "Line.PS", inputLayOutFunc, rootparameterFunc);
+		allPipelineset_->CreateNewPipeline(folderPath, "Line.VS", "Line.PS", 
+			inputLayOutFunc, rootparameterFunc,true);
 	}
 
 }
@@ -86,7 +87,7 @@ void LineMesh::DetectOverDrawing()
 	assert(curDrawIndex < maxDraw);
 }
 
-UINT LineMesh::GetCurrentIndex()
+UINT& LineMesh::GetCurrentIndex()
 {
 	return curDrawIndex;
 }
@@ -104,4 +105,15 @@ void LineMesh::SetViewProjectionMatrix(Matrix4* src_)
 void LineMesh::SetMaterial(Vector4* color_, UINT index_)
 {
 	materialForLineBuffers[index_].material.buffMap->color = *color_;
+}
+
+D3D12_GPU_VIRTUAL_ADDRESS LineMesh::GetMaterialVirtualPtr(UINT index_)
+{
+	return materialForLineBuffers[index_].material.GetVirtualGPUAddress();
+}
+
+D3D12_GPU_VIRTUAL_ADDRESS LineMesh::GetViewProjectionVirtualPtr()
+{
+	return viewProjectionMatrixBuffer.matrix.GetVirtualGPUAddress();
+
 }

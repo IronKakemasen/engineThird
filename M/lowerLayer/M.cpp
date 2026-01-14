@@ -75,6 +75,12 @@ void M::DrawMQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Ver
 		trans_, uvTrans_, vpMat_);
 }
 
+void M::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
+{
+	exclusiveDraw->DrawLine(st_, ed_, color_, vpMat_);
+}
+
+
 M* M::GetInstance()
 {
 	static M m;

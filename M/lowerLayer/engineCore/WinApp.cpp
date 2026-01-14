@@ -306,11 +306,11 @@ bool WinApp::InitWnd()
 
 #ifdef _DEBUG
 
-	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	//{
-	//	debugController->EnableDebugLayer();
-	//	debugController->SetEnableGPUBasedValidation(TRUE);
-	//}
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+	{
+		debugController->EnableDebugLayer();
+		debugController->SetEnableGPUBasedValidation(TRUE);
+	}
 
 #endif // _DEBUG
 

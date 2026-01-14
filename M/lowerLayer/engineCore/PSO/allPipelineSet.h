@@ -7,7 +7,7 @@ class VpShaders;
 class AllPipelineSet
 {
 public:
-	static int const kNumShaderSet = 10;
+	static int const kNumShaderSet = 15;
 
 private:
 	//[ pipelineSet ]
@@ -27,7 +27,8 @@ public:
 		std::string vsFileName_,
 		std::string psFileName_,
 		std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
-		std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_);
+		std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_,
+		bool isTopologyLine_ = false);
 
 	inline auto* Getter_pipelineSet(int shaderSetIndex_,BlendMode blendMode_,CullMode cullMode_)
 	{

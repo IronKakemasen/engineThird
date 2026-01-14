@@ -72,6 +72,11 @@ public:
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 
+	void DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_);
+
+
+
+
 	void DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
