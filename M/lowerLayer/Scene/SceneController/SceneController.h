@@ -23,11 +23,14 @@ private:
 	SceneBehavior* allScene[SceneType::kCount];
 	//処理間隔を調整する
 	RunSpeedChanger runSpeedChanger;
+	//グリッド線を描画するかどうか
+	bool doDrawGridLine;
 
 public:
 	void Update();
 	void Init();
 	void Reset();
+	SceneController();
 
 private:
 	//稼働するシーンを切り替える

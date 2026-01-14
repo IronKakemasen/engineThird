@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "../../M.h"
 #include "../FwdScenes.h"
+#include "./UglyGrid/UglyGrid.h"
 
 
 void SceneController::Debug()
@@ -15,12 +16,20 @@ void SceneController::Debug()
 	ImGui::Begin("SceneController");
 	ImGui::Text(GetName().c_str());
 	ImGui::DragFloat("deltaTime", &deltaTime);
+	ImGui::Text("GridLine : "); ImGui::SameLine();
+	ImGui::Checkbox(" ", &doDrawGridLine);
 	ImGui::End();
 
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
 
 	cur_Scene->Debug();
+
+	if (doDrawGridLine)
+	{
+		Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
+		UglyGrid::Draw(vpMat);
+	}
 
 #endif // USE_IMGUI
 
@@ -46,6 +55,11 @@ void SceneController::Update()
 	cur_Scene->Draw();
 
 	Reset();
+}
+
+SceneController::SceneController()
+{
+	doDrawGridLine = true;
 }
 
 void SceneController::Reset()

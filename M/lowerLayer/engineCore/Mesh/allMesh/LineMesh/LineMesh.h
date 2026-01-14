@@ -12,7 +12,7 @@ struct ID3D12Device;
 
 class LineMesh
 {
-private:
+public:
 
 	enum MaxDraw
 	{
@@ -21,7 +21,7 @@ private:
 
 	uint16_t maxDraw;
 	UINT curDrawIndex;
-	VertexBuffer vertexBuffer;
+	VertexBufferForLine vertexBufferForLine;
 	// マトリクスバッファ
 	MatrixBuffer viewProjectionMatrixBuffer;
 	// 頂点バッファマップ
@@ -46,7 +46,7 @@ public:
 
 	auto* GetVertexBufferView()
 	{
-		return &vertexBuffer.view;
+		return &vertexBufferForLine.view;
 	}
 
 };

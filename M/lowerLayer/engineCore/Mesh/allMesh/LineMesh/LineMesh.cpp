@@ -6,8 +6,8 @@
 
 LineMesh::LineMesh(AllPipelineSet* allPipelineset_, ID3D12Device* device_)
 {
-	CreateMesh(device_);
 	Init(MaxDraw::kLineMax, allPipelineset_);
+	CreateMesh(device_);
 }
 
 void LineMesh::Init(uint16_t maxDraw_, AllPipelineSet* allPipelineset_)
@@ -21,14 +21,16 @@ void LineMesh::CreateMesh(ID3D12Device* device_)
 {
 	int const kNumVectorRequired = 2;
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vector3) * kNumVectorRequired);
+	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vector3) * 
+		kNumVectorRequired * MaxDraw::kLineMax);
 	// 頂点バッファ生成
-	vertexBuffer.Create(device_, sizeOfVertexBuffer);
+	vertexBufferForLine.Create(device_, sizeOfVertexBuffer);
 
 	// 頂点バッファのマッピング
-	HRESULT result = vertexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
+	HRESULT result = vertexBufferForLine.buffer->Map(0, 
+		nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
-	vertexBuffer.buffer->Unmap(0, nullptr);
+	//vertexBuffer.buffer->Unmap(0, nullptr);
 
 	viewProjectionMatrixBuffer.matrix.CreateAndMapping(device_);
 

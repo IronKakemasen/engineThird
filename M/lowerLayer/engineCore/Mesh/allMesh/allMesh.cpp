@@ -22,6 +22,5 @@ void AllMesh::Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSr
 		triangleMesh->CreateMesh(device_);
 		quadMesh->CreateMesh(device_);
 		testParticleMesh->CreateMesh(device_,ParticleMeshSrvCreator_);
-		lineMesh->CreateMesh(device_);
 	}
 }

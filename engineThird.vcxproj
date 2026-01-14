@@ -274,7 +274,7 @@
     <ClCompile Include="Application\GameObjects\Shikoutei\Shikoutei.cpp" />
     <ClCompile Include="Application\Models\Shikoutei\ShikouteiModel.cpp" />
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouteiScene.cpp" />
-    <ClCompile Include="Application\UglyGrid\UglyGrid.cpp" />
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -411,7 +411,7 @@
     <ClInclude Include="Application\GameObjects\Shikoutei\Shikoutei.h" />
     <ClInclude Include="Application\Models\Shikoutei\ShikouteiModel.h" />
     <ClInclude Include="Application\Scenes\ShikouteiScene\ShikouteiScene.h" />
-    <ClInclude Include="Application\UglyGrid\UglyGrid.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

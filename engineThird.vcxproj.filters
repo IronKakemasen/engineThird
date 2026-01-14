@@ -417,7 +417,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\UglyGrid\UglyGrid.cpp">
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -824,7 +824,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\UglyGrid\UglyGrid.h">
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
