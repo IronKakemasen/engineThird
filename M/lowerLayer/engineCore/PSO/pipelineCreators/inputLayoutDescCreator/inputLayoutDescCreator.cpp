@@ -25,7 +25,7 @@ void InputLayoutDescCreator::AddToFuncs_InputElementDescsCreate(
 	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> func_)
 {
 	sum_created++;
-	if (sum_created >= AllPipelineSet::kNumShaderSet) assert(false);
+	if (sum_created > AllPipelineSet::kNumShaderSet) assert(false);
 	
 	funcs_inputElementDescsCreate.emplace_back(func_);
 
@@ -76,23 +76,3 @@ void InputLayoutDescCreator::SafeRelease()
 }
 
 
-//heap_inputElementDescs.first[0] = GetInputElementDesc(
-//	"POSITION",
-//	0,
-//	DXGI_FORMAT_R32G32B32_FLOAT,
-//	D3D12_APPEND_ALIGNED_ELEMENT
-//);
-//
-//heap_inputElementDescs.first[1] = GetInputElementDesc(
-//	"TEXCOORD",
-//	0,
-//	DXGI_FORMAT_R32G32_FLOAT,
-//	D3D12_APPEND_ALIGNED_ELEMENT
-//);
-//
-//heap_inputElementDescs.first[2] = GetInputElementDesc(
-//	"NORMAL",
-//	0,
-//	DXGI_FORMAT_R32G32B32_FLOAT,
-//	D3D12_APPEND_ALIGNED_ELEMENT
-//);

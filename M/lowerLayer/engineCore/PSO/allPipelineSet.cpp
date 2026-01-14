@@ -17,7 +17,8 @@ void AllPipelineSet::CreateNewPipeline(
 	std::string vsFileName_,
 	std::string psFileName_,
 	std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()> inputElementDescCreateFunc_,
-	std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_)
+	std::function<std::vector<D3D12_ROOT_PARAMETER>()> rootParameterCreateFunc_,
+	bool isTopologyLine_)
 {
 	std::string tableName = vsFileName_ + " + " + psFileName_;
 
@@ -27,7 +28,7 @@ void AllPipelineSet::CreateNewPipeline(
 	pipelineSets[0][0][0]->Activate_InputLayoutCreateFunc(inputElementDescCreateFunc_);
 	pipelineSets[0][0][0]->Activate_RootparameterCreateFunc(rootParameterCreateFunc_);
 
-	Add(tableName);
+	Add(tableName, isTopologyLine_);
 
 }
 

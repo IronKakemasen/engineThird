@@ -123,8 +123,6 @@ void PipelineSet::Activate_RootparameterCreateFunc(std::function<std::vector<D3D
 	graghicsPipeLineStatedesc.DepthStencilState = depthStencilDesc;
 	graghicsPipeLineStatedesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-
-
 	//実際に生成
 	HRESULT hr = device_->CreateGraphicsPipelineState(&graghicsPipeLineStatedesc,
 		IID_PPV_ARGS(&ret_pipelineSet->pipelineStateObject));

@@ -28,7 +28,6 @@ private:
 	Vector3* vertexMap = nullptr;
 	std::vector<MaterialForLineBuffer> materialForLineBuffers;
 
-	void CreateMesh(ID3D12Device* device_);
 	void Init(uint16_t maxDraw_ , AllPipelineSet* allPipelineset_);
 	void CreatePSO(AllPipelineSet* allPipelineset_);
 
@@ -37,10 +36,14 @@ public:
 	LineMesh(AllPipelineSet* allPipelineset_, ID3D12Device* device_);
 	void DrawIndexReset();
 	void DetectOverDrawing();
-	UINT GetCurrentIndex();
+	UINT& GetCurrentIndex();
 	Vector3* GetVertexMap();
 	void SetViewProjectionMatrix(Matrix4* src_);
 	void SetMaterial(Vector4* color_,UINT index_);
+	D3D12_GPU_VIRTUAL_ADDRESS GetMaterialVirtualPtr(UINT index_);
+	D3D12_GPU_VIRTUAL_ADDRESS GetViewProjectionVirtualPtr();
+	void CreateMesh(ID3D12Device* device_);
+
 	auto* GetVertexBufferView()
 	{
 		return &vertexBuffer.view;

@@ -109,7 +109,7 @@ void RootSignatureCreator::CopyFromIndex(int funcIndex_)
 void RootSignatureCreator::AddToFuncs_RootParametersCreate(std::function<std::vector<D3D12_ROOT_PARAMETER>()> func_)
 {
 	sum_created++;
-	if (sum_created >= AllPipelineSet::kNumShaderSet) assert(false);
+	if (sum_created > AllPipelineSet::kNumShaderSet) assert(false);
 
 	funcs_rootParametersCreate.emplace_back(func_);
 }

@@ -1,5 +1,5 @@
 #include "ShikouteiScene.h"
-
+#include "../../UglyGrid/UglyGrid.h"
 
 void ShikouteiScene::Update()
 {
@@ -13,6 +13,8 @@ void ShikouteiScene::Draw()
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
+
+	UglyGrid::Draw(vpMat);
 }
 
 void ShikouteiScene::Reset()
