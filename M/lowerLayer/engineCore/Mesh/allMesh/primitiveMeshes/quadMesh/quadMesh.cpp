@@ -8,7 +8,8 @@ QuadMesh::QuadMesh(AllPipelineSet* allPipelineset_)
 void QuadMesh::CreateMesh(ID3D12Device* device_)
 {
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vertex) * vertexCnt);
+	UINT sizeOfVertexBuffer = 
+		static_cast<UINT>(sizeof(Vertex) * vertexCnt * (int)MaxDraw::kQuad);
 	// 頂点バッファ生成
 	vertexBuffer.Create(device_, sizeOfVertexBuffer);
 	// 頂点バッファのマッピング

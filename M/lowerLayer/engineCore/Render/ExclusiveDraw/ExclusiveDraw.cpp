@@ -62,8 +62,7 @@ void ExclusiveDraw::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* 
 		lineMesh->GetMaterialVirtualPtr(i)
 		);
 
-	//描画(DrawCall)。6インデックスで一つのインスタンス
-	cList->DrawInstanced(vertexCnt, 1, static_cast<UINT>(usingVertex_index), static_cast<UINT>(usingVertex_index));
+	cList->DrawInstanced(vertexCnt, 1, static_cast<UINT>(usingVertex_index), 0);
 
 	//次の描画用にインクリメント
 	lineMesh->GetCurrentIndex()++;
