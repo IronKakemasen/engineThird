@@ -42,9 +42,8 @@ private :
 
 	};
 
-	struct CollisionBackSet
+	struct CollisionBack
 	{
-		bool isActive = false;
 		std::function<bool()> func;
 	};
 
@@ -56,8 +55,8 @@ protected:
 	Transform trans;
 	std::unique_ptr <Rect> rect;
 	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
-	std::unordered_map<Tag, CollisionBackSet> collisionBackActivationMap;
-	std::vector<GameObjectBehavior*> colObj;
+	std::unordered_map<Tag, CollisionBack> collisionBackActivationMap;
+	GameObjectBehavior* colObj;
 
 public:
 	virtual void Update() = 0;
@@ -77,9 +76,8 @@ public:
 	std::string Getter_Name();
 	void SwitchCollisionActivation(bool bool_);
 	bool IsCollisionActivated();
-	bool UpdateCollisionBack();
 	void SetCollidedObjPtr(GameObjectBehavior* obj_);
-	std::vector<GameObjectBehavior*>* Getter_ColObj();
+	GameObjectBehavior* Getter_ColObj();
 	Rect* Getter_Rect();
 
 };

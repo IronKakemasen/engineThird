@@ -126,9 +126,6 @@ void GameObjectManager::Update()
 
 		(*itr)->Update();
 		ChackAllCollision((*itr));
-		(*itr)->UpdateCollisionBack();
-		(*itr)->Getter_ColObj()->clear();
-
 	}
 }
 
@@ -178,13 +175,14 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			thisObj_->Getter_Rect(), thisWorldPos,
 			otherObj->Getter_Rect(), otherWorldPos))
 		{
-			//双方のオブジェクトの衝突反応関数をアクティブ化する
-			thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-			otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
-
 			//双方のオブジェクトの衝突相手を登録する
 			thisObj_->SetCollidedObjPtr(otherObj);
-			otherObj->SetCollidedObjPtr(thisObj_);
+			//otherObj->SetCollidedObjPtr(thisObj_);
+
+			//双方のオブジェクトの衝突反応関数をアクティブ化する
+			thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+			//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
+
 
 		}
 	}

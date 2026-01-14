@@ -28,22 +28,6 @@ bool GameObjectBehavior::IsCollisionActivated()
 	return collisionActivate;
 }
 
-bool GameObjectBehavior::UpdateCollisionBack()
-{
-	for (auto& [key, value] : collisionBackActivationMap)
-	{
-		if (!value.func) continue;
-
-		if (value.isActive)
-		{
-			value.isActive = value.func();
-			return true;
-		}
-	}
-
-	return false;
-}
-
 GameObjectBehavior::Identity::Identity()
 {
 	name = "noName";
@@ -103,7 +87,7 @@ void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 {
 	if (collisionBackActivationMap[tag_].func)
 	{
-		collisionBackActivationMap[tag_].isActive = true;
+		collisionBackActivationMap[tag_].func();
 	}
 }
 
@@ -124,10 +108,10 @@ GameObject::GameObject()
 
 void GameObjectBehavior::SetCollidedObjPtr(GameObjectBehavior* obj_)
 {
-	colObj.emplace_back(obj_);
+	colObj = obj_;
 }
 
-std::vector<GameObjectBehavior*>* GameObjectBehavior::Getter_ColObj()
+GameObjectBehavior* GameObjectBehavior::Getter_ColObj()
 {
-	return &colObj;
+	return colObj;
 }
