@@ -9,7 +9,7 @@ ShikouteiModel::ShikouteiModel()
 
 void ShikouteiModel::Update()
 {
-
+	
 }
 
 void ShikouteiModel::Draw(Matrix4* vpMat_)
@@ -41,6 +41,7 @@ void ShikouteiModel::Init(Transform* gameObjectTrans_)
 	appearance->color = { 255,0,0,255 };
 
 }
+
 void ShikouteiModel::Reset()
 {
 }

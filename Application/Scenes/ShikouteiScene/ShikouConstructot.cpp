@@ -7,13 +7,16 @@ ShikouteiScene::ShikouteiScene()
 
 void ShikouteiScene::Instantiate()
 {
-	//始皇帝のインスタンス化
+	//至高帝のインスタンス化
 	shikoutei.reset(new Shikoutei);
+	// プレイヤーのインスタンス化
+	player.reset(new Player);
 
 
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
 	gameObjManager->RegisterForContainer(shikoutei.get());
+	gameObjManager->RegisterForContainer(player.get());
 }
 
 void ShikouteiScene::Init()

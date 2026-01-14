@@ -46,18 +46,20 @@ public:
 	//入力
 	bool IsKeyTriggered(KeyType key_);
 	bool IsKeyPressed(KeyType key_);
+	//テクスチャのインデックスを得る
+	int GetTexIndex(TextureTag tag_);
+	//モデルの生成
+	std::unique_ptr<ModelSimple> CreateModel(std::string filePath_);
+	DirectionalLight* ImportDirLight();
+	PointLight* ImportPointLight();
 
 	//Logを出力
 	void LogM(std::string message_);
 
-	//テクスチャのインデックスを得る
-	int GetTexIndex(TextureTag tag_);
 
 	//shaderSetのインデックスをストリングで取得
 	int GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixelShader_);
 
-	//モデルの生成
-	std::unique_ptr<ModelSimple> CreateModel(std::string filePath_);
 
 	//モデルの描画
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
@@ -76,8 +78,6 @@ public:
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
 
-	DirectionalLight* ImportDirLight();
-	PointLight* ImportPointLight();
 
 	void SetCameraBufferPara(CameraBufferPara cameraBufferPara_);
 

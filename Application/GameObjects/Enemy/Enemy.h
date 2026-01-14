@@ -2,13 +2,11 @@
 #include "GameObjectBehavior.h"
 #include "../../Models/Shikoutei/ShikouteiModel.h"
 
-
-struct Shikoutei :public GameObject
+struct Enemy :public GameObject
 {
 private:
-	//使用するモデル
-	std::unique_ptr<ShikouteiModel> shikoModel;
-
+	// 使用するモデル
+	std::unique_ptr<ShikouteiModel> enemyModel;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -24,6 +22,7 @@ public:
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 
-	Shikoutei();
+
+	Enemy();
 };
 

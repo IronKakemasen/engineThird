@@ -1,7 +1,9 @@
 #pragma once
 #include "SceneBehavior.h"
-#include"../../GameObjects/Shikoutei/Shikoutei.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
+
+#include"../../GameObjects/Shikoutei/Shikoutei.h"
+#include "../../GameObjects/Player/Player.h"
 
 class ShikouteiScene final : public Scene
 {
@@ -10,6 +12,7 @@ class ShikouteiScene final : public Scene
 
 	//使用するゲームオブジェクト
 	std::unique_ptr<Shikoutei> shikoutei;
+	std::unique_ptr<Player> player;
 
 
 

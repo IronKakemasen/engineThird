@@ -142,6 +142,8 @@
   <ItemGroup>
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp" />
     <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp" />
+    <ClCompile Include="Application\GameObjects\Enemy\Enemy.cpp" />
+    <ClCompile Include="M\utilities\Json\Json.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
@@ -198,7 +200,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\PSO\allPipelineSet.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\DescriptorHeap\descriptorHeapBehavior.cpp" />
@@ -274,9 +276,12 @@
     <ClCompile Include="Application\GameObjects\Shikoutei\Shikoutei.cpp" />
     <ClCompile Include="Application\Models\Shikoutei\ShikouteiModel.cpp" />
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouteiScene.cpp" />
+    <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
+    <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />
+    <ClInclude Include="M\utilities\Json\Json.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h" />
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
@@ -334,7 +339,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\PSO\pipelineCreators\inputLayoutDescCreator\inputLayoutDescCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\bufferAndMap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\primitiveMeshes\PrimitiveMeshCommon.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.h" />
     <ClInclude Include="M\lowerLayer\engineCore\PSO\allPipelineSet.h" />
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\dsvDescriptorHeap\dsvDescriptorHeap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\DescriptorHeap\descriptorHeapBehavior.h" />
@@ -410,6 +415,7 @@
     <ClInclude Include="Application\GameObjects\Shikoutei\Shikoutei.h" />
     <ClInclude Include="Application\Models\Shikoutei\ShikouteiModel.h" />
     <ClInclude Include="Application\Scenes\ShikouteiScene\ShikouteiScene.h" />
+    <ClInclude Include="Application\GameObjects\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

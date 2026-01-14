@@ -1,6 +1,5 @@
 #include "ShikouteiScene.h"
 
-
 void ShikouteiScene::Update()
 {
 
@@ -23,7 +22,9 @@ void ShikouteiScene::Reset()
 void ShikouteiScene::Debug()
 {
 #ifdef USE_IMGUI
-
+	ImGui::Begin("ShikouteiScene Scene Debug");
+	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
+	ImGui::End();
 
 
 #endif // USE_IMGUI
