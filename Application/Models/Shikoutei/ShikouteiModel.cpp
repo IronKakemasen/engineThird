@@ -38,8 +38,6 @@ void ShikouteiModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
-
 }
 
 void ShikouteiModel::Reset()

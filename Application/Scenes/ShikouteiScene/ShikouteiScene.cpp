@@ -26,6 +26,17 @@ void ShikouteiScene::Debug()
 	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
 	ImGui::End();
 
+	static float values[100] = {};
+	float fps = ImGui::GetIO().Framerate;
+	for (int i = 0; i < IM_ARRAYSIZE(values) - 1; i++)
+		values[i] = values[i + 1];
+	values[IM_ARRAYSIZE(values) - 1] = fps;
+
+	ImGui::Begin("Plot");
+	ImGui::PlotLines("sin", values, IM_ARRAYSIZE(values));
+	ImGui::End();
+
+
 
 #endif // USE_IMGUI
 

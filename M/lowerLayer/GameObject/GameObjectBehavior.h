@@ -20,7 +20,8 @@ struct GameObjectBehavior
 	enum Tag
 	{
 		kShikoutei,
-
+		Enemy,
+		Player,
 
 		kCount,
 		kNone,
