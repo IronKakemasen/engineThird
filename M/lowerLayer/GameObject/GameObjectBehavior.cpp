@@ -109,7 +109,7 @@ void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 	}
 #endif // _DEBUG
 #ifndef _DEBUG
-	collisionBackActivationMap[tag_].collisionBack();
+	collision.collisionBackActivationMap[tag_].collisionBack();
 #endif // _DEBUG
 }
 

@@ -7,7 +7,8 @@
 #include "imgui.h"
 #endif
 
-void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_,Matrix4* vpMat_)
+#ifdef _DEBUG
+void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_, Matrix4* vpMat_)
 {
 	if (collisionVisibility)
 	{
@@ -20,7 +21,7 @@ void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_,Matrix4* vpMat_)
 			Vector3 RB = { r.right,0,r.bottom };
 			Vector3 LB = { r.left,0,r.bottom };
 
-			M::GetInstance()->DrawLine(LT, RT, 
+			M::GetInstance()->DrawLine(LT, RT,
 				obj_->forDebug.colorForCollision, vpMat_);
 			M::GetInstance()->DrawLine(RT, RB,
 				obj_->forDebug.colorForCollision, vpMat_);
@@ -36,6 +37,9 @@ GameObjectManager::ForDebug::ForDebug()
 {
 	collisionVisibility = false;
 }
+
+#endif
+
 
 void GameObjectManager::RegisterForContainer(GameObject* dst_)
 {
@@ -173,7 +177,11 @@ void GameObjectManager::Render(Matrix4* vpMat_)
 		}
 
 		(*itr)->Draw(vpMat_);
+
+#ifdef _DEBUG
 		forDebug.DrawCollider((*itr), vpMat_);
+#endif // _DEBUG
+
 	}
 }
 
