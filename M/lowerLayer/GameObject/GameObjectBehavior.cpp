@@ -1,5 +1,6 @@
 #include "GameObjectBehavior.h"
 
+
 //新しくゲームオブジェクトを作ったらテーブルに追加してほしい
 void GameObjectBehavior::SetIdentity(Tag tag_)
 {
@@ -20,12 +21,12 @@ std::string GameObjectBehavior::Getter_Name()
 
 void GameObjectBehavior::SwitchCollisionActivation(bool bool_)
 {
-	collisionActivate = bool_;
+	collision.collisionActivate = bool_;
 }
 
 bool GameObjectBehavior::IsCollisionActivated()
 {
-	return collisionActivate;
+	return collision.collisionActivate;
 }
 
 GameObjectBehavior::Identity::Identity()
@@ -35,7 +36,6 @@ GameObjectBehavior::Identity::Identity()
 	number = 0;
 	collisionAttribute = 0;
 	collisionMask = 0;
-
 }
 
 bool GameObjectBehavior::Identity::IsCollisionMaskMatched(Identity* other_)
@@ -66,29 +66,51 @@ GameObjectBehavior::Identity* GameObjectBehavior::Getter_Identity()
 
 Rect* GameObjectBehavior::Getter_Rect()
 {
-	return rect.get();;
+	return collision.rect.get();;
 }
 
-bool GameObjectBehavior::HasCollider()
+bool GameObjectBehavior::HasRectCollider()
 {
-	if (rect) return true;
+	if (collision.rect) return true;
 
 	return false;
 }
 
+bool GameObjectBehavior::HasCollider()
+{
+	int hit = 0;
+	if (collision.rect)
+	{
+		hit++;
+	}
+
+	return hit;
+}
+
 void GameObjectBehavior::SetRectCollision(float width_, float height_ , Vector3 centerPos_)
 {
-	if (!rect) rect.reset(new Rect);
+	if (!collision.rect) collision.rect.reset(new Rect);
 
-	rect->SetShape(width_, height_, centerPos_);
+	collision.rect->SetShape(width_, height_, centerPos_);
 }
 
 void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 {
-	if (collisionBackActivationMap[tag_].func)
+	if (!collision.collisionBackActivationMap[tag_].collisionBack) return;
+
+#ifdef _DEBUG
+	if (collision.collisionBackActivationMap[tag_].collisionBack())
 	{
-		collisionBackActivationMap[tag_].func();
+		forDebug.colorForCollision = { 200,50,50,255 };
 	}
+	else
+	{
+		forDebug.colorForCollision = { 50,50,200,255 };
+	}
+#endif // _DEBUG
+#ifndef _DEBUG
+	collisionBackActivationMap[tag_].collisionBack();
+#endif // _DEBUG
 }
 
 void GameObjectBehavior::SetNumber(int number_)
@@ -108,10 +130,10 @@ GameObject::GameObject()
 
 void GameObjectBehavior::SetCollidedObjPtr(GameObjectBehavior* obj_)
 {
-	colObj = obj_;
+	collision.colObj = obj_;
 }
 
 GameObjectBehavior* GameObjectBehavior::Getter_ColObj()
 {
-	return colObj;
+	return collision.colObj;
 }

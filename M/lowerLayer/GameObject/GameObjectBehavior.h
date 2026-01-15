@@ -42,23 +42,39 @@ private :
 
 	};
 
-	struct CollisionBack
+	struct Collision
 	{
-		std::function<bool()> func;
+		std::function<bool()> collisionBack;
+		//矩形コリジョン
+		std::unique_ptr <Rect> rect;
+		//各衝突相手に対して衝突後の処理（バック）を設定するための箱
+		std::unordered_map<Tag, Collision> collisionBackActivationMap;
+		//衝突相手のポインタ
+		GameObjectBehavior* colObj;
+		bool collisionActivate = true;
+
+
 	};
 
 	Identity identity;
-	bool collisionActivate = true;
+	Collision collision;
 
 protected:
 	Status status;
 	Transform trans;
-	std::unique_ptr <Rect> rect;
-	//各衝突相手に対して衝突後の処理（バック）を設定するための箱
-	std::unordered_map<Tag, CollisionBack> collisionBackActivationMap;
-	GameObjectBehavior* colObj;
 
 public:
+
+#ifdef _DEBUG
+	struct ForDebug
+	{
+		Vector4 colorForCollision = { 50,50,200,255 };
+	};
+
+	ForDebug forDebug;
+
+#endif // _DEBUG
+
 	virtual void Update() = 0;
 	virtual void Init() = 0;
 	virtual void Reset() = 0;
@@ -72,6 +88,7 @@ public:
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
+	bool HasRectCollider();
 	bool HasCollider();
 	std::string Getter_Name();
 	void SwitchCollisionActivation(bool bool_);
@@ -84,7 +101,6 @@ public:
 
 struct GameObject:public GameObjectBehavior
 {
-
 public:
 
 	GameObject();
