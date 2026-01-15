@@ -4,6 +4,14 @@ void Shikoutei::Update()
 {
 	//モデルの更新処理（中身を書いていれば）
 	shikoModel->Update();
+	static Counter c(1.0f);
+
+	c.Add();
+	if (c.IsEnd())
+	{
+		trans.pos.z += 1.0f;
+	}
+
 }
 
 void Shikoutei::Init()
