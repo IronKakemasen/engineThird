@@ -1,6 +1,7 @@
 #pragma once
 #include < algorithm >
 #include <vector>
+#include "../ConvertToRadian/ConvertToRadian.h"
 
 template<typename T>
 bool DoesContain(const std::vector<T>& container_, T value_) {
