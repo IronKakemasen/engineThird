@@ -24,6 +24,27 @@ void Player::Update()
 		SaveData();
 	}
 
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT))
+	{
+		translate.x -= 0.1f;
+	}
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT))
+	{
+		translate.x += 0.1f;
+	}
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
+	{
+		translate.y += 0.1f;
+		M::GetInstance()->getPadState.SetVibration(0, 0.0f, 0.0f);
+	}
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
+	{
+		translate.y -= 0.1f;
+		M::GetInstance()->getPadState.SetVibration(0, 1.0f, 1.5f);
+	}
+
+
+
 	trans.pos = translate;
 }
 
