@@ -17,7 +17,8 @@ void SceneController::Debug()
 	ImGui::Text(GetName().c_str());
 	ImGui::DragFloat("deltaTime", &deltaTime);
 	ImGui::Text("GridLine : "); ImGui::SameLine();
-	ImGui::Checkbox(" ", &doDrawGridLine);
+	ImGui::Checkbox(" ", &forDebug.doDrawGridLine);
+	runSpeedChanger.AddDebug();
 	ImGui::End();
 
 	cur_Scene->gameObjManager->Debug();
@@ -25,7 +26,7 @@ void SceneController::Debug()
 
 	cur_Scene->Debug();
 
-	if (doDrawGridLine)
+	if (forDebug.doDrawGridLine)
 	{
 		Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
 		UglyGrid::Draw(vpMat);
@@ -59,7 +60,7 @@ void SceneController::Update()
 
 SceneController::SceneController()
 {
-	doDrawGridLine = true;
+
 }
 
 void SceneController::Reset()

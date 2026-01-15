@@ -4,13 +4,31 @@
 
 #include <climits> 
 
-void RunSpeedChanger::GuiAdd_ChangeRunSpeed()
-{
 #ifdef USE_IMGUI
+void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
+{
+	if (ImGui::Checkbox(" Stop", &stopButton))
+	{
+		*runSpeed_ = (int)RunSpeed::kStop;
+		onlyOnce = true;
+	}
+	else
+	{
+		ImGui::SliderInt("RunSpeed : ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
+		if (onlyOnce)
+		{
+			runSpeedBuffer = *runSpeed_;
+			onlyOnce = false;
+		}
+	}
 
-	ImGui::SliderInt("RunSpeed : ", &runSpeed, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
+}
+#endif // USE_
 
-#endif // !USE_
+
+void RunSpeedChanger::AddDebug()
+{
+	forDebug.GuiAdd_ChangeRunSpeed(&runSpeed);
 }
 
 RunSpeedChanger::RunSpeedChanger()
@@ -23,8 +41,6 @@ void RunSpeedChanger::Reset()
 	runSpeed = 10;		//min = 1,default = 10 (1 = stop, )
 	framCnt = 0;
 }
-
-
 
 bool RunSpeedChanger::AdjustRunSpeed()
 {

@@ -23,8 +23,17 @@ private:
 	SceneBehavior* allScene[SceneType::kCount];
 	//処理間隔を調整する
 	RunSpeedChanger runSpeedChanger;
-	//グリッド線を描画するかどうか
-	bool doDrawGridLine;
+
+#ifdef _DEBUG
+	struct ForDebug
+	{
+		//グリッド線を描画するかどうか
+		bool doDrawGridLine = true;
+	};
+
+	ForDebug forDebug;
+#endif // _DEBUG
+
 
 public:
 	void Update();
