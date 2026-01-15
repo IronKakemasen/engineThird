@@ -17,7 +17,7 @@ class RunSpeedChanger
 	{
 	private:
 		bool stopButton = false;
-		int runSpeedBuffer = 0;
+		int runSpeedBuffer = 10;
 		bool onlyOnce = true;
 	public:
 		void GuiAdd_ChangeRunSpeed(int* runSpeed_);

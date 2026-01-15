@@ -1,25 +1,29 @@
 #include "RunSpeedChanger.h"
 #include "../../../../utilities/benriTemplateFunc/benriTempFunc.h"
 #include "../../../../../external/imgui/imgui.h"
-
 #include <climits> 
 
 #ifdef USE_IMGUI
 void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
 {
-	if (ImGui::Checkbox(" Stop", &stopButton))
+	ImGui::Checkbox(" Stop", &stopButton);
+
+	if (stopButton)
 	{
 		*runSpeed_ = (int)RunSpeed::kStop;
 		onlyOnce = true;
+		ImGui::Text("STOPTYUU");
 	}
 	else
 	{
-		ImGui::SliderInt("RunSpeed : ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
 		if (onlyOnce)
 		{
-			runSpeedBuffer = *runSpeed_;
+			*runSpeed_ = runSpeedBuffer;
 			onlyOnce = false;
+			return;
 		}
+		runSpeedBuffer = *runSpeed_;
+		ImGui::SliderInt("RunSpeed : ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
 	}
 
 }
