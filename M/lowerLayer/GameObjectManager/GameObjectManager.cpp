@@ -1,9 +1,41 @@
 #include "GameObjectManager.h"
 #include "../GameObject/GameObjectBehavior.h"
 #include "../Collision/CollisionDetection/CollisionDetection.h"
+#include "../../M.h"
+
 #ifdef USE_IMGUI
 #include "imgui.h"
 #endif
+
+void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_,Matrix4* vpMat_)
+{
+	if (collisionVisibility)
+	{
+		if (obj_->HasRectCollider())
+		{
+			Vector3 world = obj_->Getter_Trans()->GetWorldPos();
+			Rect r = obj_->Getter_Rect()->ConvertToWorld(world);
+			Vector3 LT = { r.left,0,r.top };
+			Vector3 RT = { r.right,0,r.top };
+			Vector3 RB = { r.right,0,r.bottom };
+			Vector3 LB = { r.left,0,r.bottom };
+
+			M::GetInstance()->DrawLine(LT, RT, 
+				obj_->forDebug.colorForCollision, vpMat_);
+			M::GetInstance()->DrawLine(RT, RB,
+				obj_->forDebug.colorForCollision, vpMat_);
+			M::GetInstance()->DrawLine(RB, LB,
+				obj_->forDebug.colorForCollision, vpMat_);
+			M::GetInstance()->DrawLine(LB, LT,
+				obj_->forDebug.colorForCollision, vpMat_);
+		}
+	}
+}
+
+GameObjectManager::ForDebug::ForDebug()
+{
+	collisionVisibility = false;
+}
 
 void GameObjectManager::RegisterForContainer(GameObject* dst_)
 {
@@ -17,6 +49,9 @@ void GameObjectManager::Debug()
 	static int selec = 0;
 
 	ImGui::Begin("ObjManager", nullptr, ImGuiWindowFlags_MenuBar);
+
+	ImGui::Text("CollisionVisivility : "); ImGui::SameLine();
+	ImGui::Checkbox(" ", &forDebug.collisionVisibility);
 
 	if (ImGui::BeginMenuBar()) 
 	{
@@ -89,8 +124,6 @@ void GameObjectManager::Debug()
 			}
 		}
 		ImGui::EndChild();
-
-
 	}
 
 	ImGui::End();
@@ -140,15 +173,14 @@ void GameObjectManager::Render(Matrix4* vpMat_)
 		}
 
 		(*itr)->Draw(vpMat_);
+		forDebug.DrawCollider((*itr), vpMat_);
 	}
-
 }
 
 void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 {
 	if (!thisObj_->IsCollisionActivated()) return;
 	else if (!thisObj_->HasCollider()) return;
-
 
 	for (auto* otherObj : objContainer)
 	{
@@ -182,8 +214,6 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			//双方のオブジェクトの衝突反応関数をアクティブ化する
 			thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
 			//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
-
-
 		}
 	}
 }

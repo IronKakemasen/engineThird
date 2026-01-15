@@ -1,0 +1,383 @@
+Use Adapter:NVIDIA GeForce RTX 5050 Laptop GPU
+
+FeatureLevel:12.2
+
+Complete create D3D12Device
+
+Complete create CommandQueue
+
+Complete create SwapChain
+
+Complete create rtvDescriptorHeap
+
+Complete pull Resource
+
+Complete create Allocators
+
+Complete create CommandList
+
+Complete built fence
+
+Complete creat event
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/MobilePrimitive/MobilePrimitiveMesh.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/MobilePrimitive/MobilePrimitiveMesh.VS.hlsl,profile:vs_6_0
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS : Complete create rootSignature
+
+MobilePrimitiveMesh.VS + MobilePrimitiveMesh.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Particle2D/TestParticle2D.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Particle2D/TestParticle2D.VS.hlsl,profile:vs_6_0
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+TestParticle2D.VS + TestParticle2D.PS : Complete create rootSignature
+
+TestParticle2D.VS + TestParticle2D.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Line/Line.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Line/Line.VS.hlsl,profile:vs_6_0
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Line.VS + Line.PS : Complete create rootSignature
+
+Line.VS + Line.PS _graghicsPipelineState
+
+Complete : LoadTexture
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelNoLight.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelNoLight.VS.hlsl,profile:vs_6_0
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+ModelNoLight.VS + ModelNoLight.PS : Complete create rootSignature
+
+ModelNoLight.VS + ModelNoLight.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelSimple.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelSimple.VS.hlsl,profile:vs_6_0
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+ModelSimple.VS + ModelSimple.PS : Complete create rootSignature
+
+ModelSimple.VS + ModelSimple.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelPhong.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelPhong.VS.hlsl,profile:vs_6_0
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+ModelPhong.VS + ModelPhong.PS : Complete create rootSignature
+
+ModelPhong.VS + ModelPhong.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelNormalizedPhong.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelNormalizedPhong.VS.hlsl,profile:vs_6_0
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS : Complete create rootSignature
+
+ModelNormalizedPhong.VS + ModelNormalizedPhong.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelBump.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelBump.VS.hlsl,profile:vs_6_0
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+ModelBump.VS + ModelBump.PS : Complete create rootSignature
+
+ModelBump.VS + ModelBump.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelCookTorrance.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelCookTorrance.VS.hlsl,profile:vs_6_0
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+ModelCookTorrance.VS + ModelCookTorrance.PS : Complete create rootSignature
+
+ModelCookTorrance.VS + ModelCookTorrance.PS _graghicsPipelineState
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelGGX.PS.hlsl,profile:ps_6_0
+
+Complete load shader
+
+Complete compile
+
+Compile Succeeded,path:./resource/preset/shader/Model/ModelGGX.VS.hlsl,profile:vs_6_0
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
+ModelGGX.VS + ModelGGX.PS : Complete create rootSignature
+
+ModelGGX.VS + ModelGGX.PS _graghicsPipelineState
+
