@@ -5,6 +5,8 @@ MobileTrianglebehavior::MobileTrianglebehavior()
 {
 	MobileTrianglebehavior::count++;
 	appearance.uvTrans.pos = kCentroid_equilateraltriangle;
+	appearance.shaderSetIndex = M::GetInstance()->
+		GetShaderSetIndexFromFileName("MobilePrimitiveMesh.VS", "MobilePrimitiveMesh.PS");
 
 }
 

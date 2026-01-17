@@ -145,6 +145,81 @@ void ExclusiveDraw::Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_,
 	cameraParaBuffer = cameraParaBuffer_;
 }
 
+void ExclusiveDraw::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
+	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
+	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
+{
+	auto* quadMesh = allMesh->Getter_QuadMesh();
+
+	quadMesh->DetectOverDrawing();
+
+	int i = quadMesh->cur_drawIndex;
+
+	//使用するマップインデックス
+	uint32_t const usingIndex_index = i * quadMesh->indexCnt;
+	uint32_t const usingVertex_index = i * quadMesh->vertexCnt;
+
+	Vertex vData[4] =
+	{
+		leftBottom_,leftTop_,rightBottom_,rightTop_
+	};
+
+	uint32_t indices[6] = { 0,1,2,2,1,3 };
+
+	float const i255 = CommonV::inv_255;
+	Vector4 color = { color_.x * i255,color_.y * i255,color_.z * i255,color_.w * i255 };
+
+	//< データの入力 >
+	//[ インデックス ]
+	std::memcpy(&quadMesh->indexMap[usingIndex_index], indices, sizeof(uint32_t) * quadMesh->indexCnt);
+
+	//[ 頂点 ]
+	std::memcpy(&quadMesh->vertexMap[usingVertex_index], vData, sizeof(Vertex) * quadMesh->vertexCnt);
+
+	//[ 行列 ]
+	Matrix4 wMat = trans_.GetWorldMatrix();
+	Matrix4 wvp = wMat.Multiply(vpMat_);
+	*quadMesh->wvpMatrixBuffer[i].matrix.buffMap = wvp;
+
+	//[ マテリアル ]
+	//色
+	Matrix4 uvMat = uvTrans_.GetUVMat();
+	quadMesh->materialBuffer[i].material.buffMap->albedoColor = color;
+	quadMesh->materialBuffer[i].material.buffMap->uvTransform = uvMat;
+
+	//< データの転送 >
+	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(shaderSet_, blendMode_, cullMode_);
+	auto* cList = src_pipeline->Getter_CommandList();
+
+	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	src_pipeline->SetGraphicsRootSignature();
+	src_pipeline->SetPipelineState();
+
+	//VBV
+	cList->IASetVertexBuffers(0, 1, quadMesh->Getter_VertexBufferView());
+
+	//IBV
+	cList->IASetIndexBuffer(quadMesh->Getter_IndexBufferView());
+
+	//texture
+	cList->SetGraphicsRootDescriptorTable(0, shaderBufferData->gpuHandleContainer[texHandle_]);
+
+	//Cバッファの場所を指定
+	src_pipeline->SetConstantBufferViews(
+		1,
+		quadMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress(),
+		quadMesh->materialBuffer[i].material.GetVirtualGPUAddress()
+	);
+
+	//描画(DrawCall)。6インデックスで一つのインスタンス
+	cList->DrawIndexedInstanced(quadMesh->indexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
+
+	//次の描画用にインクリメント
+	quadMesh->cur_drawIndex++;
+
+}
+
 void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
 	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
@@ -165,6 +240,7 @@ void ExclusiveDraw::DrawMobileQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& 
 		{
 			leftBottom_,leftTop_,rightBottom_,rightTop_
 		};
+
 
 		uint32_t indices[6] = { 0,1,2,2,1,3 };
 

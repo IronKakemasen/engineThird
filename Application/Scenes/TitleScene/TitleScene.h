@@ -1,20 +1,11 @@
 #pragma once
 #include "SceneBehavior.h"
-#include"../../GameObjects/Shikoutei/Shikoutei.h"
-#include "../../Cameras/MainCamera/MainCamera.h"
 
-class ShikouteiScene final : public Scene
+class TitleScene final : public Scene
 {
-	//そのシーンのカメラのトランスフォームをいただく
-	MainCamera mainCamera;
-
-	//使用するゲームオブジェクト
-	std::unique_ptr<Shikoutei> shikoutei;
-	MQuad quad;
-	Sprite sprite;
 
 public:
-	ShikouteiScene();
+	TitleScene();
 
 	//↓呼び出す必要なし。↓
 	//更新処理

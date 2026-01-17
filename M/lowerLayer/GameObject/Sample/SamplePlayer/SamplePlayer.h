@@ -1,6 +1,6 @@
 #pragma once
 #include "../../GameObjectBehavior.h"
-#include "../../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
+#include "../../../MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 
 class SamplePlayer :public GameObject
 {

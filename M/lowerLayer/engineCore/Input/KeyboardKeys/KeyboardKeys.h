@@ -33,7 +33,9 @@ enum class KeyType
 	UP = 0xC8,
 	DOWN = 0xD0,
 	LEFT = 0xCB,
-	RIGHT= 0xCD
+	RIGHT= 0xCD,
+	SPACE = 0x39,
+	SHIFT = 0x2A	
 };	
 
 class KeyboardKeys

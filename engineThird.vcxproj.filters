@@ -183,13 +183,13 @@
     <ClCompile Include="M\utilities\UVTransform\UVTransform.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp">
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.cpp">
@@ -201,10 +201,10 @@
     <ClCompile Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp">
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp">
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.cpp">
@@ -420,6 +420,33 @@
     <ClCompile Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Scenes\InGameScene\InGameScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TitleScene\TitleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\ModelScene\ModelScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TutorialScene\TutorialScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\ModelScene\ModelSceneConstructor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\InGameScene\InGameConstructor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h">
@@ -590,13 +617,13 @@
     <ClInclude Include="M\utilities\UVTransform\UVTransform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.h">
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h">
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h">
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.h">
@@ -608,10 +635,10 @@
     <ClInclude Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.h">
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileQuad\MobileQuadBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h">
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileQuad\MQuad\MQuad.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.h">
@@ -825,6 +852,21 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\TitleScene\TitleScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\TutorialScene\TutorialScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,8 +8,6 @@ DebugCamera::DebugCamera()
 	nextMode = mode;
 	sphericalCoordinates = { 7.5f,0.0f,-45.0f };
 	centerPos = { 0.0f,0.0f,0.0f};
-	para.trans.pos = { 0.0f,3.0f,-1.0f };
-	para.trans.lookDir.y = -0.45f;
 
 	action[Mode::kParallel] = std::bind(&DebugCamera::ParallelMove, this);
 	action[Mode::kSpherical] = std::bind(&DebugCamera::SphericallyMove, this);

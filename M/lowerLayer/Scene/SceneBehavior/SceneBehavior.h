@@ -5,6 +5,8 @@
 #include "../../engineCore/Light/DirectionalLight/DirectionalLight.h"
 #include "../../engineCore/Light/PointLight/PointLight.h"
 #include "../../GameObjectManager/GameObjectManager.h"
+#include "../../MobilePrimitive/MobileQuad/MQuad/MQuad.h"
+#include "../../MobilePrimitive/Sprite/Sprite.h"
 
 #ifdef USE_IMGUI
 #include "../../../../external/imgui/imgui.h"

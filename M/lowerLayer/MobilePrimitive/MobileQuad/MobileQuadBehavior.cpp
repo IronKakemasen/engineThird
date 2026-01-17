@@ -23,6 +23,9 @@ void MobileQuadBehavior::Initialize(float width_, float height_, Vector3 world_p
 	appearance.trans.pos = world_pos_;
 	appearance.color = color_;
 	appearance.use_texHandles[0] = (int)texHandle_;
+	appearance.shaderSetIndex = M::GetInstance()->
+		GetShaderSetIndexFromFileName("MobilePrimitiveMesh.VS", "MobilePrimitiveMesh.PS");
+
 }
 
 void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightTop_, Vector3 local_leftBottom_, Vector3 local_rightBottom_,
@@ -34,6 +37,9 @@ void MobileQuadBehavior::Initialize(Vector3 local_leftTop_, Vector3 local_rightT
 	appearance.trans.pos = world_pos_;
 	appearance.color = color_;
 	appearance.use_texHandles[0] = (int)texHandle_;
+	appearance.shaderSetIndex = M::GetInstance()->
+		GetShaderSetIndexFromFileName("MobilePrimitiveMesh.VS", "MobilePrimitiveMesh.PS");
+
 }
 
 
