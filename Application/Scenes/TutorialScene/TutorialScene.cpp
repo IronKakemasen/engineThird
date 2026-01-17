@@ -1,28 +1,25 @@
-#include "ShikouteiScene.h"
+#include "TutorialScene.h"
 
-void ShikouteiScene::Update()
+void TutorialScene::Update()
 {
 
 }
 
-void ShikouteiScene::Draw()
+void TutorialScene::Draw()
 {
 	//現在使用しているカメラのビュープロジェクション
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
-	//quad.Draw(vpMat);
-	sprite.Draw(&ortho);
-
 }
 
-void ShikouteiScene::Reset()
+void TutorialScene::Reset()
 {
 
 }
 
-void ShikouteiScene::Debug()
+void TutorialScene::Debug()
 {
 #ifdef USE_IMGUI
 

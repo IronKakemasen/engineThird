@@ -1,12 +1,17 @@
 #include "RunSpeedChanger.h"
 #include "../../../../utilities/benriTemplateFunc/benriTempFunc.h"
-#include "../../../../../external/imgui/imgui.h"
 #include <climits> 
+#include "../M.h"
 
 #ifdef USE_IMGUI
+#include "imgui.h"
 void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
 {
-	ImGui::Checkbox(" Stop", &stopButton);
+	ImGui::Checkbox(" Stop (Key : SHIFT )", &stopButton);
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SHIFT))
+	{
+		stopButton = !stopButton;
+	}
 
 	if (stopButton)
 	{

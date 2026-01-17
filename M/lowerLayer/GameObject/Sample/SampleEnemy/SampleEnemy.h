@@ -1,6 +1,6 @@
 #pragma once
 #include "../../GameObjectBehavior.h"
-#include "../../../Model/MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
+#include "../../../MobilePrimitive/MobileTriangle/MTriangle/MTriangle.h"
 
 class SampleEnemy:GameObject
 {

@@ -1,5 +1,5 @@
 #include "TestParticleMesh.h"
-#include "../../../../../Model/MobilePrimitive/MobileQuad/MQuad/MQuad.h"
+#include "../../../../../MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 #include "../../../../Buffer/gpuResources/Creator/SrvCreator/ParticleMeshSrvCreator/ParticleMeshSrvCreator.h"
 
 void TestParticleMesh::CreateMesh(ID3D12Device* device_, ParticleMeshSrvCreator* particleMeshSrvCreator_)
