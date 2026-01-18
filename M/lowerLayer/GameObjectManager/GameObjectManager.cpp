@@ -222,11 +222,6 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			continue;
 		}
 
-#ifdef _DEBUG
-		otherObj->forDebug.colorForCollision = { 50,50,200,255 };
-#endif // _DEBUG
-
-
 		//ワールド座標を取得
 		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
 		Vector3 otherWorldPos = otherObj->Getter_Trans()->GetWorldPos();
@@ -238,13 +233,8 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 				thisObj_->Getter_Circle()->radius, thisWorldPos,
 				otherObj->Getter_Circle()->radius, otherWorldPos))
 			{
-				//双方のオブジェクトの衝突相手を登録する
 				thisObj_->SetCollidedObjPtr(otherObj);
-				//otherObj->SetCollidedObjPtr(thisObj_);
-
-				//双方のオブジェクトの衝突反応関数をアクティブ化する
 				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-				//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
 			}
 		}
 		//クアッドコリジョン
@@ -254,13 +244,8 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 				thisObj_->Getter_Rect(), thisWorldPos,
 				otherObj->Getter_Rect(), otherWorldPos))
 			{
-				//双方のオブジェクトの衝突相手を登録する
 				thisObj_->SetCollidedObjPtr(otherObj);
-				//otherObj->SetCollidedObjPtr(thisObj_);
-
-				//双方のオブジェクトの衝突反応関数をアクティブ化する
 				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-				//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
 			}
 		}
 

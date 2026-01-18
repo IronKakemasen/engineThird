@@ -120,11 +120,11 @@ void GameObjectBehavior::SetCircleCollision(float radius_)
 
 void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 {
-	if (!collision.collisionBackActivationMap[tag_]) return;
-
 #ifdef _DEBUG
 	forDebug.colorForCollision = { 200,50,50,255 };
 #endif // _DEBUG
+
+	if (!collision.collisionBackActivationMap[tag_]) return;
 
 	collision.collisionBackActivationMap[tag_]();
 }
