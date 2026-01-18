@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 
+
 class TextureDataManager;
 
 enum class TextureTag
@@ -10,18 +11,7 @@ enum class TextureTag
 	kSouhei,
 	kPlayer,
 	kNothing,
-	kBlackNormal,
-	kGuruguru,
-	kNN,
 	kGridN,
-	kStarN,
-	kPlayerN,
-	kF,
-	kS,
-	kI,
-	kC,
-	kD,
-
 
 	kCount
 };

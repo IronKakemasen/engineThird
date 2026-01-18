@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
