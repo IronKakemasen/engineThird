@@ -9,9 +9,10 @@ void ShikouteiScene::Instantiate()
 {
 	//始皇帝のインスタンス化
 	shikoutei.reset(new Shikoutei);
+	exampleTyan.reset(new ExampleTyan);
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(shikoutei.get());
+	gameObjManager->RegisterForContainer(shikoutei.get(), exampleTyan.get());
 }
 
 void ShikouteiScene::Init()

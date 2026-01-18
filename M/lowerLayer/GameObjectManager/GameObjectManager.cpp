@@ -12,6 +12,8 @@ void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_, Matrix4* vpMat_
 {
 	if (collisionVisibility)
 	{
+		if (!obj_->IsCollisionActivated()) return;
+
 		if (obj_->HasRectCollider())
 		{
 			Vector3 world = obj_->Getter_Trans()->GetWorldPos();
@@ -45,7 +47,7 @@ void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_, Matrix4* vpMat_
 
 GameObjectManager::ForDebug::ForDebug()
 {
-	collisionVisibility = false;
+	collisionVisibility = true;
 }
 
 #endif
@@ -200,6 +202,10 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 	if (!thisObj_->IsCollisionActivated()) return;
 	else if (!thisObj_->HasCollider()) return;
 
+#ifdef _DEBUG
+	thisObj_->forDebug.colorForCollision = { 50,50,200,255 };
+#endif // _DEBUG
+
 	for (auto* otherObj : objContainer)
 	{
 		if (!otherObj->HasCollider()) continue;
@@ -211,10 +217,15 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 			continue;
 		}
 		//マスク処理
-		else if (!(thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity())))
+		else if (thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity()))
 		{
 			continue;
 		}
+
+#ifdef _DEBUG
+		otherObj->forDebug.colorForCollision = { 50,50,200,255 };
+#endif // _DEBUG
+
 
 		//ワールド座標を取得
 		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
