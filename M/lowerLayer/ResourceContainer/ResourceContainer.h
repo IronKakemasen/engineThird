@@ -12,7 +12,7 @@ enum class TextureTag
 	kPlayer,
 	kNothing,
 	kGridN,
-
+	kAtlasNumbers,
 	kCount
 };
 

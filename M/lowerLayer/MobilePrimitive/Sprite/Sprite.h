@@ -1,8 +1,11 @@
 #pragma once
 #include "../MobileBehavior.h"
+#include "Atlas.h"
 
 class Sprite :MobileBehavior
 {
+	std::unique_ptr<Atlas> atlas;
+
 	Vertex leftTop;
 	Vertex rightTop;
 	Vertex leftBottom;
@@ -15,7 +18,8 @@ public:
 
 	virtual void Update()override;
 	virtual void Draw(Matrix4* ortho_)override;
-
+	void ToAtlas(float numTexture_);
+	void ChangeAtlasIndex(float index_);
 	Sprite();
 
 	void Initialize(float width_, float height_, Vector3 world_pos_, int texHandle_, Vector4 color_ = { 255,255,255,255 });
