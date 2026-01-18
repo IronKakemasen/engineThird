@@ -54,7 +54,6 @@ PixcelShaderOutput main(VertexShaderOutput input)
     //直接光
     float3 dirLightDir = normalize(dirLight.pos);
     float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
-    float NL = saturate(dot(normal, dirLightDir));
     float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
     lightFinalColor += dirColor * dirLightBRDF;
 

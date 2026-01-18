@@ -14,7 +14,8 @@ void ShikouteiScene::Draw()
 
 	//quad.Draw(vpMat);
 	sprite.Draw(&ortho);
-
+	M::GetInstance()->DrawEllipseWireFrame(
+		{}, 2.0f, {}, { 255,255,255,255 }, vpMat);
 }
 
 void ShikouteiScene::Reset()

@@ -17,6 +17,30 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 	dirLightBuffer = dirLightBuffer_;
 }
 
+void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
+	Vector4 color_, Matrix4* vpMat_)
+{
+	float const div = 18.0f;
+	float const deg = 360.0f / div;
+
+	for(float i = -2.0f;i< div; ++i)
+	{
+		float stRad = GetRadian(div * i);
+		float edRad = GetRadian(div * (i + 1));
+
+		Vector3 st = { cosf(stRad), sinf(stRad) ,0.0f};
+		Vector3 ed = { cosf(edRad), sinf(edRad) ,0.0f };
+
+		Matrix4 rtMat = Get_SRTMat3D({ radius_,radius_,1.0f }, rotation_, center_);
+
+		st = st.GetMultiply(rtMat);
+		ed = ed.GetMultiply(rtMat);
+
+		DrawLine(st, ed, color_, vpMat_);
+	}
+
+}
+
 void ExclusiveDraw::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
 {
 	auto* lineMesh = allMesh->Getter_LineMesh();
