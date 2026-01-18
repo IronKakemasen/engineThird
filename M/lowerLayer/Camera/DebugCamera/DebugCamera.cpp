@@ -95,7 +95,7 @@ void DebugCamera::ParallelMove()
 {
 	auto* m = M::GetInstance();
 
-	float const speed = 4.0f;
+	float const speed = 5.0f;
 	float const deltaTime = m->GetDeltaTime();
 
 	if (m->IsKeyPressed(KeyType::LEFT))
