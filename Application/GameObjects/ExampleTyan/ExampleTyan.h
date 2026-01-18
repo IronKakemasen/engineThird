@@ -2,21 +2,11 @@
 #include "GameObjectBehavior.h"
 #include "../../Models/Shikoutei/ShikouteiModel.h"
 
-
-struct Shikoutei :public GameObject
+struct ExampleTyan :public GameObject
 {
 private:
 	//使用するモデル
 	std::unique_ptr<ShikouteiModel> shikoModel;
-	
-	//コリジョンバック用の関数オブジェクト
-	struct CollisionBackToTheFuture
-	{
-		Shikoutei* shikoutei = nullptr;
-		void operator()();
-		void Init(Shikoutei* shikoutei_);
-	};
-	CollisionBackToTheFuture collisionBackToTheFuture;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -32,6 +22,6 @@ public:
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 
-	Shikoutei();
+	ExampleTyan();
 };
 

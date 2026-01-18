@@ -1,5 +1,26 @@
 #include "Shikoutei.h"
 
+//コリジョンバックテーブルを設定
+void Shikoutei::SetCollisionBackTable()
+{
+	//タグ：kExampleと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::kExample, collisionBackToTheFuture);
+}
+
+void Shikoutei::CollisionBackToTheFuture::operator()()
+{
+	//衝突したときの処理を書く
+	//衝突相手
+	auto* opponent = shikoutei->Getter_ColObj();
+	opponent->trans.rotation.x += 1.0f;
+}
+
+void Shikoutei::CollisionBackToTheFuture::Init(Shikoutei* shikoutei_)
+{
+	shikoutei = shikoutei_;
+}
+
+
 void Shikoutei::Update()
 {
 	//モデルの更新処理（中身を書いていれば）
@@ -22,15 +43,16 @@ void Shikoutei::Init()
 	//identityTableにセットされている通りに、identityを定める
 	//タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kShikoutei);
-	//矩形コリジョンをアタッチ
-	SetRectCollision(1.0, 1.0f);
 	//円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
 	//衝突判定をするかどうか定める
-	SwitchCollisionActivation(false);
+	SwitchCollisionActivation(true);
 
 	//位置
-	trans.pos.z = 2.0f;
+	trans.pos.z = 1.0f;
+
+	//CollisionBackToTheFutureの初期化
+	collisionBackToTheFuture.Init(this);
 }
 
 void Shikoutei::Reset()
@@ -45,11 +67,6 @@ void Shikoutei::Draw(Matrix4* vpMat_)
 	shikoModel->Draw(vpMat_);
 }
 
-//コリジョンバックを設定（後ほど）
-void Shikoutei::SetCollisionBackTable()
-{
-
-}
 
 Shikoutei::Shikoutei()
 {

@@ -22,7 +22,7 @@ struct GameObjectBehavior
 	enum Tag
 	{
 		kShikoutei,
-
+		kExample,
 
 		kCount,
 		kNone,
@@ -46,13 +46,13 @@ private :
 
 	struct Collision
 	{
-		std::function<bool()> collisionBack;
+		std::function<void()> collisionBack;
 		//矩形コリジョン
 		std::unique_ptr <Rect> rect;
 		//円形コリジョン
 		std::unique_ptr <Circle> circle;
 		//各衝突相手に対して衝突後の処理（バック）を設定するための箱
-		std::unordered_map<Tag, Collision> collisionBackActivationMap;
+		std::unordered_map<Tag, std::function<void()>> collisionBackActivationMap;
 		//衝突相手のポインタ
 		GameObjectBehavior* colObj;
 		bool collisionActivate = true;
@@ -61,11 +61,11 @@ private :
 	Identity identity;
 	Collision collision;
 
-protected:
-	Status status;
-	Transform trans;
 
 public:
+
+	Status status;
+	Transform trans;
 
 #ifdef _DEBUG
 	struct ForDebug
@@ -89,6 +89,7 @@ public:
 	void ActivateOnTriggerEnter(Tag tag_);
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
 	void SetCircleCollision(float radius_);
+	void SetCollisionBack(Tag tag_, std::function<void()> func_);
 
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();

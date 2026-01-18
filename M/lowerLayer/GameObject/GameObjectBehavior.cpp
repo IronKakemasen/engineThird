@@ -5,11 +5,16 @@
 void GameObjectBehavior::SetIdentity(Tag tag_)
 {
 	int no = identity.number;
+	std::string id = "[" + std::to_string(no) + "] : ";
 
 	Identity identitiesTable[Tag::kCount]
 	{
-		Identity{ "[" + std::to_string(no) + "] : Shikoutei" ,tag_,no,0x0000000f,0x0000fff0},
+		Identity{"Shikoutei" ,tag_,no,  0x0000000f,0x000000f0},
+		Identity{"Example" ,tag_,no,	0x000000f0,0x0000000f},
+
 	};
+
+	identitiesTable[(int)tag_].name = id + identitiesTable[(int)tag_].name;
 
 	identity = identitiesTable[(int)tag_];
 }
@@ -39,9 +44,8 @@ GameObjectBehavior::Identity::Identity()
 }
 
 bool GameObjectBehavior::Identity::IsCollisionMaskMatched(Identity* other_)
-{
-
-	return false;
+{	
+	return !(collisionAttribute & other_->collisionMask);
 }
 
 GameObjectBehavior::Identity::Identity(std::string name_, Tag tag_, int number_, 
@@ -101,6 +105,12 @@ void GameObjectBehavior::SetRectCollision(float width_, float height_ , Vector3 
 	collision.rect->SetShape(width_, height_, centerPos_);
 }
 
+void GameObjectBehavior::SetCollisionBack(Tag tag_, std::function<void()> func_)
+{
+	collision.collisionBackActivationMap[tag_] = func_;
+}
+
+
 void GameObjectBehavior::SetCircleCollision(float radius_)
 {
 	if (!collision.circle) collision.circle.reset(new Circle);
@@ -110,21 +120,13 @@ void GameObjectBehavior::SetCircleCollision(float radius_)
 
 void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 {
-	if (!collision.collisionBackActivationMap[tag_].collisionBack) return;
+	if (!collision.collisionBackActivationMap[tag_]) return;
 
 #ifdef _DEBUG
-	if (collision.collisionBackActivationMap[tag_].collisionBack())
-	{
-		forDebug.colorForCollision = { 200,50,50,255 };
-	}
-	else
-	{
-		forDebug.colorForCollision = { 50,50,200,255 };
-	}
+	forDebug.colorForCollision = { 200,50,50,255 };
 #endif // _DEBUG
-#ifndef _DEBUG
-	collision.collisionBackActivationMap[tag_].collisionBack();
-#endif // _DEBUG
+
+	collision.collisionBackActivationMap[tag_]();
 }
 
 void GameObjectBehavior::SetNumber(int number_)
