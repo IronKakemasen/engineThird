@@ -4,6 +4,8 @@
 #include "../../utilities/Easing/EasingFunctions.h"
 #include "../../utilities/ConvertToRadian/ConvertToRadian.h"
 #include "../Collision/Shape/Rect.h"
+#include "../Collision/Shape/Circle.h"
+
 #include <string>
 #include <memory>
 
@@ -47,13 +49,13 @@ private :
 		std::function<bool()> collisionBack;
 		//矩形コリジョン
 		std::unique_ptr <Rect> rect;
+		//円形コリジョン
+		std::unique_ptr <Circle> circle;
 		//各衝突相手に対して衝突後の処理（バック）を設定するための箱
 		std::unordered_map<Tag, Collision> collisionBackActivationMap;
 		//衝突相手のポインタ
 		GameObjectBehavior* colObj;
 		bool collisionActivate = true;
-
-
 	};
 
 	Identity identity;
@@ -86,9 +88,12 @@ public:
 	void SetIdentity(Tag tag_);
 	void ActivateOnTriggerEnter(Tag tag_);
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
+	void SetCircleCollision(float radius_);
+
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
 	bool HasRectCollider();
+	bool HasCircleCollider();
 	bool HasCollider();
 	std::string Getter_Name();
 	void SwitchCollisionActivation(bool bool_);
@@ -96,6 +101,7 @@ public:
 	void SetCollidedObjPtr(GameObjectBehavior* obj_);
 	GameObjectBehavior* Getter_ColObj();
 	Rect* Getter_Rect();
+	Circle* Getter_Circle();
 
 };
 

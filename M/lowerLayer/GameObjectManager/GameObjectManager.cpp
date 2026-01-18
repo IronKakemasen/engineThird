@@ -30,6 +30,16 @@ void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_, Matrix4* vpMat_
 			M::GetInstance()->DrawLine(LB, LT,
 				obj_->forDebug.colorForCollision, vpMat_);
 		}
+
+		if (obj_->HasCircleCollider())
+		{
+			Vector3 world = obj_->Getter_Trans()->GetWorldPos();
+			Circle* c = obj_->Getter_Circle();
+
+			M::GetInstance()->DrawEllipseWireFrame(world, c->radius,
+				{ 90.0f,0,0 }, obj_->forDebug.colorForCollision, vpMat_);
+		}
+
 	}
 }
 
@@ -210,18 +220,39 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
 		Vector3 otherWorldPos = otherObj->Getter_Trans()->GetWorldPos();
 
-		//クアッドコリジョン
-		if (CollisionDetections::C2D ::ObjectAABB(
-			thisObj_->Getter_Rect(), thisWorldPos,
-			otherObj->Getter_Rect(), otherWorldPos))
-		{
-			//双方のオブジェクトの衝突相手を登録する
-			thisObj_->SetCollidedObjPtr(otherObj);
-			//otherObj->SetCollidedObjPtr(thisObj_);
+		//さーくるコリジョン
+		if (thisObj_->HasCircleCollider() && otherObj->HasCircleCollider())
+		{ 
+			if (CollisionDetections::C2D::CircleCollision(
+				thisObj_->Getter_Circle()->radius, thisWorldPos,
+				otherObj->Getter_Circle()->radius, otherWorldPos))
+			{
+				//双方のオブジェクトの衝突相手を登録する
+				thisObj_->SetCollidedObjPtr(otherObj);
+				//otherObj->SetCollidedObjPtr(thisObj_);
 
-			//双方のオブジェクトの衝突反応関数をアクティブ化する
-			thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-			//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
+				//双方のオブジェクトの衝突反応関数をアクティブ化する
+				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+				//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
+			}
 		}
+		//クアッドコリジョン
+		else if (thisObj_->HasRectCollider() && otherObj->HasRectCollider())
+		{
+			if (CollisionDetections::C2D::ObjectAABB(
+				thisObj_->Getter_Rect(), thisWorldPos,
+				otherObj->Getter_Rect(), otherWorldPos))
+			{
+				//双方のオブジェクトの衝突相手を登録する
+				thisObj_->SetCollidedObjPtr(otherObj);
+				//otherObj->SetCollidedObjPtr(thisObj_);
+
+				//双方のオブジェクトの衝突反応関数をアクティブ化する
+				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+				//otherObj->ActivateOnTriggerEnter(thisObj_->Getter_Identity()->tag);
+			}
+		}
+
+
 	}
 }

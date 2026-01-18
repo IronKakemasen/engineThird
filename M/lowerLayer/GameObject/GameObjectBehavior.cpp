@@ -69,6 +69,12 @@ Rect* GameObjectBehavior::Getter_Rect()
 	return collision.rect.get();;
 }
 
+Circle* GameObjectBehavior::Getter_Circle()
+{
+	return collision.circle.get();
+}
+
+
 bool GameObjectBehavior::HasRectCollider()
 {
 	if (collision.rect) return true;
@@ -76,15 +82,16 @@ bool GameObjectBehavior::HasRectCollider()
 	return false;
 }
 
+bool GameObjectBehavior::HasCircleCollider()
+{
+	if (collision.circle) return true;
+
+	return false;
+}
+
 bool GameObjectBehavior::HasCollider()
 {
-	int hit = 0;
-	if (collision.rect)
-	{
-		hit++;
-	}
-
-	return hit;
+	return HasRectCollider() + HasCircleCollider();
 }
 
 void GameObjectBehavior::SetRectCollision(float width_, float height_ , Vector3 centerPos_)
@@ -92,6 +99,13 @@ void GameObjectBehavior::SetRectCollision(float width_, float height_ , Vector3 
 	if (!collision.rect) collision.rect.reset(new Rect);
 
 	collision.rect->SetShape(width_, height_, centerPos_);
+}
+
+void GameObjectBehavior::SetCircleCollision(float radius_)
+{
+	if (!collision.circle) collision.circle.reset(new Circle);
+
+	collision.circle->SetShape(radius_);
 }
 
 void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)

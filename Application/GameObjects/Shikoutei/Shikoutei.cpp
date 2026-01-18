@@ -24,6 +24,8 @@ void Shikoutei::Init()
 	SetIdentity(Tag::kShikoutei);
 	//矩形コリジョンをアタッチ
 	SetRectCollision(1.0, 1.0f);
+	//円形コリジョンをアタッチ
+	SetCircleCollision(1.0f);
 	//衝突判定をするかどうか定める
 	SwitchCollisionActivation(false);
 

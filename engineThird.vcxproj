@@ -148,6 +148,7 @@
     <ClCompile Include="Application\Scenes\ModelScene\ModelScene.cpp" />
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
+    <ClCompile Include="M\lowerLayer\Collision\Shape\Circle.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
     <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
+    <ClInclude Include="M\lowerLayer\Collision\Shape\Circle.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h" />
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
