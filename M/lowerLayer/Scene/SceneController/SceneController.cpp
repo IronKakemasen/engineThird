@@ -12,7 +12,7 @@ void SceneController::Debug()
 
 #ifdef USE_IMGUI
 	static float deltaTime;
-	deltaTime = ImGui::GetIO().DeltaTime;
+	deltaTime = ImGui::GetIO().Framerate;
 
 
 	ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);

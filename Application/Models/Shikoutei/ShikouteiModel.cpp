@@ -3,7 +3,7 @@
 ShikouteiModel::ShikouteiModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.obj");
+	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.gltf");
 
 }
 
@@ -26,9 +26,12 @@ void ShikouteiModel::Init(Transform* gameObjectTrans_)
 	auto* appearance = model->Getter_Appearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
+	
+	appearance->texHandlesContainer[Appearance::kNormalmap] =
+		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
-	appearance->SetUsingTextureFromContainer(1, 0, 0, 0);
+	appearance->SetUsingTextureFromContainer(1, 1, 0, 0);
 
 	//ゲームオブジェクトと全モデルのペアレント化
 	MakeAllPartsBeChildren(gameObjectTrans_);

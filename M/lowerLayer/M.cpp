@@ -89,6 +89,13 @@ void M::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
 	exclusiveDraw->DrawLine(st_, ed_, color_, vpMat_);
 }
 
+void M::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
+	Vector4 color_, Matrix4* vpMat_)
+{
+	exclusiveDraw->DrawEllipseWireFrame(center_, radius_, rotation_,
+		color_, vpMat_);
+}
+
 
 M* M::GetInstance()
 {
