@@ -67,6 +67,25 @@ void Sprite::SetVertex(float width_, float height_)
 
 }
 
+void Sprite::ToAtlas(float numTexture_)
+{
+	if (!atlas) atlas.reset(new Atlas);
+
+	atlas->uvCoordinateRate = 1.0f / numTexture_;
+	float const half = atlas->uvCoordinateRate * 0.5f;
+
+	SetTexcoord({ -half,-0.5f }, { half,-0.5f }, { half,0.5f }, { -half,0.5f });
+	appearance.uvTrans.pos = { half,0.5f };
+
+}
+
+void Sprite::ChangeAtlasIndex(float index_)
+{
+	if (!atlas) return;
+	atlas->ChangeIndex(index_);
+}
+
+
 void Sprite::SetTexcoord(Vector2 leftTop_, Vector2 rightTop_, Vector2 rightBottom_, Vector2 leftBottom_)
 {
 	leftTop.texcoord = leftTop_;
@@ -77,6 +96,10 @@ void Sprite::SetTexcoord(Vector2 leftTop_, Vector2 rightTop_, Vector2 rightBotto
 
 void Sprite::Update()
 {
+	if(atlas)
+	{
+		appearance.uvTrans.pos.x = atlas->CalcUvPosX();
+	}
 
 }
 

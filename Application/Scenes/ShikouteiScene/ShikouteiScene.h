@@ -12,7 +12,7 @@ class ShikouteiScene final : public Scene
 	std::unique_ptr<Shikoutei> shikoutei;
 	MQuad quad;
 	Sprite sprite;
-
+	Sprite atlasNumber;
 public:
 	ShikouteiScene();
 

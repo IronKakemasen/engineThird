@@ -17,7 +17,7 @@ void QuadMesh::CreateMesh(ID3D12Device* device_)
 	assert(SUCCEEDED(result));
 
 	// インデックスデータのサイズ
-	UINT sizeOfIndexBuffer = static_cast<UINT>(sizeof(uint32_t) * indexCnt);
+	UINT sizeOfIndexBuffer = static_cast<UINT>(sizeof(uint32_t) * indexCnt * (int)MaxDraw::kQuad);
 	indexBuffer.Create(device_, sizeOfIndexBuffer);
 
 	// インデックスバッファのマッピング
