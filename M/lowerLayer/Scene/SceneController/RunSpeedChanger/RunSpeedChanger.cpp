@@ -7,7 +7,8 @@
 #include "imgui.h"
 void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
 {
-	ImGui::Checkbox(" Stop (Key : SHIFT )", &stopButton);
+	ImGui::Text("Stop     : "); ImGui::SameLine();
+	ImGui::Checkbox("(SHIFT)", &stopButton);
 	if (M::GetInstance()->IsKeyTriggered(KeyType::SHIFT))
 	{
 		stopButton = !stopButton;
@@ -28,7 +29,7 @@ void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
 			return;
 		}
 		runSpeedBuffer = *runSpeed_;
-		ImGui::SliderInt("RunSpeed : ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
+		ImGui::SliderInt("RunSpeed ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
 	}
 
 }

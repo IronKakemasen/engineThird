@@ -11,8 +11,8 @@ void SceneController::Debug()
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
 #ifdef USE_IMGUI
-	static float deltaTime;
-	deltaTime = ImGui::GetIO().Framerate;
+	static float fps;
+	fps = ImGui::GetIO().Framerate;
 
 
 	ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);
@@ -36,10 +36,15 @@ void SceneController::Debug()
 		ImGui::EndMenuBar();
 	}
 
+	if (M::GetInstance()->IsKeyTriggered(KeyType::G))
+	{
+		forDebug.doDrawGridLine = !forDebug.doDrawGridLine;
+	}
+
 	ImGui::Text(GetName(runningScene).c_str());
-	ImGui::DragFloat("deltaTime", &deltaTime);
+	ImGui::Text("FPS : %.2f ", fps); //ImGui::SameLine();
 	ImGui::Text("GridLine : "); ImGui::SameLine();
-	ImGui::Checkbox(" ", &forDebug.doDrawGridLine);
+	ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
 	runSpeedChanger.AddDebug();
 	ImGui::End();
 
