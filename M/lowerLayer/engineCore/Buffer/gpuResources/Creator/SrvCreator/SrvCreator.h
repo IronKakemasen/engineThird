@@ -2,6 +2,7 @@
 #include "./TextureSrvCreator/TextureSrvCreator.h"
 #include "./ParticleMeshSrvCreator/ParticleMeshSrvCreator.h"
 #include "./StructuredBufferSrvCreator/StructuredBufferSrvCreator.h"
+#include "./PostEffectSrvCreator/PostEffectSrvCreator.h"
 
 struct ShaderBuffer;
 struct SrvDescriptorHeap;
@@ -14,6 +15,7 @@ class SrvCreator
 	TextureSrvCreator textureSrvCreator;
 	ParticleMeshSrvCreator particleMeshSrvCreator;
 	StructuredBufferSrvCreator stBufferCretaor;
+	PostEffectSrvCreator postEffectSrvCreator;
 
 public:
 	void Init(SrvDescriptorHeap* srvDescriptorHeap_, ID3D12Device* device_,
@@ -33,6 +35,12 @@ public:
 	{
 		return &stBufferCretaor;
 	}
+
+	auto* Getter_PostEffectSrvCreator()
+	{
+		return &postEffectSrvCreator;
+	}
+
 
 };
 

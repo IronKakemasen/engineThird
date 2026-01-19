@@ -18,6 +18,7 @@ void AllMesh::Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSr
 		quadMesh.reset(new QuadMesh(allPipelineSet_));
 		testParticleMesh.reset(new TestParticleMesh(allPipelineSet_));
 		lineMesh.reset(new LineMesh(allPipelineSet_,device_));
+		meshForPostEffect.reset(new MeshForPostEffect(device_, allPipelineSet_));
 
 		triangleMesh->CreateMesh(device_);
 		quadMesh->CreateMesh(device_);

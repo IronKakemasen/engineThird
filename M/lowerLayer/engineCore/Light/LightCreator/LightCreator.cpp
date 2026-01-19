@@ -19,7 +19,7 @@ void LightCreator::CreatePointLight(ExclusiveDraw* exclusiveDraw_, ID3D12Device*
 	}
 
 	//SRVの作成
-	srvIndex = srvCreator_->CreateSRVForParticle(kSumPLight, sizeof(PointLightPara),
+	srvIndex = srvCreator_->CreateSRVForStructuredBuffer(kSumPLight, sizeof(PointLightPara),
 		pLightStructuredBuffer->pLight.shaderBuffer);
 
 	exclusiveDraw_->Setter_PLightSrvIndex(&srvIndex);

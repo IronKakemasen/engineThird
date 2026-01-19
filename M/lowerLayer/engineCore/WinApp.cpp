@@ -6,6 +6,17 @@
 #include <dxgidebug.h>
 
 
+void WinApp::OffScreenBegin()
+{
+
+}
+
+void WinApp::OffScreenEnd()
+{
+
+}
+
+
 bool WinApp::InitD3D()
 {
 	//COMの初期化
@@ -57,7 +68,7 @@ bool WinApp::InitD3D()
 	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&commandControl , &shaderBufferData);
 
 	//textureDataManager,textureDataCreatorの初期化
-	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator());
+	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator(), srvCreator.Getter_PostEffectSrvCreator());
 
 	//meshCreatorの初期化
 	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),
