@@ -18,6 +18,7 @@ private:
 	};
 	CollisionBackToTheFuture collisionBackToTheFuture;
 
+
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
