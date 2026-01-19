@@ -154,6 +154,7 @@
     <ClCompile Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.cpp" />
     <ClCompile Include="Application\Models\EnemyModel\EnemyModel.cpp" />
     <ClCompile Include="Application\Models\EnemyTowerModel\EnemyTowerModel.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.cpp" />
     <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.cpp" />
     <ClCompile Include="M\lowerLayer\Collision\Shape\Circle.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\Enemy.cpp" />
@@ -296,6 +297,9 @@
     <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.cpp" />
     <ClCompile Include="Application\GameObjects\Player\PlayerTower\PlayerTower.cpp" />
     <ClCompile Include="Application\Models\PlayerModel\PlayerModel.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -307,6 +311,7 @@
     <ClInclude Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.h" />
     <ClInclude Include="Application\Models\EnemyModel\EnemyModel.h" />
     <ClInclude Include="Application\Models\EnemyTowerModel\EnemyTowerModel.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.h" />
     <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.h" />
     <ClInclude Include="M\lowerLayer\Collision\Shape\Circle.h" />
     <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
@@ -454,6 +459,9 @@
     <ClInclude Include="Application\Scenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.h" />
     <ClInclude Include="Application\GameObjects\Player\Player.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -18,7 +18,7 @@ D3D12_SHADER_RESOURCE_VIEW_DESC StructuredBufferSrvCreator::CreateSRVDesc(UINT c
 
 }
 
-uint16_t StructuredBufferSrvCreator::CreateSRVForParticle(UINT createNum_, UINT size_,ShaderBuffer& data_)
+uint16_t StructuredBufferSrvCreator::CreateSRVForStructuredBuffer(UINT createNum_, UINT size_,ShaderBuffer& data_)
 {
 	D3D12_SHADER_RESOURCE_VIEW_DESC desc = CreateSRVDesc(createNum_, size_);
 	uint16_t ret_index = CreateSRV(desc, &data_);

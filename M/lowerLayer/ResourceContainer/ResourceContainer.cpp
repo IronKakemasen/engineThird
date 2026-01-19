@@ -12,6 +12,7 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kNothing, pathToPresetTex + "header.jpg");
 	LoadTextureFile(TextureTag::kGridN, pathToPresetTex + "gridLineNormal.png");
 	LoadTextureFile(TextureTag::kAtlasNumbers, pathToPresetTex + "numbers48x48.png");
+	LoadTextureFile(TextureTag::kOh, pathToPresetTex + "oh.png");
 
 	
 }
