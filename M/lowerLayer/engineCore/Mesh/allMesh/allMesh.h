@@ -3,6 +3,7 @@
 #include "./primitiveMeshes/quadMesh/quadMesh.h"
 #include "./ParticleMesh2D/TestParticleMesh/TestParticleMesh.h"
 #include "./LineMesh/LineMesh.h"
+#include "./MeshForPostEffect/MeshForPostEffect.h"
 
 class ParticleMeshSrvCreator;
 class AllPipelineSet;
@@ -13,6 +14,8 @@ class AllMesh
 	std::unique_ptr<QuadMesh> quadMesh;
 	std::unique_ptr<TestParticleMesh> testParticleMesh;
 	std::unique_ptr<LineMesh> lineMesh;
+	std::unique_ptr<MeshForPostEffect> meshForPostEffect;
+
 	
 public:
 

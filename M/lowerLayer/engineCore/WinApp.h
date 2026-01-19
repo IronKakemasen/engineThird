@@ -161,6 +161,9 @@ private:
 	void TermWnd();
 	bool InitD3D();
 	void TermD3D();
+	void OffScreenBegin();
+	void OffScreenEnd();
+
 	static LRESULT CALLBACK WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
 };

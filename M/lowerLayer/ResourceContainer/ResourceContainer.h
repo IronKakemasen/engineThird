@@ -13,6 +13,7 @@ enum class TextureTag
 	kNothing,
 	kGridN,
 	kAtlasNumbers,
+	kOh,
 	kCount
 };
 
