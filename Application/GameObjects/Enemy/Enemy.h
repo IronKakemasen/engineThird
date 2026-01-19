@@ -1,12 +1,40 @@
 #pragma once
 #include "GameObjectBehavior.h"
-#include "../../Models/Shikoutei/ShikouteiModel.h"
+#include "../../Models/EnemyModel/EnemyModel.h"
 
 struct Enemy :public GameObject
 {
 private:
 	// 使用するモデル
-	std::unique_ptr<ShikouteiModel> enemyModel;
+	std::unique_ptr<EnemyModel> model;
+
+	//コリジョンバック用の関数オブジェクト
+	struct CollisionBackToPlayer
+	{
+		Enemy* me = nullptr;
+		void operator()();
+		void Init(Enemy* object) { me = object; }
+	};
+	// playerと衝突したときのコリジョンバック
+	CollisionBackToPlayer collisionBackToPlayer;
+	//コリジョンバック用の関数オブジェクト
+	struct CollisionBackToPlayerBullet
+	{
+		Enemy* me = nullptr;
+		void operator()();
+		void Init(Enemy* object) { me = object; }
+	};
+	// playerBulletと衝突したときのコリジョンバック
+	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
+	//コリジョンバック用の関数オブジェクト
+	struct CollisionBackToPlayerTower
+	{
+		Enemy* me = nullptr;
+		void operator()();
+		void Init(Enemy* object) { me = object; }
+	};
+	// playerTowerと衝突したときのコリジョンバック
+	CollisionBackToPlayerTower collisionBackToPlayerTower;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -23,6 +51,6 @@ public:
 	virtual void SetCollisionBackTable()override;
 
 
-	Enemy();
+	Enemy() {}
 };
 

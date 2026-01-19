@@ -13,9 +13,11 @@ void ShikouteiScene::Instantiate()
 	exampleTyan.reset(new ExampleTyan);
 	// プレイヤーのインスタンス化
 	player.reset(new Player);
+	// エネミーファクトリーのインスタンス化
+	enemyFactory.reset(new EnemyFactory);
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(shikoutei.get(), exampleTyan.get(), player.get());
+	gameObjManager->RegisterForContainer(shikoutei.get(), exampleTyan.get(), player.get(), enemyFactory.get());
 
 }
 

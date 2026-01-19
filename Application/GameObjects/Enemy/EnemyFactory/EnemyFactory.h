@@ -1,31 +1,22 @@
 #pragma once
 #include "GameObjectBehavior.h"
-#include "../../Models/PlayerModel/PlayerModel.h"
+#include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 
-struct Player :public GameObject
+class EnemyFactory :public GameObject
 {
 private:
-	// 使用するモデル
-	std::unique_ptr<PlayerModel> model;
+	//使用するモデル
+	std::unique_ptr<EnemyFactoryModel> model;
 
 	//コリジョンバック用の関数オブジェクト
-	struct CollisionBackToEnemy
+	struct CollisionBackToPlayerBullet
 	{
-		Player* me = nullptr;
+		EnemyFactory* me = nullptr;
 		void operator()();
-		void Init(Player* object) { me = object; }
+		void Init(EnemyFactory* object) { me = object; }
 	};
-	// Enemyと衝突したときのコリジョンバック
-	CollisionBackToEnemy collisionBackToEnemy;
-
-
-	void SaveData();
-
-	float frameCount = 0;
-
-	Vector3 translate = { 0.0f,0.0f,0.0f };
-	Vector3 velocity = { 0.0f,0.0f,0.0f };
-	Vector3 acceleration = { 0.0f,0.0f,0.0f };
+	// プレイヤー弾と衝突したときのコリジョンバック
+	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -41,7 +32,6 @@ public:
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 
-
-	Player();
+	EnemyFactory();
 };
 

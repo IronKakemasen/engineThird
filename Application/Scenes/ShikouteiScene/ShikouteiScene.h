@@ -2,9 +2,9 @@
 #include "SceneBehavior.h"
 #include"../../GameObjects/Shikoutei/Shikoutei.h"
 #include"../../GameObjects/ExampleTyan/ExampleTyan.h"
+#include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 
-#include"../../GameObjects/Shikoutei/Shikoutei.h"
 #include "../../GameObjects/Player/Player.h"
 
 class ShikouteiScene final : public Scene
@@ -16,6 +16,7 @@ class ShikouteiScene final : public Scene
 	std::unique_ptr<Shikoutei> shikoutei;
 	std::unique_ptr<ExampleTyan> exampleTyan;
 	std::unique_ptr<Player> player;
+	std::unique_ptr<EnemyFactory> enemyFactory;
 
 
 	MQuad quad;

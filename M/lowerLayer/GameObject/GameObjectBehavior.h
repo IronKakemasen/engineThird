@@ -23,8 +23,15 @@ struct GameObjectBehavior
 	{
 		kShikoutei,
 		kExample,
+
+
+		EnemyFactory,
+		EnemyTower,
 		Enemy,
+
 		Player,
+		PlayerBullet,
+		PlayerTower,
 
 		kCount,
 		kNone,

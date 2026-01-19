@@ -15,6 +15,7 @@ void Shikoutei::CollisionBackToTheFuture::operator()()
 	opponent->trans.rotation.x += 1.0f;
 }
 
+
 void Shikoutei::CollisionBackToTheFuture::Init(Shikoutei* shikoutei_)
 {
 	shikoutei = shikoutei_;

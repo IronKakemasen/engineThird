@@ -9,10 +9,17 @@ void Player::SaveData()
 	Json::Save("./resource/json/player/playerData.json");
 }
 
+void Player::CollisionBackToEnemy::operator()()
+{
+	// 自身の取得
+	auto* player = me;
+	me->trans.rotation.y += 1.0f;
+}
+
 void Player::Update()
 {
 	//モデルの更新処理
-	playerModel->Update();
+	model->Update();
 
 	translate = trans.pos;
 	velocity = velocity + acceleration;
@@ -44,20 +51,19 @@ void Player::Update()
 	}
 
 
-
 	trans.pos = translate;
 }
 
 void Player::Init()
 {
 	// モデルの初期化
-	playerModel->Init(&trans);
+	model->Init(&trans);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::kShikoutei);
-	// 矩形コリジョンをアタッチ
-	SetRectCollision(1.0f, 1.0f);
+	SetIdentity(Tag::Player);
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -70,22 +76,23 @@ void Player::Init()
 void Player::Reset()
 {
 	// モデルのリセット
-	playerModel->Reset();
+	model->Reset();
 }
 
 void Player::Draw(Matrix4 * vpMat_)
 {
 	// モデルの描画
-	playerModel->Draw(vpMat_);
+	model->Draw(vpMat_);
 }
 
 void Player::SetCollisionBackTable()
 {
-
+	// タグ：Enemyと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::Enemy, collisionBackToEnemy);
 }
 
 Player::Player()
 {
 	// モデルのインスタンス化
-	playerModel.reset(new ShikouteiModel);
+	model.reset(new PlayerModel);
 }

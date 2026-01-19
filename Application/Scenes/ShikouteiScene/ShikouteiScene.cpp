@@ -14,8 +14,6 @@ void ShikouteiScene::Update()
 		Benri::AdjustMax(timeNum, 9.0f, 0.0f);
 	}
 	atlasNumber.ChangeAtlasIndex(timeNum);
-
-
 }
 
 void ShikouteiScene::Draw()
