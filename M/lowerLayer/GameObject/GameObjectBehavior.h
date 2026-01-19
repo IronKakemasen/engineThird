@@ -88,16 +88,13 @@ public:
 	void SetStatus(Status dst_);
 	void SetIdentity(Tag tag_);
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
-/<<<<<<< master
 	void SetCircleCollision(float radius_);
 	void SetCollisionBack(Tag tag_, std::function<void()> func_);
 
-/=======
 	void SwitchCollisionActivation(bool bool_);
 
 	void SetNumber(int id_);
 	void ActivateOnTriggerEnter(Tag tag_);
-/>>>>>>> sikodeve
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
 	bool HasRectCollider();
