@@ -41,7 +41,10 @@ void CameraController::Debug()
 
 	if (cur_camera.second == "debugCamera")
 	{
+		auto* debugCamera = reinterpret_cast<DebugCamera*>(cur_camera.first);
+		ImGui::Text(("Mode : " + debugCamera->OutputModeInString()).c_str());
 		ImGui::Text("MoveKeys : ArrowKeys , Z , X ");
+		ImGui::Text("ModeChange : V"); ImGui::SameLine();
 	}
 
 

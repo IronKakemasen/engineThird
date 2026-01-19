@@ -1,14 +1,20 @@
 #include "GameObjectBehavior.h"
 
+
 //新しくゲームオブジェクトを作ったらテーブルに追加してほしい
 void GameObjectBehavior::SetIdentity(Tag tag_)
 {
 	int no = identity.number;
+	std::string id = "[" + std::to_string(no) + "] : ";
 
 	Identity identitiesTable[Tag::kCount]
 	{
-		Identity{ "[" + std::to_string(no) + "] : Shikoutei" ,tag_,no,0x0000000f,0x0000fff0},
+		Identity{"Shikoutei" ,tag_,no,  0x0000000f,0x000000f0},
+		Identity{"Example" ,tag_,no,	0x000000f0,0x0000000f},
+
 	};
+
+	identitiesTable[(int)tag_].name = id + identitiesTable[(int)tag_].name;
 
 	identity = identitiesTable[(int)tag_];
 }
@@ -20,28 +26,12 @@ std::string GameObjectBehavior::Getter_Name()
 
 void GameObjectBehavior::SwitchCollisionActivation(bool bool_)
 {
-	collisionActivate = bool_;
+	collision.collisionActivate = bool_;
 }
 
 bool GameObjectBehavior::IsCollisionActivated()
 {
-	return collisionActivate;
-}
-
-bool GameObjectBehavior::UpdateCollisionBack()
-{
-	for (auto& [key, value] : collisionBackActivationMap)
-	{
-		if (!value.func) continue;
-
-		if (value.isActive)
-		{
-			value.isActive = value.func();
-			return true;
-		}
-	}
-
-	return false;
+	return collision.collisionActivate;
 }
 
 GameObjectBehavior::Identity::Identity()
@@ -51,13 +41,11 @@ GameObjectBehavior::Identity::Identity()
 	number = 0;
 	collisionAttribute = 0;
 	collisionMask = 0;
-
 }
 
 bool GameObjectBehavior::Identity::IsCollisionMaskMatched(Identity* other_)
-{
-
-	return false;
+{	
+	return !(collisionAttribute & other_->collisionMask);
 }
 
 GameObjectBehavior::Identity::Identity(std::string name_, Tag tag_, int number_, 
@@ -82,29 +70,63 @@ GameObjectBehavior::Identity* GameObjectBehavior::Getter_Identity()
 
 Rect* GameObjectBehavior::Getter_Rect()
 {
-	return rect.get();;
+	return collision.rect.get();;
 }
 
-bool GameObjectBehavior::HasCollider()
+Circle* GameObjectBehavior::Getter_Circle()
 {
-	if (rect) return true;
+	return collision.circle.get();
+}
+
+
+bool GameObjectBehavior::HasRectCollider()
+{
+	if (collision.rect) return true;
 
 	return false;
 }
 
+bool GameObjectBehavior::HasCircleCollider()
+{
+	if (collision.circle) return true;
+
+	return false;
+}
+
+bool GameObjectBehavior::HasCollider()
+{
+	return HasRectCollider() + HasCircleCollider();
+}
+
 void GameObjectBehavior::SetRectCollision(float width_, float height_ , Vector3 centerPos_)
 {
-	if (!rect) rect.reset(new Rect);
+	if (!collision.rect) collision.rect.reset(new Rect);
 
-	rect->SetShape(width_, height_, centerPos_);
+	collision.rect->SetShape(width_, height_, centerPos_);
+}
+
+void GameObjectBehavior::SetCollisionBack(Tag tag_, std::function<void()> func_)
+{
+	collision.collisionBackActivationMap[tag_] = func_;
+}
+
+
+void GameObjectBehavior::SetCircleCollision(float radius_)
+{
+	if (!collision.circle) collision.circle.reset(new Circle);
+
+	collision.circle->SetShape(radius_);
 }
 
 void GameObjectBehavior::ActivateOnTriggerEnter(GameObjectBehavior::Tag tag_)
 {
-	if (collisionBackActivationMap[tag_].func)
-	{
-		collisionBackActivationMap[tag_].isActive = true;
-	}
+#ifdef _DEBUG
+	forDebug.colorForCollision = { 200,50,50,255 };
+#endif // _DEBUG
+
+	if (!collision.collisionBackActivationMap[tag_]) return;
+
+	collision.collisionBackActivationMap[tag_]();
 }
 
 void GameObjectBehavior::SetNumber(int number_)
@@ -124,10 +146,10 @@ GameObject::GameObject()
 
 void GameObjectBehavior::SetCollidedObjPtr(GameObjectBehavior* obj_)
 {
-	colObj.emplace_back(obj_);
+	collision.colObj = obj_;
 }
 
-std::vector<GameObjectBehavior*>* GameObjectBehavior::Getter_ColObj()
+GameObjectBehavior* GameObjectBehavior::Getter_ColObj()
 {
-	return &colObj;
+	return collision.colObj;
 }

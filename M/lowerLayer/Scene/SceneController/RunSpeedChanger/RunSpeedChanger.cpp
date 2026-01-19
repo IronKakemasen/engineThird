@@ -1,16 +1,44 @@
 #include "RunSpeedChanger.h"
 #include "../../../../utilities/benriTemplateFunc/benriTempFunc.h"
-#include "../../../../../external/imgui/imgui.h"
-
 #include <climits> 
+#include "../M.h"
 
-void RunSpeedChanger::GuiAdd_ChangeRunSpeed()
-{
 #ifdef USE_IMGUI
+#include "imgui.h"
+void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
+{
+	ImGui::Text("Stop     : "); ImGui::SameLine();
+	ImGui::Checkbox("(SHIFT)", &stopButton);
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SHIFT))
+	{
+		stopButton = !stopButton;
+	}
 
-	ImGui::SliderInt("RunSpeed : ", &runSpeed, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
+	if (stopButton)
+	{
+		*runSpeed_ = (int)RunSpeed::kStop;
+		onlyOnce = true;
+		ImGui::Text("STOPTYUU");
+	}
+	else
+	{
+		if (onlyOnce)
+		{
+			*runSpeed_ = runSpeedBuffer;
+			onlyOnce = false;
+			return;
+		}
+		runSpeedBuffer = *runSpeed_;
+		ImGui::SliderInt("RunSpeed ", runSpeed_, (int)RunSpeed::kStop, (int)RunSpeed::kStandared);
+	}
 
-#endif // !USE_
+}
+#endif // USE_
+
+
+void RunSpeedChanger::AddDebug()
+{
+	forDebug.GuiAdd_ChangeRunSpeed(&runSpeed);
 }
 
 RunSpeedChanger::RunSpeedChanger()
@@ -23,8 +51,6 @@ void RunSpeedChanger::Reset()
 	runSpeed = 10;		//min = 1,default = 10 (1 = stop, )
 	framCnt = 0;
 }
-
-
 
 bool RunSpeedChanger::AdjustRunSpeed()
 {

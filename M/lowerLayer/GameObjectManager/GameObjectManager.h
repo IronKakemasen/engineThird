@@ -11,6 +11,18 @@ class GameObjectManager
 	//ゲームオブジェクトすべての当たり判定をとる
 	void ChackAllCollision(GameObject* thisObj_);
 
+#ifdef _DEBUG
+	struct ForDebug
+	{
+		bool collisionVisibility;
+		ForDebug();
+		void DrawCollider(GameObject* obj_, Matrix4* vpMat_);
+	};
+
+	ForDebug forDebug;
+#endif // DEBUG
+
+
 public:
 	void Init();
 	void Update();

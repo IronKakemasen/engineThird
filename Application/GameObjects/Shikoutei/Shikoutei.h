@@ -8,6 +8,15 @@ struct Shikoutei :public GameObject
 private:
 	//使用するモデル
 	std::unique_ptr<ShikouteiModel> shikoModel;
+	
+	//コリジョンバック用の関数オブジェクト
+	struct CollisionBackToTheFuture
+	{
+		Shikoutei* shikoutei = nullptr;
+		void operator()();
+		void Init(Shikoutei* shikoutei_);
+	};
+	CollisionBackToTheFuture collisionBackToTheFuture;
 
 
 public:

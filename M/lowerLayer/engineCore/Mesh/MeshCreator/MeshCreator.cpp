@@ -31,6 +31,9 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	std::wstring converted_filePath = ConvertString(filePath_);
 	const wchar_t* tmp  = converted_filePath.c_str();
 
+//<<<<<<< master
+	
+//=======
 	auto it = loadedModelMap.find(converted_filePath);
 	//すでに読み込んである場合はloadedModelMapから取得する
 	if (it != loadedModelMap.end())
@@ -40,12 +43,16 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	// 読み込んでない場合は新たに読み込む
 	else
 	{
-		ModelData modelData;
-		LoadMesh(tmp, modelData.resMesh, modelData.resMaterial);
-		auto inserted = loadedModelMap.emplace(tmp, std::move(modelData));
+		LoadMesh(tmp, model->Getter_ModelData().resMesh, model->Getter_ModelData().resMaterial);
+		auto inserted = loadedModelMap.emplace(converted_filePath, model->Getter_ModelData());
 		model->Getter_ModelData() = inserted.first->second;
+		//ModelData modelData;
+		//LoadMesh(tmp, modelData.resMesh, modelData.resMaterial);
+		//auto inserted = loadedModelMap.emplace(tmp, std::move(modelData));
+		//model->Getter_ModelData() = inserted.first->second;
 	}
 
+//>>>>>>> sikodeve
 	//モデルの個数分拡張する
 	int size = (int)model->Getter_ModelData().resMesh.size();
 	model->ResizeMeshSize(size);

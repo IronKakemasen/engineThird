@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "../../M.h"
 #include "../FwdScenes.h"
+#include "./UglyGrid/UglyGrid.h"
 
 
 void SceneController::Debug()
@@ -10,17 +11,53 @@ void SceneController::Debug()
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
 #ifdef USE_IMGUI
-	static float deltaTime;
-	deltaTime = ImGui::GetIO().DeltaTime;
-	ImGui::Begin("SceneController");
-	ImGui::Text(GetName().c_str());
-	ImGui::DragFloat("deltaTime", &deltaTime);
+	static float fps;
+	fps = ImGui::GetIO().Framerate;
+
+
+	ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);
+	
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("Select Scene"))
+		{
+			int i = 0;
+			for (auto name : sceneNameContainer)
+			{
+				if (ImGui::MenuItem(name.c_str()))
+				{
+					nextScene = GetType(i);
+				}
+				++i;
+			}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::G))
+	{
+		forDebug.doDrawGridLine = !forDebug.doDrawGridLine;
+	}
+
+	ImGui::Text(GetName(runningScene).c_str());
+	ImGui::Text("FPS : %.2f ", fps); //ImGui::SameLine();
+	ImGui::Text("GridLine : "); ImGui::SameLine();
+	ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
+	runSpeedChanger.AddDebug();
 	ImGui::End();
 
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
 
 	cur_Scene->Debug();
+
+	if (forDebug.doDrawGridLine)
+	{
+		Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
+		UglyGrid::Draw(vpMat);
+	}
 
 #endif // USE_IMGUI
 
@@ -32,10 +69,11 @@ void SceneController::Update()
 
 	Debug();
 
+	cur_Scene->cameraController->Update();
+
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
 		cur_Scene->Update();
-		cur_Scene->cameraController->Update();
 		cur_Scene->gameObjManager->Update();
 	}
 
@@ -45,7 +83,15 @@ void SceneController::Update()
 
 	cur_Scene->Draw();
 
+	ChangeScene();
+
 	Reset();
+}
+
+SceneController::SceneController(SceneType firstScene_)
+{
+	InstantiateScenes();
+	Init(firstScene_);
 }
 
 void SceneController::Reset()
@@ -56,53 +102,77 @@ void SceneController::Reset()
 	cur_Scene->doReset = false;
 }
 
-void SceneController::Init()
+void SceneController::Init(SceneType firstScene_)
 {
-	static bool initOnlyOnce = true;
+	nextScene = firstScene_;
+	runningScene = firstScene_;
 
-	if (initOnlyOnce)
+	SetScenesToArray();
+	for (auto* scene : allScene)
 	{
-		initOnlyOnce = false;
-		InstantiateScenes();
-		SetScenesToArray();
-		ChangeScene(SceneType::kShikouteiScene);
-		for (auto* scene : allScene)
-		{
-			if (!scene)continue;
+		if (!scene)continue;
 
-			scene->Instantiate();
-			scene->Init();
-			scene->gameObjManager->Init();
-		}
+		scene->Instantiate();
+		scene->Init();
+		scene->gameObjManager->Init();
 	}
-
 }
 
 void SceneController::SetScenesToArray()
 {
-	allScene[SceneType::kShikouteiScene] = shikoScene.get();
-
+	Set(kShikouteiScene, shikoScene.get());
+	Set(kInGame, ingameScene.get());
+	Set(kTitle, titleScene.get());
+	Set(kModelView, modelViewScene.get());
+	Set(kTutorial, tutorialScene.get());
 }
 
 void SceneController::InstantiateScenes()
 {
 	shikoScene.reset(new ShikouteiScene);
+	ingameScene.reset(new InGameScene);
+	titleScene.reset(new TitleScene);
+	tutorialScene.reset(new TutorialScene);
+	modelViewScene.reset(new ModelScene);
 }
 
 
-void SceneController::ChangeScene(SceneType startSceneType_)
+void SceneController::ChangeScene()
 {
-	runningScene = startSceneType_;
+	runningScene = nextScene;
 }
 
-std::string SceneController::GetName()
+std::string SceneController::GetName(SceneType type_)
 {
 	std::string names[SceneType::kCount]
 	{
-		"kShikouteiScene",
-		"kInGame",
-		"kTitle"
+		"ShikouteiScene",
+		"InGame",
+		"Title",
+		"Tutorial",
+		"ModelView",
 	};
 
-	return names[(int)runningScene];
+	return names[(int)type_];
+}
+
+SceneController::SceneType SceneController::GetType(int index_)
+{
+	SceneType types[SceneType::kCount]
+	{
+		kShikouteiScene,
+		kInGame,
+		kTitle,
+		kTutorial,
+		kModelView
+	};
+
+	return types[index_];
+}
+
+
+void SceneController::Set(SceneType type_, Scene* scene_)
+{
+	allScene[type_] = scene_;
+	sceneNameContainer.emplace_back(GetName(type_));
 }

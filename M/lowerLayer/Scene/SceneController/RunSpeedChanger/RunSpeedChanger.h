@@ -12,10 +12,26 @@ class RunSpeedChanger
 	int runSpeed;		//min = 1,default = 10 (1 = stop, )
 	int framCnt;
 
+#ifdef USE_IMGUI
+	struct ForDebug
+	{
+	private:
+		bool stopButton = true;
+		int runSpeedBuffer = 10;
+		bool onlyOnce = true;
+	public:
+		void GuiAdd_ChangeRunSpeed(int* runSpeed_);
+	};
+
+	ForDebug forDebug;
+
+#endif // _DEBUG
+
+
 public:
 	RunSpeedChanger();
-	void GuiAdd_ChangeRunSpeed();
 	bool AdjustRunSpeed();
 	void Reset();
+	void AddDebug();
 };
 

@@ -32,8 +32,9 @@ float3 SpecularModelNormalizedPhong(float3 baseColor_ , float metalic_,
 float3 SchlickFrensnel(float3 H_ ,float3 toCamera_ , float3 specularColor_)
 {
     float VH = saturate(dot(toCamera_, H_));
-    return specularColor_ + (1.0f - specularColor_) * pow((1.0f - VH), 5.0f);
+    return specularColor_ + (1.0f - specularColor_) * pow(saturate(1.0f - VH), 5.0f);
 }
+
 
 float Distribution_Beckmann(float m_, float NH_)
 {
@@ -49,7 +50,7 @@ float Distribution_GGX(float m_, float NH_)
     float m2 = m_ * m_;
 
     float f = (NH_ * m2 - NH_) * NH_ + 1.0f;
-    return m2 / (3.14159265359f * f * f);
+    return m2 / max(3.14159265359f * f * f, 0.0000001);
 }
 
 
@@ -67,16 +68,19 @@ float G2_Smith(float NL_, float NV_, float m_)
 
     float lambdaV = (-1.0f + sqrt(m2 * (1.0f - NL2) / NL2 + 1.0f)) * 0.5f;
     float lambdaL = (-1.0f + sqrt(m2 * (1.0f - NV2) / NV2 + 1.0f)) * 0.5f;
-    
+
     return 1.0f / (1.0f + lambdaV + lambdaL);
+
 }
 
 float3 ComputeBRDF(float3 diffuse_, float3 lightDir_, float3 toCamera_, float3 normal_,
         float NV_, float3 Ks_, float a_)
 {
+    float NL = saturate(dot(normal_, lightDir_));
+    if (NL <= 0.0) return float3(0, 0, 0);
+
     float3 H = normalize(toCamera_+ lightDir_);
     float NH = saturate(dot(normal_, H));
-    float NL = saturate(dot(normal_, lightDir_));
     
     float D = Distribution_GGX(a_ , NH);
     float G2 = G2_Smith(NL, NV_, a_);
@@ -84,7 +88,7 @@ float3 ComputeBRDF(float3 diffuse_, float3 lightDir_, float3 toCamera_, float3 n
         
     float3 specular = float3((Fr * D * G2 ) / (4.0f * NV_ * NL));
     
-    return saturate((diffuse_ + specular) * NV_);
+    return saturate((diffuse_ + specular) * NL);
 
 }
     

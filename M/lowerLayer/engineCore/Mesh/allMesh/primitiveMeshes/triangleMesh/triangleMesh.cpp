@@ -8,7 +8,8 @@ TriangleMesh::TriangleMesh(AllPipelineSet* allPipelineset_)
 void TriangleMesh::CreateMesh(ID3D12Device* device_)
 {
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vertex) * vertexCnt);
+	UINT sizeOfVertexBuffer = 
+		static_cast<UINT>(sizeof(Vertex) * vertexCnt * (int)MaxDraw::kTriangle);
 	// 頂点バッファ生成
 	vertexBuffer.Create(device_, sizeOfVertexBuffer);
 

@@ -13,8 +13,6 @@ class InputLayoutDescCreator
 	std::pair<D3D12_INPUT_ELEMENT_DESC*, UINT> heap_inputElementDescs = { nullptr ,0};
 	std::vector < std::function<std::vector<D3D12_INPUT_ELEMENT_DESC>()>> funcs_inputElementDescsCreate;
 
-
-
 	//いつか修正
 	void SetInputElementDescs(int funcIndex_);
 	void CopyFromIndex(int funcIndex_);

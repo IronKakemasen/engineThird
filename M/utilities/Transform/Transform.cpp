@@ -60,7 +60,7 @@ void Transform::RotateUpdate()
 
 	//ターゲット方向のクォータニオン(SLERP)
 	lookDir = lookDir.GetNormalized();
-	Benri::Adjust(lookDir.z, -0.00001f, 0.00001f, 0.00001f);
+	//Benri::Adjust(lookDir.z, -0.00001f, 0.00001f, 0.00001f);
 
 	Quaternion lookAtQua =
 		Easing::SlerpQuaternion(quaternion, lookDir, interpolationCoe);

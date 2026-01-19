@@ -5,6 +5,9 @@ CameraPara::CameraPara()
 {
 	fov = CommonV::FOVy;
 	trans.interpolationCoe = 0.05f;
+	trans.pos = { 0.0f,3.0f,-1.5f };
+	trans.lookDir.y = -0.45f;
+
 }
 
 void CameraBehavior::DirectionInterpolate()

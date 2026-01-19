@@ -7,6 +7,8 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 	static bool onlyOnce = true;
 
 	if (!onlyOnce) return;
+	onlyOnce = false;
+
 	auto inputLayOutFunc = []()
 	{
 			std::vector<D3D12_INPUT_ELEMENT_DESC> descs;

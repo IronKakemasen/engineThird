@@ -86,6 +86,8 @@ bool WinApp::InitD3D()
 		srvDescHeap.Getter_Descriptorheap()->GetGPUDescriptorHandleForHeapStart());
 	
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.5f, 0.5f, 0.1f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 	ShaderBuffer::cur_index++;
 
 #endif
@@ -306,11 +308,11 @@ bool WinApp::InitWnd()
 
 #ifdef _DEBUG
 
-	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	//{
-	//	debugController->EnableDebugLayer();
-	//	debugController->SetEnableGPUBasedValidation(TRUE);
-	//}
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+	{
+		debugController->EnableDebugLayer();
+		debugController->SetEnableGPUBasedValidation(TRUE);
+	}
 
 #endif // _DEBUG
 
@@ -348,7 +350,6 @@ bool WinApp::InitWnd()
 	rc.bottom = static_cast<LONG>(m_height);
 	auto style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
 	AdjustWindowRect(&rc, style, FALSE);
-
 
 	// ウィンドウの作成
 	m_hWnd = CreateWindowEx(

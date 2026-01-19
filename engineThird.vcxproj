@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,8 +140,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Scenes\InGameScene\InGameConstructor.cpp" />
+    <ClCompile Include="Application\Scenes\ModelScene\ModelSceneConstructor.cpp" />
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp" />
     <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp" />
+    <ClCompile Include="Application\Scenes\InGameScene\InGameScene.cpp" />
+    <ClCompile Include="Application\Scenes\ModelScene\ModelScene.cpp" />
+    <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
+    <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
+    <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.cpp" />
+    <ClCompile Include="M\lowerLayer\Collision\Shape\Circle.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\Enemy.cpp" />
     <ClCompile Include="M\utilities\Json\Json.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.cpp" />
@@ -183,12 +192,12 @@
     <ClCompile Include="M\lowerLayer\Scene\SampleScene\SampleSceneConstructor.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.cpp" />
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp" />
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileQuad\MQuad\MQuad.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileQuad\MobileQuadBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\CameraBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.cpp" />
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp" />
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileBehavior.cpp" />
     <ClCompile Include="M\utilities\ConvertToRadian\ConvertToRadian.cpp" />
     <ClCompile Include="M\lowerLayer\M.cpp" />
     <ClCompile Include="M\utilities\convertString\convertString.cpp" />
@@ -247,7 +256,7 @@
     <ClCompile Include="M\utilities\Transform\Transform.cpp" />
     <ClCompile Include="M\utilities\Quaternion\Quaternion.cpp" />
     <ClCompile Include="M\utilities\UVTransform\UVTransform.cpp" />
-    <ClCompile Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.cpp" />
     <ClCompile Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\SceneController.cpp" />
@@ -276,10 +285,21 @@
     <ClCompile Include="Application\GameObjects\Shikoutei\Shikoutei.cpp" />
     <ClCompile Include="Application\Models\Shikoutei\ShikouteiModel.cpp" />
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouteiScene.cpp" />
-    <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.cpp" />
+    <ClCompile Include="Application\Scenes\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Application\Scenes\TutorialScene\TutorialScene.cpp" />
+    <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
+    <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
+    <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
+    <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.h" />
+    <ClInclude Include="M\lowerLayer\Collision\Shape\Circle.h" />
+    <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />
     <ClInclude Include="M\utilities\Json\Json.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h" />
@@ -322,12 +342,12 @@
     <ClInclude Include="M\lowerLayer\Scene\FwdScenes.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\GuiCollecter\GuiCollecter.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Appearance\Appearance.h" />
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MQuad\MQuad.h" />
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileQuad\MobileQuadBehavior.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileQuad\MQuad\MQuad.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileQuad\MobileQuadBehavior.h" />
     <ClInclude Include="M\lowerLayer\Camera\CameraBehavior.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\ExclusiveDraw\ExclusiveDraw.h" />
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h" />
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileBehavior.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MobileTriangleBehavior.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileBehavior.h" />
     <ClInclude Include="M\utilities\ConvertToRadian\ConvertToRadian.h" />
     <ClInclude Include="M\lowerLayer\M.h" />
     <ClInclude Include="M\utilities\convertString\convertString.h" />
@@ -386,7 +406,7 @@
     <ClInclude Include="M\utilities\Transform\Transform.h" />
     <ClInclude Include="M\utilities\Quaternion\Quaternion.h" />
     <ClInclude Include="M\utilities\UVTransform\UVTransform.h" />
-    <ClInclude Include="M\lowerLayer\Model\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\MobileTriangle\MTriangle\MTriangle.h" />
     <ClInclude Include="M\lowerLayer\Camera\NormalCamera\NormalCamera.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneBehavior\SceneBehavior.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneController.h" />
@@ -415,6 +435,10 @@
     <ClInclude Include="Application\GameObjects\Shikoutei\Shikoutei.h" />
     <ClInclude Include="Application\Models\Shikoutei\ShikouteiModel.h" />
     <ClInclude Include="Application\Scenes\ShikouteiScene\ShikouteiScene.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\UglyGrid\UglyGrid.h" />
+    <ClInclude Include="Application\Scenes\TitleScene\TitleScene.h" />
+    <ClInclude Include="Application\Scenes\TutorialScene\TutorialScene.h" />
+    <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.h" />
     <ClInclude Include="Application\GameObjects\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>

@@ -5,19 +5,13 @@ Quaternion Easing::SlerpQuaternion(Quaternion q1_, Vector3 targetDir_, float t_)
 {
 	Quaternion result;
 
-	float g;
-	if (targetDir_.z < 0.8f)
-	{
-		g = 1;
-		result.q.w = g;
-	}
-
 	Quaternion q2;
 	q2.q = Quaternion::CreateQuaternion(targetDir_);
 
 	float dot = q1_.GetDot(q2);
 
-	if (dot < 0.0) {
+	if (dot < 0.0) 
+	{
 		q2.q = q2.q * -1.0;
 		dot = -dot;
 	}

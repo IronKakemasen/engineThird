@@ -4,23 +4,14 @@
 
 void ResourceContainer::LoadAllTextureFile()
 {
-	std::string pathToPresetTex =   "./resource/preset/texture/";
+	std::string pathToPresetTex = "./resource/preset/texture/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
 	LoadTextureFile(TextureTag::kPlayer, pathToPresetTex + "player128x128.png");
 	LoadTextureFile(TextureTag::kNothing, pathToPresetTex + "header.jpg");
-	LoadTextureFile(TextureTag::kBlackNormal, pathToPresetTex + "huwa2.png");
-	LoadTextureFile(TextureTag::kGuruguru, pathToPresetTex + "NormalMap.png");
-	LoadTextureFile(TextureTag::kNN, pathToPresetTex + "nNani_normal.png");
 	LoadTextureFile(TextureTag::kGridN, pathToPresetTex + "gridLineNormal.png");
-	LoadTextureFile(TextureTag::kStarN, pathToPresetTex + "bokoboko.png");
-	LoadTextureFile(TextureTag::kPlayerN, pathToPresetTex + "normalPlayer.png");
-	LoadTextureFile(TextureTag::kF, pathToPresetTex + "f.png");
-	LoadTextureFile(TextureTag::kS, pathToPresetTex + "s.png");
-	LoadTextureFile(TextureTag::kI, pathToPresetTex + "t.png");
-	LoadTextureFile(TextureTag::kC, pathToPresetTex + "c.png");
-	LoadTextureFile(TextureTag::kD, pathToPresetTex + "d.png");
+	LoadTextureFile(TextureTag::kAtlasNumbers, pathToPresetTex + "numbers48x48.png");
 
 	
 }

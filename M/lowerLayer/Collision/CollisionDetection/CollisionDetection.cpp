@@ -60,13 +60,10 @@ bool CollisionDetections::C2D::ObjectAABB(Rect* thisRect_,Vector3 thisWorld_ ,
 
 bool CollisionDetections::C2D::CircleCollision(float lRad_, Vector3 lPos_, float rRad_, Vector3 rPos_)
 {
-	bool ret = false;
-
 	float mag = (lPos_ - rPos_).GetMagnitutde();
-	if (mag < (lRad_ + rRad_))ret = true;
+	if (mag < (lRad_ + rRad_)) return true;
 
-
-	return ret;
+	return false;
 }
 
 //2つのオブジェクトが衝突したとき、thisObjのポジションを補正する（めり込み補正）

@@ -75,6 +75,28 @@ void M::DrawMQuad(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Ver
 		trans_, uvTrans_, vpMat_);
 }
 
+void M::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& rightBottom_, Vertex& leftBottom_,
+	Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
+	Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_)
+{
+	exclusiveDraw->DrawSprite(leftTop_, rightTop_, rightBottom_, leftBottom_,
+		color_, texHandle_, drawMode_, blendMode_, cullMode_, shaderSet_,
+		trans_, uvTrans_, vpMat_);
+}
+
+void M::DrawLine(Vector3 st_, Vector3 ed_, Vector4 color_, Matrix4* vpMat_)
+{
+	exclusiveDraw->DrawLine(st_, ed_, color_, vpMat_);
+}
+
+void M::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
+	Vector4 color_, Matrix4* vpMat_)
+{
+	exclusiveDraw->DrawEllipseWireFrame(center_, radius_, rotation_,
+		color_, vpMat_);
+}
+
+
 M* M::GetInstance()
 {
 	static M m;

@@ -6,8 +6,8 @@
 
 LineMesh::LineMesh(AllPipelineSet* allPipelineset_, ID3D12Device* device_)
 {
-	CreateMesh(device_);
 	Init(MaxDraw::kLineMax, allPipelineset_);
+	CreateMesh(device_);
 }
 
 void LineMesh::Init(uint16_t maxDraw_, AllPipelineSet* allPipelineset_)
@@ -21,14 +21,16 @@ void LineMesh::CreateMesh(ID3D12Device* device_)
 {
 	int const kNumVectorRequired = 2;
 	// 頂点データのサイズ
-	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vector3) * kNumVectorRequired);
+	UINT sizeOfVertexBuffer = static_cast<UINT>(sizeof(Vector3) * 
+		kNumVectorRequired * MaxDraw::kLineMax);
 	// 頂点バッファ生成
-	vertexBuffer.Create(device_, sizeOfVertexBuffer);
+	vertexBufferForLine.Create(device_, sizeOfVertexBuffer);
 
 	// 頂点バッファのマッピング
-	HRESULT result = vertexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
+	HRESULT result = vertexBufferForLine.buffer->Map(0, 
+		nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
-	vertexBuffer.buffer->Unmap(0, nullptr);
+	//vertexBuffer.buffer->Unmap(0, nullptr);
 
 	viewProjectionMatrixBuffer.matrix.CreateAndMapping(device_);
 
@@ -71,7 +73,8 @@ void LineMesh::CreatePSO(AllPipelineSet* allPipelineset_)
 
 		std::string folderPath = "Line/";
 
-		allPipelineset_->CreateNewPipeline(folderPath, "Line.VS", "Line.PS", inputLayOutFunc, rootparameterFunc);
+		allPipelineset_->CreateNewPipeline(folderPath, "Line.VS", "Line.PS", 
+			inputLayOutFunc, rootparameterFunc,true);
 	}
 
 }
@@ -86,7 +89,7 @@ void LineMesh::DetectOverDrawing()
 	assert(curDrawIndex < maxDraw);
 }
 
-UINT LineMesh::GetCurrentIndex()
+UINT& LineMesh::GetCurrentIndex()
 {
 	return curDrawIndex;
 }
@@ -104,4 +107,15 @@ void LineMesh::SetViewProjectionMatrix(Matrix4* src_)
 void LineMesh::SetMaterial(Vector4* color_, UINT index_)
 {
 	materialForLineBuffers[index_].material.buffMap->color = *color_;
+}
+
+D3D12_GPU_VIRTUAL_ADDRESS LineMesh::GetMaterialVirtualPtr(UINT index_)
+{
+	return materialForLineBuffers[index_].material.GetVirtualGPUAddress();
+}
+
+D3D12_GPU_VIRTUAL_ADDRESS LineMesh::GetViewProjectionVirtualPtr()
+{
+	return viewProjectionMatrixBuffer.matrix.GetVirtualGPUAddress();
+
 }
