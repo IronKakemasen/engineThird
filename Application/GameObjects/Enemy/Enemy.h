@@ -51,6 +51,6 @@ public:
 	virtual void SetCollisionBackTable()override;
 
 
-	Enemy() {}
+	Enemy();
 };
 
