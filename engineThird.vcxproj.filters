@@ -102,7 +102,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.cpp">
@@ -456,6 +456,15 @@
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\GameObjects\Player\Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\utilities\Json\Json.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M\lowerLayer\math\matrix\matrix.h">
@@ -542,7 +551,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.h">
@@ -885,6 +894,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Player\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\utilities\Json\Json.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,9 @@
 #include"../../GameObjects/ExampleTyan/ExampleTyan.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 
+#include"../../GameObjects/Shikoutei/Shikoutei.h"
+#include "../../GameObjects/Player/Player.h"
+
 class ShikouteiScene final : public Scene
 {
 	//そのシーンのカメラのトランスフォームをいただく
@@ -12,6 +15,8 @@ class ShikouteiScene final : public Scene
 	//使用するゲームオブジェクト
 	std::unique_ptr<Shikoutei> shikoutei;
 	std::unique_ptr<ExampleTyan> exampleTyan;
+	std::unique_ptr<Player> player;
+
 
 	MQuad quad;
 	Sprite sprite;

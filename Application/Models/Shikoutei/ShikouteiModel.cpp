@@ -9,7 +9,7 @@ ShikouteiModel::ShikouteiModel()
 
 void ShikouteiModel::Update()
 {
-
+	
 }
 
 void ShikouteiModel::Draw(Matrix4* vpMat_)
@@ -39,11 +39,10 @@ void ShikouteiModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance = model->Getter_Appearance(0);
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-
 }
+
 void ShikouteiModel::Reset()
 {
 }

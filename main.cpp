@@ -32,6 +32,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			winApp.BeginFrame();
 
+			M::GetInstance()->getPadState.Update();
+
 			sceneController->Update();
 
 			winApp.EndFrame();

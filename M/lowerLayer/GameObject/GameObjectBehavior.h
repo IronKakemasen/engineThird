@@ -23,6 +23,8 @@ struct GameObjectBehavior
 	{
 		kShikoutei,
 		kExample,
+		Enemy,
+		Player,
 
 		kCount,
 		kNone,
@@ -84,20 +86,24 @@ public:
 	virtual void SetCollisionBackTable() = 0;
 
 	void SetStatus(Status dst_);
-	void SetNumber(int id_);
 	void SetIdentity(Tag tag_);
-	void ActivateOnTriggerEnter(Tag tag_);
 	void SetRectCollision(float width_, float height_, Vector3 centerPos_ = {});
+/<<<<<<< master
 	void SetCircleCollision(float radius_);
 	void SetCollisionBack(Tag tag_, std::function<void()> func_);
 
+/=======
+	void SwitchCollisionActivation(bool bool_);
+
+	void SetNumber(int id_);
+	void ActivateOnTriggerEnter(Tag tag_);
+/>>>>>>> sikodeve
 	bool IsCollisionMaskMatched(Identity* other_);
 	Identity* Getter_Identity();
 	bool HasRectCollider();
 	bool HasCircleCollider();
 	bool HasCollider();
 	std::string Getter_Name();
-	void SwitchCollisionActivation(bool bool_);
 	bool IsCollisionActivated();
 	void SetCollidedObjPtr(GameObjectBehavior* obj_);
 	GameObjectBehavior* Getter_ColObj();
