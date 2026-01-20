@@ -12,6 +12,12 @@ EnemyFactory::EnemyFactory()
 	appearance->color = { 255,0,0,255 };
 }
 
+void EnemyFactory::Reset()
+{
+	//モデルのリセット（中身が書いてあれば）
+	model->Reset();
+}
+
 void EnemyFactory::Init()
 {
 	// モデルの初期化
@@ -30,6 +36,12 @@ void EnemyFactory::Init()
 	collisionBackToPlayerBullet.Init(this);
 }
 
+void EnemyFactory::SetCollisionBackTable()
+{
+	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::PlayerBullet, collisionBackToPlayerBullet);
+}
+
 void EnemyFactory::Update()
 {
 	model->Update();
@@ -41,22 +53,10 @@ void EnemyFactory::Draw(Matrix4 * vpMat_)
 	model->Draw(vpMat_);
 }
 
-
-void EnemyFactory::SetCollisionBackTable()
-{
-	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::PlayerBullet, collisionBackToPlayerBullet);
-}
-
+// プレイヤー弾との衝突
 void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 {
 	me->SetStatus(Status::kInActive);
 }
 
-
-void EnemyFactory::Reset()
-{
-	//モデルのリセット（中身が書いてあれば）
-	model->Reset();
-}
 

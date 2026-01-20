@@ -8,6 +8,12 @@ Enemy::Enemy()
 	model.reset(new EnemyModel);
 }
 
+void Enemy::Reset()
+{
+	// モデルのリセット
+	model->Reset();
+}
+
 void Enemy::Init()
 {
 	// モデルの初期化
@@ -40,13 +46,6 @@ void Enemy::SetCollisionBackTable()
 	SetCollisionBack(Tag::PlayerTower, collisionBackToPlayerTower);
 }
 
-void Enemy::Reset()
-{
-	// モデルのリセット
-	model->Reset();
-}
-
-
 void Enemy::Update()
 {
 	//モデルの更新処理
@@ -59,17 +58,18 @@ void Enemy::Draw(Matrix4* vpMat_)
 	model->Draw(vpMat_);
 }
 
-
+// プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
 {
 }
-
+// プレイヤー弾との衝突
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
 	// 衝突したときの処理を書く
 	me->SetStatus(Status::kInActive);
 }
-
+// プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
 }
+

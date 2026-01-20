@@ -1,22 +1,31 @@
 #pragma once
 #include "GameObjectBehavior.h"
-#include "../../../Models/PlayerTowerModel/PlayerTowerModel.h"
+#include "../../../Models/PlayerAllyModel/PlayerAllyModel.h"
 
-class PlayerTower :public GameObject
+struct PlayerAlly :public GameObject
 {
 private:
-	//使用するモデル
-	std::unique_ptr<PlayerTowerModel> model;
+	// 使用するモデル
+	std::unique_ptr<PlayerAllyModel> model;
 
 	//コリジョンバック用の関数オブジェクト
 	struct CollisionBackToEnemy
 	{
-		PlayerTower* me = nullptr;
+		PlayerAlly* me = nullptr;
 		void operator()();
-		void Init(PlayerTower* object) { me = object; }
+		void Init(PlayerAlly* object) { me = object; }
 	};
-	// プレイヤー弾と衝突したときのコリジョンバック
+	// Enemyと衝突したときのコリジョンバック
 	CollisionBackToEnemy collisionBackToEnemy;
+
+
+	void SaveData();
+
+	float frameCount = 0;
+
+	Vector3 translate = { 0.0f,0.0f,0.0f };
+	Vector3 velocity = { 0.0f,0.0f,0.0f };
+	Vector3 acceleration = { 0.0f,0.0f,0.0f };
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -32,6 +41,7 @@ public:
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 
-	PlayerTower();
+
+	PlayerAlly();
 };
 

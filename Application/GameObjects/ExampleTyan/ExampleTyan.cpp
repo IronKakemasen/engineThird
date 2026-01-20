@@ -1,5 +1,7 @@
 #include "ExampleTyan.h"
 
+/*
+
 //コリジョンバックテーブルを設定
 void ExampleTyan::SetCollisionBackTable()
 {
@@ -51,3 +53,5 @@ ExampleTyan::ExampleTyan()
 	//モデルのインスタンス化
 	shikoModel.reset(new ShikouteiModel);
 }
+
+*/

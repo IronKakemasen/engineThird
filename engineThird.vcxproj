@@ -300,6 +300,9 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.cpp" />
+    <ClCompile Include="Application\Models\PlayerTowerModel\PlayerTowerModel.cpp" />
+    <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp" />
+    <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -317,6 +320,9 @@
     <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
     <ClInclude Include="Application\GameObjects\Player\PlayerTower\PlayerTower.h" />
     <ClInclude Include="Application\Models\PlayerModel\PlayerModel.h" />
+    <ClInclude Include="Application\Models\PlayerTowerModel\PlayerTowerModel.h" />
+    <ClInclude Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.h" />
+    <ClInclude Include="Application\Models\PlayerAllyModel\PlayerAllyModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

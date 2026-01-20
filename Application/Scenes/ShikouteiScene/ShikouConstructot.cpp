@@ -7,18 +7,29 @@ ShikouteiScene::ShikouteiScene()
 
 void ShikouteiScene::Instantiate()
 {
-	//至高帝のインスタンス化
-	shikoutei.reset(new Shikoutei);
-	// exampleちゃんのインスタンス化
-	exampleTyan.reset(new ExampleTyan);
 	// プレイヤーのインスタンス化
 	player.reset(new Player);
+	// プレイヤータワーのインスタンス化
+	playerTower.reset(new PlayerTower);
+	// エネミーのインスタンス化
+	for (auto& enemyInstance : enemies)
+	{
+		enemyInstance.reset(new Enemy);
+	}
+	// エネミータワーのインスタンス化
+	enemyTower.reset(new EnemyTower);
 	// エネミーファクトリーのインスタンス化
 	enemyFactory.reset(new EnemyFactory);
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(shikoutei.get(), exampleTyan.get(), player.get(), enemyFactory.get());
-
+	gameObjManager->RegisterForContainer(player.get());
+	for (auto& enemyInstance : enemies)
+	{
+		gameObjManager->RegisterForContainer(enemyInstance.get());
+	}
+	gameObjManager->RegisterForContainer(playerTower.get());
+	gameObjManager->RegisterForContainer(enemyTower.get());
+	gameObjManager->RegisterForContainer(enemyFactory.get());
 }
 
 void ShikouteiScene::Init()

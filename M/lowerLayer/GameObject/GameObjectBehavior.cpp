@@ -9,16 +9,13 @@ void GameObjectBehavior::SetIdentity(Tag tag_)
 
 	Identity identitiesTable[Tag::kCount]
 	{
-		Identity{"Shikoutei" ,tag_,no,    0x0000000f,0x00000ff0},
-		Identity{"Example" ,tag_,no,	  0x000000f0,0x0000000f},
-
-		Identity{"EnemyFactory" ,tag_,no, 0x00000f00,0x00f000ff},
-		Identity{"EnemyTower" ,tag_,no,   0x0000f000,0x00f000ff},
-		Identity{"Enemy" ,tag_,no,        0x000f0000,0xfff000ff},
-
-		Identity{"PlayerBullet" ,tag_,no, 0x00f00000,0x000fffff},
-		Identity{"Player" ,tag_,no,       0x0f000000,0x000f00ff},
-		Identity{"PlayerTower" ,tag_,no,  0xf0000000,0x000f00ff},
+		Identity{"Enemy" ,tag_,no,        0x0000000f,0x0ffff000},
+		Identity{"EnemyTower" ,tag_,no,   0x000000f0,0x0000f000},
+		Identity{"EnemyFactory" ,tag_,no, 0x00000f00,0x0000f000},
+		Identity{"Player" ,tag_,no,       0x0000f000,0x0000000f},
+		Identity{"PlayerTower" ,tag_,no,  0x000f0000,0x0000000f},
+		Identity{"PlayerBullet" ,tag_,no, 0x00f00000,0x00000fff},
+		Identity{"PlayerAlly" ,tag_,no,   0x0f000000,0x0000000f},
 	};
 
 	identitiesTable[(int)tag_].name = id + identitiesTable[(int)tag_].name;

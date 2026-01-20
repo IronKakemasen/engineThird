@@ -12,6 +12,12 @@ EnemyTower::EnemyTower()
 	appearance->color = { 255,0,0,255 };
 }
 
+void EnemyTower::Reset()
+{
+	//モデルのリセット（中身が書いてあれば）
+	model->Reset();
+}
+
 void EnemyTower::Init()
 {
 	// モデルの初期化
@@ -30,6 +36,12 @@ void EnemyTower::Init()
 	collisionBackToPlayerBullet.Init(this);
 }
 
+void EnemyTower::SetCollisionBackTable()
+{
+	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::PlayerBullet, collisionBackToPlayerBullet);
+}
+
 void EnemyTower::Update()
 {
 	model->Update();
@@ -41,22 +53,11 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 	model->Draw(vpMat_);
 }
 
-
-void EnemyTower::SetCollisionBackTable()
-{
-	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::PlayerBullet, collisionBackToPlayerBullet);
-}
-
+// プレイヤー弾との衝突
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
 {
 	me->SetStatus(Status::kInActive);
 }
 
 
-void EnemyTower::Reset()
-{
-	//モデルのリセット（中身が書いてあれば）
-	model->Reset();
-}
 
