@@ -1,5 +1,6 @@
 #include "Shikoutei.h"
 
+/*
 //コリジョンバックテーブルを設定
 void Shikoutei::SetCollisionBackTable()
 {
@@ -84,3 +85,4 @@ Shikoutei::Shikoutei()
 	appearance->color = { 255,0,0,255 };
 
 }
+*/
