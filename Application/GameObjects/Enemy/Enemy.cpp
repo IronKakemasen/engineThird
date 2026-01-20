@@ -99,7 +99,5 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	int tinpo = 7;
-	tinpo = tinpo;
 }
 

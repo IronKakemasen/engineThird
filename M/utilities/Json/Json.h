@@ -14,7 +14,7 @@ public:
 	/// <param name="key"> キー </param>
 	/// <param name="value"> 値 </param>
 	template<typename T>
-	static void AddParam(const std::string& path, const std::string& key, const T& value)
+	static void SaveParam(const std::string& path, const std::string& key, const T& value)
 	{
 		dataMap[path][key] = value;
 	}
@@ -28,7 +28,7 @@ public:
 	/// <param name="outValue"> 取得した値の出力先 </param>
 	/// <returns> 成否 </returns>
 	template<typename T>
-	static bool Load(const std::string& path, const std::string& key, T& outValue)
+	static bool LoadParam(const std::string& path, const std::string& key, T& outValue)
 	{
 		auto it = dataMap.find(path);
 		if (it == dataMap.end()) return false;

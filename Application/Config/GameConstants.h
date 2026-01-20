@@ -9,6 +9,15 @@ namespace GameConstants
 	// 最大味方数
 	inline constexpr size_t kMaxAllies = 10;
 
+	// 最大エネミータワー数
+	inline constexpr size_t kMaxEnemyTowers = 2;
+
+	// 最大エネミーファクトリー数
+	inline constexpr size_t kMaxEnemyFactories = 2;
+
+	// 最大プレイヤータワー数
+	inline constexpr size_t kMaxPlayerTowers = 2;
+
 	// エネミー速度
 	inline constexpr float kEnemySpeed = 0.1f;
 

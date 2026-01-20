@@ -1,4 +1,6 @@
 #include "EnemyFactory.h"
+#include "../Json/Json.h"
+#include "imgui.h"
 
 EnemyFactory::EnemyFactory()
 {
@@ -42,6 +44,18 @@ void EnemyFactory::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
+void EnemyFactory::LoadData()
+{
+	// Jsonからデータをロード
+	Json::LoadParam("./resource/application/json/enemy/enemyFactory.json", "position", trans.pos);
+}
+
+void EnemyFactory::SaveData()
+{
+	Json::SaveParam("./resource/application/json/enemy/enemyFactory.json", "position", trans.pos);
+	Json::Save("./resource/application/json/enemy/enemyFactory.json");
+}
+
 void EnemyFactory::Update()
 {
 	model->Update();
@@ -51,6 +65,23 @@ void EnemyFactory::Draw(Matrix4 * vpMat_)
 {
 	//モデルの描画
 	model->Draw(vpMat_);
+}
+
+void EnemyFactory::DebugDraw()
+{
+#ifdef USE_IMGUI
+	
+	ImGui::DragFloat3("EnemyFactoryPos", &trans.pos.x, 0.1f);
+	if (ImGui::Button("Save"))
+	{
+		SaveData();
+	}
+	if (ImGui::Button("Load"))
+	{
+		LoadData();
+	}
+
+#endif // USE_IMGUI
 }
 
 // プレイヤー弾との衝突

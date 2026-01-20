@@ -36,9 +36,9 @@ void Player::Init()
 	collisionBackToEnemy.Init(this);
 
 	// Jsonからデータをロード
-	//Json::Load("./resource/json/player/playerData.json");
-	//Json::Load("./resource/json/player/playerData.json", "position", trans.pos);
-	//Json::Load("./resource/json/player/playerData.json", "velocity", velocity);
+	//Json::Load("./resource/application/json/player/playerData.json");
+	//Json::SetParam("./resource/application/json/player/playerData.json", "position", trans.pos);
+	//Json::SetParam("./resource/application/json/player/playerData.json", "velocity", velocity);
 }
 
 void Player::SetCollisionBackTable()
@@ -129,7 +129,7 @@ uint32_t Player::GetNextEmptyAllyIndex()
 
 void Player::SaveData()
 {
-	//Json::AddParam("./resource/json/player/playerData.json", "position", trans.pos);
-	//Json::AddParam("./resource/json/player/playerData.json", "velocity", velocity);
-	//Json::Save("./resource/json/player/playerData.json");
+	//Json::AddParam("./resource/application/json/player/playerData.json", "position", trans.pos);
+	//Json::AddParam("./resource/application/json/player/playerData.json", "velocity", velocity);
+	//Json::Save("./resource/application/json/player/playerData.json");
 }

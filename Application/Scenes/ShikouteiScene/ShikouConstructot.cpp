@@ -1,4 +1,5 @@
 #include "ShikouteiScene.h"
+#include "../../utilities/Json/Json.h"
 
 ShikouteiScene::ShikouteiScene()
 {
@@ -10,7 +11,8 @@ void ShikouteiScene::Instantiate()
 	// プレイヤーのインスタンス化
 	player.reset(new Player);
 	// プレイヤータワーのインスタンス化
-	playerTower.reset(new PlayerTower);
+	for (auto& playerTower : playerTowers)
+		playerTower.reset(new PlayerTower);
 	// プレイヤーアリーのインスタンス化
 	for (auto& ally : allies)
 		ally.reset(new PlayerAlly);
@@ -18,9 +20,11 @@ void ShikouteiScene::Instantiate()
 	for (auto& enemyInstance : enemies)
 		enemyInstance.reset(new Enemy);
 	// エネミータワーのインスタンス化
-	enemyTower.reset(new EnemyTower);
+	for (auto& enemyTower : enemyTowers)
+		enemyTower.reset(new EnemyTower);
 	// エネミーファクトリーのインスタンス化
-	enemyFactory.reset(new EnemyFactory);
+	for (auto& enemyFactory : enemyFactories)
+		enemyFactory.reset(new EnemyFactory);
 
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
@@ -29,9 +33,12 @@ void ShikouteiScene::Instantiate()
 		gameObjManager->RegisterForContainer(enemyInstance.get());
 	for (auto& ally : allies)
 		gameObjManager->RegisterForContainer(ally.get());
-	gameObjManager->RegisterForContainer(playerTower.get());
-	gameObjManager->RegisterForContainer(enemyTower.get());
-	gameObjManager->RegisterForContainer(enemyFactory.get());
+	for (auto& playerTower : playerTowers)
+		gameObjManager->RegisterForContainer(playerTower.get());
+	for (auto& enemyTower : enemyTowers)
+		gameObjManager->RegisterForContainer(enemyTower.get());
+	for (auto& enemyFactory : enemyFactories)
+		gameObjManager->RegisterForContainer(enemyFactory.get());
 
 	// ポインタを渡す
 	for (auto& enemyInstance : enemies)
@@ -66,4 +73,6 @@ void ShikouteiScene::Init()
 	//アトラス画像に対応させる
 	atlasNumber.ToAtlas(10);
 	
+	// resource/application/json からデータをロード
+	Json::LoadAll("./resource/application/json/");
 }

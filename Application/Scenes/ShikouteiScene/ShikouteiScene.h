@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBehavior.h"
 #include <array>
+#include <vector>
 #include "../../Config/GameConstants.h"
 #include "../../GameObjects/Shikoutei/Shikoutei.h"
 #include "../../GameObjects/ExampleTyan/ExampleTyan.h"
@@ -23,11 +24,11 @@ class ShikouteiScene final : public Scene
 
 	//使用するゲームオブジェクト
 	std::unique_ptr<Player> player;
-	std::unique_ptr<PlayerTower> playerTower;
+	std::array<std::unique_ptr<PlayerTower>, GameConstants::kMaxPlayerTowers> playerTowers;
 	std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies> allies;
 	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
-	std::unique_ptr<EnemyTower> enemyTower;
-	std::unique_ptr<EnemyFactory> enemyFactory;
+	std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers> enemyTowers;
+	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
 
 
 	MQuad quad;

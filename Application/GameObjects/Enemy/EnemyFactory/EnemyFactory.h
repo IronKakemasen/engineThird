@@ -4,6 +4,14 @@
 
 struct EnemyFactory :public GameObject
 {
+public:
+	void DebugDraw();
+
+
+private:
+	void LoadData();
+	void SaveData();
+
 private:
 	//使用するモデル
 	std::unique_ptr<EnemyFactoryModel> model;
