@@ -102,7 +102,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.cpp">
@@ -456,6 +456,36 @@
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\GameObjects\Player\Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\utilities\Json\Json.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Player\PlayerTower\PlayerTower.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Models\EnemyModel\EnemyModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Models\PlayerModel\PlayerModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Models\EnemyTowerModel\EnemyTowerModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -469,6 +499,13 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp">
+    <ClCompile Include="Application\Models\PlayerTowerModel\PlayerTowerModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -557,7 +594,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\material\material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\MaterialForLine\MaterialForLine.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\materialForLine\MaterialForLine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\VertexForLine\VertexForLine.h">
@@ -902,6 +939,36 @@
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Application\GameObjects\Player\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\utilities\Json\Json.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Player\PlayerTower\PlayerTower.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Models\EnemyModel\EnemyModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Models\PlayerModel\PlayerModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Models\EnemyTowerModel\EnemyTowerModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -915,6 +982,13 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h">
+    <ClInclude Include="Application\Models\PlayerTowerModel\PlayerTowerModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Models\PlayerAllyModel\PlayerAllyModel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

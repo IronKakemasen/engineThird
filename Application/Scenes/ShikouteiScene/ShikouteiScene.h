@@ -1,8 +1,19 @@
 #pragma once
 #include "SceneBehavior.h"
+#include <array>
 #include"../../GameObjects/Shikoutei/Shikoutei.h"
 #include"../../GameObjects/ExampleTyan/ExampleTyan.h"
+
+#include "../../GameObjects/Player/Player.h"
+#include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
+#include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../GameObjects/Enemy/Enemy.h"
+#include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
+#include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
+
+
 #include "../../Cameras/MainCamera/MainCamera.h"
+
 
 class ShikouteiScene final : public Scene
 {
@@ -10,8 +21,12 @@ class ShikouteiScene final : public Scene
 	MainCamera mainCamera;
 
 	//使用するゲームオブジェクト
-	std::unique_ptr<Shikoutei> shikoutei;
-	std::unique_ptr<ExampleTyan> exampleTyan;
+	std::unique_ptr<Player> player;
+	std::unique_ptr<PlayerTower> playerTower;
+	std::array<std::unique_ptr<Enemy>, 10> enemies;
+	std::unique_ptr<EnemyTower> enemyTower;
+	std::unique_ptr<EnemyFactory> enemyFactory;
+
 
 	MQuad quad;
 	Sprite sprite;
