@@ -19,7 +19,6 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 		sizeof(Vertex) * resMeshes->vertices.size());
 	meshForModel->vertexBuffer.buffer->Unmap(0, nullptr);
 
-
 	// インデックスデータのサイズ
 	UINT sizeOfIndexBuffer = static_cast<UINT>(sizeof(uint32_t) * resMeshes->indices.size());
 	// インデックスバッファ生成
@@ -32,7 +31,6 @@ void ModelSimple::CreateMesh(ID3D12Device* device_,int meshIndex_)
 	std::memcpy(meshForModel->indexMap, resMeshes->indices.data(),
 		sizeof(uint32_t) * resMeshes->indices.size());
 	meshForModel->indexBuffer.buffer->Unmap(0, nullptr);
-
 
 	// ワールド行列バッファ生成
 	meshForModel->transformMatrixBuffer.matrix.CreateAndMapping(device_);
