@@ -12,21 +12,24 @@ void ShikouteiScene::Instantiate()
 	// プレイヤータワーのインスタンス化
 	playerTower.reset(new PlayerTower);
 	// エネミーのインスタンス化
-	enemy.reset(new Enemy);
+	for (auto& enemyInstance : enemies)
+	{
+		enemyInstance.reset(new Enemy);
+	}
 	// エネミータワーのインスタンス化
 	enemyTower.reset(new EnemyTower);
 	// エネミーファクトリーのインスタンス化
 	enemyFactory.reset(new EnemyFactory);
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(
-		player.get(), 
-		enemy.get(), 
-		enemyFactory.get(), 
-		playerTower.get(),
-		enemyTower.get()
-	);
-
+	gameObjManager->RegisterForContainer(player.get());
+	for (auto& enemyInstance : enemies)
+	{
+		gameObjManager->RegisterForContainer(enemyInstance.get());
+	}
+	gameObjManager->RegisterForContainer(playerTower.get());
+	gameObjManager->RegisterForContainer(enemyTower.get());
+	gameObjManager->RegisterForContainer(enemyFactory.get());
 }
 
 void ShikouteiScene::Init()

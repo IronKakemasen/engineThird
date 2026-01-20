@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBehavior.h"
+#include <array>
 #include"../../GameObjects/Shikoutei/Shikoutei.h"
 #include"../../GameObjects/ExampleTyan/ExampleTyan.h"
 
