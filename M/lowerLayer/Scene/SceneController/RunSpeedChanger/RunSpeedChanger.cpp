@@ -38,7 +38,10 @@ void RunSpeedChanger::ForDebug::GuiAdd_ChangeRunSpeed(int* runSpeed_)
 
 void RunSpeedChanger::AddDebug()
 {
+#ifdef DEBUG
 	forDebug.GuiAdd_ChangeRunSpeed(&runSpeed);
+#endif // DEBUG
+
 }
 
 RunSpeedChanger::RunSpeedChanger()

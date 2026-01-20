@@ -1,5 +1,6 @@
 #include "PlayerAlly.h"
 #include "imgui.h"
+#include "../../../GameObjects/Player/Player.h"
 
 
 PlayerAlly::PlayerAlly()
@@ -31,7 +32,6 @@ void PlayerAlly::Init()
 	collisionBackToEnemy.Init(this);
 
 
-	trans.pos.z = 1.0f;
 }
 
 void PlayerAlly::SetCollisionBackTable()
@@ -44,6 +44,9 @@ void PlayerAlly::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+	// 移動処理
+	Move();
 }
 
 void PlayerAlly::Draw(Matrix4* vpMat_)
@@ -51,6 +54,16 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 	// モデルの描画
 	model->Draw(vpMat_);
 }
+
+
+void PlayerAlly::Move()
+{
+	Vector3 targetPos = targetPlayer->GetAllyTargetPos(targetPlayer->GetNextEmptyAllyIndex());
+
+	trans.pos = targetPos;
+}
+
+
 
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()

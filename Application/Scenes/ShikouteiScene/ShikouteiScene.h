@@ -24,7 +24,7 @@ class ShikouteiScene final : public Scene
 	//使用するゲームオブジェクト
 	std::unique_ptr<Player> player;
 	std::unique_ptr<PlayerTower> playerTower;
-	std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxEnemies> allies;
+	std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies> allies;
 	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
 	std::unique_ptr<EnemyTower> enemyTower;
 	std::unique_ptr<EnemyFactory> enemyFactory;

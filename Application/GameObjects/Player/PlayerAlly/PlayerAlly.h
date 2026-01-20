@@ -2,8 +2,19 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerAllyModel/PlayerAllyModel.h"
 
+struct Player;
+
 struct PlayerAlly :public GameObject
 {
+public:
+	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
+
+
+private:
+	Player* targetPlayer = nullptr;
+
+	void Move();
+
 private:
 	// 使用するモデル
 	std::unique_ptr<PlayerAllyModel> model;
