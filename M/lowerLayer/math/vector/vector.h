@@ -43,6 +43,11 @@ struct Vector3
 	float GetCos(Vector3 other_);
 	//内積を計算して返す
 	float GetDot(Vector3 other_);
+	//比較結果をゲット
+	bool IsBigger(float num_);
+	bool IsBigger(Vector3 other_);
+
+
 	Vector3 GetCross(Vector3 other);
 
 };

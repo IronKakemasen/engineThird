@@ -4,6 +4,7 @@
 #include "../../M.h"
 #include "../FwdScenes.h"
 #include "./UglyGrid/UglyGrid.h"
+#include "PointLight.h"
 
 
 void SceneController::Draw()
@@ -45,6 +46,10 @@ void SceneController::Debug()
 			Getter_Parameters()->trans.lookDir;
 	}
 
+	forDebug.p->Getter_Para()->pos = 
+		axisModel->model->Getter_Appearance(0)->trans.GetWorldPos();
+	forDebug.p->Getter_Para()->pos.z -= 1.5f;
+
 	static float fps;
 	fps = ImGui::GetIO().Framerate;
 
@@ -75,10 +80,19 @@ void SceneController::Debug()
 	}
 
 	ImGui::Text(GetName(runningScene).c_str());
-	ImGui::Text("FPS : %.2f ", fps); //ImGui::SameLine();
+	ImGui::Text("FPS : %.2f ", fps); 
 	ImGui::Text("GridLine : "); ImGui::SameLine();
 	ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
 	runSpeedChanger.AddDebug();
+
+	if (ImGui::TreeNode("DirectionalLight"))
+	{
+		ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->color), 0.01f);
+		ImGui::DragFloat("intensity", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->intensity), 0.1f);
+		ImGui::TreePop();
+	}
+
 	ImGui::End();
 
 	cur_Scene->gameObjManager->Debug();
@@ -141,6 +155,14 @@ void SceneController::Init(SceneType firstScene_)
 	}
 
 	axisModel->Init(nullptr);
+
+#ifdef _DEBUG
+	forDebug.p = M::GetInstance()->ImportPointLight();
+	forDebug.p->Getter_Para()->isActive = true;
+	forDebug.p->Getter_Para()->invSqrRadius = 200.0f;
+	forDebug.p->Getter_Para()->color = { 200,200,50 };
+#endif // _DEBUG
+
 
 }
 

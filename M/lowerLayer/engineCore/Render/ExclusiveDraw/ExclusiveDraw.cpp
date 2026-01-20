@@ -31,7 +31,8 @@ void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3
 		Vector3 st = { cosf(stRad), sinf(stRad) ,0.0f};
 		Vector3 ed = { cosf(edRad), sinf(edRad) ,0.0f };
 
-		Matrix4 rtMat = Get_SRTMat3D({ radius_,radius_,1.0f }, rotation_, center_);
+		float tmp = radius_ * 0.7f;
+		Matrix4 rtMat = Get_SRTMat3D({ tmp ,tmp ,1.0f }, rotation_, center_);
 
 		st = st.GetMultiply(rtMat);
 		ed = ed.GetMultiply(rtMat);

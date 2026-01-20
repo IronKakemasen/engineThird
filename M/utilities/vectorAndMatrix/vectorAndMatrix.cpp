@@ -379,6 +379,11 @@ Vector3 ConvertToRectangularCoordinate(Vector3& sphereCoord_)
 
 Vector4 GetQuaternion(Vector3 v_, float deltaTheta_)
 {
+	if (deltaTheta_ == 0.0f)
+	{
+		return { 0,0,0,1 };
+	}
+
 	float const degreeConverter = CommonV::kPi / 180.0f;
 	float radian = deltaTheta_ * degreeConverter;
 	Vector3 buff = v_.GetNormalized();
