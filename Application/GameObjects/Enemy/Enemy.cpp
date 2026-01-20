@@ -70,7 +70,7 @@ void Enemy::Update()
 	}
 
 	// 移動
-	trans.pos = trans.pos + finalDir * GameConstants::kEnemySpeed;
+	trans.pos = trans.pos + (finalDir * GameConstants::kEnemySpeed);
 
 	//モデルの更新処理
 	model->Update();
@@ -86,12 +86,14 @@ void Enemy::Draw(Matrix4* vpMat_)
 void Enemy::CollisionBackToPlayer::operator()()
 {
 }
+
 // プレイヤー弾との衝突
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
 	// 衝突したときの処理を書く
 	me->SetStatus(Status::kInActive);
 }
+
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
