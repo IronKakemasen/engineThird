@@ -4,19 +4,19 @@
 #include "../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 #include "../Buffer/PostEffectBuffer/PostEffectBuffer.h"
 
-class TextureSrvCreator;
-class PostEffectSrvCreator;
+class TextureSrCreator;
+class PostEffectSrCreator;
 
 class TextureDataManager
 {
-	TextureSrvCreator* textureSrvCreator = nullptr;
-	PostEffectSrvCreator* postEffectSrvCreator = nullptr;
+	TextureSrCreator* textureSrvCreator = nullptr;
+	PostEffectSrCreator* postEffectSrCreator = nullptr;
 	std::vector<ShaderBuffer> data;
-	std::vector<PostEffectBuffer> postEffectBufferData;
+	std::vector<std::unique_ptr<PostEffectBuffer>> postEffectBufferContaier;
 
 public:
 
-	void Init(TextureSrvCreator* textureSrvCreator_, PostEffectSrvCreator* postEffectSrvCreator_);
+	void Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_);
 	int CreateTextureFromFile(std::string filePath_);
 	PostEffectBuffer* CreatePostEffectBuffer();
 };

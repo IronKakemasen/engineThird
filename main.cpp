@@ -13,7 +13,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ResourceLeakChecker r;
 #endif // DEBUG
 
-
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
 
 	std::unique_ptr<SceneController> sceneController = 

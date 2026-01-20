@@ -68,7 +68,7 @@ bool WinApp::InitD3D()
 	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&commandControl , &shaderBufferData);
 
 	//textureDataManager,textureDataCreatorの初期化
-	textureDataManager.Init(srvCreator.Getter_TextureSrvCreator(), srvCreator.Getter_PostEffectSrvCreator());
+	textureDataManager.Init(srvCreator.Getter_TextureSrCreator(), srvCreator.Getter_PostEffectSrCreator());
 
 	//meshCreatorの初期化
 	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),

@@ -6,6 +6,14 @@
 #include "imgui.h"
 #endif // USE_IMGUI
 
+void CameraController::DrawDebugUI(Matrix4* orthoMat_)
+{
+	if (cur_camera.second == "debugCamera")
+	{
+		sprite_debug.Draw(orthoMat_);
+	}
+}
+
 void CameraController::Debug()
 {
 
@@ -50,6 +58,10 @@ void CameraController::Debug()
 
 	ImGui::End();
 
+	Vector3 cameraDir = cur_camera.first->Getter_Parameters()->trans.lookDir;
+	sprite_debug.GetAppearance()->trans.lookDir = 
+	{ cameraDir.x, cameraDir.y ,cameraDir.z };
+
 #endif // USE_IMGUI
 
 }
@@ -59,7 +71,13 @@ CameraController::CameraController()
 	debugCamera.reset(new DebugCamera);
 	RegisterForContainer("debugCamera", debugCamera.get());
 	preCamera = std::make_pair(debugCamera.get(), "debugCamera");
+	sprite_debug.Initialize(48, 48,{ CommonV::kWindow_W * 0.5f,CommonV::kWindow_H * 0.5f,0.0f }, 
+		M::GetInstance()->GetTexIndex(TextureTag::kCursorImage),{255,255,255,80});
+	sprite_debug.GetAppearance()->blendMode = BlendMode::kBlendModeAdd;
+	sprite_debug.GetAppearance()->cullMode = CullMode::kCullModeNone;
+
 }
+
 
 void CameraController::OverrideCameraBufferParameters()
 {
@@ -125,8 +143,3 @@ void CameraController::QuickChange()
 
 }
 
-//if (ImGui::TreeNode((*itr)->Getter_Name().c_str()))
-//{
-//	ImGui::DragFloat3("pos", reinterpret_cast<float*>(&(*itr)->Getter_Trans()->pos), 0.1f);
-//	ImGui::TreePop();
-//}

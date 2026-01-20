@@ -149,6 +149,7 @@
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
     <ClCompile Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.cpp" />
@@ -273,7 +274,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp" />
@@ -298,7 +299,7 @@
     <ClCompile Include="Application\GameObjects\Player\PlayerTower\PlayerTower.cpp" />
     <ClCompile Include="Application\Models\PlayerModel\PlayerModel.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.cpp" />
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.cpp" />
     <ClCompile Include="Application\Models\PlayerTowerModel\PlayerTowerModel.cpp" />
     <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp" />
@@ -309,6 +310,7 @@
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
     <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.h" />
     <ClInclude Include="Application\Models\EnemyFactoryModel\EnemyFactoryModel.h" />
@@ -442,7 +444,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.h" />
@@ -466,7 +468,7 @@
     <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.h" />
     <ClInclude Include="Application\GameObjects\Player\Player.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.h" />
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.h" />
   </ItemGroup>
   <ItemGroup>
