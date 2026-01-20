@@ -39,6 +39,12 @@ void ShikouteiScene::Instantiate()
 		enemyInstance->SetTargetPlayer(player.get());
 		enemyInstance->SetTargetTower(playerTower.get());
 	}
+
+	for (auto& ally : allies)
+	{
+		ally->SetTargetPlayer(player.get());
+	}
+
 }
 
 void ShikouteiScene::Init()
