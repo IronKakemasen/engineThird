@@ -21,11 +21,14 @@ void Player::Init()
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::Player);
+	SetIdentity(Tag::kPlayer);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// collisionBackの初期化
+	collisionBackToEnemy.Init(this);
 
 	// Jsonからデータをロード
 	Json::Load("./resource/json/player/playerData.json");
@@ -36,7 +39,7 @@ void Player::Init()
 void Player::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::Enemy, collisionBackToEnemy);
+	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
 void Player::Update()
@@ -54,22 +57,21 @@ void Player::Update()
 		SaveData();
 	}
 
-	if (M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT))
+	if (M::GetInstance()->IsKeyPressed(KeyType::A))
 	{
 		translate.x -= 0.1f;
 	}
-	if (M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT))
+	if (M::GetInstance()->IsKeyPressed(KeyType::D))
 	{
 		translate.x += 0.1f;
 	}
-	if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
+	if (M::GetInstance()->IsKeyPressed(KeyType::W))
 	{
-		translate.y += 0.1f;
-		M::GetInstance()->getPadState.SetVibration(0, 0.0f, 0.0f);
+		translate.z += 0.1f;
 	}
-	if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
+	if (M::GetInstance()->IsKeyPressed(KeyType::S))
 	{
-		translate.y -= 0.1f;
+		translate.z -= 0.1f;
 		M::GetInstance()->getPadState.SetVibration(0, 1.0f, 1.5f);
 	}
 

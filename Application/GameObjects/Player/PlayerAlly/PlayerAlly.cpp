@@ -21,7 +21,7 @@ void PlayerAlly::Init()
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::PlayerAlly);
+	SetIdentity(Tag::kPlayerAlly);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
@@ -37,7 +37,7 @@ void PlayerAlly::Init()
 void PlayerAlly::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::Enemy, collisionBackToEnemy);
+	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
 void PlayerAlly::Update()

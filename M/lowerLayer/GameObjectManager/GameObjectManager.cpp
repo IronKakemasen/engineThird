@@ -93,7 +93,7 @@ void GameObjectManager::Debug()
 
 	if (selec == 0)
 	{
-		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 100), ImGuiWindowFlags_NoTitleBar);
+		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 250), ImGuiWindowFlags_NoTitleBar);
 
 		for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 		{

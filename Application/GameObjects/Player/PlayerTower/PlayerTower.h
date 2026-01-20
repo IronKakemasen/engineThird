@@ -2,7 +2,7 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerTowerModel/PlayerTowerModel.h"
 
-class PlayerTower :public GameObject
+struct PlayerTower :public GameObject
 {
 private:
 	//使用するモデル

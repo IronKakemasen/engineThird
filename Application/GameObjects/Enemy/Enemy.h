@@ -1,10 +1,23 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../Models/EnemyModel/EnemyModel.h"
+#include "../../Config/GameConstants.h"
+
+struct Player;
+struct PlayerTower;
 
 struct Enemy :public GameObject
 {
 private:
+	PlayerTower* targetTower = nullptr;
+	Player* targetPlayer = nullptr;
+
+public:
+	void SetTargetTower(PlayerTower* tower_) { targetTower = tower_; };
+	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
+
+private:
+
 	// 使用するモデル
 	std::unique_ptr<EnemyModel> model;
 
@@ -46,6 +59,7 @@ private:
 	CollisionBackToPlayerAlly collisionBackToPlayerAlly;
 
 public:
+
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 
 	// 更新処理 (GameObject::StateがinActiveの場合は呼び出されない)

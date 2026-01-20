@@ -21,14 +21,14 @@ struct GameObjectBehavior
 	//ゲームオブジェクトのタグ。適宜追加
 	enum Tag
 	{
-		Enemy,
-		EnemyFactory,
-		EnemyTower,
+		kEnemy,
+		kEnemyFactory,
+		kEnemyTower,
 
-		Player,
-		PlayerBullet,
-		PlayerTower,
-		PlayerAlly,
+		kPlayer,
+		kPlayerBullet,
+		kPlayerTower,
+		kPlayerAlly,
 
 		kCount,
 		kNone,

@@ -1,8 +1,9 @@
 #pragma once
 #include "SceneBehavior.h"
 #include <array>
-#include"../../GameObjects/Shikoutei/Shikoutei.h"
-#include"../../GameObjects/ExampleTyan/ExampleTyan.h"
+#include "../../Config/GameConstants.h"
+#include "../../GameObjects/Shikoutei/Shikoutei.h"
+#include "../../GameObjects/ExampleTyan/ExampleTyan.h"
 
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
@@ -23,7 +24,8 @@ class ShikouteiScene final : public Scene
 	//使用するゲームオブジェクト
 	std::unique_ptr<Player> player;
 	std::unique_ptr<PlayerTower> playerTower;
-	std::array<std::unique_ptr<Enemy>, 10> enemies;
+	std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxEnemies> allies;
+	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
 	std::unique_ptr<EnemyTower> enemyTower;
 	std::unique_ptr<EnemyFactory> enemyFactory;
 

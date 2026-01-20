@@ -2,7 +2,7 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 
-class EnemyFactory :public GameObject
+struct EnemyFactory :public GameObject
 {
 private:
 	//使用するモデル
