@@ -60,8 +60,8 @@ bool CollisionDetections::C2D::ObjectAABB(Rect* thisRect_,Vector3 thisWorld_ ,
 
 bool CollisionDetections::C2D::CircleCollision(float lRad_, Vector3 lPos_, float rRad_, Vector3 rPos_)
 {
-	float mag = (lPos_ - rPos_).GetMagnitutde();
-	if (mag < (lRad_ + rRad_)) return true;
+	Vector3 diff = lPos_ - rPos_;
+	if (!diff.IsBigger(lRad_ + rRad_))return true;
 
 	return false;
 }

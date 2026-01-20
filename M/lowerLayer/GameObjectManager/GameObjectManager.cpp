@@ -226,28 +226,28 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
 		Vector3 otherWorldPos = otherObj->Getter_Trans()->GetWorldPos();
 
-		////さーくるコリジョン
-		//if (thisObj_->HasCircleCollider() && otherObj->HasCircleCollider())
-		//{ 
-		//	if (CollisionDetections::C2D::CircleCollision(
-		//		thisObj_->Getter_Circle()->radius, thisWorldPos,
-		//		otherObj->Getter_Circle()->radius, otherWorldPos))
-		//	{
-		//		thisObj_->SetCollidedObjPtr(otherObj);
-		//		thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-		//	}
-		//}
-		////クアッドコリジョン
-		//else if (thisObj_->HasRectCollider() && otherObj->HasRectCollider())
-		//{
-		//	if (CollisionDetections::C2D::ObjectAABB(
-		//		thisObj_->Getter_Rect(), thisWorldPos,
-		//		otherObj->Getter_Rect(), otherWorldPos))
-		//	{
-		//		thisObj_->SetCollidedObjPtr(otherObj);
-		//		thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
-		//	}
-		//}
+		//さーくるコリジョン
+		if (thisObj_->HasCircleCollider() && otherObj->HasCircleCollider())
+		{ 
+			if (CollisionDetections::C2D::CircleCollision(
+				thisObj_->Getter_Circle()->radius, thisWorldPos,
+				otherObj->Getter_Circle()->radius, otherWorldPos))
+			{
+				thisObj_->SetCollidedObjPtr(otherObj);
+				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+			}
+		}
+		//クアッドコリジョン
+		else if (thisObj_->HasRectCollider() && otherObj->HasRectCollider())
+		{
+			if (CollisionDetections::C2D::ObjectAABB(
+				thisObj_->Getter_Rect(), thisWorldPos,
+				otherObj->Getter_Rect(), otherWorldPos))
+			{
+				thisObj_->SetCollidedObjPtr(otherObj);
+				thisObj_->ActivateOnTriggerEnter(otherObj->Getter_Identity()->tag);
+			}
+		}
 
 
 	}
