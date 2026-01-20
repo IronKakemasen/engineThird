@@ -20,17 +20,20 @@ void PlayerTower::Init()
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::PlayerTower);
+	SetIdentity(Tag::kPlayerTower);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// collisionBackの初期化
+	collisionBackToEnemy.Init(this);
 }
 
 void PlayerTower::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::Enemy, collisionBackToEnemy);
+	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
 void PlayerTower::Update()

@@ -25,7 +25,7 @@ void EnemyTower::Init()
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::EnemyTower);
+	SetIdentity(Tag::kEnemyTower);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
 
@@ -39,7 +39,7 @@ void EnemyTower::Init()
 void EnemyTower::SetCollisionBackTable()
 {
 	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
-	SetCollisionBack(Tag::PlayerBullet, collisionBackToPlayerBullet);
+	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
 void EnemyTower::Update()
