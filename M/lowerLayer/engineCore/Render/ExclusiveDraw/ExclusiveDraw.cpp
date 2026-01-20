@@ -20,10 +20,10 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
 	Vector4 color_, Matrix4* vpMat_)
 {
-	float const div = 18.0f;
-	float const deg = 360.0f / div;
+	static float const div = 36.0f;
+	static float const deg = 360.0f / div;
 
-	for(float i = -2.0f;i< div; ++i)
+	for(float i = -2.0f;i< deg; ++i)
 	{
 		float stRad = GetRadian(div * i);
 		float edRad = GetRadian(div * (i + 1));

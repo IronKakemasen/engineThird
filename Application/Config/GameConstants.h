@@ -4,7 +4,7 @@
 namespace GameConstants
 {
 	// 最大エネミー数
-    inline constexpr std::size_t kMaxEnemies = 10;
+    inline constexpr std::size_t kMaxEnemies = 30;
 
 	// エネミー速度
 	inline constexpr float kEnemySpeed = 0.1f;

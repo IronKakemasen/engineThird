@@ -18,7 +18,7 @@ public:
 		TextureDataManager* textureDataManager_, CommandControl* commandControl_,
 		FenceControl* fenceControl_, IDXGISwapChain4* swapChain_);
 
-	std::unordered_map<std::wstring, ModelData> loadedModelMap;
+	std::unordered_map<std::wstring, ModelSimple*> loadedModelMap;
 
 private:
 	AllPipelineSet * allPipelineset = nullptr;
