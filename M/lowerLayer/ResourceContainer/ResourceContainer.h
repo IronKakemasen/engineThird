@@ -14,6 +14,8 @@ enum class TextureTag
 	kGridN,
 	kAtlasNumbers,
 	kOh,
+	kCursorImage,
+
 	kCount
 };
 

@@ -1,13 +1,13 @@
 #include "textureDataManager.h"
 #include "../DescriptorHeap/srvDescriptorHeap/srvDescriptorHeap.h"
-#include "../Buffer/gpuResources/Creator/SrvCreator/TextureSrvCreator/TextureSrvCreator.h"
+#include "../Buffer/gpuResources/Creator/SrvCreator/TextureSrCreator/TextureSrCreator.h"
 #include "../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
-#include "../Buffer/gpuResources/Creator/SrvCreator/PostEffectSrvCreator/PostEffectSrvCreator.h"
+#include "../Buffer/gpuResources/Creator/SrvCreator/PostEffectSrCreator/PostEffectSrCreator.h"
 
-void TextureDataManager::Init(TextureSrvCreator* textureSrvCreator_, PostEffectSrvCreator* postEffectSrvCreator_)
+void TextureDataManager::Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_)
 {
 	textureSrvCreator = textureSrvCreator_;
-	postEffectSrvCreator = postEffectSrvCreator_;
+	postEffectSrCreator = postEffectSrCreator_;
 }
 
 int TextureDataManager::CreateTextureFromFile( std::string filePath_)
@@ -18,8 +18,7 @@ int TextureDataManager::CreateTextureFromFile( std::string filePath_)
 
 PostEffectBuffer* TextureDataManager::CreatePostEffectBuffer()
 {
-	auto* dst = &postEffectBufferData.emplace_back();	
-	*dst->GetSrvHandle() = postEffectSrvCreator->CreateSRVForPostEffect(dst);
+	postEffectBufferContaier.emplace_back(postEffectSrCreator->Create());
 
-	return dst;
+	return postEffectBufferContaier.emplace_back(postEffectSrCreator->Create()).get();
 }

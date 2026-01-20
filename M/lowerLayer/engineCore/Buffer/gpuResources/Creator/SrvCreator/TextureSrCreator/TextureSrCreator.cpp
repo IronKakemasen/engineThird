@@ -1,4 +1,4 @@
-#include "TextureSrvCreator.h"
+#include "TextureSrCreator.h"
 #include "../../../../../../../utilities/convertString/convertString.h"
 #include "../../../../../Essential/BarrierControl/BarrierControl.h"
 #include "../../../../../Essential/CommandControl/CommandControl.h"
@@ -7,7 +7,7 @@
 #pragma comment(lib,"d3d12.lib")
 
 
-int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data)
+int TextureSrCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data)
 {
 	auto mipImages = LoadTextureFile(filePath_);
 	auto metaData = mipImages.GetMetadata();
@@ -30,7 +30,7 @@ int TextureSrvCreator::CreateShaderBufferFromFile(std::string filePath_, ShaderB
 }
 
 
-D3D12_SHADER_RESOURCE_VIEW_DESC TextureSrvCreator::CreateSRVDescFromTexture(
+D3D12_SHADER_RESOURCE_VIEW_DESC TextureSrCreator::CreateSRVDescFromTexture(
 	DXGI_FORMAT metaDataFormat_, size_t mipLevels_)
 {
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
@@ -45,7 +45,7 @@ D3D12_SHADER_RESOURCE_VIEW_DESC TextureSrvCreator::CreateSRVDescFromTexture(
 	return srvDesc;
 }
 
-void TextureSrvCreator::UploadTextureData(DirectX::ScratchImage const& mipImages_, ShaderBuffer* shaderBuffer_)
+void TextureSrCreator::UploadTextureData(DirectX::ScratchImage const& mipImages_, ShaderBuffer* shaderBuffer_)
 {
 	std::vector<D3D12_SUBRESOURCE_DATA> subresource;
 
@@ -75,7 +75,7 @@ void TextureSrvCreator::UploadTextureData(DirectX::ScratchImage const& mipImages
 
 
 //テクスチャを読み込むための関数
-DirectX::ScratchImage TextureSrvCreator::LoadTextureFile(std::string const& filePath_)
+DirectX::ScratchImage TextureSrCreator::LoadTextureFile(std::string const& filePath_)
 {
 	//テクスチャファイルを読み込んでプログラムで扱えるようにする
 	DirectX::ScratchImage image{};
@@ -99,12 +99,12 @@ DirectX::ScratchImage TextureSrvCreator::LoadTextureFile(std::string const& file
 	return mipImages;
 }
 
-TextureSrvCreator::TextureSrvCreator()
+TextureSrCreator::TextureSrCreator()
 {
 
 }
 
-void TextureSrvCreator::CreateTextureResourceFromMetaData(DirectX::TexMetadata& metaData_, ShaderBuffer* shaderBuffer_)
+void TextureSrCreator::CreateTextureResourceFromMetaData(DirectX::TexMetadata& metaData_, ShaderBuffer* shaderBuffer_)
 {
 	D3D12_RESOURCE_DESC resourceDesc{};
 

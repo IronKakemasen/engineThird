@@ -1,5 +1,5 @@
 #include "SrvCreator.h"
-#include "./TextureSrvCreator/TextureSrvCreator.h"
+#include "./TextureSrCreator/TextureSrCreator.h"
 #include "./ParticleMeshSrvCreator/ParticleMeshSrvCreator.h"
 
 

@@ -9,7 +9,9 @@ class PostEffectBuffer
 	ShaderBuffer shaderBuffer;
 	D3D12_CPU_DESCRIPTOR_HANDLE renderTargetHandle;
 	uint16_t srvHandle;
+
 public:
+	PostEffectBuffer() {};
 	ShaderBuffer* GetShaderBuffer();
 	D3D12_CPU_DESCRIPTOR_HANDLE* GetRtvHandle();
 	uint16_t* GetSrvHandle();

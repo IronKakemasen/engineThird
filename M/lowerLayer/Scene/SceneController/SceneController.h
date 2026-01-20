@@ -2,6 +2,7 @@
 #include "../../../utilities/benriTemplateFunc/benriTempFunc.h"
 #include "./RunSpeedChanger/RunSpeedChanger.h"
 #include "../FwdScenes.h"
+#include "./AxisModel/AxisModel.h"
 
 class SceneController
 {
@@ -22,6 +23,7 @@ private:
 	std::unique_ptr<TitleScene> titleScene;
 	std::unique_ptr<TutorialScene> tutorialScene;
 	std::unique_ptr<ModelScene> modelViewScene;
+	std::unique_ptr<AxisModel> axisModel;
 
 	//現在稼働しているシーン
 	SceneType runningScene;
@@ -60,7 +62,7 @@ private:
 	void Debug();
 	void Set(SceneType type_, Scene* scene_);
 	void Init(SceneType firstScene_);
-
+	void Draw();
 
 };
 

@@ -9,6 +9,11 @@ void Sprite::ResetTexcoord()
 	appearance.uvTrans.pos = { 0.5f,0.5f };
 }
 
+Appearance* Sprite::GetAppearance()
+{
+	return &appearance;
+}
+
 Sprite::Sprite()
 {
 	Sprite::count++;

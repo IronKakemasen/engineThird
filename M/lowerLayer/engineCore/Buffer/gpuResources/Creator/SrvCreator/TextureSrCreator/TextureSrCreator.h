@@ -5,7 +5,7 @@
 #include "../../../../../../../../external/DirectXTex/DirectXTex.h"
 
 
-class TextureSrvCreator:public SrvCreatorBehavior
+class TextureSrCreator:public SrvCreatorBehavior
 {
 	void CreateTextureResourceFromMetaData(DirectX::TexMetadata& metaData_, ShaderBuffer* shaderBuffer_);
 
@@ -18,7 +18,7 @@ class TextureSrvCreator:public SrvCreatorBehavior
 
 public:
 	int CreateShaderBufferFromFile(std::string filePath_, ShaderBuffer& data);
-	TextureSrvCreator();
+	TextureSrCreator();
 
 };
 

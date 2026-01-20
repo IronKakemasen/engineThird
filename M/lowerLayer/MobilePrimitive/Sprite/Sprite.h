@@ -30,6 +30,7 @@ public:
 		Vector2 rightBottom_ = { 0.5f,0.5f }, Vector2 leftBottom_ = { -0.5f,0.5f });
 
 	void ResetTexcoord();
+	Appearance* GetAppearance();
 
 };
 
