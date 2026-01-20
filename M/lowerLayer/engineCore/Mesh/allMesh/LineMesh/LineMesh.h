@@ -16,7 +16,7 @@ public:
 
 	enum MaxDraw
 	{
-		kLineMax = 2048 
+		kLineMax = 6000 
 	};
 
 	uint16_t maxDraw;
