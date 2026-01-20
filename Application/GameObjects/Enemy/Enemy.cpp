@@ -85,6 +85,8 @@ void Enemy::Draw(Matrix4* vpMat_)
 // プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
 {
+	
+
 }
 
 // プレイヤー弾との衝突
@@ -97,5 +99,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
+	int tinpo = 7;
+	tinpo = tinpo;
 }
 
