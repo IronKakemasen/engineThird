@@ -249,7 +249,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp">
@@ -462,10 +462,13 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.cpp">
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,7 +707,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h">
@@ -905,10 +908,13 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.h">
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,14 +6,47 @@
 #include "./UglyGrid/UglyGrid.h"
 
 
+void SceneController::Draw()
+{
+	SceneBehavior* cur_Scene = allScene[runningScene];
+
+	Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
+	Matrix4 orthoMat = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+
+	cur_Scene->Draw();
+	cur_Scene->gameObjManager->Render(vpMat);
+
+#ifdef _DEBUG
+	if (forDebug.doDrawGridLine)
+	{
+		UglyGrid::Draw(vpMat);
+		axisModel->Draw(vpMat);
+	}
+
+	cur_Scene->cameraController->DrawDebugUI(&orthoMat);
+
+	#endif
+
+
+}
+
 void SceneController::Debug()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
 #ifdef USE_IMGUI
+
+	axisModel->MakeAllPartsBeChildren(
+		&cur_Scene->cameraController->GetUsingCamera()->Getter_Parameters()->trans);
+	for (auto a = axisModel->model->Getter_Appearance()->begin();
+		a != axisModel->model->Getter_Appearance()->end(); ++a)
+	{
+		a->trans.lookDir = cur_Scene->cameraController->GetUsingCamera()->
+			Getter_Parameters()->trans.lookDir;
+	}
+
 	static float fps;
 	fps = ImGui::GetIO().Framerate;
-
 
 	ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);
 	
@@ -50,14 +83,8 @@ void SceneController::Debug()
 
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
-
 	cur_Scene->Debug();
 
-	if (forDebug.doDrawGridLine)
-	{
-		Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
-		UglyGrid::Draw(vpMat);
-	}
 
 #endif // USE_IMGUI
 
@@ -67,8 +94,6 @@ void SceneController::Update()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	Debug();
-
 	cur_Scene->cameraController->Update();
 
 	if (runSpeedChanger.AdjustRunSpeed())
@@ -77,11 +102,9 @@ void SceneController::Update()
 		cur_Scene->gameObjManager->Update();
 	}
 
-	Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
-	Matrix4 m = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
-	cur_Scene->gameObjManager->Render(vpMat);
+	Draw();
 
-	cur_Scene->Draw();
+	Debug();
 
 	ChangeScene();
 
@@ -116,6 +139,9 @@ void SceneController::Init(SceneType firstScene_)
 		scene->Init();
 		scene->gameObjManager->Init();
 	}
+
+	axisModel->Init(nullptr);
+
 }
 
 void SceneController::SetScenesToArray()
@@ -125,6 +151,7 @@ void SceneController::SetScenesToArray()
 	Set(kTitle, titleScene.get());
 	Set(kModelView, modelViewScene.get());
 	Set(kTutorial, tutorialScene.get());
+
 }
 
 void SceneController::InstantiateScenes()
@@ -134,6 +161,8 @@ void SceneController::InstantiateScenes()
 	titleScene.reset(new TitleScene);
 	tutorialScene.reset(new TutorialScene);
 	modelViewScene.reset(new ModelScene);
+	axisModel.reset(new AxisModel);
+
 }
 
 

@@ -149,6 +149,7 @@
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
+    <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.cpp" />
     <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.cpp" />
     <ClCompile Include="M\lowerLayer\Collision\Shape\Circle.cpp" />
@@ -266,7 +267,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.cpp" />
@@ -289,7 +290,7 @@
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.cpp" />
-    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.cpp" />
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +298,7 @@
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
     <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\MeshForPostEffect\MeshForPostEffect.h" />
     <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Atlas.h" />
     <ClInclude Include="M\lowerLayer\Collision\Shape\Circle.h" />
@@ -415,7 +417,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\meshStructure\TransformMatrix\TransformMatrix.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\TransformMatrixBuffer\TransformMatrixBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreatorBehavior.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrvCreator\TextureSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\TextureSrCreator\TextureSrCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\SrvCreator.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\StructuredBufferAndMap.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\TransformMatrixStructuredBuffer\TransformMatrixStructuredBuffer.h" />
@@ -438,7 +440,7 @@
     <ClInclude Include="Application\Scenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="M\lowerLayer\MobilePrimitive\Sprite\Sprite.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\PostEffectBuffer\PostEffectBuffer.h" />
-    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrvCreator\PostEffectSrvCreator.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.h" />
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.h" />
   </ItemGroup>
   <ItemGroup>

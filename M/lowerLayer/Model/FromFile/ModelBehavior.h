@@ -8,13 +8,14 @@ struct ModelBehavior
 {
 	std::unique_ptr<ModelSimple> model;
 
+	ModelBehavior();
+
 	virtual void Update() = 0;
 	virtual void Draw(Matrix4* vpMat_) = 0;
 	virtual void Init(Transform* gameObjectTrans_) = 0;
 	virtual void Reset() = 0;
-	void MakeAllPartsBeChildren(Transform* gameObject_);
 
-	ModelBehavior();
+	void MakeAllPartsBeChildren(Transform* gameObject_);
 
 };
 
