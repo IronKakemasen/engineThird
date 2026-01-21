@@ -37,6 +37,19 @@ Vector4 Quaternion::CreateQuaternion(Vector3 axis_, float theta_)
 	return quaternion;
 }
 
+Vector4 Quaternion::CreateQuaternion(Vector3 axis_, float radian_, bool rad )
+{
+	Vector3 buff = axis_.GetNormalized();
+	float halfRad = radian_ * CommonV::kHalf;
+	float sinNum = sinf(halfRad);
+
+	Vector4 quaternion = { buff.x * sinNum,buff.y * sinNum
+		,buff.z * sinNum ,cosf(halfRad) };
+
+	return quaternion;
+}
+
+
 Vector4 Quaternion::CreateQuaternion(Vector3 lookDir_)
 {
 	Vector3 z = lookDir_.GetNormalized();
