@@ -18,6 +18,12 @@ void EnemyFactory::Reset()
 {
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void EnemyFactory::Init()
@@ -44,16 +50,19 @@ void EnemyFactory::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
+// データ保存・読み込み
 void EnemyFactory::LoadData()
 {
-	// Jsonからデータをロード
-	Json::LoadParam("./resource/application/json/enemy/enemyFactory.json", "position", trans.pos);
-}
+	std::string key = "/ID:" + std::to_string(ID);
 
+	Json::LoadParam(path, key + "/position", trans.pos);
+}
 void EnemyFactory::SaveData()
 {
-	Json::SaveParam("./resource/application/json/enemy/enemyFactory.json", "position", trans.pos);
-	Json::Save("./resource/application/json/enemy/enemyFactory.json");
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::Save(path);
 }
 
 void EnemyFactory::Update()
@@ -71,12 +80,14 @@ void EnemyFactory::DebugDraw()
 {
 #ifdef USE_IMGUI
 	
-	ImGui::DragFloat3("EnemyFactoryPos", &trans.pos.x, 0.1f);
-	if (ImGui::Button("Save"))
+	std::string key = "##" + std::to_string(ID);
+
+	ImGui::DragFloat3((key + "position").c_str(), &trans.pos.x, 0.1f);
+	if (ImGui::Button((std::to_string(ID) + ":Save").c_str()))
 	{
 		SaveData();
 	}
-	if (ImGui::Button("Load"))
+	if (ImGui::Button((std::to_string(ID) + ":Load").c_str()))
 	{
 		LoadData();
 	}

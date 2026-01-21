@@ -9,8 +9,14 @@ PlayerTower::PlayerTower()
 
 void PlayerTower::Reset()
 {
-	// モデルのリセット
+	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void PlayerTower::Init()
@@ -34,6 +40,21 @@ void PlayerTower::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
+}
+
+// データ保存・読み込み
+void PlayerTower::LoadData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::LoadParam(path, key + "/position", trans.pos);
+}
+void PlayerTower::SaveData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::Save(path);
 }
 
 void PlayerTower::Update()

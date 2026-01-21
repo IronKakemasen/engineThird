@@ -17,6 +17,12 @@ void Player::Reset()
 	allyExistenceFlags.fill(false);
 	// posHistoryの初期化
 	posHistory.fill(Vector3(0.0f, 0.0f, 0.0f));
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void Player::Init()
@@ -34,11 +40,6 @@ void Player::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-	// Jsonからデータをロード
-	//Json::Load("./resource/application/json/player/playerData.json");
-	//Json::SetParam("./resource/application/json/player/playerData.json", "position", trans.pos);
-	//Json::SetParam("./resource/application/json/player/playerData.json", "velocity", velocity);
 }
 
 void Player::SetCollisionBackTable()
@@ -47,23 +48,44 @@ void Player::SetCollisionBackTable()
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
+// データ保存・読み込み
+void Player::LoadData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::LoadParam(path, key + "/position", trans.pos);
+	Json::LoadParam(path, key + "/velocity", velocity);
+}
+void Player::SaveData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::SaveParam(path, key + "/velocity", velocity);
+	Json::Save(path);
+}
+
+// 更新処理
 void Player::Update()
 {
 	//モデルの更新処理
 	model->Update();
 
+	// 移動処理
 	Move();
 
+	// 座標保存処理
 	SavePos();
 }
 
+// 描画処理
 void Player::Draw(Matrix4 * vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
 }
 
-// Enemyとの衝突
+// Enemyとの衝突処理
 void Player::CollisionBackToEnemy::operator()()
 {
 	// 自身の取得
@@ -72,7 +94,7 @@ void Player::CollisionBackToEnemy::operator()()
 }
 
 
-
+// 移動処理
 void Player::Move()
 {
 	isMoving = false;
@@ -100,9 +122,10 @@ void Player::Move()
 
 	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
 
-	trans.pos = trans.pos + moveDir * GameConstants::kPlayerSpeed;
+	trans.pos = trans.pos + moveDir * velocity;
 }
 
+// 座標保存処理
 void Player::SavePos()
 {
 	// 味方の存在フラグをリセット
@@ -116,20 +139,14 @@ void Player::SavePos()
 	if (headIndex >= posHistory.size()) { headIndex = 0; }
 }
 
+// 味方の目標座標を取得
 Vector3 Player::GetAllyTargetPos(size_t allyIndex)
 {
 	size_t index = headIndex + (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
 	return posHistory[index % posHistory.size()];
 }
-
+// 次に空いている味方のインデックスを取得
 uint32_t Player::GetNextEmptyAllyIndex()
 {
 	return emptyAllyIndex++;
-}
-
-void Player::SaveData()
-{
-	//Json::AddParam("./resource/application/json/player/playerData.json", "position", trans.pos);
-	//Json::AddParam("./resource/application/json/player/playerData.json", "velocity", velocity);
-	//Json::Save("./resource/application/json/player/playerData.json");
 }

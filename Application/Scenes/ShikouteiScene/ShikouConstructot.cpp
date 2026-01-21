@@ -8,24 +8,39 @@ ShikouteiScene::ShikouteiScene()
 
 void ShikouteiScene::Instantiate()
 {
-	// プレイヤーのインスタンス化
+	// プレイヤーのインスタンス化 & IDセット
 	player.reset(new Player);
-	// プレイヤータワーのインスタンス化
-	for (auto& playerTower : playerTowers)
-		playerTower.reset(new PlayerTower);
-	// プレイヤーアリーのインスタンス化
-	for (auto& ally : allies)
-		ally.reset(new PlayerAlly);
-	// エネミーのインスタンス化
-	for (auto& enemyInstance : enemies)
-		enemyInstance.reset(new Enemy);
-	// エネミータワーのインスタンス化
-	for (auto& enemyTower : enemyTowers)
-		enemyTower.reset(new EnemyTower);
-	// エネミーファクトリーのインスタンス化
-	for (auto& enemyFactory : enemyFactories)
-		enemyFactory.reset(new EnemyFactory);
-
+	player->SetID(0);
+	// プレイヤータワーのインスタンス化 & IDセット
+	for (size_t i = 0; i < playerTowers.size(); ++i)
+	{
+		playerTowers[i].reset(new PlayerTower);
+		playerTowers[i]->SetID(static_cast<int32_t>(i));
+	}
+	// プレイヤーアリーのインスタンス化 & IDセット
+	for (size_t i = 0; i < allies.size(); ++i)
+	{
+		allies[i].reset(new PlayerAlly);
+		allies[i]->SetID(static_cast<int32_t>(i));
+	}
+	// エネミーのインスタンス化 & IDセット
+	for (size_t i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i].reset(new Enemy);
+		enemies[i]->SetID(static_cast<int32_t>(i));
+	}
+	// エネミータワーのインスタンス化 & IDセット
+	for (size_t i = 0; i < enemyTowers.size(); ++i)
+	{
+		enemyTowers[i].reset(new EnemyTower);
+		enemyTowers[i]->SetID(static_cast<int32_t>(i));
+	}
+	// エネミーファクトリーのインスタンス化 & IDセット
+	for (size_t i = 0; i < enemyFactories.size(); ++i)
+	{
+		enemyFactories[i].reset(new EnemyFactory);
+		enemyFactories[i]->SetID(static_cast<int32_t>(i));
+	}
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
 	gameObjManager->RegisterForContainer(player.get());
@@ -44,14 +59,14 @@ void ShikouteiScene::Instantiate()
 	for (auto& enemyInstance : enemies)
 	{
 		enemyInstance->SetTargetPlayer(player.get());
-		enemyInstance->SetTargetTower(playerTower.get());
+		for (auto& playerTower : playerTowers)
+			enemyInstance->SetTargetTower(playerTower.get());
 	}
 
 	for (auto& ally : allies)
 	{
 		ally->SetTargetPlayer(player.get());
 	}
-
 }
 
 void ShikouteiScene::Init()

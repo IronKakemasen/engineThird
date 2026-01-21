@@ -30,10 +30,10 @@ class ShikouteiScene final : public Scene
 	std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers> enemyTowers;
 	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
 
-
 	MQuad quad;
 	Sprite sprite;
 	Sprite atlasNumber;
+
 public:
 	ShikouteiScene();
 

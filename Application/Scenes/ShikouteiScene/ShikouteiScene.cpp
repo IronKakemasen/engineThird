@@ -49,10 +49,20 @@ void ShikouteiScene::Debug()
 
 
 	ImGui::Begin("EnemyFactory");
-	enemyFactory->DebugDraw();
+	for (auto& factory : enemyFactories)
+	{
+		factory->DebugDraw();
+	}
 	ImGui::End();
+
+	//ImGui::Begin("EnemyFactory");
+	//auto drawList = ImGui::GetWindowDrawList();
+	//drawList->AddRectFilled(ImVec2(10, 10), ImVec2(110, 110), IM_COL32(255, 0, 0, 255));
+	//ImGui::End();
+
 
 #endif // USE_IMGUI
 
 }
+
 

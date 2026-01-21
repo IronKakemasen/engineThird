@@ -1,7 +1,7 @@
 #include "PlayerAlly.h"
 #include "imgui.h"
 #include "../../../GameObjects/Player/Player.h"
-
+#include "../../../M/utilities/Json/Json.h"
 
 PlayerAlly::PlayerAlly()
 {
@@ -11,8 +11,14 @@ PlayerAlly::PlayerAlly()
 
 void PlayerAlly::Reset()
 {
-	// モデルのリセット
+	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void PlayerAlly::Init()
@@ -30,14 +36,27 @@ void PlayerAlly::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-
 }
 
 void PlayerAlly::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
+}
+
+// データ保存・読み込み
+void PlayerAlly::LoadData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::LoadParam(path, key + "/position", trans.pos);
+}
+void PlayerAlly::SaveData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::Save(path);
 }
 
 void PlayerAlly::Update()
