@@ -2,6 +2,8 @@
 #include "imgui.h"
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
+#include "../../M/utilities/Json/Json.h"
+#include <array>
 
 Enemy::Enemy()
 {
@@ -11,8 +13,14 @@ Enemy::Enemy()
 
 void Enemy::Reset()
 {
-	// モデルのリセット
+	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void Enemy::Init()
@@ -32,9 +40,6 @@ void Enemy::Init()
 	collisionBackToPlayer.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
-
-
-	trans.pos.z = 1.0f;
 }
 
 void Enemy::SetCollisionBackTable()
@@ -47,39 +52,97 @@ void Enemy::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerTower, collisionBackToPlayerTower);
 }
 
+// データ保存・読み込み
+void Enemy::LoadData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::LoadParam(path, key + "/position", trans.pos);
+	Json::LoadParam(path, key + "/speed", speed);
+}
+void Enemy::SaveData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::SaveParam(path, key + "/speed", speed);
+	Json::Save(path);
+}
+
 void Enemy::Update()
+{
+	//モデルの更新処理
+	model->Update();
+
+	// 理想的な移動速度をセット
+	SetIdealVelocity();
+
+	// 移動
+	trans.pos = trans.pos + velocity;
+}
+
+void Enemy::SetIdealVelocity()
 {
 	// 自身の位置を取得
 	Vector3 myPos = trans.pos;
+
 	// ターゲットの位置を取得
-	Vector3 towerPos = targetTower->Getter_Trans()->pos;
+	std::array<Vector3, GameConstants::kMaxPlayerTowers> towerPositions{};
+	for (size_t i = 0; i < playerTowers.size(); ++i)
+		towerPositions[i] = playerTowers[i]->Getter_Trans()->pos;
 	Vector3 playerPos = targetPlayer->Getter_Trans()->pos;
+
 	// ターゲットまでの方向ベクトルを計算
-	Vector3 dirToTower = towerPos - myPos;
+	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
+	for (size_t i = 0; i < playerTowers.size(); ++i)
+		dirToTowers[i] = towerPositions[i] - myPos;
 	Vector3 dirToPlayer = playerPos - myPos;
+
 	// 最終的に向かう方向ベクトル
 	Vector3 finalDir = {};
 
+	// プレイヤーが近ければプレイヤーを追う
 	if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
 	{
 		finalDir = dirToPlayer.GetNormalized();
 	}
-	else
+	// 遠ければ最も近いタワーを追う
+	else if (playerTowers.size() > 0)
 	{
-		finalDir = dirToTower.GetNormalized();
+		// 最も近いタワーのインデックスを探す
+		size_t nearestTowerIndex = 0;
+		float nearestDistance = dirToTowers[0].GetMagnitutde();
+		for (size_t i = 1; i < playerTowers.size(); ++i)
+		{
+			float distance = dirToTowers[i].GetMagnitutde();
+			if (distance < nearestDistance)
+			{
+				nearestDistance = distance;
+				nearestTowerIndex = i;
+			}
+		}
+		finalDir = dirToTowers[nearestTowerIndex].GetNormalized();
 	}
 
 	// 移動
-	trans.pos = trans.pos + (finalDir * GameConstants::kEnemySpeed);
-
-	//モデルの更新処理
-	model->Update();
+	velocity = Vector3(0.0f, 0.0f, 0.0f);
+	velocity = finalDir * speed;
 }
 
 void Enemy::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
+}
+
+void Enemy::DebugDraw()
+{
+#ifdef USE_IMGUI
+
+	std::string tag = "##speed: " + std::to_string(speed);
+	ImGui::DragFloat(tag.c_str(), &speed, 0.01f, 0.0f, 10.0f);
+
+#endif // USE_IMGUI
 }
 
 // プレイヤーとの衝突
@@ -99,7 +162,5 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	int tinpo = 7;
-	tinpo = tinpo;
 }
 

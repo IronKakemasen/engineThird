@@ -8,6 +8,12 @@ std::unordered_map<std::string, nlohmann::json> Json::dataMap;
 
 bool Json::Load(const std::string& path)
 {
+    if (dataMap.find(path) != dataMap.end())
+    {
+        // すでに読み込まれている場合はスキップ
+        return true;
+	}
+
     std::ifstream ifs(path);
     if (!ifs.is_open())
     {
@@ -24,7 +30,9 @@ bool Json::Load(const std::string& path)
 
 void Json::LoadAll(const std::string& directoryPath)
 {
-    for (const auto& entry : std::filesystem::directory_iterator(directoryPath))
+    std::filesystem::create_directories(directoryPath);
+    
+    for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
     {
         if (entry.path().extension() == ".json")
         {

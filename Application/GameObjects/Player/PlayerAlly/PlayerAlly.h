@@ -6,14 +6,41 @@ struct Player;
 
 struct PlayerAlly :public GameObject
 {
-public:
-	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
-
+#pragma region 独自部位
 
 private:
 	Player* targetPlayer = nullptr;
 
 	void Move();
+
+public:
+	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
+
+#pragma	endregion
+
+#pragma region 共通部位
+
+public:
+	// データの読み込み・保存
+	void LoadData();
+	void SaveData();
+
+	// IDのセット
+	void SetID(int32_t id_) { ID = id_; }
+
+	// デバッグ描画
+	void DebugDraw();
+
+private:
+	// ID
+	int32_t ID = -1;
+
+	// Json保存パス
+	std::string path = "./resource/application/json/player/playerAllyData.json";
+
+#pragma endregion
+
+#pragma region 基盤部位
 
 private:
 	// 使用するモデル
@@ -29,14 +56,6 @@ private:
 	// Enemyと衝突したときのコリジョンバック
 	CollisionBackToEnemy collisionBackToEnemy;
 
-
-	void SaveData();
-
-	float frameCount = 0;
-
-	Vector3 translate = { 0.0f,0.0f,0.0f };
-	Vector3 velocity = { 0.0f,0.0f,0.0f };
-	Vector3 acceleration = { 0.0f,0.0f,0.0f };
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -54,5 +73,7 @@ public:
 
 
 	PlayerAlly();
+
+#pragma endregion
 };
 

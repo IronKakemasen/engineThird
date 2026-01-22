@@ -2,22 +2,58 @@
 #include "GameObjectBehavior.h"
 #include "../../Models/EnemyModel/EnemyModel.h"
 #include "../../Config/GameConstants.h"
+#include <span>
 
 struct Player;
 struct PlayerTower;
 
 struct Enemy :public GameObject
 {
+#pragma region 独自部位
+
 private:
-	PlayerTower* targetTower = nullptr;
+	// 理想敵な移動速度(攻撃・ノックバック等を受けなかった時)
+	void SetIdealVelocity();
+
+	Vector3 velocity = { 0.0f,0.0f,0.0f };
+	float speed = 0.05f;
+
+	// 参照ポインタ
+	std::vector<PlayerTower*> playerTowers{};
 	Player* targetPlayer = nullptr;
 
 public:
-	void SetTargetTower(PlayerTower* tower_) { targetTower = tower_; };
+	// ポインタのセット
+	void SetTargetTower(PlayerTower* tower) { playerTowers.push_back(tower); };
 	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
 
-private:
+#pragma	endregion
 
+#pragma region 共通部位
+
+public:
+	// データの読み込み・保存
+	void LoadData();
+	void SaveData();
+
+	// IDのセット
+	void SetID(int32_t id_) { ID = id_; }
+
+	// デバッグ描画
+	void DebugDraw();
+
+private:
+	// ID
+	int32_t ID = -1;
+
+	// Json保存パス
+	std::string path = "./resource/application/json/enemy/enemyData.json";
+
+#pragma endregion
+
+#pragma region 基盤部位
+
+private:
 	// 使用するモデル
 	std::unique_ptr<EnemyModel> model;
 
@@ -59,9 +95,7 @@ private:
 	CollisionBackToPlayerAlly collisionBackToPlayerAlly;
 
 public:
-
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
-
 	// 更新処理 (GameObject::StateがinActiveの場合は呼び出されない)
 	virtual void Update()override;
 	// 初期化処理
@@ -75,5 +109,7 @@ public:
 
 
 	Enemy();
+
+#pragma endregion
 };
 

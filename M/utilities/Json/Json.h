@@ -7,20 +7,21 @@ class Json
 {
 public:
 	/// <summary>
-	/// dataMapにパラメータを追加する
+	/// dataMapにパラメータを追加する（key は "/a/b/c" のような階層パス対応）
 	/// </summary>
 	/// <typeparam name="T"> 値の型 </typeparam>
 	/// <param name="path"> ファイルパス </param>
 	/// <param name="key"> キー </param>
 	/// <param name="value"> 値 </param>
 	template<typename T>
-	static void AddParam(const std::string& path, const std::string& key, const T& value)
+	static void SaveParam(const std::string& path, const std::string& key, const T& value)
 	{
-		dataMap[path][key] = value;
+		auto& root = dataMap[path];
+		root[nlohmann::json::json_pointer(key)] = value;
 	}
 
 	/// <summary>
-	/// dataMapからパラメータを取得する
+	/// dataMapからパラメータを取得する（key は "/a/b/c" のような階層パス対応）
 	/// </summary>
 	/// <typeparam name="T"> 値の型 </typeparam>
 	/// <param name="path"> ファイルパス </param>
@@ -28,14 +29,16 @@ public:
 	/// <param name="outValue"> 取得した値の出力先 </param>
 	/// <returns> 成否 </returns>
 	template<typename T>
-	static bool Load(const std::string& path, const std::string& key, T& outValue)
+	static bool LoadParam(const std::string& path, const std::string& key, T& outValue)
 	{
 		auto it = dataMap.find(path);
 		if (it == dataMap.end()) return false;
 
-		if (!it->second.contains(key)) return false;
+		nlohmann::json::json_pointer jp(key);
 
-		outValue = it->second.at(key).get<T>();
+		if (!it->second.contains(jp)) return false;
+
+		outValue = it->second.at(jp).get<T>();
 		return true;
 	}
 
