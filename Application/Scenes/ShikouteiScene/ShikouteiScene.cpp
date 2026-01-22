@@ -1,4 +1,6 @@
 #include "ShikouteiScene.h"
+#include "../../M/utilities/Json/Json.h"
+
 
 void ShikouteiScene::Update()
 {
@@ -48,26 +50,7 @@ void ShikouteiScene::Reset()
 
 void ShikouteiScene::Debug()
 {
-#ifdef USE_IMGUI
-	ImGui::Begin("ShikouteiScene Scene Debug");
-	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
-	ImGui::End();
 
-
-	ImGui::Begin("EnemyFactory");
-	for (auto& factory : enemyFactories)
-	{
-		factory->DebugDraw();
-	}
-	ImGui::End();
-
-	//ImGui::Begin("EnemyFactory");
-	//auto drawList = ImGui::GetWindowDrawList();
-	//drawList->AddRectFilled(ImVec2(10, 10), ImVec2(110, 110), IM_COL32(255, 0, 0, 255));
-	//ImGui::End();
-
-
-#endif // USE_IMGUI
 
 }
 

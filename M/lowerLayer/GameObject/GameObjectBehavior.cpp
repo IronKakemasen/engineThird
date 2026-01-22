@@ -8,6 +8,12 @@ void GameObjectBehavior::SetIdentity(Tag tag_)
 	int no = identity.number;
 	std::string id = "[" + std::to_string(no) + "] : ";
 
+	if (tag_ == Tag::kNone)
+	{
+		identity =  { id + "NoName" ,tag_,no,0,0 };
+		return;
+	}
+
 	Identity identitiesTable[Tag::kCount]
 	{
 		Identity{"Enemy" ,tag_,no,			0x0000000f,0x0ffff000},
