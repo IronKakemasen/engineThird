@@ -4,6 +4,8 @@
 #include "../FwdScenes.h"
 #include "./AxisModel/AxisModel.h"
 
+class PointLight;
+
 class SceneController
 {
 public:
@@ -39,6 +41,7 @@ private:
 	{
 		//グリッド線を描画するかどうか
 		bool doDrawGridLine = true;
+		PointLight* p;
 	};
 
 	ForDebug forDebug;

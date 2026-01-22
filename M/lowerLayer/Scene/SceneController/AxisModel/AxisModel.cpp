@@ -45,6 +45,7 @@ void AxisModel::Init(Transform* gameObjectTrans_)
 	model->Getter_Appearance(0)->color = { 0,50,200,255 };
 	model->Getter_Appearance(1)->color = { 200,0,50,255 };
 	model->Getter_Appearance(2)->color = { 0,200,50,255 };
+	model->Getter_Appearance(3)->color = { 200,200,100,255 };
 
 }
 

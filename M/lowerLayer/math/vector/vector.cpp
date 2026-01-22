@@ -130,6 +130,33 @@ float Vector3::GetDot(Vector3 other_)
 	return ret_dot;
 }
 
+bool Vector3::IsBigger(float num_)
+{
+	float tmp = x * x + y * y + z * z;
+	if (tmp >= num_)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool Vector3::IsBigger(Vector3 other_)
+{
+	float tmp = other_.x * other_.x + other_.y * other_.y + other_.z * other_.z;
+
+	if (IsBigger(tmp))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
 Vector3 operator+(Vector3 const& lVec, Vector3 const& rVec2)
 {
 	Vector3 ret_vec = { lVec.x + rVec2.x,lVec.y + rVec2.y ,lVec.z + rVec2.z };
