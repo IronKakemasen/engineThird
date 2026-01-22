@@ -87,9 +87,15 @@ void EnemyFactory::DebugDraw()
 	{
 		SaveData();
 	}
+	ImGui::SameLine();
 	if (ImGui::Button((std::to_string(ID) + ":Load").c_str()))
 	{
 		LoadData();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button((std::to_string(ID) + ":Reset").c_str()))
+	{
+		Reset();
 	}
 
 #endif // USE_IMGUI

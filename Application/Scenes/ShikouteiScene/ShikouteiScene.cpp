@@ -14,6 +14,12 @@ void ShikouteiScene::Update()
 		Benri::AdjustMax(timeNum, 9.0f, 0.0f);
 	}
 	atlasNumber.ChangeAtlasIndex(timeNum);
+
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::R))
+	{
+		SceneBehavior::doReset = true;
+	}
 }
 
 void ShikouteiScene::Draw()

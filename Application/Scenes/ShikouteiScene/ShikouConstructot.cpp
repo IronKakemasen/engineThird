@@ -90,4 +90,5 @@ void ShikouteiScene::Init()
 	
 	// resource/application/json からデータをロード
 	Json::LoadAll("./resource/application/json/");
+
 }
