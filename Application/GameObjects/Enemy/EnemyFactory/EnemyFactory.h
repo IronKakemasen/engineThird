@@ -1,8 +1,9 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
+#include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
 
-struct EnemyFactory :public GameObject
+struct EnemyFactory :public GameObject, public GameObjectBuilding
 {
 #pragma region 独自部位
 
@@ -13,25 +14,16 @@ public:
 
 #pragma	endregion
 
+
 #pragma region 共通部位
 
 public:
 	// データの読み込み・保存
-	void LoadData();
-	void SaveData();
-
-	// IDのセット
-	void SetID(int32_t id_) { ID = id_; }
+	void LoadData() override;
+	void SaveData() override;
 
 	// デバッグ描画
-	void DebugDraw();
-
-private:
-	// ID
-	int32_t ID = -1;
-
-	// Json保存パス
-	std::string path = "./resource/application/json/enemy/enemyFactoryData.json";
+	void DebugDraw() override;
 
 #pragma endregion
 

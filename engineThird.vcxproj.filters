@@ -332,6 +332,8 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\gpuResources\Creator\SrvCreator\PostEffectSrCreator\PostEffectSrCreator.h" />
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\OffScreenTextureContainer.h" />
     <ClInclude Include="Application\Config\GameConstants.h" />
+    <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectBuilding.h" />
+    <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectEntity.h" />
     <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
   </ItemGroup>

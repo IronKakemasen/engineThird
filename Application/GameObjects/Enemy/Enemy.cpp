@@ -9,6 +9,16 @@ Enemy::Enemy()
 {
 	// モデルのインスタンス化
 	model.reset(new EnemyModel);
+
+	//必須でない
+	auto* appearance = model->model->Getter_Appearance(0);
+
+	appearance->metalic = 0.72f;
+	appearance->roughness = 0.4f;
+	appearance->color = { 255,0,0,255 };
+	
+	// Jsonパスの設定
+	path = "./resource/application/json/enemy/enemyData.json";
 }
 
 void Enemy::Reset()
@@ -21,6 +31,9 @@ void Enemy::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void Enemy::Init()
@@ -40,6 +53,9 @@ void Enemy::Init()
 	collisionBackToPlayer.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void Enemy::SetCollisionBackTable()

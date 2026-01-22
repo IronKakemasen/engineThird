@@ -1,6 +1,5 @@
 #include "ShikouteiScene.h"
-#include "../../M/utilities/Json/Json.h"
-
+#include "../../utilities/Json/Json.h"
 
 void ShikouteiScene::Update()
 {
@@ -50,7 +49,6 @@ void ShikouteiScene::Reset()
 
 void ShikouteiScene::Debug()
 {
-
 
 }
 

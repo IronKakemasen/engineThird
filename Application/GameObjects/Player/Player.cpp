@@ -6,6 +6,16 @@ Player::Player()
 {
 	// モデルのインスタンス化
 	model.reset(new PlayerModel);
+
+	// 必須でない
+	auto* appearance = model->model->Getter_Appearance(0);
+	
+	appearance->metalic = 0.72f;
+	appearance->roughness = 0.4f;
+	appearance->color = { 0,255,0,255 };
+
+	// Jsonパスの設定
+	path = "./resource/application/json/player/playerData.json";
 }
 
 void Player::Reset()
@@ -21,8 +31,8 @@ void Player::Reset()
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
-	// 初期無効化
-	status = Status::kInActive;
+	// データ読み込み
+	LoadData();
 }
 
 void Player::Init()
@@ -40,6 +50,9 @@ void Player::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void Player::SetCollisionBackTable()
@@ -84,6 +97,10 @@ void Player::Draw(Matrix4 * vpMat_)
 	// モデルの描画
 	model->Draw(vpMat_);
 }
+
+void Player::DebugDraw()
+{}
+
 
 // Enemyとの衝突処理
 void Player::CollisionBackToEnemy::operator()()

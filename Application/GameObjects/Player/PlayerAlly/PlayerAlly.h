@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerAllyModel/PlayerAllyModel.h"
+#include "../../../GameObjects/ObjectParent/GameObjectEntity.h"
 
 struct Player;
 
-struct PlayerAlly :public GameObject
+struct PlayerAlly :public GameObject, public GameObjectEntity
 {
 #pragma region 独自部位
 
@@ -22,21 +23,11 @@ public:
 
 public:
 	// データの読み込み・保存
-	void LoadData();
-	void SaveData();
-
-	// IDのセット
-	void SetID(int32_t id_) { ID = id_; }
+	void LoadData() override;
+	void SaveData() override;
 
 	// デバッグ描画
-	void DebugDraw();
-
-private:
-	// ID
-	int32_t ID = -1;
-
-	// Json保存パス
-	std::string path = "./resource/application/json/player/playerAllyData.json";
+	void DebugDraw() override;
 
 #pragma endregion
 
