@@ -81,7 +81,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObjectManager;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)external\imgui;$(ProjectDir)external\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +104,7 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObjectManager;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)external\imgui;$(ProjectDir)external\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +129,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)external\imgui;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)M\lowerLayer\engineCore\Light\PointLight</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)M\utilities\Transform;$(ProjectDir)M\lowerLayer\Model\FromFile;$(ProjectDir)M\lowerLayer\GameObject;$(ProjectDir)M\lowerLayer\MobilePrimitive\Sprite;$(ProjectDir)M\lowerLayer\GameObjectManager;$(ProjectDir)M\lowerLayer\Scene\SceneBehavior;$(ProjectDir)external\imgui;$(ProjectDir)external\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +149,7 @@
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
+    <ClCompile Include="Application\GameObjects\InGameController\InGameController.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
     <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h" />
+    <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.h" />

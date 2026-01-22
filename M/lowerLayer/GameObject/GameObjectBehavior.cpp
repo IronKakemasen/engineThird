@@ -1,4 +1,5 @@
 #include "GameObjectBehavior.h"
+#include "../GameObjectManager/GameObjectManager.h"
 
 
 //新しくゲームオブジェクトを作ったらテーブルに追加してほしい
@@ -82,6 +83,10 @@ Circle* GameObjectBehavior::Getter_Circle()
 	return collision.circle.get();
 }
 
+void GameObjectBehavior::SetGameObjectManager(GameObjectManager* gameObjectManager_)
+{
+	gameObjectManager = gameObjectManager_;
+}
 
 bool GameObjectBehavior::HasRectCollider()
 {

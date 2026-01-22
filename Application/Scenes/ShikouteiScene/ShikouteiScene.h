@@ -12,6 +12,7 @@
 #include "../../GameObjects/Enemy/Enemy.h"
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
+#include "../../GameObjects/InGameController/InGameController.h"
 
 
 #include "../../Cameras/MainCamera/MainCamera.h"
@@ -29,6 +30,7 @@ class ShikouteiScene final : public Scene
 	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
 	std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers> enemyTowers;
 	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
+	std::unique_ptr<InGameController> inGameController;
 
 	MQuad quad;
 	Sprite sprite;

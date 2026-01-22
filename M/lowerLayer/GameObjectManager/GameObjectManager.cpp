@@ -55,8 +55,24 @@ GameObjectManager::ForDebug::ForDebug()
 
 void GameObjectManager::RegisterForContainer(GameObject* dst_)
 {
-	objContainer.emplace_back(dst_);
+	dst_->SetGameObjectManager(this);
 	dst_->SetNumber(createNum++);
+
+	objContainer.emplace_back(dst_);
+}
+
+std::vector<GameObject*> GameObjectManager::Find(GameObject::Tag tag_)
+{
+	std::vector<GameObject*> data;
+	for (auto* i : objContainer)
+	{
+		if (i->Getter_Identity()->tag == tag_)
+		{
+			data.emplace_back(i);
+		}
+	}
+
+	return data;
 }
 
 void GameObjectManager::Debug()
