@@ -10,13 +10,12 @@ struct Player :public GameObject, public GameObjectEntity
 #pragma region 独自部位
 
 private:
-	// 移動処理
-	void Move();
+	void Move();			// 移動処理
+	void SavePos();			// 座標履歴の保存
 	bool isMoving = false;	// 移動中フラグ
-	float velocity = 0.2f;	// 移動速度
+	float speed = 0.2f;		// 移動速度
 
-	// 座標履歴の保存
-	void SavePos();
+	
 
 	// 味方の存在フラグ[最大味方数]
 	std::array<bool, GameConstants::kMaxAllies> allyExistenceFlags = {};

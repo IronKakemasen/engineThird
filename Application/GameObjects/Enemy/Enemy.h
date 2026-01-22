@@ -13,10 +13,22 @@ struct Enemy :public GameObject , public GameObjectEntity
 #pragma region 独自部位
 
 private:
-	// 理想敵な移動速度(攻撃・ノックバック等を受けなかった時)
-	void SetIdealVelocity();
+	// ターゲット方向に移動
+	void MoveToTarget();
 
-	Vector3 velocity = { 0.0f,0.0f,0.0f };
+	// ノックバック方向に移動
+	void MoveKnockBack();
+
+	// ノックバック関数(float power:ノックバックの強さ)
+	void KnockBack(float power);
+
+	// 最終的な速度
+	Vector3 velocity{};
+	// ノックバック用速度
+	Vector3 knockBackVelocity{};
+	// 移動速度
+	Vector3 moveVelocity{};
+
 	float speed = 0.05f;
 
 	// 参照ポインタ

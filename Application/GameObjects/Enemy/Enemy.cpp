@@ -100,14 +100,22 @@ void Enemy::Update()
 	//モデルの更新処理
 	model->Update();
 
-	// 理想的な移動速度をセット
-	SetIdealVelocity();
+	// 移動処理
+	MoveToTarget();
 
-	// 移動
+	// ノックバック処理
+	MoveKnockBack();
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::K))
+	{
+	 	KnockBack(1.0f);
+	}
+
+	velocity = knockBackVelocity + moveVelocity;
 	trans.pos = trans.pos + velocity;
 }
 
-void Enemy::SetIdealVelocity()
+void Enemy::MoveToTarget()
 {
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
@@ -122,15 +130,8 @@ void Enemy::SetIdealVelocity()
 	// 最終的に向かう方向ベクトル
 	Vector3 lastDir;
 
-	// プレイヤーが近ければプレイヤーを追う
-	if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
-	{
-		lastDir = dirToPlayer.GetNormalized();
-	}
-
-
 	// 遠ければ最も近いタワーを追う
-	else if (playerTowers.size() > 0)
+	if (playerTowers.size() > 0)
 	{
 		// 最も近いタワーのインデックスを探す
 		size_t nearestTowerIndex = 0;
@@ -144,14 +145,25 @@ void Enemy::SetIdealVelocity()
 				nearestTowerIndex = i;
 			}
 		}
+
 		lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
 	}
 
+	// 補完
 	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);
 
 	// 移動
-	velocity = Vector3(0.0f, 0.0f, 0.0f);
-	velocity = trans.lookDir * speed;
+	moveVelocity = trans.lookDir.GetNormalized() * speed;
+}
+
+void Enemy::MoveKnockBack()
+{
+	knockBackVelocity = knockBackVelocity * 0.9f;
+}
+
+void Enemy::KnockBack(float power)
+{
+	knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
 }
 
 void Enemy::Draw(Matrix4* vpMat_)

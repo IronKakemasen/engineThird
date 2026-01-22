@@ -67,14 +67,14 @@ void Player::LoadData()
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
-	Json::LoadParam(path, key + "/velocity", velocity);
+	Json::LoadParam(path, key + "/speed", speed);
 }
 void Player::SaveData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::SaveParam(path, key + "/position", trans.pos);
-	Json::SaveParam(path, key + "/velocity", velocity);
+	Json::SaveParam(path, key + "/speed", speed);
 	Json::Save(path);
 }
 
@@ -139,7 +139,7 @@ void Player::Move()
 
 	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
 
-	trans.pos = trans.pos + moveDir * velocity;
+	trans.pos = trans.pos + moveDir * speed;
 }
 
 // 座標保存処理
