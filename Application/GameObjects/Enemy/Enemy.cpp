@@ -3,6 +3,7 @@
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
 #include "../../M/utilities/Json/Json.h"
+#include "../GameObjectManager/GameObjectManager.h"
 #include <array>
 
 Enemy::Enemy()
@@ -54,6 +55,15 @@ void Enemy::Init()
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
 
+	// ポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+	for (auto& towerObj : gameObjectManager->Find(Tag::kPlayerTower))
+	{
+		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
+	}
+
+	trans.interpolationCoe = 0.1f;
+
 	// 初期化
 	Reset();
 }
@@ -99,29 +109,26 @@ void Enemy::Update()
 
 void Enemy::SetIdealVelocity()
 {
-	// 自身の位置を取得
-	Vector3 myPos = trans.pos;
-
-	// ターゲットの位置を取得
-	std::array<Vector3, GameConstants::kMaxPlayerTowers> towerPositions{};
-	for (size_t i = 0; i < playerTowers.size(); ++i)
-		towerPositions[i] = playerTowers[i]->Getter_Trans()->pos;
-	Vector3 playerPos = targetPlayer->Getter_Trans()->pos;
-
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
 	for (size_t i = 0; i < playerTowers.size(); ++i)
-		dirToTowers[i] = towerPositions[i] - myPos;
-	Vector3 dirToPlayer = playerPos - myPos;
+	{
+		dirToTowers[i] = Vector3(9999.9f, 9999.9f, 9999.9f);
+		if (playerTowers[i]->GetStatus() == Status::kActive)
+			dirToTowers[i] = playerTowers[i]->Getter_Trans()->pos - trans.pos;
+	}
+	Vector3 dirToPlayer = targetPlayer->Getter_Trans()->GetWorldPos() - trans.GetWorldPos();
 
 	// 最終的に向かう方向ベクトル
-	Vector3 finalDir = {};
+	Vector3 lastDir;
 
 	// プレイヤーが近ければプレイヤーを追う
 	if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
 	{
-		finalDir = dirToPlayer.GetNormalized();
+		lastDir = dirToPlayer.GetNormalized();
 	}
+
+
 	// 遠ければ最も近いタワーを追う
 	else if (playerTowers.size() > 0)
 	{
@@ -137,12 +144,14 @@ void Enemy::SetIdealVelocity()
 				nearestTowerIndex = i;
 			}
 		}
-		finalDir = dirToTowers[nearestTowerIndex].GetNormalized();
+		lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
 	}
+
+	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);
 
 	// 移動
 	velocity = Vector3(0.0f, 0.0f, 0.0f);
-	velocity = finalDir * speed;
+	velocity = trans.lookDir * speed;
 }
 
 void Enemy::Draw(Matrix4* vpMat_)

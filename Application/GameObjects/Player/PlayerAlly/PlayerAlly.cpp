@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "../../../GameObjects/Player/Player.h"
 #include "../../../M/utilities/Json/Json.h"
+#include "../GameObjectManager/GameObjectManager.h"
 
 PlayerAlly::PlayerAlly()
 {
@@ -49,6 +50,10 @@ void PlayerAlly::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// ポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+
 
 	// 初期化
 	Reset();

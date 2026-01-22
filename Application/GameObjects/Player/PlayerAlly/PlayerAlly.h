@@ -15,7 +15,6 @@ private:
 	void Move();
 
 public:
-	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
 
 #pragma	endregion
 

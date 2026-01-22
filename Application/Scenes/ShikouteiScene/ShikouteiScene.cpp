@@ -51,52 +51,109 @@ void ShikouteiScene::Reset()
 void ShikouteiScene::Debug()
 {
 #ifdef USE_IMGUI
+
 	ImGui::Begin("ShikouteiScene Scene Debug");
 	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
 	ImGui::End();
 
 
-	ImGui::Begin("EnemyFactory");
-	int32_t Sum = 0;
-	for (auto& factory : enemyFactories)
+	ImGui::Begin("Building Debug");
+
+	if (ImGui::BeginTabBar("Building", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
 	{
-		if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
+		if (ImGui::BeginTabItem("EnemyFactory"))
 		{
-			Sum++;
-		}
-	}
+			int32_t Sum = 0;
+			for (auto& factory : enemyFactories)
+			{
+				if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
 
-	if (ImGui::Button("Add EnemyFactory"))
-	{
-		enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	}
-	if (ImGui::Button("Remove EnemyFactory"))
-	{
-		if (Sum > 0)
+			if (ImGui::Button("Add"))
+			{
+				enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string path = enemyFactories[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& factory : enemyFactories)
+				{
+					factory->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& factory : enemyFactories)
+			{
+				factory->DebugDraw();
+			}
+
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PlayerTower"))
 		{
-			enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+			int32_t Sum = 0;
+			for (auto& tower : playerTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				playerTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					playerTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string path = playerTowers[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& tower : playerTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : playerTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
 		}
-	}
-	if (ImGui::Button("Save"))
-	{
-		std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
-		std::string path = enemyFactories[0]->path;
 
-		Json::SaveParam(path, key, Sum);
-
-		for (auto& factory : enemyFactories)
-		{
-			factory->SaveData();
-		}
+		ImGui::EndTabBar();
 	}
 
-	ImGui::Text("-----------------------------------");
-
-	for (auto& factory : enemyFactories)
-	{
-		factory->DebugDraw();
-	}
 	ImGui::End();
+
+
 
 	//ImGui::Begin("EnemyFactory");
 	//auto drawList = ImGui::GetWindowDrawList();

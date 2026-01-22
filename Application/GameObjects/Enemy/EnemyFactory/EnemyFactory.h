@@ -3,14 +3,28 @@
 #include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
 
+struct Enemy;
+
 struct EnemyFactory :public GameObject, public GameObjectBuilding
 {
 #pragma region 独自部位
 
 private:
 
+	// 参照ポインタ
+	std::vector<Enemy*> enemies{};
 
+	Counter timer;
+	static float timeNum;
+	//timer.Add();
+	//if (timer.IsEnd())
+	//{
+	//	timeNum++;
+	//	Benri::AdjustMax(timeNum, 9.0f, 0.0f);
+	//}
 public:
+
+	void SpawnEnemy();
 
 #pragma	endregion
 
