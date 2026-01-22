@@ -16,11 +16,11 @@ void ShikouteiScene::Update()
 	}
 	atlasNumber.ChangeAtlasIndex(timeNum);
 
-
 	if (M::GetInstance()->IsKeyTriggered(KeyType::R))
 	{
 		SceneBehavior::doReset = true;
 	}
+
 }
 
 void ShikouteiScene::Draw()
@@ -51,10 +51,11 @@ void ShikouteiScene::Debug()
 {
 #ifdef USE_IMGUI
 
-	ImGui::Begin("ShikouteiScene Scene Debug");
-	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
-	ImGui::End();
+	ImGui::Begin("InGameController");
+	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
+	ImGui::Text( "Count : %.1f", inGameController->GetCnt());
 
+	ImGui::End();
 
 	ImGui::Begin("Building Debug");
 

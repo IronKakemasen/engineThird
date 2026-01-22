@@ -21,7 +21,11 @@ void actor::Playable::Reset()
 
 void actor::Enter::operator()()
 {
-
+	if (cnt.IsEnd())
+	{
+		Reset();
+		ing->curMode = InGameController::Mode::kPlayable;
+	}
 }
 
 void actor::Enter::Reset()

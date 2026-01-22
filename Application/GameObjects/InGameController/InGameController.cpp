@@ -9,7 +9,7 @@ void InGameController::ModeData::Set(float time_)
 
 float* InGameController::GetCnt()
 {
-	return &count;
+	return &curCnt;
 }
 
 void InGameController::SetModeData()
@@ -43,21 +43,21 @@ void InGameController::SetCollisionBackTable()
 
 void InGameController::Update()
 {
-	(*actors[mode].get())();
+	(*actors[curMode].get())();
 }
 
 std::string InGameController::WathchInString()
 {
 	std::string modeName[Mode::kCount]
 	{
-		"kEnter",
-		"kPlayable",
-		"kUnPlayable",
-		"kResult",
-		"kGameOver"
+		"Enter",
+		"Playable",
+		"UnPlayable",
+		"Result",
+		"GameOver"
 	};
 
-	return modeName[(int)mode];
+	return modeName[(int)curMode];
 }
 
 void InGameController::Init()

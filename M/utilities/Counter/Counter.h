@@ -2,8 +2,11 @@
 
 struct Counter
 {
-	float count = 0.0f;
+private  :
 	float inv_Time;
+
+public:
+	float count = 0.0f;
 	float speed = 1.0f;
 
 	Counter(float performTime_);
