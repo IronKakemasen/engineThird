@@ -6,7 +6,7 @@
 namespace GameConstants
 {
 	// 最大エネミー数
-	inline constexpr size_t kMaxEnemies = 10;
+	inline constexpr size_t kMaxEnemies = 100;
 
 	// 最大味方数
 	inline constexpr size_t kMaxAllies = 100;

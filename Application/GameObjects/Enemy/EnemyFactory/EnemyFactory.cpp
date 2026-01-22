@@ -2,6 +2,8 @@
 #include "../Json/Json.h"
 #include "imgui.h"
 #include "../../../Config/GameConstants.h"
+#include "../../GameObjectManager/GameObjectManager.h"
+#include "../../Enemy/Enemy.h"
 
 EnemyFactory::EnemyFactory()
 {
@@ -44,6 +46,9 @@ void EnemyFactory::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
+
+	// タイマーリセット
+	timer.Initialize(1.0f);
 }
 
 void EnemyFactory::Init()
@@ -62,6 +67,12 @@ void EnemyFactory::Init()
 
 	// collisionBackToPlayerBulletの初期化
 	collisionBackToPlayerBullet.Init(this);
+
+	// ポインタ取得
+	for (auto& towerObj : gameObjectManager->Find(Tag::kEnemy))
+	{
+		enemies.push_back(reinterpret_cast<Enemy*>(towerObj));
+	}
 	
 	// 初期化
 	Reset();
@@ -95,6 +106,9 @@ void EnemyFactory::SaveData()
 void EnemyFactory::Update()
 {
 	model->Update();
+
+	// スポーン処理
+	SpawnEnemy();
 }
 
 void EnemyFactory::Draw(Matrix4 * vpMat_)
@@ -141,3 +155,20 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 }
 
 
+
+void EnemyFactory::SpawnEnemy()
+{
+	timer.Add();
+	if (timer.IsEnd())
+	{
+		for (auto& enemy : enemies)
+		{
+			if (enemy->GetStatus() == Status::kInActive)
+			{
+				enemy->SetStatus(Status::kActive);
+				enemy->trans.pos = this->trans.pos;
+				break;
+			}
+		}
+	}
+}
