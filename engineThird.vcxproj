@@ -149,8 +149,6 @@
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
-    <ClCompile Include="Application\GameObjects\ObjectParent\GameObjectBuilding.cpp" />
-    <ClCompile Include="Application\GameObjects\ObjectParent\GameObjectEntity.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
