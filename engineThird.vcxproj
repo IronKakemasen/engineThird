@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\GameObjects\InGameController\Actor.cpp" />
     <ClCompile Include="Application\Scenes\InGameScene\InGameConstructor.cpp" />
     <ClCompile Include="Application\Scenes\ModelScene\ModelSceneConstructor.cpp" />
     <ClCompile Include="Application\Scenes\ShikouteiScene\ShikouConstructot.cpp" />
@@ -307,6 +308,7 @@
     <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
     <ClInclude Include="Application\Config\GameConstants.h" />
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />

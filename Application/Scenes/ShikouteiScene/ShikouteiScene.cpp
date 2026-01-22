@@ -1,5 +1,4 @@
 #include "ShikouteiScene.h"
-#include "GameObjectBehavior.h"
 #include "../../utilities/Json/Json.h"
 
 void ShikouteiScene::Update()
