@@ -27,6 +27,9 @@ void EnemyTower::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void EnemyTower::Init()
@@ -44,6 +47,9 @@ void EnemyTower::Init()
 
 	// collisionBackToPlayerBulletの初期化
 	collisionBackToPlayerBullet.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void EnemyTower::SetCollisionBackTable()

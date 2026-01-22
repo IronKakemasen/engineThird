@@ -31,8 +31,8 @@ void Player::Reset()
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
-	// 初期無効化
-	status = Status::kInActive;
+	// データ読み込み
+	LoadData();
 }
 
 void Player::Init()
@@ -50,6 +50,9 @@ void Player::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void Player::SetCollisionBackTable()

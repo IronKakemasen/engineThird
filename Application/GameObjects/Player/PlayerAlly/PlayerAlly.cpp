@@ -29,6 +29,9 @@ void PlayerAlly::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void PlayerAlly::Init()
@@ -46,6 +49,9 @@ void PlayerAlly::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void PlayerAlly::SetCollisionBackTable()

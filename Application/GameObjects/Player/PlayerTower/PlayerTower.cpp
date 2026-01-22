@@ -27,6 +27,9 @@ void PlayerTower::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void PlayerTower::Init()
@@ -44,6 +47,9 @@ void PlayerTower::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void PlayerTower::SetCollisionBackTable()

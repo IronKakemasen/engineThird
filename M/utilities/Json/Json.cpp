@@ -36,7 +36,7 @@ void Json::LoadAll(const std::string& directoryPath)
     {
         if (entry.path().extension() == ".json")
         {
-            Load(entry.path().string());
+            Load(entry.path().generic_string());
         }
     }
 }

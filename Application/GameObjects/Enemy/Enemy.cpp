@@ -31,6 +31,9 @@ void Enemy::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void Enemy::Init()
@@ -50,6 +53,9 @@ void Enemy::Init()
 	collisionBackToPlayer.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void Enemy::SetCollisionBackTable()

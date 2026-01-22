@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <cstdint>
+#include <array>
+#include "../../Config/GameConstants.h"
 
 struct GameObjectBuilding
 {
@@ -15,13 +17,13 @@ public:
 	// デバッグ描画
 	virtual void DebugDraw() = 0;
 
+	// Jsonパス
+	std::string path;
+
 protected:
 	// ID
 	int32_t ID = -1;
 
-	// Jsonパス
-	std::string path;
-
 	// ステージごとのActive数
-	int32_t activeCountPerStage;
+	int32_t stageActiveCounts;
 };
