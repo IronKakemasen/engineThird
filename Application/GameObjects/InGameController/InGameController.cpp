@@ -2,6 +2,38 @@
 #include "GameObjectManager.h"
 #include "../../GameObjects/Player/Player.h"
 
+void InGameController::ModeData::Set(float time_)
+{
+	time = time_;
+}
+
+float* InGameController::GetCnt()
+{
+	return &count;
+}
+
+void InGameController::SetModeData()
+{
+	actors[Mode::kPlayable].reset(new actor::Playable);
+	actors[Mode::kEnter].reset(new actor::Enter);
+	actors[Mode::kUnPlayable].reset(new actor::UnPlayable);
+	actors[Mode::kResult].reset(new actor::Result);
+	actors[Mode::kGameOver].reset(new actor::GameOver);
+
+	modeData[Mode::kEnter].Set(1.0f);
+	modeData[Mode::kPlayable].Set(1.0f);
+	modeData[Mode::kUnPlayable].Set(1.0f);
+	modeData[Mode::kResult].Set(1.0f);
+	modeData[Mode::kGameOver].Set(1.0f);
+
+	int i = 0;
+	for (auto& actor : actors)
+	{
+		actor.second->Init(this, modeData[i].time);
+		i++;
+	}
+
+}
 
 //コリジョンバックテーブルを設定
 void InGameController::SetCollisionBackTable()
@@ -11,10 +43,21 @@ void InGameController::SetCollisionBackTable()
 
 void InGameController::Update()
 {
-	//モデルの更新処理（中身を書いていれば）
-	model->Update();
-	//player->trans.pos.y = 3.0f;
+	(*actors[mode].get())();
+}
 
+std::string InGameController::WathchInString()
+{
+	std::string modeName[Mode::kCount]
+	{
+		"kEnter",
+		"kPlayable",
+		"kUnPlayable",
+		"kResult",
+		"kGameOver"
+	};
+
+	return modeName[(int)mode];
 }
 
 void InGameController::Init()
@@ -26,6 +69,9 @@ void InGameController::Init()
 	std::vector<GameObject*> objContainer = gameObjectManager->Find(Tag::kPlayer);
 	player = reinterpret_cast<Player*>(objContainer[0]);
 
+	SetIdentity(Tag::kNone);
+
+	SetModeData();
 
 	//位置
 	trans.pos.z = 4.0f;

@@ -57,7 +57,6 @@ void GameObjectManager::RegisterForContainer(GameObject* dst_)
 {
 	dst_->SetGameObjectManager(this);
 	dst_->SetNumber(createNum++);
-
 	objContainer.emplace_back(dst_);
 }
 
@@ -81,7 +80,6 @@ void GameObjectManager::Debug()
 	static int selec = 0;
 
 	ImGui::Begin("ObjManager", nullptr, ImGuiWindowFlags_MenuBar);
-
 	ImGui::Text("CollisionVisivility : "); ImGui::SameLine();
 	ImGui::Checkbox(" ", &forDebug.collisionVisibility);
 
