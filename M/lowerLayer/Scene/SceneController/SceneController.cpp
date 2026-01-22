@@ -4,7 +4,7 @@
 #include "../../M.h"
 #include "../FwdScenes.h"
 #include "./UglyGrid/UglyGrid.h"
-#include "PointLight.h"
+#include "../engineCore/Light/PointLight/PointLight.h"
 
 
 void SceneController::Draw()

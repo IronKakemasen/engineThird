@@ -166,6 +166,7 @@
     <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp" />
     <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp" />
     <ClCompile Include="Application\GameObjects\Player\Player.cpp" />
+    <ClCompile Include="Application\GameObjects\InGameController\InGameController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -332,6 +333,7 @@
     <ClInclude Include="Application\Config\GameConstants.h" />
     <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectBuilding.h" />
     <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectEntity.h" />
+    <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

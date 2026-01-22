@@ -1,8 +1,8 @@
 #pragma once
+#include "../GameObject/GameObjectBehavior.h"
 #include <vector>
 
 struct Matrix4;
-struct GameObject;
 
 class GameObjectManager
 {
@@ -30,6 +30,8 @@ public:
 	void Reset();
 	void Debug();
 
+	std::vector<GameObject*> Find(GameObject::Tag tag_);
+
 	template<typename... objPointer>
 	void RegisterForContainer(objPointer... pointers_)
 	{
@@ -39,10 +41,14 @@ public:
 		for (int i = 0; i < length; i++)
 		{
 			pointers[i]->SetNumber(createNum++);
+			pointers[i]->SetGameObjectManager(this);
+
 			objContainer.emplace_back(pointers[i]);
 		}
 	}
 
 	void RegisterForContainer(GameObject* dst_);
+
+
 };
 

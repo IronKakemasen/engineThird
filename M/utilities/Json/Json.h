@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../../../external/nlohmann/json.hpp"
+#include "json.hpp"
 #include "../../lowerLayer/math/matrix/matrix.h"
 #include "../../lowerLayer/math/vector/vector.h"
 
