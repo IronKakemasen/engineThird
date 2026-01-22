@@ -1,4 +1,5 @@
 #include "EnemyTower.h"
+#include "../Json/Json.h"
 
 EnemyTower::EnemyTower()
 {
@@ -16,6 +17,12 @@ void EnemyTower::Reset()
 {
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
+	// 初期無効化
+	status = Status::kInActive;
 }
 
 void EnemyTower::Init()
@@ -28,7 +35,6 @@ void EnemyTower::Init()
 	SetIdentity(Tag::kEnemyTower);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(1.0f);
-
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -40,6 +46,21 @@ void EnemyTower::SetCollisionBackTable()
 {
 	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
+}
+
+// データ保存・読み込み
+void EnemyTower::LoadData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::LoadParam(path, key + "/position", trans.pos);
+}
+void EnemyTower::SaveData()
+{
+	std::string key = "/ID:" + std::to_string(ID);
+
+	Json::SaveParam(path, key + "/position", trans.pos);
+	Json::Save(path);
 }
 
 void EnemyTower::Update()

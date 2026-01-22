@@ -135,7 +135,11 @@ void SceneController::Reset()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	if(cur_Scene->doReset) cur_Scene->Reset();
+	if (cur_Scene->doReset)
+	{
+		cur_Scene->Reset();
+		cur_Scene->gameObjManager->Reset();
+	}
 	cur_Scene->doReset = false;
 }
 

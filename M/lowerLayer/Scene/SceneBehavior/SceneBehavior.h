@@ -21,7 +21,7 @@ public:
 	std::unique_ptr< NormalCamera > mainCamera;
 	std::unique_ptr< GameObjectManager > gameObjManager;
 	DirectionalLight* dirLight = nullptr;
-	bool doReset;
+	static inline bool doReset = false;
 
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
@@ -29,7 +29,7 @@ public:
 	virtual void Debug() = 0;
 	virtual void Instantiate() = 0;
 	virtual void Init() = 0;
-	void ActivateReset();
+	static void ActivateReset();
 
 };
 

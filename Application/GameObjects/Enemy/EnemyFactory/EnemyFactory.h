@@ -4,6 +4,39 @@
 
 struct EnemyFactory :public GameObject
 {
+#pragma region 独自部位
+
+private:
+
+
+public:
+
+#pragma	endregion
+
+#pragma region 共通部位
+
+public:
+	// データの読み込み・保存
+	void LoadData();
+	void SaveData();
+
+	// IDのセット
+	void SetID(int32_t id_) { ID = id_; }
+
+	// デバッグ描画
+	void DebugDraw();
+
+private:
+	// ID
+	int32_t ID = -1;
+
+	// Json保存パス
+	std::string path = "./resource/application/json/enemy/enemyFactoryData.json";
+
+#pragma endregion
+
+#pragma region 基盤部位
+
 private:
 	//使用するモデル
 	std::unique_ptr<EnemyFactoryModel> model;
@@ -17,8 +50,6 @@ private:
 	};
 	// プレイヤー弾と衝突したときのコリジョンバック
 	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
-
-
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
@@ -35,5 +66,7 @@ public:
 	virtual void SetCollisionBackTable()override;
 
 	EnemyFactory();
+
+#pragma endregion
 };
 
