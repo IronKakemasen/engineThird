@@ -9,6 +9,10 @@
 #include <string>
 #include <memory>
 
+
+class GameObjectManager;
+
+
 struct GameObjectBehavior
 {
 	//オブジェクトのステータス
@@ -67,6 +71,8 @@ private :
 	Identity identity;
 	Collision collision;
 
+protected:
+	GameObjectManager* gameObjectManager = nullptr;
 
 public:
 
@@ -110,6 +116,7 @@ public:
 	GameObjectBehavior* Getter_ColObj();
 	Rect* Getter_Rect();
 	Circle* Getter_Circle();
+	void SetGameObjectManager(GameObjectManager* gameObjectManager_);
 
 };
 

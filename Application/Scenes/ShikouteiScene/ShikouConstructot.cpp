@@ -8,6 +8,8 @@ ShikouteiScene::ShikouteiScene()
 
 void ShikouteiScene::Instantiate()
 {
+	inGameController.reset(new InGameController);
+
 	// プレイヤーのインスタンス化 & IDセット
 	player.reset(new Player);
 	player->SetID(0);
@@ -43,7 +45,7 @@ void ShikouteiScene::Instantiate()
 	}
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(player.get());
+	gameObjManager->RegisterForContainer(player.get(), inGameController.get());
 	for (auto& enemyInstance : enemies)
 		gameObjManager->RegisterForContainer(enemyInstance.get());
 	for (auto& ally : allies)
