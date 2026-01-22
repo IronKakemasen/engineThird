@@ -117,6 +117,8 @@ void WinApp::BeginFrame()
 	QueryPerformanceFrequency(&fpsController.mTimeFreq);
 	QueryPerformanceCounter(&fpsController.mTimeStart);
 
+	M::GetInstance()->getPadState.Update();
+
 	//Imguiにここからフレームが始まる旨を告げる
 #ifdef USE_IMGUI
 	ImGui_ImplDX12_NewFrame();
