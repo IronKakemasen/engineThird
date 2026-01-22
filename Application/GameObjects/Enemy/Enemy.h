@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObjectBehavior.h"
+#include "../../GameObjects/ObjectParent/GameObjectEntity.h"
 #include "../../Models/EnemyModel/EnemyModel.h"
 #include "../../Config/GameConstants.h"
 #include <span>
@@ -7,7 +8,7 @@
 struct Player;
 struct PlayerTower;
 
-struct Enemy :public GameObject
+struct Enemy :public GameObject , public GameObjectEntity
 {
 #pragma region 独自部位
 
@@ -33,21 +34,11 @@ public:
 
 public:
 	// データの読み込み・保存
-	void LoadData();
-	void SaveData();
-
-	// IDのセット
-	void SetID(int32_t id_) { ID = id_; }
+	void LoadData() override;
+	void SaveData() override;
 
 	// デバッグ描画
-	void DebugDraw();
-
-private:
-	// ID
-	int32_t ID = -1;
-
-	// Json保存パス
-	std::string path = "./resource/application/json/enemy/enemyData.json";
+	void DebugDraw() override;
 
 #pragma endregion
 

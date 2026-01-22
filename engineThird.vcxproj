@@ -312,6 +312,8 @@
     <ClInclude Include="Application\Scenes\InGameScene\InGameScene.h" />
     <ClInclude Include="Application\Scenes\ModelScene\ModelScene.h" />
     <ClInclude Include="Application\GameObjects\ExampleTyan\ExampleTyan.h" />
+    <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectBuilding.h" />
+    <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectEntity.h" />
     <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h" />

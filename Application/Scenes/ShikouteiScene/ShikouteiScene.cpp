@@ -1,4 +1,6 @@
 #include "ShikouteiScene.h"
+#include "GameObjectBehavior.h"
+#include "../../utilities/Json/Json.h"
 
 void ShikouteiScene::Update()
 {
@@ -55,6 +57,41 @@ void ShikouteiScene::Debug()
 
 
 	ImGui::Begin("EnemyFactory");
+	int32_t Sum = 0;
+	for (auto& factory : enemyFactories)
+	{
+		if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
+		{
+			Sum++;
+		}
+	}
+
+	if (ImGui::Button("Add EnemyFactory"))
+	{
+		enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+	}
+	if (ImGui::Button("Remove EnemyFactory"))
+	{
+		if (Sum > 0)
+		{
+			enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+		}
+	}
+	if (ImGui::Button("Save"))
+	{
+		std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+		std::string path = enemyFactories[0]->path;
+
+		Json::SaveParam(path, key, Sum);
+
+		for (auto& factory : enemyFactories)
+		{
+			factory->SaveData();
+		}
+	}
+
+	ImGui::Text("-----------------------------------");
+
 	for (auto& factory : enemyFactories)
 	{
 		factory->DebugDraw();

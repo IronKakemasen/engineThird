@@ -7,6 +7,16 @@ PlayerAlly::PlayerAlly()
 {
 	// モデルのインスタンス化
 	model.reset(new PlayerAllyModel);
+
+	// 必須でない
+	auto* appearance = model->model->Getter_Appearance(0);
+
+	appearance->metalic = 0.72f;
+	appearance->roughness = 0.4f;
+	appearance->color = { 0,0,255,255 };
+
+	// Jsonパスの設定
+	path = "./resource/application/json/player/playerAllyData.json";
 }
 
 void PlayerAlly::Reset()
@@ -19,6 +29,9 @@ void PlayerAlly::Reset()
 
 	// 初期無効化
 	status = Status::kInActive;
+
+	// データ読み込み
+	LoadData();
 }
 
 void PlayerAlly::Init()
@@ -36,6 +49,9 @@ void PlayerAlly::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+
+	// 初期化
+	Reset();
 }
 
 void PlayerAlly::SetCollisionBackTable()
@@ -59,6 +75,7 @@ void PlayerAlly::SaveData()
 	Json::Save(path);
 }
 
+
 void PlayerAlly::Update()
 {
 	//モデルの更新処理
@@ -74,6 +91,8 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 	model->Draw(vpMat_);
 }
 
+void PlayerAlly::DebugDraw()
+{}
 
 void PlayerAlly::Move()
 {
