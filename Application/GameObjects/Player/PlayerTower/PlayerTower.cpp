@@ -5,6 +5,16 @@ PlayerTower::PlayerTower()
 {
 	// モデルのインスタンス化
 	model.reset(new PlayerTowerModel);
+
+	// 必須でない
+	auto* appearance = model->model->Getter_Appearance(0);
+
+	appearance->metalic = 0.72f;
+	appearance->roughness = 0.4f;
+	appearance->color = { 0,0,255,255 };
+
+	// Jsonパスの設定
+	path = "./resource/application/json/player/playerTowerData.json";
 }
 
 void PlayerTower::Reset()
@@ -68,6 +78,9 @@ void PlayerTower::Draw(Matrix4* vpMat_)
 	// モデルの描画
 	model->Draw(vpMat_);
 }
+
+void PlayerTower::DebugDraw()
+{}
 
 // Enemyとの衝突
 void PlayerTower::CollisionBackToEnemy::operator()()

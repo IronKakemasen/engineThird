@@ -5,12 +5,16 @@ EnemyTower::EnemyTower()
 {
 	//モデルのインスタンス化
 	model.reset(new EnemyTowerModel);
+
 	//必須でない
 	auto* appearance = model->model->Getter_Appearance(0);
 
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->color = { 255,0,0,255 };
+
+	// Jsonパスの設定
+	path = "./resource/application/json/enemy/enemyTowerData.json";
 }
 
 void EnemyTower::Reset()
@@ -73,6 +77,9 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 	//モデルの描画
 	model->Draw(vpMat_);
 }
+
+void EnemyTower::DebugDraw()
+{}
 
 // プレイヤー弾との衝突
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
