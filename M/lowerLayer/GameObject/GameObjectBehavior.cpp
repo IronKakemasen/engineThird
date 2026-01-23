@@ -94,6 +94,7 @@ void GameObjectBehavior::SetGameObjectManager(GameObjectManager* gameObjectManag
 	gameObjectManager = gameObjectManager_;
 }
 
+
 bool GameObjectBehavior::HasRectCollider()
 {
 	if (collision.rect) return true;

@@ -99,6 +99,16 @@ void SceneController::Debug()
 	cur_Scene->cameraController->Debug();
 	cur_Scene->Debug();
 
+	if (runSpeedChanger.IsStop())
+	{
+		cur_Scene->dirLight->Getter_Para()->color =
+			{ 5,5,5};
+	}
+	else
+	{
+		cur_Scene->dirLight->Getter_Para()->color =
+			forDebug.lightBuffer;
+	}
 
 #endif // USE_IMGUI
 
@@ -161,6 +171,7 @@ void SceneController::Init(SceneType firstScene_)
 	axisModel->Init(nullptr);
 
 #ifdef _DEBUG
+	forDebug.lightBuffer = allScene[runningScene]->dirLight->Getter_Para()->color;
 	forDebug.p = M::GetInstance()->ImportPointLight();
 	forDebug.p->Getter_Para()->isActive = true;
 	forDebug.p->Getter_Para()->invSqrRadius = 200.0f;

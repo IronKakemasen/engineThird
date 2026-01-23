@@ -8,8 +8,12 @@ class GameObjectManager
 {
 	std::vector< GameObject* > objContainer;
 	int createNum = 0;
+	float tileLength = 1.0f;
+
 	//ゲームオブジェクトすべての当たり判定をとる
 	void ChackAllCollision(GameObject* thisObj_);
+	Vector2 ComputeTilePosition(Vector3 wPos_);
+	bool IsBothPositionsAreNear(Vector3 thisWPos_, Vector3 otherWPos_);
 
 #ifdef _DEBUG
 	struct ForDebug

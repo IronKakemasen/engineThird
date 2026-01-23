@@ -31,11 +31,11 @@ Quaternion Easing::SlerpQuaternion(Quaternion q1_, Vector3 targetDir_, float t_)
 	//SLERPの計算
 	float theta = std::acos(dot);
 	float interpolatedTheta = theta * t_;
-	float sinT0 = std::sin(theta);
-	float sinT1 = std::sin(interpolatedTheta);
+	float inv_sinT0 = 1.0f / sinf(theta);
+	float sinT1 = sinf(interpolatedTheta);
 
-	float s1 = sinf((1.0f - t_) * theta) / sinf(theta);
-	float s2 = sinT1 / sinT0;
+	float s1 = sinf((1.0f - t_) * theta) * inv_sinT0;
+	float s2 = sinT1 * inv_sinT0;
 
 	result.q = (q1_.q * s1) + (q2.q * s2);
 	

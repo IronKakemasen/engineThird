@@ -14,8 +14,8 @@ float* InGameController::GetCnt()
 
 void InGameController::SetModeData()
 {
-	actors[Mode::kPlayable].reset(new actor::Playable);
 	actors[Mode::kEnter].reset(new actor::Enter);
+	actors[Mode::kPlayable].reset(new actor::Playable);
 	actors[Mode::kUnPlayable].reset(new actor::UnPlayable);
 	actors[Mode::kResult].reset(new actor::Result);
 	actors[Mode::kGameOver].reset(new actor::GameOver);
