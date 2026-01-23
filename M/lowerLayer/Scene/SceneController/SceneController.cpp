@@ -93,18 +93,6 @@ void SceneController::Debug()
 		ImGui::TreePop();
 	}
 
-	for (int i = 0; i < 2; ++i)
-	{
-		if (ImGui::TreeNode(("PointLight" + std::to_string(i)).c_str()))
-		{
-			ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->pos), 0.1f);
-			ImGui::DragFloat3("color", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->color), 0.01f);
-			ImGui::DragFloat("intensity", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->intensity), 0.1f);
-			ImGui::TreePop();
-		}
-
-	}
-
 	ImGui::End();
 
 
