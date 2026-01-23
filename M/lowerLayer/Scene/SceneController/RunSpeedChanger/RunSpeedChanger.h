@@ -33,5 +33,6 @@ public:
 	bool AdjustRunSpeed();
 	void Reset();
 	void AddDebug();
+	bool IsStop();
 };
 

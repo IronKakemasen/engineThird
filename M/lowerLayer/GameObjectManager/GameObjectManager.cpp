@@ -211,10 +211,38 @@ void GameObjectManager::Render(Matrix4* vpMat_)
 	}
 }
 
+Vector2 GameObjectManager::ComputeTilePosition(Vector3 wPos_)
+{
+	static float const invTileLength = 1.0f / tileLength;
+
+	return { (floor(wPos_.x) + 100) * invTileLength,
+			(floor(wPos_.z) + 100)* invTileLength };
+}
+
+bool GameObjectManager::IsBothPositionsAreNear(Vector3 thisWPos_, Vector3 otherWPos_)
+{
+	Vector2 obj1 = ComputeTilePosition(thisWPos_);
+	Vector2 obj2 = ComputeTilePosition(otherWPos_);
+
+	float absDifX = fabs(obj1.x - obj2.x);
+	if (absDifX > 1.0f )
+	{
+		return false;
+	}
+
+	float absDifZ = fabs(obj1.y - obj2.y);
+	if (absDifZ > 1.0f)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 {
-	if (!thisObj_->IsCollisionActivated()) return;
-	else if (!thisObj_->HasCollider()) return;
+	if (!thisObj_->HasCollider()) return;
+	else if (!thisObj_->IsCollisionActivated()) return;
 
 #ifdef _DEBUG
 	thisObj_->forDebug.colorForCollision = { 50,50,200,255 };
@@ -230,6 +258,16 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 		{
 			continue;
 		}
+		//コライダーを所持しているのか
+		else if (!otherObj->HasCollider())
+		{
+			continue;
+		}
+		//コリジョンがアクティブ化されているのか
+		else if (!otherObj->IsCollisionActivated())
+		{
+			continue;
+		}
 		//マスク処理
 		else if (thisObj_->IsCollisionMaskMatched(otherObj->Getter_Identity()))
 		{
@@ -239,6 +277,12 @@ void GameObjectManager::ChackAllCollision(GameObject* thisObj_)
 		//ワールド座標を取得
 		Vector3 thisWorldPos = thisObj_->Getter_Trans()->GetWorldPos();
 		Vector3 otherWorldPos = otherObj->Getter_Trans()->GetWorldPos();
+
+		//近くに存在しているのか
+		if (!IsBothPositionsAreNear(thisWorldPos, otherWorldPos))
+		{
+			continue;
+		}
 
 		//さーくるコリジョン
 		if (thisObj_->HasCircleCollider() && otherObj->HasCircleCollider())
