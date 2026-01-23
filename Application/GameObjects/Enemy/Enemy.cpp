@@ -16,7 +16,7 @@ Enemy::Enemy()
 
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
+	appearance->color = { 200,50,50,255 };
 	
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyData.json";

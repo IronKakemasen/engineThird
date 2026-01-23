@@ -14,7 +14,7 @@
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../GameObjects/InGameController/InGameController.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
-
+#include "../../engineCore/Light/RectLight/RectLight.h"
 
 class ShikouteiScene final : public Scene
 {
@@ -33,6 +33,7 @@ class ShikouteiScene final : public Scene
 	MQuad quad;
 	Sprite sprite;
 	Sprite atlasNumber;
+	RectLight* rectLights[2];
 
 public:
 	ShikouteiScene();

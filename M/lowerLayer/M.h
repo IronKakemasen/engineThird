@@ -39,6 +39,7 @@ class AllPipelineSet;
 struct MeshAndDataCommon;
 class LightManager;
 class PointLight;
+class RectLight;
 class CameraParameterSetter;
 struct CameraBufferPara;
 class DirectionalLight;
@@ -74,14 +75,13 @@ public:
 	std::unique_ptr<ModelSimple> CreateModel(std::string filePath_);
 	DirectionalLight* ImportDirLight();
 	PointLight* ImportPointLight();
+	RectLight* ImportRectLight();
 
 	//Logを出力
 	void LogM(std::string message_);
 
-
 	//shaderSetのインデックスをストリングで取得
 	int GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixelShader_);
-
 
 	//モデルの描画
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
@@ -107,7 +107,6 @@ public:
 	void DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 		BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
-
 
 	void SetCameraBufferPara(CameraBufferPara cameraBufferPara_);
 

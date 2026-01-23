@@ -27,6 +27,7 @@ void LightManager::Update()
 LightManager::LightManager()
 {
 	pointLightID = 0;
+	rectLightID = 0;
 }
 
 void LightManager::Init(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_,
@@ -53,14 +54,24 @@ void LightManager::Init(ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_,
 void LightManager::Fetch()
 {
 	directionalLight = lightCreator.Getter_DirLight();
+	dirLightBuffer = lightCreator.Getter_DirLightBuffer();
+
 	auto* pLightContainer = lightCreator.Getter_PointLightContainer();
 	pointLightStructuredBuffer = lightCreator.Getter_PointLightStructuredBuffer();
-	dirLightBuffer = lightCreator.Getter_DirLightBuffer();
+
+	auto* rLightContainer = lightCreator.Getter_RectLightContainer();
+	rectLightStructuredBuffer = lightCreator.Getter_RectLightStructuredBuffer();
 
 	for (auto itr = pLightContainer->begin(); itr != pLightContainer->end(); ++itr)
 	{
 		pointLights.emplace_back((*itr).get());
 	}
+
+	for (auto itr = rLightContainer->begin(); itr != rLightContainer->end(); ++itr)
+	{
+		rectLights.emplace_back((*itr).get());
+	}
+
 }
 
 DirectionalLight* LightManager::ExportDirectionalLight()
@@ -71,17 +82,24 @@ DirectionalLight* LightManager::ExportDirectionalLight()
 PointLight* LightManager::ExportPointLight()
 {
 	auto* pLightContainer = lightCreator.Getter_PointLightContainer();
-	int limit = (int)pLightContainer->size();
-	assert(pointLightID < limit);
+	assert(pointLightID < LightCreator::Max::kPLightMax);
 
 	return pointLights[pointLightID++];
 }
 
+RectLight* LightManager::ExportRectLight()
+{
+	auto* rectLightContainer = lightCreator.Getter_RectLightContainer();
+	assert(rectLightID < LightCreator::Max::kRLightmax);
+
+	return rectLights[rectLightID++];
+}
+
+
 void LightManager::Batch()
 {
 	//PointLights
-	int sum = (int)pointLights.size();
-	for (int i = 0; i < sum; ++i)
+	for (int i = 0; i < LightCreator::kPLightMax; ++i)
 	{
 		auto *para = pointLights[i]->Getter_Para();
 		pointLightStructuredBuffer->pLight.buffMap[i].isActive = para->isActive;
@@ -99,6 +117,33 @@ void LightManager::Batch()
 		pointLightStructuredBuffer->pLight.buffMap[i].pos = para->pos;
 		pointLightStructuredBuffer->pLight.buffMap[i].invSqrRadius = invsqrtRadius;
 	}
+
+	//RectLights
+	for (int i = 0; i < LightCreator::kRLightmax; ++i)
+	{
+		auto* para = rectLights[i]->Getter_Para();
+		rectLightStructuredBuffer->rLight.buffMap[i].isActive = para->isActive;
+
+		if (!para->isActive)
+		{
+			continue;
+		}
+
+		rectLights[i]->Update();
+
+		Vector3 color_ = para->color * CommonV::inv_255;
+		rectLightStructuredBuffer->rLight.buffMap[i].color = color_;
+		rectLightStructuredBuffer->rLight.buffMap[i].intensity = para->intensity;
+		rectLightStructuredBuffer->rLight.buffMap[i].pos = para->pos;
+		rectLightStructuredBuffer->rLight.buffMap[i].attenuationRadius = para->attenuationRadius;
+		rectLightStructuredBuffer->rLight.buffMap[i].width = para->width;
+		rectLightStructuredBuffer->rLight.buffMap[i].height = para->height;
+		rectLightStructuredBuffer->rLight.buffMap[i].axisX = para->axisX;
+		rectLightStructuredBuffer->rLight.buffMap[i].axisY = para->axisY;
+		rectLightStructuredBuffer->rLight.buffMap[i].halfSize =
+		{ para->width * 0.5f,para->height * 0.5f };
+	}
+
 
 	//DirectionalLight
 	auto* para = directionalLight->Getter_Para();

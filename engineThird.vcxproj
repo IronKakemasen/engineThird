@@ -307,6 +307,8 @@
     <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp" />
     <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp" />
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\PostEffects\PostEffects.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
@@ -334,6 +336,8 @@
     <ClInclude Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.h" />
     <ClInclude Include="Application\Models\PlayerAllyModel\PlayerAllyModel.h" />
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\PostEffects\PostEffects.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

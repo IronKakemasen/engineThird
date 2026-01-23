@@ -58,9 +58,6 @@ void CameraController::Debug()
 
 	ImGui::End();
 
-	Vector3 cameraDir = cur_camera.first->Getter_Parameters()->trans.lookDir;
-	sprite_debug.GetAppearance()->trans.lookDir = 
-	{ cameraDir.x, cameraDir.y ,cameraDir.z };
 
 #endif // USE_IMGUI
 

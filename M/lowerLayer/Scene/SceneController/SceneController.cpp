@@ -46,9 +46,9 @@ void SceneController::Debug()
 			Getter_Parameters()->trans.lookDir;
 	}
 
-	forDebug.p->Getter_Para()->pos = 
+	forDebug.ps[0]->Getter_Para()->pos =
 		axisModel->model->Getter_Appearance(0)->trans.GetWorldPos();
-	forDebug.p->Getter_Para()->pos.z -= 1.5f;
+	forDebug.ps[0]->Getter_Para()->pos.z -= 1.5f;
 
 	static float fps;
 	fps = ImGui::GetIO().Framerate;
@@ -93,7 +93,21 @@ void SceneController::Debug()
 		ImGui::TreePop();
 	}
 
+	for (int i = 0; i < 2; ++i)
+	{
+		if (ImGui::TreeNode(("PointLight" + std::to_string(i)).c_str()))
+		{
+			ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->pos), 0.1f);
+			ImGui::DragFloat3("color", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->color), 0.01f);
+			ImGui::DragFloat("intensity", reinterpret_cast<float*>(&forDebug.ps[i]->Getter_Para()->intensity), 0.1f);
+			ImGui::TreePop();
+		}
+
+	}
+
 	ImGui::End();
+
+
 
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
@@ -172,10 +186,15 @@ void SceneController::Init(SceneType firstScene_)
 
 #ifdef _DEBUG
 	forDebug.lightBuffer = allScene[runningScene]->dirLight->Getter_Para()->color;
-	forDebug.p = M::GetInstance()->ImportPointLight();
-	forDebug.p->Getter_Para()->isActive = true;
-	forDebug.p->Getter_Para()->invSqrRadius = 200.0f;
-	forDebug.p->Getter_Para()->color = { 200,200,50 };
+	
+	for (int i = 0; i < 2; ++i)
+	{
+		forDebug.ps[i] = M::GetInstance()->ImportPointLight();
+		forDebug.ps[i]->Getter_Para()->isActive = true;
+		forDebug.ps[i]->Getter_Para()->invSqrRadius = 200.0f;
+		forDebug.ps[i]->Getter_Para()->color = { 200,200,50 };
+
+	}
 #endif // _DEBUG
 
 

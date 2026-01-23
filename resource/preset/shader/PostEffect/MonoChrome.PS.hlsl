@@ -1,8 +1,5 @@
 #include "../HLSLI/Material.hlsli"
-#include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
-#include "../HLSLI/PointLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 

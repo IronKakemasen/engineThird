@@ -12,6 +12,11 @@ void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 	pLightSrvIndex = pLightSrvIndex_;
 }
 
+void ExclusiveDraw::Setter_RLightSrvIndex(uint16_t* rLightSrvIndex_)
+{
+	rLightSrvIndex = rLightSrvIndex_;
+}
+
 void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_)
 {
 	dirLightBuffer = dirLightBuffer_;
@@ -20,7 +25,7 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
 	Vector4 color_, Matrix4* vpMat_)
 {
-	static float const div = 36.0f;
+	static float const div = 40.0f;
 	static float const deg = 360.0f / div;
 
 	for(float i = -2.0f;i< deg; ++i)
@@ -138,9 +143,13 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		}
 
 		//pointLight
-		cList->SetGraphicsRootDescriptorTable(k,
+		cList->SetGraphicsRootDescriptorTable(k++,
 			shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
-		++k;
+
+		//areaLight
+		cList->SetGraphicsRootDescriptorTable(k++,
+			shaderBufferData->gpuHandleContainer[*rLightSrvIndex]);
+
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
