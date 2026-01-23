@@ -1,3 +1,6 @@
+#include "ComputeLight.hlsli"
+
+
 struct PointLight
 {
     float3 pos;
@@ -27,12 +30,29 @@ float GetDistanceAttenuation(float3 unnormalizedToObject_,float invSqrtRadius_ )
     return attenuation;
 }
 
-float3 EvaluatePointLight( float3 normal_ , float3 worldPos_, float3 lightPos_, 
-    float invSqrtRadius_, float3 lightColor_ )
+float3 EvaluatePointLight(float3 normal_, float3 worldPos_, PointLight pLight_)
 {
-    float3 dif = lightPos_ - worldPos_;
+    float3 dif = pLight_.pos - worldPos_;
     float3 L = normalize(dif);
-    float att = GetDistanceAttenuation(dif, invSqrtRadius_);
+    float att = GetDistanceAttenuation(dif, pLight_.invSqrRadius);
 
-    return saturate(dot(normal_, L)) * lightColor_ * att / (4.0f * 3.14159265359f);
+    static const float tmp = 1.0f / (4.0f * 3.14159265359f);
+    return saturate(dot(normal_, L)) * pLight_.color * att * tmp;
 }
+
+float3 ComputePointLight(float3 world_, float3 V_, float3 N_, float VN_,
+    float squaredRoughness_, float3 Ks_, float3 diffuse_, PointLight light_)
+{
+    if (!light_.isActive) return float3(0,0,0);
+
+    float3 pointLightDir = normalize(light_.pos - world_);
+
+    float3 poinghtLightColor = EvaluatePointLight(N_, world_,
+            light_) * light_.intensity * light_.isActive;
+        
+    float3 pointLightBRDF = ComputeBRDF(diffuse_, pointLightDir, V_, N_, VN_, Ks_, squaredRoughness_);
+ 
+    return  poinghtLightColor * pointLightBRDF;
+}
+
+

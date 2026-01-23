@@ -64,6 +64,10 @@ void ShikouteiScene::Instantiate()
 		for (auto& playerTower : playerTowers)
 			enemyInstance->SetTargetTower(playerTower.get());
 	}
+
+	rectLights[0] = M::GetInstance()->ImportRectLight();
+	rectLights[1] = M::GetInstance()->ImportRectLight();
+
 }
 
 void ShikouteiScene::Init()
@@ -87,5 +91,8 @@ void ShikouteiScene::Init()
 	
 	// resource/application/json からデータをロード
 	Json::LoadAll("./resource/application/json/");
+
+	rectLights[0]->Getter_Para()->isActive = true;
+	rectLights[1]->Getter_Para()->isActive = true;
 
 }

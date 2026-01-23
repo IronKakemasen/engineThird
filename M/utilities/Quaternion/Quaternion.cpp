@@ -52,7 +52,7 @@ Vector4 Quaternion::CreateQuaternion(Vector3 axis_, float radian_, bool rad )
 
 Vector4 Quaternion::CreateQuaternion(Vector3 lookDir_)
 {
-	Vector3 z = lookDir_.GetNormalized();
+	Vector3 z = lookDir_;
 	Vector3 ver = { 0.0f, 1.0f, 0.0f };
 	Vector3 x = (ver.GetCross(z)).GetNormalized();
 	Vector3 y = (z.GetCross(x)).GetNormalized();

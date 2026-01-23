@@ -1,12 +1,14 @@
 #include "../HLSLI/Material.hlsli"
 #include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
+#include "../HLSLI/ComputeDiffuse.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
 #include "../HLSLI/PointLight.hlsli"
+#include "../HLSLI/RectLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 Texture2D<float4> normalMap : register(t1);
 StructuredBuffer<PointLight> pointLights : register(t2);
+StructuredBuffer<RectLight> rectLights : register(t3);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
@@ -40,7 +42,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
 
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
-    float3 normal = normalMap.Sample(nomalSmp, input.texcoord).xyz * 2.0 - 1.0f;
+    float3 normal = normalMap.Sample(nomalSmp, transformedUV.xy).xyz * 2.0 - 1.0f;
     normal = mul(input.invTangentBasis, normal);
 
     float4 baseColor = textureColor * gMaterial.albedoColor;
@@ -52,10 +54,8 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float3 lightFinalColor = float3(0, 0, 0);
     
     //直接光
-    float3 dirLightDir = normalize(dirLight.pos);
-    float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
-    float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
-    lightFinalColor += dirColor * dirLightBRDF;
+    lightFinalColor += ComputeDirectionalLight(input.worldPosition, toCamera,
+        normal, NV, a, Ks, diffuse, dirLight);
 
     //ポイントライト
     uint numLights, stride;
@@ -63,18 +63,21 @@ PixcelShaderOutput main(VertexShaderOutput input)
     
     for (uint i = 0; i < numLights; ++i)
     {
-        if (!pointLights[i].isActive)
-            continue;
-
-        float3 pointLightDir = normalize(pointLights[i].pos - input.worldPosition);
-
-        float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition,
-            pointLights[i].pos, pointLights[i].invSqrRadius,
-            pointLights[i].color) * pointLights[i].intensity * pointLights[i].isActive;
-        float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
-        lightFinalColor += poinghtLightColor * pointLightBRDF;
+        lightFinalColor += ComputePointLight(input.worldPosition, toCamera, normal, NV,
+            a, Ks, diffuse, pointLights[i]);
     }
+ 
+     //rectLight
+    uint numRLights, Rstride;
+    rectLights.GetDimensions(numRLights, Rstride);
     
+    for (uint p = 0; p < numRLights; ++p)
+    {
+        lightFinalColor += ComputeRectLight(input.worldPosition, toCamera, normal, NV,
+            a, Ks, diffuse, rectLights[p]);
+    }
+
+
     output.color = float4(lightFinalColor, baseColor.a);
     
     return output;

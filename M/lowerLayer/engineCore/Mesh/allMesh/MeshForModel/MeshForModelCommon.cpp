@@ -50,6 +50,7 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 
 		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 0));
 		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 1));
+		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 2));
 
 		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
 		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 1));
@@ -68,6 +69,7 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 0));
 		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 1));
 		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 2));
+		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 3));
 
 		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
 		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 1));

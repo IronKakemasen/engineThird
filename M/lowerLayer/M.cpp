@@ -34,8 +34,14 @@ DirectionalLight* M::ImportDirLight()
 PointLight* M::ImportPointLight()
 {
 	return lightManager->ExportPointLight();
+}
+
+RectLight* M::ImportRectLight()
+{
+    return lightManager->ExportRectLight();
 
 }
+
 
 
 std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)
