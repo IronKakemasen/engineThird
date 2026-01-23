@@ -6,6 +6,7 @@
 #include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include "./engineCore/Mesh/MeshCreator/MeshCreator.h"
 #include "./engineCore/Input/InputInterface/InputInterface.h"
+#include "./OffScreenTextureContainer/OffScreenManager.h"
 
 #include <functional>
 #include <d3d12.h>
@@ -45,6 +46,7 @@ class KeyboardKeys;
 
 class M
 {
+	OffScreenManager offscreenManager;
 	ResourceContainer resourceContainer;
 	ExclusiveDraw* exclusiveDraw = nullptr;
 	VPShaderTable* vpShaderTable = nullptr;

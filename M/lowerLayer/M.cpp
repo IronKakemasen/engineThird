@@ -121,18 +121,19 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
 
-	if (initOnlyOnce)
-	{
-		resourceContainer.Init(textureDataManager_);
-		exclusiveDraw = exclusiveDraw_;
-		vpShaderTable = vpShaderTable_;
-		allPipelineSet = allPipelineSet_;
-		meshCreator = meshCreator_;
-		lightManager = lightManager_;
-		cameraParameterSetter = cameraParameterSetter_;
-		keyboardKeys = keyboardKeys_;
-		initOnlyOnce = false;
-	}
+    if (!initOnlyOnce)return;
+    initOnlyOnce = false;
+
+    resourceContainer.Init(textureDataManager_);
+    offscreenManager.Init(textureDataManager_);
+    exclusiveDraw = exclusiveDraw_;
+    vpShaderTable = vpShaderTable_;
+    allPipelineSet = allPipelineSet_;
+    meshCreator = meshCreator_;
+    lightManager = lightManager_;
+    cameraParameterSetter = cameraParameterSetter_;
+    keyboardKeys = keyboardKeys_;
+
 }
 
 void M::LogM(std::string message_)

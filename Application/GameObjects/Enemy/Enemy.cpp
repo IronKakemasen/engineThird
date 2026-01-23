@@ -122,10 +122,16 @@ void Enemy::SetIdealVelocity()
 	// 最終的に向かう方向ベクトル
 	Vector3 lastDir;
 
+	//// プレイヤーが近ければプレイヤーを追う
+	//if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
+	//{
+	//	lastDir = dirToPlayer;
+	//}
+
 	// プレイヤーが近ければプレイヤーを追う
-	if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
+	if (!dirToPlayer.IsBigger(GameConstants::kEnemyRecognizeDistance))
 	{
-		lastDir = dirToPlayer.GetNormalized();
+		lastDir = dirToPlayer;
 	}
 
 
@@ -134,17 +140,22 @@ void Enemy::SetIdealVelocity()
 	{
 		// 最も近いタワーのインデックスを探す
 		size_t nearestTowerIndex = 0;
-		float nearestDistance = dirToTowers[0].GetMagnitutde();
+
+		//float nearestDistance = dirToTowers[0].GetMagnitutde();
+		float nearestDistance = dirToTowers[0].GetDot(dirToTowers[0]);
+
 		for (size_t i = 1; i < playerTowers.size(); ++i)
 		{
-			float distance = dirToTowers[i].GetMagnitutde();
+			//float distance = dirToTowers[i].GetMagnitutde();
+			float distance = dirToTowers[i].GetDot(dirToTowers[i]);
+
 			if (distance < nearestDistance)
 			{
 				nearestDistance = distance;
 				nearestTowerIndex = i;
 			}
 		}
-		lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
+		lastDir = dirToTowers[nearestTowerIndex];
 	}
 
 	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);

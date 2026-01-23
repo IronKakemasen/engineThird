@@ -132,8 +132,9 @@ float Vector3::GetDot(Vector3 other_)
 
 bool Vector3::IsBigger(float num_)
 {
-	float tmp = x * x + y * y + z * z;
-	if (tmp >= num_)
+	float tmp = GetDot(*this);
+	float tmp2 = num_ * num_;
+	if (tmp >= tmp2)
 	{
 		return true;
 	}
@@ -144,9 +145,10 @@ bool Vector3::IsBigger(float num_)
 }
 bool Vector3::IsBigger(Vector3 other_)
 {
-	float tmp = other_.x * other_.x + other_.y * other_.y + other_.z * other_.z;
+	float tmp = GetDot(*this);
+	float tmp2 = GetDot(*this);
 
-	if (IsBigger(tmp))
+	if (tmp >= tmp2)
 	{
 		return true;
 	}
