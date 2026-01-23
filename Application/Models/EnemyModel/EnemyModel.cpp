@@ -3,13 +3,15 @@
 EnemyModel::EnemyModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.gltf");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/Enemy/Enemy.obj");
 
 }
 
 void EnemyModel::Update()
 {
+	auto* appearance = model->Getter_Appearance(0);
 
+	appearance->trans.rotation.x += 3.0f;
 }
 
 void EnemyModel::Draw(Matrix4* vpMat_)
@@ -26,12 +28,10 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 	auto* appearance = model->Getter_Appearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
+		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 
-	appearance->texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
-	appearance->SetUsingTextureFromContainer(1, 1, 0, 0);
+	appearance->SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	//ゲームオブジェクトと全モデルのペアレント化
 	MakeAllPartsBeChildren(gameObjectTrans_);
@@ -39,8 +39,8 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
+	appearance->metalic = 0.9f;
+	appearance->roughness = 0.2f;
 }
 
 void EnemyModel::Reset()

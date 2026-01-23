@@ -47,7 +47,7 @@ void GameObjectManager::ForDebug::DrawCollider(GameObject* obj_, Matrix4* vpMat_
 
 GameObjectManager::ForDebug::ForDebug()
 {
-	collisionVisibility = true;
+	collisionVisibility = false;
 }
 
 #endif
