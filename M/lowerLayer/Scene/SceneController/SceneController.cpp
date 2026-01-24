@@ -95,8 +95,6 @@ void SceneController::Debug()
 
 	ImGui::End();
 
-
-
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
 	cur_Scene->Debug();
@@ -120,13 +118,14 @@ void SceneController::Update()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	cur_Scene->cameraController->Update();
-
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
-		cur_Scene->Update();
 		cur_Scene->gameObjManager->Update();
+		cur_Scene->Update();
+
 	}
+
+	cur_Scene->cameraController->Update();
 
 	Draw();
 

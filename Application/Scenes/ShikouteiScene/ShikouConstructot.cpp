@@ -72,7 +72,8 @@ void ShikouteiScene::Instantiate()
 
 void ShikouteiScene::Init()
 {
-	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
+	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
+		inGameController.get(),player.get());
 	
 	//矩形の初期化
 	quad.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2));

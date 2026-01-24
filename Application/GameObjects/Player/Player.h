@@ -74,7 +74,7 @@ public:
 	virtual void Draw(Matrix4* vpMat_)override;
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
-
+	inline bool WatchIsMove() { return isMoving; }
 
 	Player();
 
