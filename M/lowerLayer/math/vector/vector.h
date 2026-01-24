@@ -46,7 +46,7 @@ struct Vector3
 	//比較結果をゲット
 	bool IsBigger(float num_);
 	bool IsBigger(Vector3 other_);
-
+	bool IsFloorEqual(Vector3 other_);
 
 	Vector3 GetCross(Vector3 other);
 

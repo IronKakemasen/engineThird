@@ -21,6 +21,7 @@ void ShikouteiScene::Update()
 		SceneBehavior::doReset = true;
 	}
 
+	mainCamera.Update();
 }
 
 void ShikouteiScene::Draw()
@@ -44,7 +45,7 @@ void ShikouteiScene::Draw()
 
 void ShikouteiScene::Reset()
 {
-
+	mainCamera.Reset();
 }
 
 void ShikouteiScene::Debug()

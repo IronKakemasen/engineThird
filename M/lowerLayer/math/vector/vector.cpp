@@ -158,6 +158,20 @@ bool Vector3::IsBigger(Vector3 other_)
 	}
 }
 
+bool Vector3::IsFloorEqual(Vector3 other_)
+{
+	Vector3 adjust = { 0.0001f ,0.0001f ,0.0001f };
+	*this = *this + adjust;
+	other_= other_ + adjust;
+
+	if ((int)x == (int)other_.x && (int)y == (int)other_.y && (int)z == (int)other_.z)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 Vector3 operator+(Vector3 const& lVec, Vector3 const& rVec2)
 {
