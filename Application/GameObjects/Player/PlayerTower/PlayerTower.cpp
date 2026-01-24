@@ -60,9 +60,6 @@ void PlayerTower::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-	// 初期化
-	Reset();
 }
 
 void PlayerTower::SetCollisionBackTable()

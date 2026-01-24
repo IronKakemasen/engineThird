@@ -9,6 +9,7 @@
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../GameObjects/Enemy/Enemy.h"
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
@@ -28,6 +29,7 @@ class ShikouteiScene final : public Scene
 	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
 	std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers> enemyTowers;
 	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
+	std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets> playerBullets;
 	std::unique_ptr<InGameController> inGameController;
 
 	MQuad quad;

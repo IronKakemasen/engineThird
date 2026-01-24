@@ -1,6 +1,11 @@
 #include "Player.h"
 #include "imgui.h"
 #include "../Json/Json.h"
+#include "../GameObjectManager/GameObjectManager.h"
+#include "../../Config/GameConstants.h"
+#include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
+
 
 Player::Player()
 {
@@ -27,6 +32,10 @@ void Player::Reset()
 	allyExistenceFlags.fill(false);
 	// posHistoryの初期化
 	posHistory.fill(Vector3(0.0f, 0.0f, 0.0f));
+	//for (size_t i = 0; i < posHistory.size(); i++)
+	//{
+	//	posHistory[i].x = trans.pos.x - speed * i;
+	//}
 
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
@@ -50,15 +59,25 @@ void Player::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-	// 初期化
-	Reset();
 }
 
 void Player::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
+}
+
+void Player::SpawnAlly(Vector3 pos)
+{
+	for (auto* ally : allies)
+	{
+		if (ally->GetStatus() == GameObjectBehavior::Status::kInActive)
+		{
+			// 配置
+			ally->Spawn(pos);
+			break;
+		}
+	}
 }
 
 // データ保存・読み込み
@@ -87,8 +106,17 @@ void Player::Update()
 	// 移動処理
 	Move();
 
+	// 視線変更処理
+	UpdateLookDir();
+
 	// 座標保存処理
 	SavePos();
+
+	// 味方データ更新処理
+	UpdateAllyData();
+
+	// 攻撃処理
+	Attack();
 }
 
 // 描画処理
@@ -99,7 +127,36 @@ void Player::Draw(Matrix4 * vpMat_)
 }
 
 void Player::DebugDraw()
-{}
+{
+#ifdef USE_IMGUI
+
+
+	for (size_t i = 0; i < allyExistenceFlags.size(); i++)
+	{
+		if (allyExistenceFlags[i])
+		{
+			ImGui::Text("%d:#\n", i);
+		}
+		else
+		{
+			ImGui::Text("%d: \n", i);
+		}
+		ImGui::SameLine();
+		std::string key = "remove##" + std::to_string(i);
+		if (ImGui::Button(key.c_str()))
+		{
+			allies[i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			allyExistenceFlags[i] = false;
+		}
+		ImGui::SameLine();
+		ImGui::Text("c:%d", allies[i]->formationCurrentIndex);
+		ImGui::SameLine();
+		ImGui::Text("t :%d", allyTargetIndices[i]);
+	}
+
+
+#endif // USE_IMGUI
+}
 
 
 // Enemyとの衝突処理
@@ -121,10 +178,27 @@ void Player::Move()
 
 	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
 	{
-		// 左スティックの入力を取得
-		Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
-		moveDir.x -= leftStick.x;
-		moveDir.z += leftStick.y;
+		bool left = M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT);
+		bool right = M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT);
+		bool up = M::GetInstance()->getPadState.IsHeld(0, PAD_UP);
+		bool down = M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN);
+		if (!left && !right && !up && !down)
+		{
+			// 十字キーの入力がない場合はスティック入力を使う
+			// 左スティックの入力を取得
+			Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
+			if (leftStick.x < 0.2f && leftStick.x > -0.2f) leftStick.x = 0.0f;
+			if (leftStick.y < 0.2f && leftStick.y > -0.2f) leftStick.y = 0.0f;
+			moveDir.x += leftStick.x;
+			moveDir.z += leftStick.y;
+		}
+		else
+		{
+			if (left) moveDir.x -= 1.0f;
+			if (right) moveDir.x += 1.0f;
+			if (up) moveDir.z += 1.0f;
+			if (down) moveDir.z -= 1.0f;
+		}
 	}
 	else
 	{
@@ -135,19 +209,48 @@ void Player::Move()
 	}
 
 	// 正規化
-	moveDir.GetNormalized();
+	moveDir = moveDir.GetNormalized();
 
 	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
 
 	trans.pos = trans.pos + moveDir * speed;
 }
 
+void Player::Attack()
+{
+	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	{
+		if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
+	}
+	else
+	{
+		if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE)) return;
+	}
+
+	for (auto* bullet : bullets)
+	{
+		if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
+		{
+			attackGauge -= 1.0f;
+			if (attackGauge < 0.0f)
+				attackGauge = 0.0f;
+
+			int32_t stage = 0;
+			if (attackGauge >= 2.0f)stage = 2;
+			else if (attackGauge >= 1.0f)stage = 1;
+			else stage = 0;
+
+			// リセット
+			bullet->Fire(trans.pos, trans.lookDir, stage);
+
+			break;
+		}
+	}
+}
+
 // 座標保存処理
 void Player::SavePos()
 {
-	// 味方の存在フラグをリセット
-	emptyAllyIndex = 0;
-
 	if (!isMoving)return;
 
 	// 座標履歴を保存
@@ -156,14 +259,106 @@ void Player::SavePos()
 	if (headIndex >= posHistory.size()) { headIndex = 0; }
 }
 
+// 視線変更処理
+void Player::UpdateLookDir()
+{
+	// 視線方向ベクトル
+	Vector3 target = Vector3(0.0f, 0.0f, 0.0f);
+
+	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	{
+		// 右スティックの入力を取得
+		Vector2 rightStick = M::GetInstance()->getPadState.GetRightStick(0);
+		if (rightStick.x < 0.2f && rightStick.x > -0.2f) rightStick.x = 0.0f;
+		if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
+		target.x = rightStick.x;
+		target.z = rightStick.y;
+	}
+	else
+	{
+		if (M::GetInstance()->IsKeyPressed(KeyType::UP))	target.z += 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::DOWN))	target.z -= 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) target.x += 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::LEFT))	target.x -= 1.0f;
+	}
+
+	if (target.x == 0.0f && target.z == 0.0f) return;
+
+	// 正規化
+	trans.lookDir = target.GetNormalized();
+}
+
+// 
+// 0 - 1 - 2 - 3 - x - 5 - 6    新　新　新
+// 
+// 上記のように4番目の味方が抜けた場合
+// currentIndex 0,1,2,3 の場合返り値はそのまま0,1,2,3
+// currentIndex 4 のキャラはそもそもこの関数を呼ばない
+// currentIndex 5,6 の場合返り値はそれぞれ4,5となり詰める
+// currentIndex -1(新規) の場合返り値は列を完全に詰めた場合の最後尾(上記例だと6)となり最後尾を指す
+// 
+
+// 味方データ更新処理
+void Player::UpdateAllyData()
+{
+	// 味方の数をリセット
+	formedAllyCount = 0;
+
+
+	// 味方の存在フラグを更新
+	uint32_t fakeSum = 0;
+	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
+	{
+		if (allyExistenceFlags[i] == true)
+		{
+			// 見かけ上の人数
+			fakeSum++;
+			// 実際に並んでいる人数
+			if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				formedAllyCount++;
+			}
+		}
+	}
+
+	//// fakeSum != formedAllyCount の場合、allyExistenceFlagsの後半のtrueは誤りなのでfalseにする
+	//if (fakeSum != formedAllyCount)
+	//{
+	//	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
+	//	{
+	//		if (fakeSum > formedAllyCount && allyExistenceFlags[i] == true)
+	//		{
+	//			allyExistenceFlags[i] = false;
+	//			//fakeSum--;
+	//		}
+	//	}
+	//}
+
+	uint32_t empty = 0;
+	for (uint32_t i = 0; i < GameConstants::kMaxAllies; ++i)
+	{
+		allyTargetIndices[i] = i - empty;
+
+		if (!allyExistenceFlags[i])
+		{
+			empty++;
+		}
+	}
+}
 // 味方の目標座標を取得
 Vector3 Player::GetAllyTargetPos(size_t allyIndex)
 {
-	size_t index = headIndex + (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
-	return posHistory[index % posHistory.size()];
+	size_t delayFrames = (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
+	size_t index = (headIndex + posHistory.size() - delayFrames) % posHistory.size();
+	return posHistory[index];
 }
-// 次に空いている味方のインデックスを取得
-uint32_t Player::GetNextEmptyAllyIndex()
+uint32_t Player::GetNextEmptyAllyIndex(int32_t currentIndex)
 {
-	return emptyAllyIndex++;
+	// 新規の場合、最後尾を返す
+	if (currentIndex == -1)
+	{
+		return formedAllyCount;
+	}
+
+	return allyTargetIndices[currentIndex];
 }

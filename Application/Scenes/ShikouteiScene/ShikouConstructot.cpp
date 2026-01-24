@@ -25,6 +25,12 @@ void ShikouteiScene::Instantiate()
 		allies[i].reset(new PlayerAlly);
 		allies[i]->SetID(static_cast<int32_t>(i));
 	}
+	// プレイヤーバレットのインスタンス化 & IDセット
+	for (size_t i = 0; i < playerBullets.size(); ++i)
+	{
+		playerBullets[i].reset(new PlayerBullet);
+		playerBullets[i]->SetID(static_cast<int32_t>(i));
+	}
 	// エネミーのインスタンス化 & IDセット
 	for (size_t i = 0; i < enemies.size(); ++i)
 	{
@@ -50,6 +56,8 @@ void ShikouteiScene::Instantiate()
 		gameObjManager->RegisterForContainer(enemyInstance.get());
 	for (auto& ally : allies)
 		gameObjManager->RegisterForContainer(ally.get());
+	for (auto& playerBullet : playerBullets)
+		gameObjManager->RegisterForContainer(playerBullet.get());
 	for (auto& playerTower : playerTowers)
 		gameObjManager->RegisterForContainer(playerTower.get());
 	for (auto& enemyTower : enemyTowers)
@@ -63,6 +71,16 @@ void ShikouteiScene::Instantiate()
 		enemyInstance->SetTargetPlayer(player.get());
 		for (auto& playerTower : playerTowers)
 			enemyInstance->SetTargetTower(playerTower.get());
+	}
+
+	for (auto& ally : allies)
+	{
+		player->SetAllies(ally.get());
+	}
+
+	for (auto& bullet : playerBullets)
+	{
+		player->SetBullets(bullet.get());
 	}
 }
 

@@ -20,6 +20,9 @@ namespace GameConstants
 	// 最大エネミーファクトリー数
 	inline constexpr size_t kMaxEnemyFactories = 10 + kMaxPlayerTowers;
 
+	// 最大弾丸数
+	inline constexpr size_t kMaxPlayerBullets = 12;
+
 	// 最大ステージ数
 	inline constexpr size_t kMaxStages = 5;
 

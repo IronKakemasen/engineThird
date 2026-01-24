@@ -47,9 +47,6 @@ void EnemyTower::Init()
 
 	// collisionBackToPlayerBulletの初期化
 	collisionBackToPlayerBullet.Init(this);
-
-	// 初期化
-	Reset();
 }
 
 void EnemyTower::SetCollisionBackTable()

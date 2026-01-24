@@ -17,7 +17,7 @@ void ShikouteiScene::Update()
 	atlasNumber.ChangeAtlasIndex(timeNum);
 
 
-	if (M::GetInstance()->IsKeyTriggered(KeyType::R))
+	if (M::GetInstance()->IsKeyTriggered(KeyType::C))
 	{
 		SceneBehavior::doReset = true;
 	}
@@ -144,6 +144,12 @@ void ShikouteiScene::Debug()
 			{
 				tower->DebugDraw();
 			}
+			ImGui::EndTabItem();
+		}
+
+		if (ImGui::BeginTabItem("Player"))
+		{
+			player->DebugDraw();
 			ImGui::EndTabItem();
 		}
 

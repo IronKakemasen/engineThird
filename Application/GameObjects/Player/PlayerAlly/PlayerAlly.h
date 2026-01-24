@@ -14,7 +14,16 @@ private:
 
 	void Move();
 
+	float speed = 0.05f;
+
 public:
+	// 自分は列の何番目か(-1の時はまだたどり着いていない)
+	int32_t formationCurrentIndex = -1;
+	// 自分は列の何番目を目指すか
+	int32_t formationTargetIndex = -1;
+
+	void Spawn(Vector3 pos);
+
 
 #pragma	endregion
 
@@ -45,7 +54,14 @@ private:
 	};
 	// Enemyと衝突したときのコリジョンバック
 	CollisionBackToEnemy collisionBackToEnemy;
-
+	struct CollisionBackToPlayerBullet
+	{
+		PlayerAlly* me = nullptr;
+		void operator()();
+		void Init(PlayerAlly* object) { me = object; }
+	};
+	// PlayerBulletと衝突したときのコリジョンバック
+	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

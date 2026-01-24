@@ -48,7 +48,7 @@ void EnemyFactory::Reset()
 	}
 
 	// タイマーリセット
-	timer.Initialize(1.0f);
+	timer.Initialize(spawnInterval);
 }
 
 void EnemyFactory::Init()
@@ -73,9 +73,6 @@ void EnemyFactory::Init()
 	{
 		enemies.push_back(reinterpret_cast<Enemy*>(towerObj));
 	}
-	
-	// 初期化
-	Reset();
 }
 
 void EnemyFactory::SetCollisionBackTable()
@@ -165,8 +162,7 @@ void EnemyFactory::SpawnEnemy()
 		{
 			if (enemy->GetStatus() == Status::kInActive)
 			{
-				enemy->SetStatus(Status::kActive);
-				enemy->trans.pos = this->trans.pos;
+				enemy->Spawn(trans.pos);
 				break;
 			}
 		}

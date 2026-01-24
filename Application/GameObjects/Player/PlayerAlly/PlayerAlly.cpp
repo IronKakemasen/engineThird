@@ -50,13 +50,13 @@ void PlayerAlly::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
+	collisionBackToPlayerBullet.Init(this);
 
 	// ポインタ取得
 	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
 
-
-	// 初期化
-	Reset();
+	// 補完係数設定
+	trans.interpolationCoe = 0.9f;
 }
 
 void PlayerAlly::SetCollisionBackTable()
@@ -99,15 +99,137 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 void PlayerAlly::DebugDraw()
 {}
 
+//void PlayerAlly::Move()
+//{
+//	uint32_t formationTargetIndex = targetPlayer->GetNextEmptyAllyIndex(formationCurrentIndex);
+//	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationTargetIndex);
+//	Vector3 direction = targetPos - trans.pos;
+//	direction = direction.GetNormalized();
+//
+//	// -1(列に加わっていない野良)なら最後尾に向かう
+//	if (formationCurrentIndex == -1)
+//	{
+//		// 補完
+//		trans.lookDir = Easing::SLerp(trans.lookDir, direction, trans.interpolationCoe);
+//
+//		trans.pos = trans.pos + (trans.lookDir * (targetPlayer->GetSpeed() / 3.0f));
+//
+//		// 目的地に到達したら位置を合わせる
+//		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.5f)
+//		{
+//			// たどり着いたインデックスにまだ味方がいなければ列に登録
+//			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+//			{
+//				// 自身のインデックス更新
+//				formationCurrentIndex = formationTargetIndex;
+//
+//				// 味方存在フラグ更新
+//				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
+//			}
+//		}
+//	}
+//	else
+//	{
+//		trans.pos = targetPos;
+//	}
+//}
+
+//void PlayerAlly::Move()
+//{
+//	uint32_t formationTargetIndex = targetPlayer->GetNextEmptyAllyIndex(formationCurrentIndex);
+//	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationTargetIndex);
+//	Vector3 direction = targetPos - trans.pos;
+//	float distance = direction.GetMagnitutde();
+//
+//
+//	// 目的地まで距離があるなら移動
+//	if (distance > 0.2f)
+//	{
+//		// 補完
+//		trans.lookDir = Easing::SLerp(trans.lookDir, direction.GetNormalized(), trans.interpolationCoe);
+//
+//		trans.pos = trans.pos + (trans.lookDir * (targetPlayer->GetSpeed()));
+//
+//		distance = Vector3(targetPos - trans.pos).GetMagnitutde();
+//
+//		// 移動した結果目的地に到達したなら かつ
+//		if (distance < 0.2f)
+//		{
+//			// たどり着いたインデックスにまだ味方がいなければ 列に登録
+//			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+//			{
+//				// 自身のインデックス更新
+//				formationCurrentIndex = formationTargetIndex;
+//
+//				// 味方存在フラグ更新
+//				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
+//			}
+//		}
+//	}
+//	// 目的地に近ければ理想の位置に移動
+//	else
+//	{
+//		trans.pos = targetPos;
+//	}
+//}
+
 void PlayerAlly::Move()
 {
-	Vector3 targetPos = targetPlayer->GetAllyTargetPos(targetPlayer->GetNextEmptyAllyIndex());
+	formationTargetIndex = targetPlayer->GetNextEmptyAllyIndex(formationCurrentIndex);
+	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
+	Vector3 direction = targetPos - trans.pos;
+	float distance = direction.GetMagnitutde();
 
-	trans.pos = targetPos;
+
+	// 目的地まで距離があるなら移動
+	if (distance > 0.2f)
+	{
+		trans.pos = trans.pos + (direction.GetNormalized() * targetPlayer->GetSpeed());
+
+		distance = Vector3(targetPos - trans.pos).GetMagnitutde();
+
+		// 移動した結果目的地に到達したなら かつ
+		if (distance < 0.2f)
+		{
+			// たどり着いたインデックスにまだ味方がいなければ 列に登録
+			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+			{
+				// 自身のインデックス更新
+				formationCurrentIndex = formationTargetIndex;
+
+				// 味方存在フラグ更新
+				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
+			}
+		}
+	}
+	// 目的地に近ければ理想の位置に移動
+	else
+	{
+		trans.pos = targetPos;
+	}
 }
 
+void PlayerAlly::Spawn(Vector3 pos)
+{
+	// 有効化
+	SetStatus(Status::kActive);
+	// 初期座標設定
+	trans.pos = pos;
+	// 自分は列の何番目か
+	formationCurrentIndex = -1;
+}
 
 
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()
-{}
+{
+	// 本来はここで自身の死亡判定を行うべきだが、
+	// statusが非アクティブになるとコリジョンが無効化されてしまい、
+	// エネミー側で衝突判定が行えなくなるため、エネミー側で処理を行う(1024敗)
+}
+
+// プレイヤー弾との衝突
+void PlayerAlly::CollisionBackToPlayerBullet::operator()()
+{
+	me->SetStatus(Status::kInActive);
+}

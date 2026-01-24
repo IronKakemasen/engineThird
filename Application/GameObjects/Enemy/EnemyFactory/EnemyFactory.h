@@ -15,13 +15,9 @@ private:
 	std::vector<Enemy*> enemies{};
 
 	Counter timer;
-	static float timeNum;
-	//timer.Add();
-	//if (timer.IsEnd())
-	//{
-	//	timeNum++;
-	//	Benri::AdjustMax(timeNum, 9.0f, 0.0f);
-	//}
+
+	float spawnInterval = 20.0f;
+
 public:
 
 	void SpawnEnemy();
