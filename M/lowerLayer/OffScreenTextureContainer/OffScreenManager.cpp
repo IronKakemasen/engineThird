@@ -6,7 +6,8 @@ void OffScreenManager::Init(TextureDataManager* textureDataManager_)
 {
 	textureDataManager = textureDataManager_;
 
-	SetEffectSysytem(PostEffectType::kBloom, std::make_unique<PostEffects::PostEffect>());
+	SetEffectSysytem(PostEffectType::kBloom, std::make_unique<PostEffects::Bloom>());
+	SetEffectSysytem(PostEffectType::kNone, std::make_unique<PostEffects::NoEffection>());
 
 	for (auto& effect : effectContainer)
 	{

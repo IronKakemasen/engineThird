@@ -5,14 +5,13 @@
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
 #include "../../Mesh/allMesh/MeshForModel/MeshForModelCommon.h"
 
-
 class AllPipelineSet;
 class AllMesh;
 struct ShaderBufferData;
 struct DirectionalLightBuffer;
 struct PointLightBuffer;
-
 struct CameraParaBuffer;
+class Palette;
 
 class ExclusiveDraw
 {
@@ -47,6 +46,8 @@ public:
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
+	void DrawOnPalette(Palette* palette_);
+
 
 	void ResetDrawIndexes();
 

@@ -21,12 +21,20 @@ namespace PostEffects
 
 	};
 
-	struct Bloom :public PostEffectBehavior
+	struct Bloom :public PostEffect
 	{
 		virtual void operator()()override;
 		virtual void Init(TextureDataManager* textureDataManager_) override;
 
 	};
+
+	struct NoEffection :public PostEffect
+	{
+		virtual void operator()()override;
+		virtual void Init(TextureDataManager* textureDataManager_) override;
+
+	};
+
 
 };
 

@@ -6,6 +6,7 @@
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
 #include "../../../M.h"
+#include "../Palette/Palette.h"
 
 void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 {
@@ -251,6 +252,11 @@ void ExclusiveDraw::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& righ
 
 	//次の描画用にインクリメント
 	quadMesh->cur_drawIndex++;
+
+}
+
+void ExclusiveDraw::DrawOnPalette(Palette* palette_)
+{
 
 }
 

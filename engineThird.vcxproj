@@ -310,6 +310,8 @@
     <ClCompile Include="M\lowerLayer\OffScreenTextureContainer\PostEffects\PostEffects.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Render\Palette\Palette.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
@@ -322,6 +324,7 @@
     <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectEntity.h" />
     <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
     <ClInclude Include="Application\Cameras\MainCamera\CameraActions.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.h" />
@@ -340,6 +343,8 @@
     <ClInclude Include="M\lowerLayer\OffScreenTextureContainer\PostEffects\PostEffects.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\Palette.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

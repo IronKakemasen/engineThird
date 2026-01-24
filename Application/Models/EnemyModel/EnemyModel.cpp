@@ -3,7 +3,7 @@
 EnemyModel::EnemyModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/application/Model/Enemy/Enemy.obj");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/Enemy02/Enemy02.obj");
 
 }
 
@@ -11,7 +11,7 @@ void EnemyModel::Update()
 {
 	auto* appearance = model->Getter_Appearance(0);
 
-	appearance->trans.rotation.x += 3.0f;
+	appearance->trans.rotation.y += 3.0f;
 }
 
 void EnemyModel::Draw(Matrix4* vpMat_)
