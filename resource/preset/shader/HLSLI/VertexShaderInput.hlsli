@@ -6,6 +6,11 @@ struct VertexShaderInput
     float3 tangent : TANGENT;
 };
 
+struct VertexShaderInputLine
+{
+    float3 position : POSITION0;
+};
+
 struct VertexShaderInputPlane
 {
     float3 position : POSITION0;

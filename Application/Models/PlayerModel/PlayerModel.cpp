@@ -3,7 +3,7 @@
 PlayerModel::PlayerModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModel/PlayerModel.obj");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModel01/PlayerModel01.obj");
 
 }
 

@@ -17,13 +17,19 @@ class AllPipelineSet;
 struct MeshForPostEffect
 {
 	int const kMax = 10;
+	int const kIndexCnt = 6;
+	int const kVertexCnt = 4;
 
 	// 頂点バッファマップ
 	Vertex* vertexMap = nullptr;
+	// インデックスバッファマップ
+	uint32_t* indexMap = nullptr;
 
 protected:
 	// 頂点バッファとそのびゅー
 	VertexBuffer vertexBuffer;
+	// インデックスバッファとそのびゅー
+	IndexBuffer indexBuffer;
 
 public:
 
@@ -32,6 +38,11 @@ public:
 	auto* Getter_VertexBufferView()
 	{
 		return &vertexBuffer.view;
+	}
+
+	auto* Getter_IndexBufferView()
+	{
+		return &indexBuffer.view;
 	}
 
 private:

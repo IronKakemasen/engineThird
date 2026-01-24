@@ -2,16 +2,9 @@
 #include "./PostEffects/PostEffects.h"
 #include <unordered_map>
 #include <memory>
+#include "../engineCore/Render/Palette/PostEffectType.h"
 
 class TextureDataManager;
-
-enum class PostEffectType
-{
-	kNone,
-	kBloom,
-
-	kCount
-};
 
 class OffScreenManager
 {

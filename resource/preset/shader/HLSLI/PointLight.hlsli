@@ -1,4 +1,4 @@
-#include "ComputeLight.hlsli"
+#include "ComputeBRDF.hlsli"
 
 
 struct PointLight

@@ -172,6 +172,8 @@
     <ClCompile Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.cpp" />
     <ClCompile Include="Application\Cameras\MainCamera\CameraActions.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Render\Palette\Palette.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -344,6 +346,9 @@
     <ClInclude Include="M\lowerLayer\engineCore\Light\RectLight\RectLight.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.h" />
     <ClInclude Include="Application\Cameras\MainCamera\CameraActions.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\Palette.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

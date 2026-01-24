@@ -13,3 +13,14 @@ void PostEffects::Bloom::Init(TextureDataManager* textureDataManager_)
 		buffers.emplace_back(textureDataManager_->CreatePostEffectBuffer());
 	}
 }
+
+void PostEffects::NoEffection::operator()()
+{
+
+}
+
+void PostEffects::NoEffection::Init(TextureDataManager* textureDataManager_)
+{
+	buffers.emplace_back(textureDataManager_->CreatePostEffectBuffer());
+}
+
