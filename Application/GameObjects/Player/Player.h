@@ -17,18 +17,22 @@ private:
 	//////  移動処理  //////
 	void Move();			// 移動
 	bool isMoving = false;	// 移動中フラグ
-	//int32_t stopMoveFrame = 0;// 移動停止してからのフレーム数
 	float speed = 0.1f;		// 移動速度
 
 	//////  攻撃処理  //////
 	void Attack();		// 攻撃
 	std::vector<PlayerBullet*> bullets{}; // 参照ポインタ
-	float attackGauge = 3.0f;		// 攻撃ゲージ(0.0f ~ 3.0f)攻撃一回で1.0f減少 減った後残3.0f~2.0fの攻撃はステージ１　2.0f~1.0f
-	float attackInterval = 0.5f;	// 攻撃したから一定時間はゲージが回復しない
-	Counter attackIntervalCounter; // 攻撃間隔カウンター
+	float defaultAttackPower;	// デフォルト攻撃力
+	float allyPowerBonus;		// 味方を経由するごとに増える攻撃力補正値
+	float allySizeBonus;			// 味方を経由するごとに増える弾サイズ補正値
+	float attackGauge = 3.0f;			// 攻撃ゲージ(0.0f ~ 3.0f)攻撃一回で1.0f減少 減った後残3.0f~2.0fの攻撃はステージ１　2.0f~1.0f
+	float attackGaugeRecoverInterval = 0.5f;// 攻撃したら一定時間はゲージが回復しない
+	float attackGaugeRecoverSpeed = 0.5f;	// 攻撃ゲージ回復速度(1秒間に回復するゲージ量)
+	Counter attackIntervalCounter;		// 攻撃間隔カウンター
 
 	///// 座標履歴管理処理  //////
 	void SavePos();			// 座標履歴の保存
+	Vector3 GetPosHistory(int32_t n);// nフレーム前の座標を取得
 	// 自身の座標履歴[最大味方数 * 味方追従遅延フレーム数]
 	std::array<Vector3, GameConstants::kMaxAllies* GameConstants::kAllyFollowDelayFrames> posHistory = {};
 	size_t headIndex = 0;	// リングバッファの先頭インデックス
@@ -37,6 +41,10 @@ private:
 	////// 視線変更処理  //////
 	void UpdateLookDir();
 	
+
+	////// HP管理処理  //////
+	float MaxHP; // 最大HP
+
 
 	////// 味方管理処理  //////
 	void UpdateAllyData(); // 味方データ更新処理
@@ -64,11 +72,6 @@ private:
 	// 死亡して詰め待ちのリスト(先入れ先出し)
 	std::deque<int32_t> deadIndexList = {};
 
-
-	/// <summary>
-	/// プレイヤーのnフレーム前の座標を取得
-	/// </summary>
-	Vector3 GetPosHistory(int32_t n);
 public:
 
 	/// <summary>

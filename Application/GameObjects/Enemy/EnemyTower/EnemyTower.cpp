@@ -1,5 +1,7 @@
 #include "EnemyTower.h"
 #include "../Json/Json.h"
+#include "../../../Config/InGameConfig.h"
+#include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 
 EnemyTower::EnemyTower()
 {
@@ -30,6 +32,13 @@ void EnemyTower::Reset()
 
 	// データ読み込み
 	LoadData();
+
+	// config反映
+	if (inGameConfig)
+	{
+		// HP反映
+		hp = inGameConfig->enemyTowerMaxHP;
+	}
 }
 
 void EnemyTower::Init()
@@ -87,7 +96,14 @@ void EnemyTower::DebugDraw()
 // プレイヤー弾との衝突
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
 {
-	me->SetStatus(Status::kInActive);
+	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+
+	me->hp = me->hp - playerBullet->GetAttackPower();
+
+	if (me->hp < 0.0f)
+	{
+		me->SetStatus(Status::kInActive);
+	}
 }
 
 

@@ -7,6 +7,7 @@
 #include "../../Config/GameConstants.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../Config/InGameConfig.h"
 #include <array>
 
 Enemy::Enemy()
@@ -41,6 +42,19 @@ void Enemy::Reset()
 
 	// 初期向きを最近のターゲット方向に設定
 	LookAtTarget();
+
+	// config反映
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->enemySpeed;
+		// 味方と当たったときのノックバック力反映
+		knockBackPowerOnAlly = inGameConfig->enemyKnockBackPowerToAlly;
+		// HP反映
+		maxHP = inGameConfig->enemyMaxHP;
+		// 攻撃力反映
+		attackPower = inGameConfig->enemyAttackPower;
+	}
 }
 
 void Enemy::Init()
@@ -79,7 +93,7 @@ void Enemy::Spawn(Vector3 pos)
 	// 初期座標設定
 	trans.pos = pos;
 	// 体力初期化
-	hp = 100.0f;
+	hp = maxHP;
 }
 
 void Enemy::SetCollisionBackTable()
@@ -136,11 +150,13 @@ void Enemy::MoveToTarget()
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
 	for (size_t i = 0; i < playerTowers.size(); ++i)
 	{
-		dirToTowers[i] = Vector3(9999.9f, 9999.9f, 9999.9f);
+		dirToTowers[i] = Vector3(0.0f, 0.0f, 9999.9f);
 		if (playerTowers[i]->GetStatus() == Status::kActive)
+		{
 			dirToTowers[i] = playerTowers[i]->Getter_Trans()->pos - trans.pos;
+
+		}
 	}
-	Vector3 dirToPlayer = targetPlayer->Getter_Trans()->GetWorldPos() - trans.GetWorldPos();
 
 	// 最も近いタワーを追う
 	size_t nearestTowerIndex = 0;
@@ -249,7 +265,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
 
 	// ノックバック付与
-	me->KnockBack(0.02f);
+	me->KnockBack(0.2f);
 
 	// 無敵付与
 	me->invincibleTime = 20;
@@ -269,7 +285,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	//me->KnockBack(0.1f);
+	me->KnockBack(2.1f);
 }
 
 // プレイヤー味方との衝突
@@ -279,7 +295,7 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 
 	if (playerAlly->formationCurrentIndex != -1)
 	{
-		me->KnockBack(1.0f);
+		me->KnockBack(me->knockBackPowerOnAlly);
 		playerAlly->Death();
 	}
 }

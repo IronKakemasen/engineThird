@@ -170,6 +170,7 @@
     <ClCompile Include="Application\GameObjects\InGameController\Actor.cpp" />
     <ClCompile Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.cpp" />
     <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
+    <ClCompile Include="Application\Config\InGameConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -340,6 +341,7 @@
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
     <ClInclude Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
+    <ClInclude Include="Application\Config\InGameConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

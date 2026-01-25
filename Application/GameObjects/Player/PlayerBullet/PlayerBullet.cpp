@@ -5,6 +5,7 @@
 #include "../../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../Json/Json.h"
 
+
 PlayerBullet::PlayerBullet()
 {
 	//モデルのインスタンス化
@@ -64,7 +65,7 @@ void PlayerBullet::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerAlly, collisionBackToAlly);
 }
 
-void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
+void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, float powerBonus, float sizeBonus)
 {
 	// リセット
 	trans.scale = Vector3(0.5f, 0.2f, 0.5f);
@@ -79,7 +80,11 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	// カウンター設定
 	lifeCounter.Initialize(defaultLifeTime);
 	// 攻撃力リセット
-	attackPower = defaultAttackPower;
+	attackPower = power;
+	// 味方経由攻撃力補正値設定
+	allyPowerBonus = powerBonus;
+	// 味方経由サイズ補正値設定
+	allySizeBonus = sizeBonus;
 }
 
 // データ保存・読み込み
@@ -87,15 +92,14 @@ void PlayerBullet::LoadData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
-	Json::LoadParam(path, key + "/position", trans.pos);
 }
 void PlayerBullet::SaveData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
-	Json::SaveParam(path, key + "/position", trans.pos);
 	Json::Save(path);
 }
+
 
 void PlayerBullet::Update()
 {
@@ -110,7 +114,7 @@ void PlayerBullet::Update()
 	if (lifeCounter.count >= 1.0f)
 	{
 		// 0.1以下になるまで小さくなる
-		trans.scale = trans.scale * 0.7f;
+		trans.scale = trans.scale * 0.5f;
 		if (trans.scale.x <= 0.1f)
 		{
 			SetStatus(Status::kInActive);
@@ -150,6 +154,6 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	auto* ally = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 	if (ally->formationCurrentIndex == -1) return;
 
-	me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
-	me->attackPower += 5.0f;
+	me->trans.scale = me->trans.scale + Vector3{ me->allySizeBonus, 0.0f, me->allySizeBonus };
+	me->attackPower += me->allyPowerBonus;
 }

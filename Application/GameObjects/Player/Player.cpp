@@ -5,7 +5,7 @@
 #include "../../Config/GameConstants.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
-
+#include "../../Config/InGameConfig.h"
 
 Player::Player()
 {
@@ -51,6 +51,26 @@ void Player::Reset()
 
 	// データ読み込み
 	LoadData();
+
+	// config反映
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->playerSpeed;
+		// デフォルト攻撃力反映
+		defaultAttackPower = inGameConfig->playerDefaultAttackPower;
+		// 味方補正値反映
+		allyPowerBonus = inGameConfig->playerAllyPowerBonus;
+		allySizeBonus = inGameConfig->playerAllySizeBonus;
+		// 最大HP反映
+		MaxHP = inGameConfig->playerMaxHP;
+		// 現在HPを最大HPに設定
+		hp = MaxHP;
+		// 攻撃ゲージ回復速度反映
+		attackGaugeRecoverSpeed = inGameConfig->playerAttackGaugeRecoverSpeed;
+		// 攻撃ゲージ回復インターバル反映
+		attackGaugeRecoverInterval = inGameConfig->playerAttackGaugeRecoverInterval;
+	}
 }
 
 void Player::Init()
@@ -95,14 +115,12 @@ void Player::LoadData()
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
-	Json::LoadParam(path, key + "/speed", speed);
 }
 void Player::SaveData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::SaveParam(path, key + "/position", trans.pos);
-	Json::SaveParam(path, key + "/speed", speed);
 	Json::Save(path);
 }
 
@@ -146,8 +164,6 @@ void Player::DebugDraw()
 	index = (index + 1) % values.size();
 
 	ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
-
-	//ImGui::PlotLines("Gauge", values, IM_ARRAYSIZE(values), 0, nullptr, 0.0f, 1.0f, ImVec2(0, 80));
 
 	ImGui::Text("---------------------------------------------\n");
 
@@ -279,7 +295,7 @@ void Player::Attack()
 	if (attackIntervalCounter.count >= 1.0f)
 	{
 		// 攻撃間隔経過後はゲージ回復
-		attackGauge += 0.02f;
+		attackGauge += attackGaugeRecoverSpeed;
 		if (attackGauge > 3.0f)
 			attackGauge = 3.0f;
 	}
@@ -296,7 +312,6 @@ void Player::Attack()
 
 	if (attackGauge < 1.0f)return;
 
-
 	for (auto* bullet : bullets)
 	{
 		if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
@@ -310,10 +325,10 @@ void Player::Attack()
 			else if (attackGauge >= 1.0f)stage = 1;
 			else stage = 0;
 
-			attackIntervalCounter.Initialize(attackInterval);
+			attackIntervalCounter.Initialize(attackGaugeRecoverInterval);
 
 			// リセット
-			bullet->Fire(trans.pos, trans.lookDir, stage);
+			bullet->Fire(trans.pos, trans.lookDir, stage, defaultAttackPower, allyPowerBonus, allySizeBonus);
 
 			break;
 		}

@@ -2,6 +2,8 @@
 #include <string>
 #include <cstdint>
 
+class InGameConfig;
+
 struct GameObjectEntity
 {
 public:
@@ -15,11 +17,18 @@ public:
 	// デバッグ描画
 	virtual void DebugDraw() = 0;
 
+	virtual void SetInGameConfig(const InGameConfig* config_) { inGameConfig = config_; }
+
+	// Jsonパス
+	std::string path;
+
 protected:
 	// ID
 	int32_t ID = -1;
 
-	// Jsonパス
-	std::string path;
+	// HP
+	float hp = 100.0f;
+
+	const InGameConfig* inGameConfig = nullptr;
 };
 

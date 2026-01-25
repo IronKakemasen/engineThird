@@ -21,8 +21,9 @@ private:
 	Counter lifeCounter;
 
 	// 攻撃力
-	float defaultAttackPower = 10.0f;
 	float attackPower = 0.0f;
+	float allyPowerBonus = 0.0f;
+	float allySizeBonus = 0.0f;
 
 	// 何段目の攻撃か
 	int32_t attackStage = 0;
@@ -31,7 +32,8 @@ private:
 
 public:
 
-	void Fire(Vector3 pos, Vector3 dir, int32_t stage);
+	// 発射  (pos : 発射位置, dir : 発射方向, stage : 何段目の攻撃か, power : 初期攻撃力, powerBonus : 味方経由する度にあがる攻撃力補正値, sizeBonus : 味方経由する度にあがる弾サイズ補正値)
+	void Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, float powerBonus, float sizeBonus);
 
 	float GetAttackPower() const { return attackPower; }
 	int32_t GetAttackStage() const { return attackStage; }

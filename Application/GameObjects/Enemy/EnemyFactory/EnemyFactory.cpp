@@ -2,7 +2,9 @@
 #include "../Json/Json.h"
 #include "imgui.h"
 #include "../../../Config/GameConstants.h"
+#include "../../../Config/InGameConfig.h"
 #include "../../GameObjectManager/GameObjectManager.h"
+#include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Enemy/Enemy.h"
 
 EnemyFactory::EnemyFactory()
@@ -45,6 +47,13 @@ void EnemyFactory::Reset()
 		status = Status::kInActive;
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
+	}
+
+	// config反映
+	if (inGameConfig)
+	{
+		// スポーン間隔反映
+		spawnInterval = inGameConfig->enemySpawnInterval;
 	}
 
 	// タイマーリセット
@@ -148,7 +157,14 @@ void EnemyFactory::DebugDraw()
 // プレイヤー弾との衝突
 void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 {
-	me->SetStatus(Status::kInActive);
+	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+
+	me->hp = me->hp - playerBullet->GetAttackPower();
+
+	if (me->hp < 0.0f)
+	{
+		me->SetStatus(Status::kInActive);
+	}
 }
 
 

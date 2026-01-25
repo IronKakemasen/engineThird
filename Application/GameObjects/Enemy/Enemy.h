@@ -28,7 +28,6 @@ private:
 	// 無敵判定更新
 	void UpdateInvincibleTime();
 	int32_t invincibleTime = 0;	// 無敵時間
-	float hp = 100.0f;				// HP
 
 	// ノックバック速度
 	Vector3 knockBackVelocity{};
@@ -37,6 +36,15 @@ private:
 
 	// 移動速度の大きさ
 	float speed = 0.05f;
+
+	// 味方と当たったときのノックバック力
+	float knockBackPowerOnAlly = 0.2f;
+
+	// 攻撃力
+	float attackPower = 10.0f;
+
+	// HP最大値
+	float maxHP = 100.0f;
 
 	// 参照ポインタ
 	std::vector<PlayerTower*> playerTowers{};
@@ -54,6 +62,8 @@ public:
 
 	// 工場から生まれる
 	void Spawn(Vector3 pos);
+
+	float GetAttackPower() { return attackPower; }
 
 #pragma	endregion
 

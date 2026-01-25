@@ -17,7 +17,7 @@ void ShikouteiScene::Update()
 	atlasNumber.ChangeAtlasIndex(timeNum);
 
 
-	if (M::GetInstance()->IsKeyTriggered(KeyType::C))
+	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
 		SceneBehavior::doReset = true;
 	}
@@ -158,6 +158,12 @@ void ShikouteiScene::Debug()
 
 	ImGui::End();
 
+	inGameConfig->DebugDraw();
+	if (ImGui::Button("ref"))
+	{
+		SceneBehavior::doReset = true;
+	}
+	ImGui::End();
 
 
 	//ImGui::Begin("EnemyFactory");

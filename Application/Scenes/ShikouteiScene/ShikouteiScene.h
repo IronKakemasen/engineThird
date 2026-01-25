@@ -16,6 +16,7 @@
 #include "../../GameObjects/InGameController/InGameController.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 
+#include "../../Config/InGameConfig.h"
 
 class ShikouteiScene final : public Scene
 {
@@ -31,6 +32,7 @@ class ShikouteiScene final : public Scene
 	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
 	std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets> playerBullets;
 	std::unique_ptr<InGameController> inGameController;
+	std::unique_ptr<InGameConfig> inGameConfig;
 
 	MQuad quad;
 	Sprite sprite;
