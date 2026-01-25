@@ -30,19 +30,17 @@ void ColorBuffer::SetDXMatrix(float width_, float height_, float left_, float to
 	rtvDesc.Texture2D.PlaneSlice = planeSlice_;
 	rtvDesc.Texture2D.MipSlice = mipSlice_;
 
-
 	return rtvDesc;
-
 }
 
-void ColorBuffer::CreateRTV(ID3D12Device* device_ , RtvDescriptorHeap* rtvDescHeap_, D3D12_RENDER_TARGET_VIEW_DESC desc_)
+void ColorBuffer::CreateRTV(ID3D12Device* device_ , RtvDescriptorHeap* rtvDescHeap_, 
+	D3D12_RENDER_TARGET_VIEW_DESC desc_, ID3D12Resource* resource_)
 {
-
 	if (cur_index > 0)
 	{
 		handle.ptr = rtvDescHeap_->GetCPUDescriptorHandle(cur_index);
 
-		device_->CreateRenderTargetView(resource.Get(), &desc_, handle);
+		device_->CreateRenderTargetView(resource_, &desc_, handle);
 	}
 
 	else
@@ -52,7 +50,7 @@ void ColorBuffer::CreateRTV(ID3D12Device* device_ , RtvDescriptorHeap* rtvDescHe
 		//1つめを作る。１つ目は最初に作る。作る場所をこちらで指定する必要がある
 		handle = rtvStartHandle;
 
-		device_->CreateRenderTargetView(resource.Get(), &desc_, handle);
+		device_->CreateRenderTargetView(resource_, &desc_, handle);
 	}
 
 	cur_index++;

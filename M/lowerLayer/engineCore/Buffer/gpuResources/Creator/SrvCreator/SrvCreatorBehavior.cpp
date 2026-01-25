@@ -18,7 +18,6 @@ uint16_t SrvCreatorBehavior::CreateSRV(D3D12_SHADER_RESOURCE_VIEW_DESC desc_, Sh
 	//ハンドル
 	if (ShaderBuffer::cur_index > 0)
 	{
-		
 		shaderBuffer_->handle= srvDescriptorHeap->GetCPUDescriptorHandle2(ShaderBuffer::cur_index);
 		shaderBuffer_->handleGPU = srvDescriptorHeap->GetGPUDescriptorHandle2(ShaderBuffer::cur_index);
 

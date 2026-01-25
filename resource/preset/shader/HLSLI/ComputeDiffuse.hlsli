@@ -1,3 +1,5 @@
+ #pragma once
+
 float3 DiffuseModelNormalizedLambert(float3 baseColor_, float metalic_)
 {
     return baseColor_ * (1.0f - metalic_) * 0.31830988618;

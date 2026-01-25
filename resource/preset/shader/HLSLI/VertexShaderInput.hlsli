@@ -1,3 +1,5 @@
+ #pragma once
+
 struct VertexShaderInput
 {
     float3 position : POSITION0;

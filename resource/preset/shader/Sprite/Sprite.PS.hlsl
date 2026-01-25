@@ -27,6 +27,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
+    if (textureColor.a <= 0.0) discard;
 
     output.color = gMaterial.albedoColor * textureColor;
     

@@ -30,11 +30,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 		else
 		{
-			winApp.BeginFrame();
+			winApp.OffScreenBegin();
 
 			sceneController->Update();
+			sceneController->Draw();
 
-			winApp.EndFrame();
+			winApp.OffScreenEnd();
 
 		}
 	}

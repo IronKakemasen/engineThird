@@ -27,6 +27,9 @@
 //=================================================================== allPipelineSet,DrawSystem
 #include "./PSO/allPipelineSet.h"
 #include "./Render/ExclusiveDraw/ExclusiveDraw.h"
+#include "./Render/OriginalScreen/OriginalScreen.h"
+#include "./Render/Palette/Palette.h"
+#include "./Render/OffScreenManager/OffScreenManager.h"
 //===================================================================
 
 
@@ -87,6 +90,8 @@ public:
 	void TermApp();
 	void BeginFrame();
 	void EndFrame();
+	void OffScreenBegin();
+	void OffScreenEnd();
 
 	~WinApp();
 
@@ -127,9 +132,12 @@ private:
 	//[ ShaderData , vpShadertable  ]
 	VpShaders vpShaders;
 
-	//[ AllPipelineSet,ExclusiveDraw ]
+	//[ AllPipelineSet ]
 	AllPipelineSet allPipelineSet;
+
+	//[ ExclusiveDraw ]
 	ExclusiveDraw exclusiveDraw;
+	OffScreenManager offScreenManager;
 
 	//[ AllMesh ,ParticleMeshSrvCreator ]
 	AllMesh allMesh;
@@ -161,8 +169,6 @@ private:
 	void TermWnd();
 	bool InitD3D();
 	void TermD3D();
-	void OffScreenBegin();
-	void OffScreenEnd();
 
 	static LRESULT CALLBACK WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 

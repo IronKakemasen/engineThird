@@ -3,6 +3,7 @@
 #include "../../utilities/vectorAndMatrix/vectorAndMatrix.h"
 #include <unordered_map>
 
+class OriginalScreen;
 class Palette
 {
 	class Para
@@ -11,20 +12,20 @@ class Palette
 	public:
 
 		int shaderSetIndex;
-		std::unordered_map < PostEffectType, std::vector<int>>
-			offscreenTextureContainer;
+		std::vector<uint16_t> offscreenTextureContainer;
 
 		Para();
-
 	};
 
-	Para para;
 	PostEffectType curType;
-
+	std::unordered_map < PostEffectType, Para> paraContainer;
+	OriginalScreen* originalScreen = nullptr;
 public:
+	void Init(OriginalScreen* originalScreen_);
 	Palette();
 	int WatchShaderSetIndex();
-	std::vector<int> WatchUseTexture();
-	void Set(PostEffectType type_, std::vector<int> textures_, int shaderSetIndex_);
+	std::vector<uint16_t> WatchUseTexture();
+	void Set(PostEffectType type_, std::vector<uint16_t> textures_, int shaderSetIndex_);
+	void ChangeType(PostEffectType type_);
 };
 

@@ -5,6 +5,7 @@
 #include "./engineCore/PSO/allPipelineSet.h"
 #include "./engineCore/Light/LightManager/LightManager.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
+#include "./engineCore/Render/OffScreenManager/OffScreenManager.h"
 
 float M::GetDeltaTime()
 {
@@ -122,7 +123,7 @@ int M::GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixe
 void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 	VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
 	LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
-	KeyboardKeys* keyboardKeys_)
+	KeyboardKeys* keyboardKeys_, OffScreenManager* offScreenManager_)
 {
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
@@ -131,7 +132,7 @@ void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDr
     initOnlyOnce = false;
 
     resourceContainer.Init(textureDataManager_);
-    offscreenManager.Init(textureDataManager_);
+    offScreenManager =  offScreenManager_;
     exclusiveDraw = exclusiveDraw_;
     vpShaderTable = vpShaderTable_;
     allPipelineSet = allPipelineSet_;

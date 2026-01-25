@@ -1,3 +1,5 @@
+ #pragma once
+
 struct WorldMatrix
 {
     float4x4 World;

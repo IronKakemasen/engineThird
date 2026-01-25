@@ -19,7 +19,8 @@ void SwapChainControl::CreateRenderTargetView(ID3D12Device* device_, RtvDescript
 
 	for (int i = 0u; i < kFrameBufferCnt; ++i)
 	{
-		colorBuffers[i].CreateRTV(device_, rtvDescHeap_, rtvDesc);
+		colorBuffers[i].CreateRTV(device_, rtvDescHeap_, 
+			rtvDesc, colorBuffers[i].Getter_Resource());
 	}
 
 	renderTargetDescForImGui = rtvDesc;
