@@ -122,12 +122,10 @@ void SceneController::Update()
 	{
 		cur_Scene->gameObjManager->Update();
 		cur_Scene->Update();
-
 	}
 
 	cur_Scene->cameraController->Update();
 
-	Draw();
 
 	Debug();
 

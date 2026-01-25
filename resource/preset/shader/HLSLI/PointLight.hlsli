@@ -1,5 +1,6 @@
-#include "ComputeBRDF.hlsli"
+ #pragma once
 
+#include "ComputeBRDF.hlsli"
 
 struct PointLight
 {

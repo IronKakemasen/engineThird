@@ -51,7 +51,7 @@ private:
 
 public:
 	void Update();
-	void Reset();
+	void Draw();
 	SceneController(SceneType firstScene_);
 
 private:
@@ -66,7 +66,7 @@ private:
 	void Debug();
 	void Set(SceneType type_, Scene* scene_);
 	void Init(SceneType firstScene_);
-	void Draw();
+	void Reset();
 
 };
 

@@ -19,11 +19,14 @@ struct MeshForPostEffect
 	int const kMax = 10;
 	int const kIndexCnt = 6;
 	int const kVertexCnt = 4;
+	int curIndex = 0;
 
 	// 頂点バッファマップ
 	Vertex* vertexMap = nullptr;
 	// インデックスバッファマップ
 	uint32_t* indexMap = nullptr;
+	//WVPマトリクスバッファ
+	std::vector<MatrixBuffer> wvpMatrixBuffer;
 
 protected:
 	// 頂点バッファとそのびゅー

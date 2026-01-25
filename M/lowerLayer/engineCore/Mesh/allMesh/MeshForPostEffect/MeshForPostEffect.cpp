@@ -13,16 +13,15 @@ void MeshForPostEffect::CreateMesh(ID3D12Device* device_)
 	// 頂点バッファのマッピング
 	HRESULT result = vertexBuffer.buffer->Map(0, nullptr, reinterpret_cast<void**>(&vertexMap));
 	assert(SUCCEEDED(result));
+	vertexMap[0].texcoord = { 0.0f,1.0f};
+	vertexMap[1].texcoord = { 0.0f,0.0f};
+	vertexMap[2].texcoord = { 1.0f,0.0f};
+	vertexMap[3].texcoord = { 1.0f,1.0f};
 
 	vertexMap[0].position = { 0.0f,CommonV::kWindow_H,0.0f };
 	vertexMap[1].position = { 0.0f,0.0f,0.0f };
 	vertexMap[2].position = { CommonV::kWindow_W,0.0f,0.0f };
 	vertexMap[3].position = { CommonV::kWindow_W,CommonV::kWindow_H,0.0f };
-
-	vertexMap[0].texcoord = { 0.0f,1.0f};
-	vertexMap[1].texcoord = { 0.0f,0.0f};
-	vertexMap[2].texcoord = { 1.0f,0.0f};
-	vertexMap[3].texcoord = { 1.0f,1.0f};
 
 
 	// インデックスデータのサイズ
@@ -44,6 +43,13 @@ void MeshForPostEffect::CreateMesh(ID3D12Device* device_)
 
 	}
 
+	wvpMatrixBuffer.resize(kMax);
+
+	for (int i = 0; i < kMax; ++i)
+	{
+		//wvp行列バッファの生成
+		wvpMatrixBuffer[i].matrix.CreateAndMapping(device_);
+	}
 }
 
 MeshForPostEffect::MeshForPostEffect(ID3D12Device* device_, AllPipelineSet* allPipelineset_)

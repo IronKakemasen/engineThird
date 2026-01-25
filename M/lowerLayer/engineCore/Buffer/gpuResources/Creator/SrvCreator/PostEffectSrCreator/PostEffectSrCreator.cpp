@@ -61,7 +61,7 @@ void PostEffectSrCreator::CreteResource(PostEffectBuffer* data_)
 	//サンプリングカウント。１固定
 	resourceDesc.SampleDesc.Count = 1;
 	//テクスチャの次元数。2
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION(3);
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
 	//[ 利用するHeapの設定 ]
@@ -69,12 +69,20 @@ void PostEffectSrCreator::CreteResource(PostEffectBuffer* data_)
 	D3D12_HEAP_PROPERTIES heapProperties{};
 	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
 
+	// Clear 値を正しく渡す（CreateRenderTargetView と同じフォーマット）
+	D3D12_CLEAR_VALUE clearValue{};
+	clearValue.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	clearValue.Color[0] = 0.0f;
+	clearValue.Color[1] = 0.0f;
+	clearValue.Color[2] = 0.0f;
+	clearValue.Color[3] = 1.0f;
+
 	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties,					//Heapの設定
 		D3D12_HEAP_FLAG_NONE,				//Heapの特殊な設定、特になし
 		&resourceDesc,						//Resourceの設定
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		nullptr,							//Clear最適値。使わないのでnullptr
+		&clearValue,							//Clear最適値。使わないのでnullptr
 		IID_PPV_ARGS(data_->GetShaderBuffer()->Getter_ResourcePP()));			//作成するresourceへのポインタのポインタ
 
 	assert(SUCCEEDED(hr));

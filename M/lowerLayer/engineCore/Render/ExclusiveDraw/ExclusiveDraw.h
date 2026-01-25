@@ -23,6 +23,7 @@ class ExclusiveDraw
 	uint16_t* pLightSrvIndex = nullptr;
 	uint16_t* rLightSrvIndex = nullptr;
 
+
 public:
 	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, 
 		ShaderBufferData* shaderBufferData_, CameraParaBuffer* cameraParaBuffer_);
@@ -46,10 +47,9 @@ public:
 		Vector4 color_, int texHandle_, DrawMode drawMode_, BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 		Transform& trans_, UVTransform& uvTrans_, Matrix4& vpMat_);
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
-	void DrawOnPalette(Palette* palette_);
-
 
 	void ResetDrawIndexes();
+	void DrawOnPalette(Palette* palette_);
 
 	void Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_);
 	void Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_);

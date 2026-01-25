@@ -6,7 +6,6 @@
 #include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include "./engineCore/Mesh/MeshCreator/MeshCreator.h"
 #include "./engineCore/Input/InputInterface/InputInterface.h"
-#include "./OffScreenTextureContainer/OffScreenManager.h"
 
 #include <functional>
 #include <d3d12.h>
@@ -44,10 +43,11 @@ class CameraParameterSetter;
 struct CameraBufferPara;
 class DirectionalLight;
 class KeyboardKeys;
+class OffScreenManager;
 
 class M
 {
-	OffScreenManager offscreenManager;
+	OffScreenManager* offScreenManager;
 	ResourceContainer resourceContainer;
 	ExclusiveDraw* exclusiveDraw = nullptr;
 	VPShaderTable* vpShaderTable = nullptr;
@@ -63,7 +63,7 @@ public:
 	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 		VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
 		LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
-		KeyboardKeys* keyboardKeys_);
+		KeyboardKeys* keyboardKeys_, OffScreenManager* offScreenManager_);
 
 	float GetDeltaTime();
 	//入力

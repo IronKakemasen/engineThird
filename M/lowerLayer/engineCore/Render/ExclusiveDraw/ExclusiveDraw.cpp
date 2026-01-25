@@ -257,6 +257,52 @@ void ExclusiveDraw::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& righ
 
 void ExclusiveDraw::DrawOnPalette(Palette* palette_)
 {
+	auto* paletteMesh = allMesh->Getter_MeshForPostEffect();
+
+	int i = paletteMesh->curIndex;
+
+	//使用する三角形のマップインデックス
+	uint32_t const usingIndex_index = i * paletteMesh->kIndexCnt;
+	uint32_t const usingVertex_index = i * paletteMesh->kVertexCnt;
+
+	//< データの転送 >
+	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(palette_->WatchShaderSetIndex(),
+		BlendMode::kBlendModeAdd, CullMode::kCullModeNone);
+	auto* cList = src_pipeline->Getter_CommandList();
+
+	*paletteMesh->wvpMatrixBuffer[i].matrix.buffMap =
+		Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+
+	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	src_pipeline->SetGraphicsRootSignature();
+	src_pipeline->SetPipelineState();
+
+	//VBV
+	cList->IASetVertexBuffers(0, 1, paletteMesh->Getter_VertexBufferView());
+	//IBV
+	cList->IASetIndexBuffer(paletteMesh->Getter_IndexBufferView());
+
+	//texture
+	int k = 0;
+	for (; k < (int)palette_->WatchUseTexture().size(); ++k)
+	{
+		cList->SetGraphicsRootDescriptorTable(k,
+			shaderBufferData->gpuHandleContainer[palette_->WatchUseTexture()[k]]);
+	}
+
+
+	//Cバッファの場所を指定
+	src_pipeline->SetConstantBufferViews(
+		k,
+		paletteMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress());
+
+
+	//描画(DrawCall)。6インデックスで一つのインスタンス
+	cList->DrawIndexedInstanced(paletteMesh->kIndexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
+
+	//次の描画用にインクリメント
+	paletteMesh->curIndex++;
 
 }
 

@@ -4,6 +4,7 @@ enum class PostEffectType
 {
 	kNone,
 	kBloom,
+	kGreyScale,
 
 	kCount
 };

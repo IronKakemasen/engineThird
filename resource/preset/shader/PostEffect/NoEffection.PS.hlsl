@@ -1,6 +1,3 @@
-#include "../HLSLI/Material.hlsli"
-#include "../HLSLI/CameraPara.hlsli"
-
 Texture2D<float4> colorMap : register(t0);
 
 SamplerState baseColorSmp : register(s0);

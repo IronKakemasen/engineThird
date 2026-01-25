@@ -3,11 +3,15 @@
 #include "../Buffer/gpuResources/Creator/SrvCreator/TextureSrCreator/TextureSrCreator.h"
 #include "../Buffer/gpuResources/Resource/shaderBuffer/shaderBuffer.h"
 #include "../Buffer/gpuResources/Creator/SrvCreator/PostEffectSrCreator/PostEffectSrCreator.h"
+#include "../DescriptorHeap/rtvDescriptorHeap/rtvDescriptorHeap.h"
 
-void TextureDataManager::Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_)
+void TextureDataManager::Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_, 
+	RtvDescriptorHeap* rtvDescriptorHeap_, ID3D12Device* device_)
 {
 	textureSrvCreator = textureSrvCreator_;
 	postEffectSrCreator = postEffectSrCreator_;
+	rtvDescriptorHeap = rtvDescriptorHeap_;
+	device = device_;
 }
 
 int TextureDataManager::CreateTextureFromFile( std::string filePath_)
@@ -18,7 +22,11 @@ int TextureDataManager::CreateTextureFromFile( std::string filePath_)
 
 PostEffectBuffer* TextureDataManager::CreatePostEffectBuffer()
 {
-	postEffectBufferContaier.emplace_back(postEffectSrCreator->Create());
+	auto& buffer = postEffectBufferContaier.emplace_back(postEffectSrCreator->Create());
 
-	return postEffectBufferContaier.emplace_back(postEffectSrCreator->Create()).get();
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+	rtvDesc = ColorBuffer::CreateRTV_Desc();
+	buffer->CreateRTV(device, rtvDescriptorHeap, rtvDesc);
+
+	return buffer.get();
 }
