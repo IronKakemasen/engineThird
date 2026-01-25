@@ -109,7 +109,6 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 
 void EnemyTower::DebugDraw()
 {
-
 #ifdef USE_IMGUI
 
 	if (status == Status::kInActive) return;

@@ -10,43 +10,50 @@ InGameConfig::~InGameConfig()
 
 void InGameConfig::Load()
 {
+	Json::LoadParam(path, "/player/MaxHP", playerMaxHP);
+	Json::LoadParam(path, "/playerTower/MaxHP", playerTowerMaxHP);
+	Json::LoadParam(path, "/enemy/MaxHP", enemyMaxHP);
+	Json::LoadParam(path, "/enemyFactory/MaxHP", enemyFactoryMaxHP);
+	Json::LoadParam(path, "/enemyTower/MaxHP", enemyTowerMaxHP);
+
 	Json::LoadParam(path, "/player/defaultAttackPower", playerDefaultAttackPower);
 	Json::LoadParam(path, "/player/allyPowerBonus", playerAllyPowerBonus);
 	Json::LoadParam(path, "/player/allySizeBonus", playerAllySizeBonus);
-	Json::LoadParam(path, "/player/MaxHP", playerMaxHP);
+	Json::LoadParam(path, "/enemy/defaultAttackPower", enemyAttackPower);
+
 	Json::LoadParam(path, "/player/speed", playerSpeed);
+	Json::LoadParam(path, "/enemy/speed", enemySpeed);
+
+	Json::LoadParam(path, "/enemy/spawnInterval", enemySpawnInterval);
+	Json::LoadParam(path, "/enemy/knockBackPowerToAlly", enemyKnockBackPowerToAlly);
+
 	Json::LoadParam(path, "/player/allyDelayFrames", allyDelayFrames);
 	Json::LoadParam(path, "/player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
 	Json::LoadParam(path, "/player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
-	Json::LoadParam(path, "/enemy/defaultAttackPower", enemyAttackPower);
-	Json::LoadParam(path, "/enemy/spawnInterval", enemySpawnInterval);
-	Json::LoadParam(path, "/enemy/knockBackPowerToAlly", enemyKnockBackPowerToAlly);
-	Json::LoadParam(path, "/enemy/MaxHP", enemyMaxHP);
-	Json::LoadParam(path, "/enemy/speed", enemySpeed);
-	Json::LoadParam(path, "/enemyTower/MaxHP", enemyTowerMaxHP);
-	Json::LoadParam(path, "/enemyFactory/MaxHP", enemyFactoryMaxHP);
 }
 
 void InGameConfig::Save()
 {
+	Json::SaveParam(path, "/player/MaxHP", playerMaxHP);
+	Json::SaveParam(path, "/playerTower/MaxHP", playerTowerMaxHP);
+	Json::SaveParam(path, "/enemy/MaxHP", enemyMaxHP);
+	Json::SaveParam(path, "/enemyFactory/MaxHP", enemyFactoryMaxHP);
+	Json::SaveParam(path, "/enemyTower/MaxHP", enemyTowerMaxHP);
+
 	Json::SaveParam(path, "/player/defaultAttackPower", playerDefaultAttackPower);
 	Json::SaveParam(path, "/player/allyPowerBonus", playerAllyPowerBonus);
 	Json::SaveParam(path, "/player/allySizeBonus", playerAllySizeBonus);
-	Json::SaveParam(path, "/player/MaxHP", playerMaxHP);
+	Json::SaveParam(path, "/enemy/defaultAttackPower", enemyAttackPower);
+
 	Json::SaveParam(path, "/player/speed", playerSpeed);
+	Json::SaveParam(path, "/enemy/speed", enemySpeed);
+
+	Json::SaveParam(path, "/enemy/spawnInterval", enemySpawnInterval);
+	Json::SaveParam(path, "/enemy/knockBackPowerToAlly", enemyKnockBackPowerToAlly);
+
 	Json::SaveParam(path, "/player/allyDelayFrames", allyDelayFrames);
 	Json::SaveParam(path, "/player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
 	Json::SaveParam(path, "/player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
-
-	Json::SaveParam(path, "/enemy/defaultAttackPower", enemyAttackPower);
-	Json::SaveParam(path, "/enemy/spawnInterval", enemySpawnInterval);
-	Json::SaveParam(path, "/enemy/knockBackPowerToAlly", enemyKnockBackPowerToAlly);
-	Json::SaveParam(path, "/enemy/MaxHP", enemyMaxHP);
-	Json::SaveParam(path, "/enemy/speed", enemySpeed);
-
-	Json::SaveParam(path, "/enemyTower/MaxHP", enemyTowerMaxHP);
-
-	Json::SaveParam(path, "/enemyFactory/MaxHP", enemyFactoryMaxHP);
 
 	Json::Save(path);
 }
