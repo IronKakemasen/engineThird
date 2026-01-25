@@ -10,6 +10,9 @@ void ShikouteiScene::Instantiate()
 {
 	inGameController.reset(new InGameController);
 
+	// resource/application/json からデータをロード
+	Json::LoadAll("./resource/application/json/");
+
 	inGameConfig = std::make_unique<InGameConfig>();
 	inGameConfig->Load();
 
@@ -112,8 +115,5 @@ void ShikouteiScene::Init()
 		M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
 	//アトラス画像に対応させる
 	atlasNumber.ToAtlas(10);
-	
-	// resource/application/json からデータをロード
-	Json::LoadAll("./resource/application/json/");
 
 }

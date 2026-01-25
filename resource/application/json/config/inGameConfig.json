@@ -1,25 +1,28 @@
 {
     "enemy": {
         "MaxHP": 100.0,
-        "defaultAttackPower": 0.10000000149011612,
+        "defaultAttackPower": 5.0,
         "knockBackPowerToAlly": 1.0,
-        "spawnInterval": 2.0,
+        "spawnInterval": 5.0,
         "speed": 0.05000000074505806
     },
     "enemyFactory": {
-        "MaxHP": 300.0
+        "MaxHP": 100.0
     },
     "enemyTower": {
-        "MaxHP": 200.0
+        "MaxHP": 100.0
     },
     "player": {
         "MaxHP": 100.0,
         "allyDelayFrames": 30,
         "allyPowerBonus": 2.0,
-        "allySizeBonus": 0.5,
+        "allySizeBonus": 0.10000000149011612,
         "attackGaugeRecoverInterval": 0.5,
         "attackGaugeRecoverSpeed": 0.019999999552965164,
         "defaultAttackPower": 10.0,
         "speed": 0.10000000149011612
+    },
+    "playerTower": {
+        "MaxHP": 100.0
     }
 }
