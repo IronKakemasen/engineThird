@@ -2,6 +2,7 @@
 #include "../Json/Json.h"
 #include "../../../Config/InGameConfig.h"
 #include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
+#include "imgui.h"
 
 EnemyTower::EnemyTower()
 {
@@ -24,14 +25,26 @@ void EnemyTower::Reset()
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
 
-	// 衝突判定をするかどうか定める
-	SwitchCollisionActivation(true);
+	// 現在選択されているステージでのアクティブ数を取得
+	Json::LoadParam(path, "/stage" + std::to_string(StageCount) + "/ActiveCount", stageActiveCounts);
 
-	// 初期無効化
-	status = Status::kInActive;
-
-	// データ読み込み
-	LoadData();
+	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
+	if (stageActiveCounts > ID)
+	{
+		// アクティブ化
+		status = Status::kActive;
+		// 衝突判定をするかどうか定める
+		SwitchCollisionActivation(true);
+		// データ読み込み
+		LoadData();
+	}
+	else
+	{
+		// 非アクティブ化
+		status = Status::kInActive;
+		// 衝突判定をするかどうか定める
+		SwitchCollisionActivation(false);
+	}
 
 	// config反映
 	if (inGameConfig)
@@ -67,13 +80,17 @@ void EnemyTower::SetCollisionBackTable()
 // データ保存・読み込み
 void EnemyTower::LoadData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
+	if (status == Status::kInActive) return;
+
+	std::string key = "/stage" + std::to_string(StageCount) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 }
 void EnemyTower::SaveData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
+	if (status == Status::kInActive) return;
+
+	std::string key = "/stage" + std::to_string(StageCount) + "/ID:" + std::to_string(ID);
 
 	Json::SaveParam(path, key + "/position", trans.pos);
 	Json::Save(path);
@@ -91,7 +108,35 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 }
 
 void EnemyTower::DebugDraw()
-{}
+{
+
+#ifdef USE_IMGUI
+
+	if (status == Status::kInActive) return;
+
+	std::string key = std::to_string(ID) + "##";
+
+	ImGui::PushItemWidth(100.0f);
+	ImGui::DragFloat((key + "position.x").c_str(), &trans.pos.x, 0.1f);
+	ImGui::SameLine();
+	ImGui::DragFloat((key + "position.z").c_str(), &trans.pos.z, 0.1f);
+	if (ImGui::Button(("Save##" + std::to_string(ID)).c_str()))
+	{
+		SaveData();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button(("Load##" + std::to_string(ID)).c_str()))
+	{
+		LoadData();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button(("Reset##" + std::to_string(ID)).c_str()))
+	{
+		Reset();
+	}
+
+#endif // USE_IMGUI
+}
 
 // プレイヤー弾との衝突
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
