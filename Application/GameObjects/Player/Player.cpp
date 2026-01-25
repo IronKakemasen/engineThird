@@ -31,11 +31,9 @@ void Player::Reset()
 	// allyExistenceFlagsの初期化
 	allyExistenceFlags.fill(false);
 	// posHistoryの初期化
-	posHistory.fill(Vector3(0.0f, 0.0f, 0.0f));
-	//for (size_t i = 0; i < posHistory.size(); i++)
-	//{
-	//	posHistory[i].x = trans.pos.x - speed * i;
-	//}
+	posHistory.fill(trans.pos);
+	// headIndexの初期化
+	headIndex = 0;
 
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
@@ -146,7 +144,6 @@ void Player::DebugDraw()
 		if (ImGui::Button(key.c_str()))
 		{
 			allies[i]->SetStatus(GameObjectBehavior::Status::kInActive);
-			allyExistenceFlags[i] = false;
 		}
 		ImGui::SameLine();
 		ImGui::Text("c:%d", allies[i]->formationCurrentIndex);
@@ -211,7 +208,15 @@ void Player::Move()
 	// 正規化
 	moveDir = moveDir.GetNormalized();
 
-	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
+	if (moveDir.x != 0.0f || moveDir.z != 0.0f)
+	{
+		isMoving = true;
+		//stopMoveFrame = 0;
+	}
+	else
+	{
+		//stopMoveFrame++;
+	}
 
 	trans.pos = trans.pos + moveDir * speed;
 }
@@ -303,37 +308,34 @@ void Player::UpdateAllyData()
 {
 	// 味方の数をリセット
 	formedAllyCount = 0;
+	unformedAllyCount = 0;
 
 
-	// 味方の存在フラグを更新
-	uint32_t fakeSum = 0;
-	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
+	// 毎フレーム再構築（味方側から直接いじらない）
+	allyExistenceFlags.fill(false);
+
+	for (int32_t i = 0; i < allies.size(); ++i)
 	{
-		if (allyExistenceFlags[i] == true)
+		// アクティブなら
+		if (allies[i]->GetStatus() != GameObjectBehavior::Status::kActive) continue;
+
+
+		if (allies[i]->formationCurrentIndex >= 0)
 		{
-			// 見かけ上の人数
-			fakeSum++;
-			// 実際に並んでいる人数
-			if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			const uint32_t idx = static_cast<uint32_t>(allies[i]->formationCurrentIndex);
+			if (idx < allyExistenceFlags.size())
 			{
+				allyExistenceFlags[idx] = true;
 				formedAllyCount++;
 			}
 		}
+		else
+		{
+			unformedAllyCount++;
+		}
 	}
 
-	//// fakeSum != formedAllyCount の場合、allyExistenceFlagsの後半のtrueは誤りなのでfalseにする
-	//if (fakeSum != formedAllyCount)
-	//{
-	//	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
-	//	{
-	//		if (fakeSum > formedAllyCount && allyExistenceFlags[i] == true)
-	//		{
-	//			allyExistenceFlags[i] = false;
-	//			//fakeSum--;
-	//		}
-	//	}
-	//}
-
+	// 「穴が空いたら詰める」用マッピングを作る
 	uint32_t empty = 0;
 	for (uint32_t i = 0; i < GameConstants::kMaxAllies; ++i)
 	{
@@ -344,15 +346,119 @@ void Player::UpdateAllyData()
 			empty++;
 		}
 	}
+	//// 味方の存在フラグを更新
+	//uint32_t fakeSum = 0;
+	//for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
+	//{
+	//	if (allyExistenceFlags[i] == true)
+	//	{
+	//		// 見かけ上の人数
+	//		fakeSum++;
+	//		// 実際に並んでいる人数
+	//		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+	//		{
+	//			formedAllyCount++;
+	//		}
+	//	}
+	//}
+	//
+	////// fakeSum != formedAllyCount の場合、allyExistenceFlagsの後半のtrueは誤りなのでfalseにする
+	////if (fakeSum != formedAllyCount)
+	////{
+	////	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
+	////	{
+	////		if (fakeSum > formedAllyCount && allyExistenceFlags[i] == true)
+	////		{
+	////			allyExistenceFlags[i] = false;
+	////			//fakeSum--;
+	////		}
+	////	}
+	////}
+	//
+	//uint32_t empty = 0;
+	//for (uint32_t i = 0; i < GameConstants::kMaxAllies; ++i)
+	//{
+	//	allyTargetIndices[i] = i - empty;
+	//
+	//	if (!allyExistenceFlags[i])
+	//	{
+	//		empty++;
+	//	}
+	//}
 }
 // 味方の目標座標を取得
-Vector3 Player::GetAllyTargetPos(size_t allyIndex)
+Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
-	size_t delayFrames = (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
-	size_t index = (headIndex + posHistory.size() - delayFrames) % posHistory.size();
-	return posHistory[index];
+	// ※１
+	// そもそも列に並んでいない 場合
+	// 目標座標は最後尾+1の座標
+
+	// ※２
+	// 前に味方がいる && (isMovingNow || !isMovingNow) の場合
+	// 目標座標は通常通り遅延フレーム*列index前の座標
+
+	// ※３
+	// 前に味方がいない && isMovingNow の場合
+	// 目標座標は通常通り遅延フレーム*列index前の座標
+	// 詰めたいが、座標履歴に完璧に追従する場合は速度が急激にあがるため詰めれない
+	// 速度は変えず、最短経路を通り詰める方式はそもそもゲーム性が変わるため採用しない
+
+	// ※４
+	// 前に味方がいない && !isMovingNow の場合
+	// 目標座標は通常目指す座標よりstopMoveFrameだけ前に詰めた座標
+	// 例：stopMoveFrameが5フレームの場合、通常目指す座標より5フレーム前の座標を目標座標とする
+	// これにより味方の速度がどんな時も変わらず、かつ見た目の説得力も保てる
+	
+	// 前に味方いるか
+	bool isExistFrontAlly = IsExistFrontAlly(allyIndex);
+	// 現在動いているか(いらないが可読性向上のため記述)
+	bool isMovingNow = isMoving;
+	// 列に並んでいるか
+	bool isFormed = (allyIndex != -1);
+	// プレイヤーから何フレーム遅れの位置か
+	int32_t delayFrames = (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
+	// 座標履歴のインデックス
+	int32_t index = (static_cast<int32_t>(headIndex) - delayFrames);
+	if (index < 0) index += static_cast<int32_t>(posHistory.size()); 
+	// 理想的な位置
+	Vector3 idealPos = posHistory[index];
+
+
+	// ※１ そもそも列に並んでいない 場合
+	if (!isFormed)
+	{
+		// 目標座標は最後尾+1の座標
+		int32_t adjustedIndex = index;
+		adjustedIndex = adjustedIndex - (formedAllyCount * GameConstants::kAllyFollowDelayFrames);
+		if (adjustedIndex < 0) adjustedIndex += static_cast<int32_t>(posHistory.size());
+		return posHistory[adjustedIndex];
+	}
+
+	// ※２ 前に味方がいる && (isMovingNow || !isMovingNow) の場合
+	if (isExistFrontAlly)
+	{
+		return idealPos;
+	}
+
+	// ※３ 前に味方がいない && isMovingNow の場合
+	if (!isExistFrontAlly && isMovingNow)
+	{
+		return idealPos;
+	}
+
+	// ※４ 前に味方がいない && !isMovingNow の場合
+	if (!isExistFrontAlly && !isMovingNow)
+	{
+		// stopMoveFrame分前に詰めた座標を返す
+		int32_t adjustedIndex = index;
+		adjustedIndex = adjustedIndex - allies[allyIndex]->formationOffsetFrames;
+		if (adjustedIndex < 0) adjustedIndex += static_cast<int32_t>(posHistory.size());
+		return posHistory[adjustedIndex];
+	}
+
+	return idealPos;
 }
-uint32_t Player::GetNextEmptyAllyIndex(int32_t currentIndex)
+int32_t Player::GetAllyTargetIndex(int32_t currentIndex)
 {
 	// 新規の場合、最後尾を返す
 	if (currentIndex == -1)
@@ -361,4 +467,26 @@ uint32_t Player::GetNextEmptyAllyIndex(int32_t currentIndex)
 	}
 
 	return allyTargetIndices[currentIndex];
+}
+bool Player::TryReserveFormationIndex(int32_t preferredIndex)
+{
+	if (allyExistenceFlags[preferredIndex] == false)
+	{
+		allyExistenceFlags[preferredIndex] = true;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool Player::IsExistFrontAlly(int32_t currentIndex)
+{
+	if (currentIndex <= 0) { return true; }
+
+	if (allyExistenceFlags[currentIndex - 1])
+	{
+		return true;
+	}
+	return false;
 }

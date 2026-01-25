@@ -14,7 +14,6 @@ PlayerAlly::PlayerAlly()
 
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 0,0,255,255 };
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerAllyData.json";
@@ -85,6 +84,9 @@ void PlayerAlly::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+	// デバッグ用色更新
+	UpdateDebugColor();
 
 	// 移動処理
 	Move();
@@ -173,41 +175,166 @@ void PlayerAlly::DebugDraw()
 //	}
 //}
 
+//void PlayerAlly::Move()
+//{
+//	formationTargetIndex = targetPlayer->GetAllyTargetIndex(formationCurrentIndex);
+//	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
+//	Vector3 direction = targetPos - trans.pos;
+//	float distance = direction.GetMagnitutde();
+//
+//
+//	// 目的地まで距離があるなら移動
+//	if (distance > 0.2f)
+//	{
+//		trans.pos = targetPos;
+//
+//		distance = Vector3(targetPos - trans.pos).GetMagnitutde();
+//
+//		// 移動した結果目的地に到達した かつ
+//		if (distance < 0.2f)
+//		{
+//			// たどり着いたインデックスにまだ味方がいなければ 列に登録
+//			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+//			{
+//				// 自身のインデックス更新
+//				formationCurrentIndex = formationTargetIndex;
+//
+//				// 味方存在フラグ更新
+//				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
+//			}
+//		}
+//	}
+//	// 目的地に近ければ理想の位置に移動
+//	else
+//	{
+//		trans.pos = targetPos;
+//	}
+//}
+
+//void PlayerAlly::Move()
+//{
+//	// ※１
+//	// もし formationCurrentIndexが-1(列に加わっていない)なら最後尾に向かう
+//	// ↳補完なし最短経路　プレイヤーと同じ速度
+//
+//	// ※２
+//	// もし formationCurrentIndexが!-1(列に加わっている)なら理想の位置に移動
+//	// ↳プレイヤーの移動履歴を完璧に追従
+//
+//	// ※３
+//	// もし 列に加わってる かつ 自分の前に味方がいないなら 詰める
+//	// ↳プレイヤーの移動履歴を完璧に追従 つまりプレイヤーが止まらなければ隙間が埋まることはない
+//
+//	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
+//	formationTargetIndex = targetPlayer->GetAllyTargetIndex(formationCurrentIndex);
+//
+//	// 列に加わっていない場合 ※１
+//	if (formationCurrentIndex == -1)
+//	{
+//		// 列の最後尾に向かう
+//		Vector3 direction = targetPos - trans.pos;
+//
+//		trans.lookDir = Easing::SLerp(trans.lookDir, direction, trans.interpolationCoe);
+//		trans.pos = trans.pos + (trans.lookDir.GetNormalized() * targetPlayer->GetSpeed());
+//
+//		// 目的地に到達したら位置を合わせる
+//		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.02f)
+//		{
+//			// たどり着いたインデックスにまだ味方がいなければ列に登録
+//			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+//			{
+//				// 自身のインデックス更新
+//				formationCurrentIndex = formationTargetIndex;
+//				// 味方存在フラグ更新
+//				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
+//			}
+//		}
+//	}
+//	// 列に加わっている場合 ※２ ※３
+//	else
+//	{
+//		trans.pos = targetPos;
+//	}
+//}
+
 void PlayerAlly::Move()
 {
-	formationTargetIndex = targetPlayer->GetNextEmptyAllyIndex(formationCurrentIndex);
-	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
-	Vector3 direction = targetPos - trans.pos;
-	float distance = direction.GetMagnitutde();
+	// ※１
+	// もし formationCurrentIndexが-1(列に加わっていない)なら最後尾に向かう
+	// ↳補完なし最短経路　プレイヤーと同じ速度
 
+	// ※２
+	// もし formationCurrentIndexが!-1(列に加わっている)なら理想の位置に移動
+	// ↳プレイヤーの移動履歴を完璧に追従
 
-	// 目的地まで距離があるなら移動
-	if (distance > 0.2f)
+	// ※３
+	// もし 列に加わってる かつ 自分の前に味方がいないなら 詰める
+	// ↳プレイヤーの移動履歴を完璧に追従 つまりプレイヤーが止まらなければ隙間が埋まることはない
+
+	// 自身の列インデックスに対応する目標インデックスを取得
+	formationTargetIndex = targetPlayer->GetAllyTargetIndex(formationCurrentIndex);
+	// 自身の目標インデックスに対応する目標座標を取得
+	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationTargetIndex);
+
+	// 列に加わっていない場合 ※１
+	if (formationCurrentIndex == -1)
 	{
-		trans.pos = trans.pos + (direction.GetNormalized() * targetPlayer->GetSpeed());
+		// 原罪地から最後尾
+		Vector3 direction = targetPos - trans.pos;
 
-		distance = Vector3(targetPos - trans.pos).GetMagnitutde();
-
-		// 移動した結果目的地に到達したなら かつ
-		if (distance < 0.2f)
+		if (direction.GetMagnitutde() > 0.0001f)
 		{
-			// たどり着いたインデックスにまだ味方がいなければ 列に登録
-			if (targetPlayer->allyExistenceFlags[formationTargetIndex] == false)
+			trans.lookDir = Easing::SLerp(trans.lookDir, direction, trans.interpolationCoe);
+			trans.pos = trans.pos + (trans.lookDir.GetNormalized() * targetPlayer->GetSpeed());
+		}
+
+		// 目的地に到達した かつ
+		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.05f)
+		{
+			if (targetPlayer->TryReserveFormationIndex(formationTargetIndex))
 			{
 				// 自身のインデックス更新
 				formationCurrentIndex = formationTargetIndex;
-
-				// 味方存在フラグ更新
-				targetPlayer->allyExistenceFlags[formationTargetIndex] = true;
 			}
 		}
+
+		return;
 	}
-	// 目的地に近ければ理想の位置に移動
+	// 列に加わっている場合 ※２ ※３
 	else
 	{
-		trans.pos = targetPos;
+		if (!targetPlayer->IsMoving() && !targetPlayer->IsExistFrontAlly(formationCurrentIndex))
+		{
+			formationOffsetFrames++;
+		}
+		else
+		{
+			formationOffsetFrames = 0;
+		}
+	}
+
+	trans.pos = targetPos;
+}
+
+void PlayerAlly::UpdateDebugColor()
+{
+	// 列に加わっていない場合は青色にする
+	if (formationCurrentIndex == -1)
+	{
+		model->model->Getter_Appearance(0)->color = { 0,0,255,255 };
+	}
+	// 列に加わっている場合は緑色にする
+	else
+	{
+		model->model->Getter_Appearance(0)->color = { 0,255,0,255 };
+	}
+	// 詰め移動中は黄色にする
+	if (formationTargetIndex < formationCurrentIndex)
+	{
+		model->model->Getter_Appearance(0)->color = { 255,255,0,255 };
 	}
 }
+
 
 void PlayerAlly::Spawn(Vector3 pos)
 {

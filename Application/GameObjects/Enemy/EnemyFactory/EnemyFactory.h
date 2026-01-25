@@ -16,7 +16,7 @@ private:
 
 	Counter timer;
 
-	float spawnInterval = 20.0f;
+	float spawnInterval = 10.0f;
 
 public:
 

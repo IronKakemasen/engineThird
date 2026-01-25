@@ -16,7 +16,8 @@ private:
 	//////  移動処理  //////
 	void Move();			// 移動
 	bool isMoving = false;	// 移動中フラグ
-	float speed = 0.2f;		// 移動速度
+	//int32_t stopMoveFrame = 0;// 移動停止してからのフレーム数
+	float speed = 0.1f;		// 移動速度
 
 	//////  攻撃処理  //////
 	void Attack();		// 攻撃
@@ -38,31 +39,49 @@ private:
 	////// 味方管理処理  //////
 	void UpdateAllyData(); // 味方データ更新処理
 	std::vector<PlayerAlly*> allies{};	// 参照ポインタ
+	// 配置インデックスが空いているかのフラグ[最大味方数]
+	std::array<bool, GameConstants::kMaxAllies> allyExistenceFlags = {};
 	// そのインデックスの味方が目指すべきインデックス[最大味方数]
-	std::array<uint32_t, GameConstants::kMaxAllies> allyTargetIndices = {};
+	std::array<int32_t, GameConstants::kMaxAllies> allyTargetIndices = {};
 	// 列に並んでいる味方の数
-	uint32_t formedAllyCount = 0;
+	int32_t formedAllyCount = 0;
 	// 列に並んでいない味方の数
-	uint32_t unformedAllyCount = 0;
+	int32_t unformedAllyCount = 0;
 
 
 public:
-	// 配置インデックスが空いているかのフラグ[最大味方数]
-	std::array<bool, GameConstants::kMaxAllies> allyExistenceFlags = {};
 
 	/// <summary>
 	/// 味方の目標座標を取得
 	/// </summary>
 	/// <param name="allyIndex"> 列の前から何番目の座標か </param>
 	/// <returns></returns>
-	Vector3 GetAllyTargetPos(size_t allyIndex);
+	Vector3 GetAllyTargetPos(int32_t allyIndex);
 
 	/// <summary>
 	/// 自身が目指すべき次の空いている味方インデックスを取得
 	/// </summary>
 	/// <param name="currentIndex"> 現在のインデックス(-1はまだ列に加わっていない) </param>
 	/// <returns></returns>
-	uint32_t GetNextEmptyAllyIndex(int32_t currentIndex);
+	int32_t GetAllyTargetIndex(int32_t currentIndex);
+
+	/// <summary>
+	/// 列ぬ加入している味方の生存フラグをセット
+	/// </summary>
+	/// <param name="index"> インデックス </param>
+	/// <param name="flag"> フラグ </param>
+	/// <returns> 成功したらtrue </returns>
+	bool TryReserveFormationIndex(int32_t preferredIndex);
+
+	/// <summary>
+	/// currentIndexの前に味方が存在するか
+	/// </summary>
+	/// <param name="currentIndex"> 現在のインデックス </param>
+	/// <returns> 存在するならtrue </returns>
+	bool IsExistFrontAlly(int32_t currentIndex);
+
+	// 動いているかどうか
+	bool IsMoving() { return isMoving; }
 
 	float GetSpeed() { return speed; }
 
