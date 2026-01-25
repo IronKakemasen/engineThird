@@ -4,6 +4,7 @@
 #include "../../GameObjects/ObjectParent/GameObjectEntity.h"
 #include "../../Config/GameConstants.h"
 #include <array>
+#include <queue>
 
 struct PlayerAlly;
 struct PlayerBullet;
@@ -39,51 +40,56 @@ private:
 	////// 味方管理処理  //////
 	void UpdateAllyData(); // 味方データ更新処理
 	std::vector<PlayerAlly*> allies{};	// 参照ポインタ
-	// 配置インデックスが空いているかのフラグ[最大味方数]
-	std::array<bool, GameConstants::kMaxAllies> allyExistenceFlags = {};
-	// そのインデックスの味方が目指すべきインデックス[最大味方数]
-	std::array<int32_t, GameConstants::kMaxAllies> allyTargetIndices = {};
 	// 列に並んでいる味方の数
 	int32_t formedAllyCount = 0;
 	// 列に並んでいない味方の数
 	int32_t unformedAllyCount = 0;
 
 
+	// 前からn番目の味方が存在するかのフラグ
+	// [n]が死んだ瞬間にdeadIndexList.push(n);
+	std::array<bool, GameConstants::kMaxAllies> exist = {};
+
+	// 味方の遅延フレームオフセット
+	// 例：	[n]が死亡した場合
+	//		deadIndexList.empty() == falseなら
+	//		プレイヤーが停止している時、delayFrameOffsetsが1ずつ増える
+	//      delayFrameOffsetsがkAllyFollowDelayFramesと同値になったら１人分詰め切ったと判断し
+	//		delayFrameOffsets を 0 にリセットする
+	//		deadIndexList.pop() して次の味方の詰め待ちに移行する
+	//	    
+	// 要約:自分より前の味方が死んだ時後ろの味方すべてが詰める。そのオフセット管理用
+	int32_t delayFrameOffsets = 0;
+	// 死亡して詰め待ちのリスト(先入れ先出し)
+	std::deque<int32_t> deadIndexList = {};
+
+
+
+	/// <summary>
+	/// プレイヤーのnフレーム前の座標を取得
+	/// </summary>
+	Vector3 GetPosHistory(int32_t n);
 public:
 
 	/// <summary>
 	/// 味方の目標座標を取得
 	/// </summary>
-	/// <param name="allyIndex"> 列の前から何番目の座標か </param>
-	/// <returns></returns>
+	/// <param name="allyIndex"> 列の前から何番目か(並んでない時は-1) </param>
 	Vector3 GetAllyTargetPos(int32_t allyIndex);
 
 	/// <summary>
-	/// 自身が目指すべき次の空いている味方インデックスを取得
+	/// 最後尾に並ぶことを試みる
 	/// </summary>
-	/// <param name="currentIndex"> 現在のインデックス(-1はまだ列に加わっていない) </param>
-	/// <returns></returns>
-	int32_t GetAllyTargetIndex(int32_t currentIndex);
+	/// <returns> 失敗したら-1 </returns>
+	int32_t TryReserveFormationIndex();
 
-	/// <summary>
-	/// 列ぬ加入している味方の生存フラグをセット
-	/// </summary>
-	/// <param name="index"> インデックス </param>
-	/// <param name="flag"> フラグ </param>
-	/// <returns> 成功したらtrue </returns>
-	bool TryReserveFormationIndex(int32_t preferredIndex);
-
-	/// <summary>
-	/// currentIndexの前に味方が存在するか
-	/// </summary>
-	/// <param name="currentIndex"> 現在のインデックス </param>
-	/// <returns> 存在するならtrue </returns>
-	bool IsExistFrontAlly(int32_t currentIndex);
+	// 死亡届
+	void NotifyAllyDeath(int32_t formationIndex);
 
 	// 動いているかどうか
-	bool IsMoving() { return isMoving; }
+	bool IsMoving() const { return isMoving; }
 
-	float GetSpeed() { return speed; }
+	float GetSpeed() const { return speed; }
 
 
 	// 味方の参照ポインタを追加

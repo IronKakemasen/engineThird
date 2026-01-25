@@ -28,8 +28,19 @@ void Player::Reset()
 	// モデルのリセット
 	model->Reset();
 
-	// allyExistenceFlagsの初期化
-	allyExistenceFlags.fill(false);
+	// existの初期化
+	exist.fill(false);
+	// deadIndexListの初期化
+	while (!deadIndexList.empty())
+	{
+		deadIndexList.pop_back();
+	}
+	// formedAllyCountの初期化
+	formedAllyCount = 0;
+	// unformedAllyCountの初期化
+	unformedAllyCount = 0;
+	// delayFrameOffsetsの初期化
+	delayFrameOffsets = 0;
 	// posHistoryの初期化
 	posHistory.fill(trans.pos);
 	// headIndexの初期化
@@ -104,11 +115,11 @@ void Player::Update()
 	// 移動処理
 	Move();
 
-	// 視線変更処理
-	UpdateLookDir();
-
 	// 座標保存処理
 	SavePos();
+
+	// 視線変更処理
+	UpdateLookDir();
 
 	// 味方データ更新処理
 	UpdateAllyData();
@@ -129,9 +140,9 @@ void Player::DebugDraw()
 #ifdef USE_IMGUI
 
 
-	for (size_t i = 0; i < allyExistenceFlags.size(); i++)
+	for (size_t i = 0; i < 10; i++)
 	{
-		if (allyExistenceFlags[i])
+		if (exist[i])
 		{
 			ImGui::Text("%d:#\n", i);
 		}
@@ -139,18 +150,30 @@ void Player::DebugDraw()
 		{
 			ImGui::Text("%d: \n", i);
 		}
-		ImGui::SameLine();
-		std::string key = "remove##" + std::to_string(i);
-		if (ImGui::Button(key.c_str()))
-		{
-			allies[i]->SetStatus(GameObjectBehavior::Status::kInActive);
-		}
-		ImGui::SameLine();
-		ImGui::Text("c:%d", allies[i]->formationCurrentIndex);
-		ImGui::SameLine();
-		ImGui::Text("t :%d", allyTargetIndices[i]);
 	}
+	ImGui::Text("formedAllyCount:%d\n", formedAllyCount);
 
+
+	for (size_t i = 0; i < deadIndexList.size(); i++)
+	{
+		ImGui::Text("deadIndexList[%d]:%d\n", i, deadIndexList.front());
+	}
+	ImGui::Text("delayFrameOffsets:%d\n", delayFrameOffsets);
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		if (ImGui::Button(("remove##" + std::to_string(i)).c_str()))
+		{
+			for (auto& ally : allies)
+			{
+				if (ally->GetStatus() == GameObjectBehavior::Status::kActive && ally->formationCurrentIndex == i)
+				{
+					ally->Death();
+					break;
+				}
+			}
+		}
+	}
 
 #endif // USE_IMGUI
 }
@@ -293,6 +316,15 @@ void Player::UpdateLookDir()
 	trans.lookDir = target.GetNormalized();
 }
 
+// プレイヤーのnフレーム前の座標を取得
+Vector3 Player::GetPosHistory(int32_t n)
+{
+	// 座標履歴のインデックス
+	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
+	if (index < 0) index += static_cast<int32_t>(posHistory.size());
+	return posHistory[index];
+}
+
 // 
 // 0 - 1 - 2 - 3 - x - 5 - 6    新　新　新
 // 
@@ -310,183 +342,100 @@ void Player::UpdateAllyData()
 	formedAllyCount = 0;
 	unformedAllyCount = 0;
 
-
-	// 毎フレーム再構築（味方側から直接いじらない）
-	allyExistenceFlags.fill(false);
+	exist.fill(false);
 
 	for (int32_t i = 0; i < allies.size(); ++i)
 	{
-		// アクティブなら
-		if (allies[i]->GetStatus() != GameObjectBehavior::Status::kActive) continue;
-
-
-		if (allies[i]->formationCurrentIndex >= 0)
+		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 		{
-			const uint32_t idx = static_cast<uint32_t>(allies[i]->formationCurrentIndex);
-			if (idx < allyExistenceFlags.size())
+			// 列に並んでいるなら
+			if (allies[i]->formationCurrentIndex >= 0)
 			{
-				allyExistenceFlags[idx] = true;
+				exist[allies[i]->formationCurrentIndex] = true;
 				formedAllyCount++;
+			}
+			else
+			{
+				unformedAllyCount++;
+			}
+		}
+	}
+
+	// 詰めオフセット更新
+	if (!deadIndexList.empty())
+	{
+		if (!isMoving)
+		{
+			delayFrameOffsets++;
+			if (delayFrameOffsets >= GameConstants::kAllyFollowDelayFrames)
+			{
+				// オフセットリセット
+				delayFrameOffsets = 0;
+				// 詰め終わったので存在フラグを更新
+				for (size_t i = deadIndexList.front(); i < exist.size() - 1; ++i)
+				{
+					exist[i] = exist[i + 1];
+				}
+				exist[exist.size() - 1] = false;
+				// 味方の列インデックスを詰める
+				for (auto* ally : allies)
+				{
+					if (ally->formationCurrentIndex > deadIndexList.front())
+					{
+						ally->formationCurrentIndex--;
+					}
+				}
+				// deadIndexList更新
+				for (size_t i = 0; i < deadIndexList.size(); ++i)
+				{
+					if (deadIndexList[i] > deadIndexList.front())
+					{
+						deadIndexList[i]--;
+					}
+				}
+				// 次の味方へ
+				deadIndexList.pop_front();
 			}
 		}
 		else
 		{
-			unformedAllyCount++;
+			// 動いている場合はオフセットリセット
+			delayFrameOffsets = 0;
 		}
 	}
-
-	// 「穴が空いたら詰める」用マッピングを作る
-	uint32_t empty = 0;
-	for (uint32_t i = 0; i < GameConstants::kMaxAllies; ++i)
-	{
-		allyTargetIndices[i] = i - empty;
-
-		if (!allyExistenceFlags[i])
-		{
-			empty++;
-		}
-	}
-	//// 味方の存在フラグを更新
-	//uint32_t fakeSum = 0;
-	//for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
-	//{
-	//	if (allyExistenceFlags[i] == true)
-	//	{
-	//		// 見かけ上の人数
-	//		fakeSum++;
-	//		// 実際に並んでいる人数
-	//		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			formedAllyCount++;
-	//		}
-	//	}
-	//}
-	//
-	////// fakeSum != formedAllyCount の場合、allyExistenceFlagsの後半のtrueは誤りなのでfalseにする
-	////if (fakeSum != formedAllyCount)
-	////{
-	////	for (size_t i = 0; i < allyExistenceFlags.size(); ++i)
-	////	{
-	////		if (fakeSum > formedAllyCount && allyExistenceFlags[i] == true)
-	////		{
-	////			allyExistenceFlags[i] = false;
-	////			//fakeSum--;
-	////		}
-	////	}
-	////}
-	//
-	//uint32_t empty = 0;
-	//for (uint32_t i = 0; i < GameConstants::kMaxAllies; ++i)
-	//{
-	//	allyTargetIndices[i] = i - empty;
-	//
-	//	if (!allyExistenceFlags[i])
-	//	{
-	//		empty++;
-	//	}
-	//}
 }
-// 味方の目標座標を取得
+
+
 Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
-	// ※１
-	// そもそも列に並んでいない 場合
-	// 目標座標は最後尾+1の座標
-
-	// ※２
-	// 前に味方がいる && (isMovingNow || !isMovingNow) の場合
-	// 目標座標は通常通り遅延フレーム*列index前の座標
-
-	// ※３
-	// 前に味方がいない && isMovingNow の場合
-	// 目標座標は通常通り遅延フレーム*列index前の座標
-	// 詰めたいが、座標履歴に完璧に追従する場合は速度が急激にあがるため詰めれない
-	// 速度は変えず、最短経路を通り詰める方式はそもそもゲーム性が変わるため採用しない
-
-	// ※４
-	// 前に味方がいない && !isMovingNow の場合
-	// 目標座標は通常目指す座標よりstopMoveFrameだけ前に詰めた座標
-	// 例：stopMoveFrameが5フレームの場合、通常目指す座標より5フレーム前の座標を目標座標とする
-	// これにより味方の速度がどんな時も変わらず、かつ見た目の説得力も保てる
-	
-	// 前に味方いるか
-	bool isExistFrontAlly = IsExistFrontAlly(allyIndex);
-	// 現在動いているか(いらないが可読性向上のため記述)
-	bool isMovingNow = isMoving;
-	// 列に並んでいるか
-	bool isFormed = (allyIndex != -1);
-	// プレイヤーから何フレーム遅れの位置か
-	int32_t delayFrames = (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
-	// 座標履歴のインデックス
-	int32_t index = (static_cast<int32_t>(headIndex) - delayFrames);
-	if (index < 0) index += static_cast<int32_t>(posHistory.size()); 
-	// 理想的な位置
-	Vector3 idealPos = posHistory[index];
-
-
-	// ※１ そもそも列に並んでいない 場合
-	if (!isFormed)
+	int32_t index = allyIndex;
+	if (index < 0)
 	{
-		// 目標座標は最後尾+1の座標
-		int32_t adjustedIndex = index;
-		adjustedIndex = adjustedIndex - (formedAllyCount * GameConstants::kAllyFollowDelayFrames);
-		if (adjustedIndex < 0) adjustedIndex += static_cast<int32_t>(posHistory.size());
-		return posHistory[adjustedIndex];
+		index = formedAllyCount;
 	}
 
-	// ※２ 前に味方がいる && (isMovingNow || !isMovingNow) の場合
-	if (isExistFrontAlly)
+	int32_t delayFrames = (index + 1) * GameConstants::kAllyFollowDelayFrames;
+	int32_t offset = 0;
+	if (!deadIndexList.empty() && index >= deadIndexList.front())
 	{
-		return idealPos;
+		offset = delayFrameOffsets;
 	}
-
-	// ※３ 前に味方がいない && isMovingNow の場合
-	if (!isExistFrontAlly && isMovingNow)
-	{
-		return idealPos;
-	}
-
-	// ※４ 前に味方がいない && !isMovingNow の場合
-	if (!isExistFrontAlly && !isMovingNow)
-	{
-		// stopMoveFrame分前に詰めた座標を返す
-		int32_t adjustedIndex = index;
-		adjustedIndex = adjustedIndex - allies[allyIndex]->formationOffsetFrames;
-		if (adjustedIndex < 0) adjustedIndex += static_cast<int32_t>(posHistory.size());
-		return posHistory[adjustedIndex];
-	}
-
-	return idealPos;
+	return GetPosHistory(delayFrames - offset);
 }
-int32_t Player::GetAllyTargetIndex(int32_t currentIndex)
+int32_t Player::TryReserveFormationIndex()
 {
-	// 新規の場合、最後尾を返す
-	if (currentIndex == -1)
+	if (exist[formedAllyCount] == false)
 	{
+		exist[formedAllyCount] = true;
 		return formedAllyCount;
-	}
-
-	return allyTargetIndices[currentIndex];
-}
-bool Player::TryReserveFormationIndex(int32_t preferredIndex)
-{
-	if (allyExistenceFlags[preferredIndex] == false)
-	{
-		allyExistenceFlags[preferredIndex] = true;
-		return true;
 	}
 	else
 	{
-		return false;
+		return -1;
 	}
 }
-bool Player::IsExistFrontAlly(int32_t currentIndex)
-{
-	if (currentIndex <= 0) { return true; }
 
-	if (allyExistenceFlags[currentIndex - 1])
-	{
-		return true;
-	}
-	return false;
+void Player::NotifyAllyDeath(int32_t formationIndex)
+{
+	deadIndexList.push_back(formationIndex);
 }

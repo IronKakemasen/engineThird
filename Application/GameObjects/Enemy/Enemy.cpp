@@ -280,6 +280,6 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 	if (playerAlly->formationCurrentIndex != -1)
 	{
 		me->KnockBack(1.0f);
-		playerAlly->SetStatus(Status::kInActive);
+		playerAlly->Death();
 	}
 }
