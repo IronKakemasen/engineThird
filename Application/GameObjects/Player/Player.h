@@ -24,7 +24,8 @@ private:
 	void Attack();		// 攻撃
 	std::vector<PlayerBullet*> bullets{}; // 参照ポインタ
 	float attackGauge = 3.0f;		// 攻撃ゲージ(0.0f ~ 3.0f)攻撃一回で1.0f減少 減った後残3.0f~2.0fの攻撃はステージ１　2.0f~1.0f
-
+	float attackInterval = 0.5f;	// 攻撃したから一定時間はゲージが回復しない
+	Counter attackIntervalCounter; // 攻撃間隔カウンター
 
 	///// 座標履歴管理処理  //////
 	void SavePos();			// 座標履歴の保存
@@ -62,7 +63,6 @@ private:
 	int32_t delayFrameOffsets = 0;
 	// 死亡して詰め待ちのリスト(先入れ先出し)
 	std::deque<int32_t> deadIndexList = {};
-
 
 
 	/// <summary>

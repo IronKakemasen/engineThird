@@ -6,7 +6,7 @@
 struct Enemy;
 struct EnemyTower;
 struct EnemyFactory;
-struct playerAlly;
+struct PlayerAlly;
 
 struct PlayerBullet :public GameObject, public GameObjectBuilding
 {
@@ -33,8 +33,8 @@ public:
 
 	void Fire(Vector3 pos, Vector3 dir, int32_t stage);
 
-	float GetAttackPower() { return attackPower; }
-	int32_t GetAttackStage() { return attackStage; }
+	float GetAttackPower() const { return attackPower; }
+	int32_t GetAttackStage() const { return attackStage; }
 
 #pragma	endregion
 

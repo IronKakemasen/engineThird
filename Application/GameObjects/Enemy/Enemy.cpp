@@ -258,7 +258,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->hp = me->hp - playerBullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f)
+	if (me->hp < 0.0f && playerBullet->GetAttackStage() == 0)
 	{
 		me->SetStatus(Status::kInActive);
 
@@ -269,7 +269,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	me->KnockBack(0.1f);
+	//me->KnockBack(0.1f);
 }
 
 // プレイヤー味方との衝突

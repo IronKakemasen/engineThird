@@ -65,6 +65,8 @@ void PlayerAlly::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
+	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
 // データ保存・読み込み
@@ -199,5 +201,8 @@ void PlayerAlly::CollisionBackToEnemy::operator()()
 // プレイヤー弾との衝突
 void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 {
-	me->SetStatus(Status::kInActive);
+	if (me->formationCurrentIndex != -1)
+	{
+		me->Death();
+	}
 }

@@ -139,6 +139,35 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
+	static std::vector<float> values(100, 0.0f);
+	static int index = 0;
+
+	values[index] = attackGauge;
+	index = (index + 1) % values.size();
+
+	ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
+
+	//ImGui::PlotLines("Gauge", values, IM_ARRAYSIZE(values), 0, nullptr, 0.0f, 1.0f, ImVec2(0, 80));
+
+	ImGui::Text("---------------------------------------------\n");
+
+	float arr[1] = { attackGauge };
+	ImGui::PlotHistogram("Gauge", arr, 1, 0, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
+
+	ImGui::Text("---------------------------------------------\n");
+
+	ImDrawList* draw = ImGui::GetWindowDrawList();
+	ImVec2 center = ImGui::GetCursorScreenPos();
+	center.x += 50;
+	center.y += 50;
+
+	float radius = 40.0f;
+	float value = attackGauge / 3.0f;
+
+	draw->PathArcTo(center, radius, -3.1415f / 2.0f, -3.1415f / 2.0f + 3.1415f * 2.0f * value, 32);
+	draw->PathStroke(IM_COL32(0, 255, 0, 255), false, 6.0f);
+
+	ImGui::Text("---------------------------------------------\n");
 
 	for (size_t i = 0; i < 10; i++)
 	{
@@ -152,7 +181,6 @@ void Player::DebugDraw()
 		}
 	}
 	ImGui::Text("formedAllyCount:%d\n", formedAllyCount);
-
 
 	for (size_t i = 0; i < deadIndexList.size(); i++)
 	{
@@ -246,6 +274,17 @@ void Player::Move()
 
 void Player::Attack()
 {
+	// 攻撃間隔カウンター更新
+	attackIntervalCounter.Add();
+	if (attackIntervalCounter.count >= 1.0f)
+	{
+		// 攻撃間隔経過後はゲージ回復
+		attackGauge += 0.02f;
+		if (attackGauge > 3.0f)
+			attackGauge = 3.0f;
+	}
+
+
 	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
 	{
 		if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
@@ -254,6 +293,9 @@ void Player::Attack()
 	{
 		if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE)) return;
 	}
+
+	if (attackGauge < 1.0f)return;
+
 
 	for (auto* bullet : bullets)
 	{
@@ -267,6 +309,8 @@ void Player::Attack()
 			if (attackGauge >= 2.0f)stage = 2;
 			else if (attackGauge >= 1.0f)stage = 1;
 			else stage = 0;
+
+			attackIntervalCounter.Initialize(attackInterval);
 
 			// リセット
 			bullet->Fire(trans.pos, trans.lookDir, stage);

@@ -1,5 +1,8 @@
 #include "PlayerBullet.h"
 #include "../../../GameObjects/Enemy/Enemy.h"
+#include "../../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
+#include "../../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
+#include "../../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../Json/Json.h"
 
 PlayerBullet::PlayerBullet()
@@ -127,12 +130,11 @@ void PlayerBullet::DebugDraw()
 // エネミーとの衝突
 void PlayerBullet::CollisionBackToEnemy::operator()()
 {
-	auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
+	//auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
+	//if (enemy->IsInvincible()) return;
 
-	if (enemy->IsInvincible()) return;
-
-	me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
-	me->attackPower += 5.0f;
+	////me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
+	////me->attackPower += 5.0f;
 }
 // 敵塔との衝突
 void PlayerBullet::CollisionBackToEnemyTower::operator()()
@@ -145,6 +147,9 @@ void PlayerBullet::CollisionBackToEnemyFactory::operator()()
 // 味方との衝突
 void PlayerBullet::CollisionBackToAlly::operator()()
 {
+	auto* ally = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
+	if (ally->formationCurrentIndex == -1) return;
+
 	me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
 	me->attackPower += 5.0f;
 }
