@@ -53,7 +53,7 @@ void WinApp::OffScreenBegin()
 	//指定した深度で画面クリアする
 	cList->ClearDepthStencilView(*depthHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	//指定した色で画面全体をクリアする
-	float clearColor[] = { 0.0f,0.0f,0.0f,1.0f };
+	float clearColor[] = { 0.0f,0.0f,0.0f,0.0f };
 	//指定した色で画面全体をクリアする
 	commandControl.Getter_commandList()->ClearRenderTargetView(
 		*rtvHandle, windowColor, 0, nullptr);

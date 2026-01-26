@@ -1,11 +1,13 @@
 #pragma once
 #include "SceneBehavior.h"
+#include "../../GameObjects/Player/Player.h"
 
 class ModelScene final : public Scene
 {
 
 public:
 	ModelScene();
+	Player p;
 
 	//↓呼び出す必要なし。↓
 	//更新処理

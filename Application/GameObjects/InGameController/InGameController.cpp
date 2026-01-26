@@ -62,8 +62,6 @@ std::string InGameController::WathchInString()
 
 void InGameController::Init()
 {
-	//モデルの初期化
-	model->Init(&trans);
 
 	//プレイヤーの挿入
 	std::vector<GameObject*> objContainer = gameObjectManager->Find(Tag::kPlayer);
@@ -79,19 +77,16 @@ void InGameController::Init()
 
 void InGameController::Reset()
 {
-	//モデルのリセット（中身が書いてあれば）
-	model->Reset();
+
 }
 
 void InGameController::Draw(Matrix4* vpMat_)
 {
-	//モデルの描画
-	model->Draw(vpMat_);
+
 }
 
 
 InGameController::InGameController()
 {
-	//モデルのインスタンス化
-	model.reset(new PlayerModel);
+
 }

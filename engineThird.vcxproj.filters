@@ -178,6 +178,7 @@
     <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
     <ClCompile Include="Application\Config\InGameConfig.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
+    <ClCompile Include="Application\Models\GroundPlane\GroundPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -357,6 +358,7 @@
     <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
+    <ClInclude Include="Application\Models\GroundPlane\GroundPlane.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />
