@@ -39,6 +39,8 @@ class ShikouteiScene final : public Scene
 	Sprite atlasNumber;
 	RectLight* rectLights[2];
 
+	void AdaptToPostEffect();
+
 public:
 	ShikouteiScene();
 
