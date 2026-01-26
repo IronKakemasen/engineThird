@@ -37,8 +37,8 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.9f;
-	appearance->roughness = 0.1f;
+	appearance->metalic = 0.0f;
+	appearance->roughness = 1.0f;
 
 
 }

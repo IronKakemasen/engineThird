@@ -88,7 +88,7 @@ void SceneController::Debug()
 	if (ImGui::TreeNode("DirectionalLight"))
 	{
 		ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);
-		ImGui::DragFloat3("color", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->color), 0.01f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(&forDebug.lightBuffer), 0.01f);
 		ImGui::DragFloat("intensity", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->intensity), 0.1f);
 		ImGui::TreePop();
 	}
@@ -98,6 +98,8 @@ void SceneController::Debug()
 	cur_Scene->gameObjManager->Debug();
 	cur_Scene->cameraController->Debug();
 	cur_Scene->Debug();
+
+
 
 	if (runSpeedChanger.IsStop())
 	{
