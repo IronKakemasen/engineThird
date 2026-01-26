@@ -67,8 +67,6 @@ void InGameController::Init()
 	std::vector<GameObject*> objContainer = gameObjectManager->Find(Tag::kPlayer);
 	player = reinterpret_cast<Player*>(objContainer[0]);
 
-	SetIdentity(Tag::kNone);
-
 	SetModeData();
 
 	//位置
@@ -88,5 +86,6 @@ void InGameController::Draw(Matrix4* vpMat_)
 
 InGameController::InGameController()
 {
+	SetIdentity(Tag::kInGameController);
 
 }

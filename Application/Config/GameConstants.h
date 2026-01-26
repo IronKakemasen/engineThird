@@ -1,7 +1,7 @@
 #pragma once
 #include <cstddef>
 
-#define StageCount 0
+//#define StageCount 0
 
 namespace GameConstants
 {

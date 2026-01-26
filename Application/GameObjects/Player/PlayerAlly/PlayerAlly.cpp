@@ -39,6 +39,11 @@ void PlayerAlly::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+	// プレイヤーポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerAlly);
@@ -50,9 +55,6 @@ void PlayerAlly::Init()
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
 	collisionBackToPlayerBullet.Init(this);
-
-	// ポインタ取得
-	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
 
 	// 補完係数設定
 	trans.interpolationCoe = 0.9f;

@@ -5,6 +5,7 @@
 #include "../../Config/GameConstants.h"
 
 class InGameConfig;
+struct InGameController;
 
 struct GameObjectBuilding
 {
@@ -23,6 +24,9 @@ public:
 
 	// Jsonパス
 	std::string path;
+
+	// inGameController参照ポインタ
+	InGameController* inGameController = nullptr;
 
 
 	float GetHP() const { return hp; }

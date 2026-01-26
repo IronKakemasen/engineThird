@@ -49,6 +49,16 @@ void Enemy::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+	// プレイヤーポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+	// タワーポインタ取得
+	for (auto& towerObj : gameObjectManager->Find(Tag::kPlayerTower))
+	{
+		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
+	}
+
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemy);
@@ -63,12 +73,6 @@ void Enemy::Init()
 	collisionBackToPlayerTower.Init(this);
 	collisionBackToPlayerAlly.Init(this);
 
-	// ポインタ取得
-	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
-	for (auto& towerObj : gameObjectManager->Find(Tag::kPlayerTower))
-	{
-		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
-	}
 
 	trans.interpolationCoe = 0.1f;
 }

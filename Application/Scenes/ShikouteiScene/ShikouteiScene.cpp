@@ -130,7 +130,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = enemyFactories[0]->path;
 
 				Json::SaveParam(path, key, Sum);
@@ -173,7 +173,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = playerTowers[0]->path;
 
 				Json::SaveParam(path, key, Sum);
@@ -215,7 +215,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = enemyTowers[0]->path;
 				Json::SaveParam(path, key, Sum);
 				for (auto& tower : enemyTowers)
@@ -265,15 +265,18 @@ void ShikouteiScene::Debug()
 
 		ImGui::EndTabBar();
 	}
+	ImGui::End();
+
+	ImGui::Begin("Object de");
+	if (ImGui::BeginTabBar("Player"))
+	{
+		player->DebugDraw();
+		ImGui::EndTabBar();
+	}
 
 	ImGui::End();
 
 
-		//if (ImGui::BeginTabItem("Player"))
-		//{
-		//	player->DebugDraw();
-		//	ImGui::EndTabItem();
-		//}
 	ImGui::Begin("InGameConfig");
 	inGameConfig->DebugDraw();
 	ImGui::End();
