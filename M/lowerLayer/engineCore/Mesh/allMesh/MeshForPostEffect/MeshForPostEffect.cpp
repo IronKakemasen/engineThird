@@ -91,10 +91,21 @@ void MeshForPostEffect::CreatePSO(AllPipelineSet* allPipelineset_)
 		return meters;
 	};
 
+	auto rootparameterSimpleNeonLike= []() {
+
+		std::vector<D3D12_ROOT_PARAMETER> meters;
+		meters.emplace_back(RootSignatureCreator::GetRootparameterSRV(ShaderStage::PS, 0));
+		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
+		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 1));
+
+		return meters;
+		};
+
 
 	std::string folderPath = "PostEffect/";
 
 	allPipelineset_->CreateNewPipeline(folderPath, "MonoChrome.VS", "MonoChrome.PS", inputLayOutFunc, rootparameterMonoChrome);
 	allPipelineset_->CreateNewPipeline(folderPath, "NoEffection.VS", "NoEffection.PS", inputLayOutFunc, rootparameterMonoChrome);
+	allPipelineset_->CreateNewPipeline(folderPath, "SimpleNeonLike.VS", "SimpleNeonLike.PS", inputLayOutFunc, rootparameterSimpleNeonLike);
 
 }

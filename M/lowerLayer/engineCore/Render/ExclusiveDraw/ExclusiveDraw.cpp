@@ -294,9 +294,15 @@ void ExclusiveDraw::DrawOnPalette(Palette* palette_)
 
 	//Cバッファの場所を指定
 	src_pipeline->SetConstantBufferViews(
-		k,
+		k++,
 		paletteMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress());
 
+	auto tmp = palette_->WatchCBufferAddressContainer();
+
+	for (auto itr = tmp.begin();itr != tmp.end(); ++itr, k++)
+	{
+		cList->SetGraphicsRootConstantBufferView(k,(*itr));
+	}
 
 	//描画(DrawCall)。6インデックスで一つのインスタンス
 	cList->DrawIndexedInstanced(paletteMesh->kIndexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);

@@ -312,6 +312,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Render\Palette\Palette.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
@@ -345,6 +346,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\StructuredBuffer\RectLightStructuredBuffer\RectLightStructuredBuffer.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\Palette.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

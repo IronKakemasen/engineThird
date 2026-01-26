@@ -2,6 +2,7 @@
 #include "PostEffectType.h"
 #include "../../utilities/vectorAndMatrix/vectorAndMatrix.h"
 #include <unordered_map>
+#include <d3d12.h>
 
 class OriginalScreen;
 class Palette
@@ -13,7 +14,7 @@ class Palette
 
 		int shaderSetIndex;
 		std::vector<uint16_t> offscreenTextureContainer;
-
+		std::vector<D3D12_GPU_VIRTUAL_ADDRESS> cBufferAddressContainer;
 		Para();
 	};
 
@@ -25,7 +26,10 @@ public:
 	Palette();
 	int WatchShaderSetIndex();
 	std::vector<uint16_t> WatchUseTexture();
-	void Set(PostEffectType type_, std::vector<uint16_t> textures_, int shaderSetIndex_);
+	std::vector<D3D12_GPU_VIRTUAL_ADDRESS> WatchCBufferAddressContainer();
+
+	void Set(PostEffectType type_, std::vector<uint16_t> textures_, 
+		int shaderSetIndex_, std::vector<D3D12_GPU_VIRTUAL_ADDRESS> cBufferAddressContainer_);
 	void ChangeType(PostEffectType type_);
 };
 
