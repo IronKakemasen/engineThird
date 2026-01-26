@@ -31,9 +31,6 @@ void EnemyFactory::Reset()
 	// 現在選択されているステージでのアクティブ数を取得
 	Json::LoadParam(path, "/stage" + std::to_string(StageCount) + "/ActiveCount", stageActiveCounts);
 
-	// config反映
-	ConfigHotReload();
-
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
 	{
@@ -53,7 +50,7 @@ void EnemyFactory::Reset()
 	}
 
 	// タイマーリセット
-	timer.Initialize(spawnInterval);
+	timer.Initialize(inGameConfig->enemySpawnInterval);
 }
 
 void EnemyFactory::Init()
@@ -86,14 +83,6 @@ void EnemyFactory::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
-void EnemyFactory::ConfigHotReload()
-{
-	if (inGameConfig)
-	{
-		// スポーン間隔反映
-		spawnInterval = inGameConfig->enemySpawnInterval;
-	}
-}
 
 // データ保存・読み込み
 void EnemyFactory::LoadData()
@@ -120,15 +109,41 @@ void EnemyFactory::Update()
 {
 	model->Update();
 
-#ifdef USE_IMGUI
-	// config反映
-	ConfigHotReload();
-#endif // USE_IMGUI
+	// 衝突弾リスト更新
+	UpdateHitBullets();
 
 	// スポーン処理
 	SpawnEnemy();
 }
 
+void EnemyFactory::AddHitBullet(PlayerBullet* bullet)
+{
+	hitBullets.push_back(bullet);
+}
+
+bool EnemyFactory::IsInHitBulletList(PlayerBullet* bullet)
+{
+	for (auto& hitBullet : hitBullets)
+	{
+		if (hitBullet == bullet)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void EnemyFactory::UpdateHitBullets()
+{
+	for (size_t i = 0; i < hitBullets.size(); ++i)
+	{
+		if (hitBullets[i]->GetStatus() == Status::kInActive)
+		{
+			hitBullets.erase(hitBullets.begin() + i);
+			--i;
+		}
+	}
+}
 void EnemyFactory::SpawnEnemy()
 {
 	timer.Add();
@@ -139,7 +154,7 @@ void EnemyFactory::SpawnEnemy()
 			if (enemy->GetStatus() == Status::kInActive)
 			{
 				enemy->Spawn(trans.pos);
-				timer.Initialize(spawnInterval);
+				timer.Initialize(inGameConfig->enemySpawnInterval);
 				break;
 			}
 		}
@@ -188,8 +203,14 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 {
 	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
 
-	me->hp = me->hp - playerBullet->GetAttackPower();
+	// 既に衝突リストにあるなら何もしない
+	if (me->IsInHitBulletList(playerBullet)) return;
 
+	// 衝突リストに追加
+	me->AddHitBullet(playerBullet);
+
+	// ダメージ処理
+	me->hp = me->hp - playerBullet->GetAttackPower();
 	if (me->hp < 0.0f)
 	{
 		me->SetStatus(Status::kInActive);

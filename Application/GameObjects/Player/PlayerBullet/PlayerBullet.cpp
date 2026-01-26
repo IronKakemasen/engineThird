@@ -150,11 +150,6 @@ void PlayerBullet::DebugDraw()
 // エネミーとの衝突
 void PlayerBullet::CollisionBackToEnemy::operator()()
 {
-	//auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
-	//if (enemy->IsInvincible()) return;
-
-	////me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
-	////me->attackPower += 5.0f;
 }
 // 敵塔との衝突
 void PlayerBullet::CollisionBackToEnemyTower::operator()()

@@ -81,7 +81,7 @@ void InGameConfig::DebugDraw()
 	ImGui::DragFloat("Enemy		MaxHP", &enemyMaxHP, 1.0f, 0.0f, 100.0f);
 	ImGui::DragFloat("EFactory	MaxHP", &enemyFactoryMaxHP, 1.0f, 0.0f, 100.0f);
 	ImGui::DragFloat("ETower	MaxHP", &enemyTowerMaxHP, 1.0f, 0.0f, 100.0f);
-	ImGui::DragFloat("Bullet	LifeTime", &playerBulletLifeTime, 1.0f, 0.0f, 100.0f);
+	ImGui::DragFloat("Bullet	LifeTime", &playerBulletLifeTime, 0.1f, 0.0f, 10.0f);
 	ImGui::Text("---------------------Speed--------------------\n");
 	ImGui::DragFloat("Player	speed", &playerSpeed, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Enemy		speed", &enemySpeed, 0.01f, 0.0f, 1.0f);

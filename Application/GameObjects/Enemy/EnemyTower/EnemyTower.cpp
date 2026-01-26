@@ -47,7 +47,7 @@ void EnemyTower::Reset()
 	}
 
 	// config反映
-	ConfigHotReload();
+	hp = inGameConfig->enemyTowerMaxHP;
 }
 
 void EnemyTower::Init()
@@ -73,15 +73,6 @@ void EnemyTower::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
-void EnemyTower::ConfigHotReload()
-{
-	if (inGameConfig)
-	{
-		// HP反映
-		hp = inGameConfig->enemyTowerMaxHP;
-	}
-}
-
 // データ保存・読み込み
 void EnemyTower::LoadData()
 {
@@ -104,11 +95,6 @@ void EnemyTower::SaveData()
 void EnemyTower::Update()
 {
 	model->Update();
-
-#ifdef USE_IMGUI
-	// config反映
-	ConfigHotReload();
-#endif // USE_IMGUI
 }
 
 void EnemyTower::Draw(Matrix4* vpMat_)

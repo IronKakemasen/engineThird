@@ -8,8 +8,6 @@ struct EnemyTower :public GameObject, public GameObjectBuilding
 #pragma region 独自部位
 
 private:
-	// config反映
-	void ConfigHotReload();
 
 public:
 
