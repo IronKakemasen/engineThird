@@ -72,6 +72,9 @@ private:
 	// 死亡して詰め待ちのリスト(先入れ先出し)
 	std::deque<int32_t> deadIndexList = {};
 
+	// config反映
+	void ConfigHotReload();
+
 public:
 
 	/// <summary>

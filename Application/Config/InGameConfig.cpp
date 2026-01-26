@@ -84,7 +84,7 @@ void InGameConfig::DebugDraw()
 	ImGui::DragFloat("Player	speed", &playerSpeed, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Enemy		speed", &enemySpeed, 0.01f, 0.0f, 1.0f);
 	ImGui::Text("---------------------------------------------\n");
-	ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.1f, 20.0f);
+	ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
 	ImGui::DragFloat("Enemy		knockBackPowerToAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
 	ImGui::Text("---------------------------------------------\n");
 	ImGui::DragInt("Ally		delayFrames", &allyDelayFrames, 1, 0, 120);

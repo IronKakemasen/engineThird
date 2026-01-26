@@ -44,17 +44,7 @@ void Enemy::Reset()
 	LookAtTarget();
 
 	// config反映
-	if (inGameConfig)
-	{
-		// 移動速度反映
-		speed = inGameConfig->enemySpeed;
-		// 味方と当たったときのノックバック力反映
-		knockBackPowerOnAlly = inGameConfig->enemyKnockBackPowerToAlly;
-		// HP反映
-		maxHP = inGameConfig->enemyMaxHP;
-		// 攻撃力反映
-		attackPower = inGameConfig->enemyAttackPower;
-	}
+	ConfigHotReload();
 }
 
 void Enemy::Init()
@@ -130,6 +120,11 @@ void Enemy::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+#ifdef USE_IMGUI
+	// config反映
+	ConfigHotReload();
+#endif // USE_IMGUI
 
 	// 移動処理
 	MoveToTarget();
@@ -255,6 +250,22 @@ void Enemy::UpdateInvincibleTime()
 	if (invincibleTime > 0)
 	{
 		invincibleTime -= 1;
+	}
+}
+
+void Enemy::ConfigHotReload()
+{
+	// config反映
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->enemySpeed;
+		// 味方と当たったときのノックバック力反映
+		knockBackPowerOnAlly = inGameConfig->enemyKnockBackPowerToAlly;
+		// HP反映
+		maxHP = inGameConfig->enemyMaxHP;
+		// 攻撃力反映
+		attackPower = inGameConfig->enemyAttackPower;
 	}
 }
 

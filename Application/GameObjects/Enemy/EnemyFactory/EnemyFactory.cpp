@@ -50,11 +50,7 @@ void EnemyFactory::Reset()
 	}
 
 	// config反映
-	if (inGameConfig)
-	{
-		// スポーン間隔反映
-		spawnInterval = inGameConfig->enemySpawnInterval;
-	}
+	ConfigHotReload();
 
 	// タイマーリセット
 	timer.Initialize(spawnInterval);
@@ -90,6 +86,15 @@ void EnemyFactory::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
 
+void EnemyFactory::ConfigHotReload()
+{
+	if (inGameConfig)
+	{
+		// スポーン間隔反映
+		spawnInterval = inGameConfig->enemySpawnInterval;
+	}
+}
+
 // データ保存・読み込み
 void EnemyFactory::LoadData()
 {
@@ -113,8 +118,30 @@ void EnemyFactory::Update()
 {
 	model->Update();
 
+#ifdef USE_IMGUI
+	// config反映
+	ConfigHotReload();
+#endif // USE_IMGUI
+
 	// スポーン処理
 	SpawnEnemy();
+}
+
+void EnemyFactory::SpawnEnemy()
+{
+	timer.Add();
+	if (timer.IsEnd())
+	{
+		for (auto& enemy : enemies)
+		{
+			if (enemy->GetStatus() == Status::kInActive)
+			{
+				enemy->Spawn(trans.pos);
+				timer.Initialize(spawnInterval);
+				break;
+			}
+		}
+	}
 }
 
 void EnemyFactory::Draw(Matrix4 * vpMat_)
@@ -168,19 +195,3 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 }
 
 
-
-void EnemyFactory::SpawnEnemy()
-{
-	timer.Add();
-	if (timer.IsEnd())
-	{
-		for (auto& enemy : enemies)
-		{
-			if (enemy->GetStatus() == Status::kInActive)
-			{
-				enemy->Spawn(trans.pos);
-				break;
-			}
-		}
-	}
-}

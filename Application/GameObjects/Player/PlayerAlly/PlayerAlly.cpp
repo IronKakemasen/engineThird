@@ -90,9 +90,6 @@ void PlayerAlly::Update()
 	//モデルの更新処理
 	model->Update();
 
-	// デバッグ用色更新
-	UpdateDebugColor();
-
 	// 移動処理
 	Move();
 }
@@ -154,21 +151,6 @@ void PlayerAlly::Move()
 		trans.pos = targetPos;
 	}
 }
-
-void PlayerAlly::UpdateDebugColor()
-{
-	// 列に加わっていない場合は青色にする
-	if (formationCurrentIndex == -1)
-	{
-		model->model->Getter_Appearance(0)->color = { 0,0,255,255 };
-	}
-	// 列に加わっている場合は緑色にする
-	else
-	{
-		model->model->Getter_Appearance(0)->color = { 0,255,0,255 };
-	}
-}
-
 
 void PlayerAlly::Spawn(Vector3 pos)
 {

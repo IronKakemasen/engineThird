@@ -29,6 +29,9 @@ private:
 	void UpdateInvincibleTime();
 	int32_t invincibleTime = 0;	// 無敵時間
 
+	// config反映
+	void ConfigHotReload();
+
 	// ノックバック速度
 	Vector3 knockBackVelocity{};
 	// 移動速度

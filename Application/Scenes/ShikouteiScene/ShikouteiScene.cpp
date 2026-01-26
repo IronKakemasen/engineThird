@@ -214,10 +214,6 @@ void ShikouteiScene::Debug()
 	ImGui::End();
 
 	inGameConfig->DebugDraw();
-	if (ImGui::Button("ref"))
-	{
-		SceneBehavior::doReset = true;
-	}
 	ImGui::End();
 
 

@@ -53,24 +53,8 @@ void Player::Reset()
 	LoadData();
 
 	// config反映
-	if (inGameConfig)
-	{
-		// 移動速度反映
-		speed = inGameConfig->playerSpeed;
-		// デフォルト攻撃力反映
-		defaultAttackPower = inGameConfig->playerDefaultAttackPower;
-		// 味方補正値反映
-		allyPowerBonus = inGameConfig->playerAllyPowerBonus;
-		allySizeBonus = inGameConfig->playerAllySizeBonus;
-		// 最大HP反映
-		MaxHP = inGameConfig->playerMaxHP;
-		// 現在HPを最大HPに設定
-		hp = MaxHP;
-		// 攻撃ゲージ回復速度反映
-		attackGaugeRecoverSpeed = inGameConfig->playerAttackGaugeRecoverSpeed;
-		// 攻撃ゲージ回復インターバル反映
-		attackGaugeRecoverInterval = inGameConfig->playerAttackGaugeRecoverInterval;
-	}
+	ConfigHotReload();
+	hp = MaxHP;
 }
 
 void Player::Init()
@@ -94,6 +78,26 @@ void Player::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
+}
+
+void Player::ConfigHotReload()
+{
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->playerSpeed;
+		// デフォルト攻撃力反映
+		defaultAttackPower = inGameConfig->playerDefaultAttackPower;
+		// 味方補正値反映
+		allyPowerBonus = inGameConfig->playerAllyPowerBonus;
+		allySizeBonus = inGameConfig->playerAllySizeBonus;
+		// 最大HP反映
+		MaxHP = inGameConfig->playerMaxHP;
+		// 攻撃ゲージ回復速度反映
+		attackGaugeRecoverSpeed = inGameConfig->playerAttackGaugeRecoverSpeed;
+		// 攻撃ゲージ回復インターバル反映
+		attackGaugeRecoverInterval = inGameConfig->playerAttackGaugeRecoverInterval;
+	}
 }
 
 void Player::SpawnAlly(Vector3 pos)
@@ -129,6 +133,11 @@ void Player::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+#ifdef USE_IMGUI
+	// config反映
+	ConfigHotReload();
+#endif // USE_IMGUI
 
 	// 移動処理
 	Move();

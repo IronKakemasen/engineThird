@@ -8,6 +8,12 @@ struct PlayerTower :public GameObject, public GameObjectBuilding
 #pragma region 独自部位
 
 private:
+	// config反映
+	void ConfigHotReload();
+
+	// 無敵時間
+	float invincibleTime = 0.5f;
+	Counter invincibleTimeCounter;
 
 public:
 

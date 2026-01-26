@@ -24,6 +24,9 @@ public:
 	// 敵の工場の最大HP
 	float enemyFactoryMaxHP = 300.0f;
 	
+	// プレイヤーのタワー無敵時間
+	float playerTowerInvincibleTime = 0.5f;
+
 	// ＃プレイヤーのデフォルト攻撃力
 	float playerDefaultAttackPower = 10.0f;
 	// ＃味方を経由するごとに増える攻撃力補正値

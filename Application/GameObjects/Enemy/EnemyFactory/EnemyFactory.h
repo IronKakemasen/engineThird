@@ -18,6 +18,9 @@ private:
 
 	float spawnInterval = 10.0f;
 
+	// config反映
+	void ConfigHotReload();
+
 public:
 
 	void SpawnEnemy();

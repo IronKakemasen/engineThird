@@ -14,16 +14,9 @@ private:
 
 	void Move();
 
-	void UpdateDebugColor();
-
 public:
 	// 自分は列の何番目か(-1の時はまだたどり着いていない)
 	int32_t formationCurrentIndex = -1;
-	// 自分は列の何番目を目指すか
-	//int32_t formationTargetIndex = -1;
-	// 前の味方が死んで詰める時の移動オフセット
-	//int32_t formationOffsetFrames = 0;
-
 
 	void Spawn(Vector3 pos);
 
