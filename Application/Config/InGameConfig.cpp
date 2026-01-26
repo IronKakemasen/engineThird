@@ -68,8 +68,6 @@ void InGameConfig::Save()
 
 void InGameConfig::DebugDraw()
 {
-	ImGui::Begin("InGameConfig");
-
 	ImGui::PushItemWidth(150.0f);
 
 	if (ImGui::Button("Save Config"))
