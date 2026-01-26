@@ -16,8 +16,11 @@ public:
 	template<typename T>
 	static void SaveParam(const std::string& path, const std::string& key, const T& value)
 	{
+		std::string fixedKey = key;
+		if (fixedKey[0] != '/')fixedKey = "/" + fixedKey;
+
 		auto& root = dataMap[path];
-		root[nlohmann::json::json_pointer(key)] = value;
+		root[nlohmann::json::json_pointer(fixedKey)] = value;
 	}
 
 	/// <summary>
@@ -31,10 +34,13 @@ public:
 	template<typename T>
 	static bool LoadParam(const std::string& path, const std::string& key, T& outValue)
 	{
+		std::string fixedKey = key;
+		if (fixedKey[0] != '/')fixedKey = "/" + fixedKey;
+
 		auto it = dataMap.find(path);
 		if (it == dataMap.end()) return false;
 
-		nlohmann::json::json_pointer jp(key);
+		nlohmann::json::json_pointer jp(fixedKey);
 
 		if (!it->second.contains(jp)) return false;
 

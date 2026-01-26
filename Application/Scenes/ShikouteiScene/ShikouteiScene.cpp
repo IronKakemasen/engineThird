@@ -240,33 +240,26 @@ void ShikouteiScene::Debug()
 
 	if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
 	{
-		ImGui::Text("Player         HP : %f", player->GetHP());
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
 		for (int32_t i = 0; i < playerTowers.size(); ++i)
 		{
 			if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 			{
-				if (playerTowers[i]->IsInvincible())
-				{
-					ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
-				}
-				else
-				{
-					ImGui::Text("PlayerTower    HP : %f", playerTowers[i]->GetHP());
-				}
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
 			}
 		}
 		for (int32_t i = 0; i < enemyTowers.size(); ++i)
 		{
 			if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 			{
-				ImGui::Text("EnemyTower     HP : %f", enemyTowers[i]->GetHP());
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
 			}
 		}
 		for (int32_t i = 0; i < enemyFactories.size(); ++i)
 		{
 			if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 			{
-				ImGui::Text("EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
 			}
 		}
 

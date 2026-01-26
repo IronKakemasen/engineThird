@@ -4,6 +4,7 @@
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
 
 struct Enemy;
+struct PlayerBullet;
 
 struct EnemyFactory :public GameObject, public GameObjectBuilding
 {
@@ -16,17 +17,22 @@ private:
 
 	Counter timer;
 
-	float spawnInterval = 10.0f;
-
-	// config反映
-	void ConfigHotReload();
+	// 衝突弾リスト更新
+	void UpdateHitBullets();
+	// そのターンで衝突した弾のリスト（多重衝突防止用）
+	std::vector<PlayerBullet*> hitBullets{};
 
 public:
 
+	// 衝突した弾をリストに追加
+	void AddHitBullet(PlayerBullet* bullet);
+	// その弾が既に衝突リストにあるか
+	bool IsInHitBulletList(PlayerBullet* bullet);
+
+	// エネミー生産
 	void SpawnEnemy();
 
 #pragma	endregion
-
 
 #pragma region 共通部位
 
