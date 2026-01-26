@@ -22,6 +22,8 @@ public:
 	// Jsonパス
 	std::string path;
 
+	float GetHP() const { return hp; }
+
 protected:
 	// ID
 	int32_t ID = -1;

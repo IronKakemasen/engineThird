@@ -325,7 +325,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	me->KnockBack(2.1f);
+	me->KnockBack(0.1f);
 }
 
 // プレイヤー味方との衝突

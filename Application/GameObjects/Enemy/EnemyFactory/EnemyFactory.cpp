@@ -31,6 +31,9 @@ void EnemyFactory::Reset()
 	// 現在選択されているステージでのアクティブ数を取得
 	Json::LoadParam(path, "/stage" + std::to_string(StageCount) + "/ActiveCount", stageActiveCounts);
 
+	// config反映
+	ConfigHotReload();
+
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
 	{
@@ -48,9 +51,6 @@ void EnemyFactory::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
-
-	// config反映
-	ConfigHotReload();
 
 	// タイマーリセット
 	timer.Initialize(spawnInterval);
@@ -103,6 +103,8 @@ void EnemyFactory::LoadData()
 	std::string key = "/stage" + std::to_string(StageCount) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
+
+	hp = inGameConfig->enemyFactoryMaxHP;
 }
 void EnemyFactory::SaveData()
 {

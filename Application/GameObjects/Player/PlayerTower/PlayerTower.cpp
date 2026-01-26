@@ -77,6 +77,11 @@ void PlayerTower::SetCollisionBackTable()
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
+void PlayerTower::StartInvincible()
+{
+	invincibleTimeCounter.Initialize(invincibleTime);
+}
+
 // データ保存・読み込み
 void PlayerTower::LoadData()
 {
@@ -141,9 +146,16 @@ void PlayerTower::DebugDraw()
 // Enemyとの衝突
 void PlayerTower::CollisionBackToEnemy::operator()()
 {
+	if (me->IsInvincible())
+	{
+		// 無敵時間中は何もしない
+		return;
+	}
+
 	auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
 
 	me->hp = me->hp - enemy->GetAttackPower();
+	me->StartInvincible();
 
 	if (me->hp < 0.0f)
 	{

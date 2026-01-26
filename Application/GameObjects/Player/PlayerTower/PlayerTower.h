@@ -16,6 +16,8 @@ private:
 	Counter invincibleTimeCounter;
 
 public:
+	void StartInvincible();
+	bool IsInvincible() { return invincibleTimeCounter.IsEnd() == false; }
 
 #pragma endregion
 
