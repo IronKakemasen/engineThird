@@ -15,8 +15,8 @@
     "player": {
         "MaxHP": 100.0,
         "allyDelayFrames": 30,
-        "allyPowerBonus": 2.0,
-        "allySizeBonus": 0.10000000149011612,
+        "allyPowerBonus": 20.0,
+        "allySizeBonus": 0.5,
         "attackGaugeRecoverInterval": 0.5,
         "attackGaugeRecoverSpeed": 0.019999999552965164,
         "defaultAttackPower": 20.0,

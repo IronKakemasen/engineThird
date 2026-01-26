@@ -40,6 +40,11 @@ public:
 	float playerSpeed = 0.1f;
 	// ＃敵の移動速度
 	float enemySpeed = 0.05f;
+	// ＃弾の速度
+	float playerBulletSpeed = 0.3f;
+
+	// ＃弾の生命時間
+	float playerBulletLifeTime = 3.0f;
 
 	// ＃敵の生成間隔
 	float enemySpawnInterval = 5.0f;
