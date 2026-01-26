@@ -1,8 +1,10 @@
 {
     "enemy": {
         "MaxHP": 100.0,
-        "defaultAttackPower": 5.0,
-        "knockBackPowerToAlly": 1.0,
+        "defaultAttackPower": 0.0,
+        "knockBackPowerToAlly": 2.0,
+        "knockBackPowerToBullet": 0.5,
+        "knockBackPowerToPTower": 0.5,
         "spawnInterval": 5.0,
         "speed": 0.019999999552965164
     },
