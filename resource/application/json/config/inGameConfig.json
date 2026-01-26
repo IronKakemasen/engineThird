@@ -19,10 +19,15 @@
         "allySizeBonus": 0.5,
         "attackGaugeRecoverInterval": 0.5,
         "attackGaugeRecoverSpeed": 0.019999999552965164,
+        "bullet": {
+            "lifeTime": 3.0,
+            "speed": 0.30000001192092896
+        },
         "defaultAttackPower": 20.0,
         "speed": 0.10000000149011612
     },
     "playerTower": {
-        "MaxHP": 100.0
+        "MaxHP": 100.0,
+        "invincibleTime": 0.5
     }
 }
