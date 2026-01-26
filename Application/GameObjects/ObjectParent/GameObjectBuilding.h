@@ -4,6 +4,8 @@
 #include <array>
 #include "../../Config/GameConstants.h"
 
+class InGameConfig;
+
 struct GameObjectBuilding
 {
 public:
@@ -17,6 +19,8 @@ public:
 	// デバッグ描画
 	virtual void DebugDraw() = 0;
 
+	virtual void SetInGameConfig(const InGameConfig* config_) { inGameConfig = config_; }
+
 	// Jsonパス
 	std::string path;
 
@@ -26,4 +30,9 @@ protected:
 
 	// ステージごとのActive数
 	int32_t stageActiveCounts;
+
+	// HP
+	float hp = 100.0f;
+
+	const InGameConfig* inGameConfig = nullptr;
 };

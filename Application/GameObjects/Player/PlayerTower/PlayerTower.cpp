@@ -1,6 +1,8 @@
 #include "PlayerTower.h"
 #include "../Json/Json.h"
 #include "imgui.h"
+#include "../../../Config/InGameConfig.h"
+#include "../../../GameObjects/Enemy/Enemy.h"
 
 PlayerTower::PlayerTower()
 {
@@ -43,6 +45,13 @@ void PlayerTower::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
+
+	// config反映
+	if (inGameConfig)
+	{
+		// HP反映
+		hp = inGameConfig->playerTowerMaxHP;
+	}
 }
 
 void PlayerTower::Init()
@@ -60,9 +69,6 @@ void PlayerTower::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-	// 初期化
-	Reset();
 }
 
 void PlayerTower::SetCollisionBackTable()
@@ -135,7 +141,12 @@ void PlayerTower::DebugDraw()
 // Enemyとの衝突
 void PlayerTower::CollisionBackToEnemy::operator()()
 {
-	// 自身の取得
-	auto* PlayerTower = me;
-	me->trans.rotation.y += 1.0f;
+	auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
+
+	me->hp = me->hp - enemy->GetAttackPower();
+
+	if (me->hp < 0.0f)
+	{
+		me->SetStatus(Status::kInActive);
+	}
 }
