@@ -20,14 +20,14 @@ namespace GameConstants
 	// 最大エネミーファクトリー数
 	inline constexpr size_t kMaxEnemyFactories = 10 + kMaxPlayerTowers;
 
+	// 最大弾丸数
+	inline constexpr size_t kMaxPlayerBullets = 12;
+
 	// 最大ステージ数
 	inline constexpr size_t kMaxStages = 5;
 
 
-	// エネミーがプレイヤーを認知する距離
-	inline constexpr float kEnemyRecognizeDistance = 5.0f;
-
 	// 味方は何フレーム遅れてついてくるか
-	inline constexpr uint32_t kAllyFollowDelayFrames = 10;
+	inline constexpr uint32_t kAllyFollowDelayFrames = 30;
 }
 

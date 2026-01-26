@@ -2,7 +2,9 @@
 #include "../Json/Json.h"
 #include "imgui.h"
 #include "../../../Config/GameConstants.h"
+#include "../../../Config/InGameConfig.h"
 #include "../../GameObjectManager/GameObjectManager.h"
+#include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Enemy/Enemy.h"
 
 EnemyFactory::EnemyFactory()
@@ -47,8 +49,15 @@ void EnemyFactory::Reset()
 		SwitchCollisionActivation(false);
 	}
 
+	// config反映
+	if (inGameConfig)
+	{
+		// スポーン間隔反映
+		spawnInterval = inGameConfig->enemySpawnInterval;
+	}
+
 	// タイマーリセット
-	timer.Initialize(1.0f);
+	timer.Initialize(spawnInterval);
 }
 
 void EnemyFactory::Init()
@@ -73,9 +82,6 @@ void EnemyFactory::Init()
 	{
 		enemies.push_back(reinterpret_cast<Enemy*>(towerObj));
 	}
-	
-	// 初期化
-	Reset();
 }
 
 void EnemyFactory::SetCollisionBackTable()
@@ -151,7 +157,14 @@ void EnemyFactory::DebugDraw()
 // プレイヤー弾との衝突
 void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 {
-	me->SetStatus(Status::kInActive);
+	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+
+	me->hp = me->hp - playerBullet->GetAttackPower();
+
+	if (me->hp < 0.0f)
+	{
+		me->SetStatus(Status::kInActive);
+	}
 }
 
 
@@ -165,8 +178,7 @@ void EnemyFactory::SpawnEnemy()
 		{
 			if (enemy->GetStatus() == Status::kInActive)
 			{
-				enemy->SetStatus(Status::kActive);
-				enemy->trans.pos = this->trans.pos;
+				enemy->Spawn(trans.pos);
 				break;
 			}
 		}

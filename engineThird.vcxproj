@@ -151,6 +151,7 @@
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
     <ClCompile Include="Application\GameObjects\InGameController\InGameController.cpp" />
+    <ClCompile Include="Application\Config\InGameConfig.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -306,6 +307,8 @@
     <ClCompile Include="Application\Models\PlayerTowerModel\PlayerTowerModel.cpp" />
     <ClCompile Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.cpp" />
     <ClCompile Include="Application\Models\PlayerAllyModel\PlayerAllyModel.cpp" />
+    <ClCompile Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.cpp" />
+    <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
@@ -317,6 +320,7 @@
     <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectBuilding.h" />
     <ClInclude Include="Application\GameObjects\ObjectParent\GameObjectEntity.h" />
     <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
+    <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.h" />
     <ClInclude Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.h" />
@@ -332,6 +336,8 @@
     <ClInclude Include="Application\Models\PlayerTowerModel\PlayerTowerModel.h" />
     <ClInclude Include="Application\GameObjects\Player\PlayerAlly\PlayerAlly.h" />
     <ClInclude Include="Application\Models\PlayerAllyModel\PlayerAllyModel.h" />
+    <ClInclude Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.h" />
+    <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

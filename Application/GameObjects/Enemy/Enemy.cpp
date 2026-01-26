@@ -4,6 +4,10 @@
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
 #include "../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
+#include "../../Config/GameConstants.h"
+#include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
+#include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../Config/InGameConfig.h"
 #include <array>
 
 Enemy::Enemy()
@@ -35,6 +39,22 @@ void Enemy::Reset()
 
 	// データ読み込み
 	LoadData();
+
+	// 初期向きを最近のターゲット方向に設定
+	LookAtTarget();
+
+	// config反映
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->enemySpeed;
+		// 味方と当たったときのノックバック力反映
+		knockBackPowerOnAlly = inGameConfig->enemyKnockBackPowerToAlly;
+		// HP反映
+		maxHP = inGameConfig->enemyMaxHP;
+		// 攻撃力反映
+		attackPower = inGameConfig->enemyAttackPower;
+	}
 }
 
 void Enemy::Init()
@@ -54,6 +74,7 @@ void Enemy::Init()
 	collisionBackToPlayer.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
+	collisionBackToPlayerAlly.Init(this);
 
 	// ポインタ取得
 	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
@@ -63,9 +84,16 @@ void Enemy::Init()
 	}
 
 	trans.interpolationCoe = 0.1f;
+}
 
-	// 初期化
-	Reset();
+void Enemy::Spawn(Vector3 pos)
+{
+	// 有効化
+	SetStatus(Status::kActive);
+	// 初期座標設定
+	trans.pos = pos;
+	// 体力初期化
+	hp = maxHP;
 }
 
 void Enemy::SetCollisionBackTable()
@@ -76,6 +104,9 @@ void Enemy::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 	// タグ：PlayerTowerと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kPlayerTower, collisionBackToPlayerTower);
+	// タグ：PlayerAllyと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::kPlayerAlly, collisionBackToPlayerAlly);
+
 }
 
 // データ保存・読み込み
@@ -100,14 +131,55 @@ void Enemy::Update()
 	//モデルの更新処理
 	model->Update();
 
-	// 理想的な移動速度をセット
-	SetIdealVelocity();
+	// 移動処理
+	MoveToTarget();
 
-	// 移動
-	trans.pos = trans.pos + velocity;
+	// ノックバック処理
+	MoveKnockBack();
+
+	// 無敵時間更新
+	UpdateInvincibleTime();
+
+	Vector3 finalVelocity = moveVelocity + knockBackVelocity;
+	trans.pos = trans.pos + finalVelocity;
 }
 
-void Enemy::SetIdealVelocity()
+void Enemy::MoveToTarget()
+{
+	// ターゲットまでの方向ベクトルを計算
+	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
+	for (size_t i = 0; i < playerTowers.size(); ++i)
+	{
+		dirToTowers[i] = Vector3(0.0f, 0.0f, 9999.9f);
+		if (playerTowers[i]->GetStatus() == Status::kActive)
+		{
+			dirToTowers[i] = playerTowers[i]->Getter_Trans()->pos - trans.pos;
+
+		}
+	}
+
+	// 最も近いタワーを追う
+	size_t nearestTowerIndex = 0;
+	float nearestDistance = dirToTowers[0].GetMagnitutde();
+	for (size_t i = 1; i < playerTowers.size(); ++i)
+	{
+		float distance = dirToTowers[i].GetMagnitutde();
+		if (distance < nearestDistance)
+		{
+			nearestDistance = distance;
+			nearestTowerIndex = i;
+		}
+	}
+	Vector3 lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
+
+	// 補完
+	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);
+
+	// エネミー ⇒ 塔　移動ベクトル
+	moveVelocity = trans.lookDir.GetNormalized() * speed;
+}
+
+void Enemy::LookAtTarget()
 {
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
@@ -119,39 +191,42 @@ void Enemy::SetIdealVelocity()
 	}
 	Vector3 dirToPlayer = targetPlayer->Getter_Trans()->GetWorldPos() - trans.GetWorldPos();
 
-	// 最終的に向かう方向ベクトル
-	Vector3 lastDir;
-
-	// プレイヤーが近ければプレイヤーを追う
-	if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
+	// 最も近いタワーを追う
+	size_t nearestTowerIndex = 0;
+	float nearestDistance = dirToTowers[0].GetMagnitutde();
+	for (size_t i = 1; i < playerTowers.size(); ++i)
 	{
-		lastDir = dirToPlayer.GetNormalized();
-	}
-
-
-	// 遠ければ最も近いタワーを追う
-	else if (playerTowers.size() > 0)
-	{
-		// 最も近いタワーのインデックスを探す
-		size_t nearestTowerIndex = 0;
-		float nearestDistance = dirToTowers[0].GetMagnitutde();
-		for (size_t i = 1; i < playerTowers.size(); ++i)
+		float distance = dirToTowers[i].GetMagnitutde();
+		if (distance < nearestDistance)
 		{
-			float distance = dirToTowers[i].GetMagnitutde();
-			if (distance < nearestDistance)
-			{
-				nearestDistance = distance;
-				nearestTowerIndex = i;
-			}
+			nearestDistance = distance;
+			nearestTowerIndex = i;
 		}
-		lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
 	}
 
-	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);
+	Vector3 lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
+	// 一直線になるのを防ぐためほんの少しだけ右回転する
+	lastDir.x += 0.001f;
 
-	// 移動
-	velocity = Vector3(0.0f, 0.0f, 0.0f);
-	velocity = trans.lookDir * speed;
+	trans.lookDir = lastDir;
+}
+
+void Enemy::MoveKnockBack()
+{
+	knockBackVelocity = knockBackVelocity * 0.9f;
+}
+
+void Enemy::KnockBack(float power)
+{
+	knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
+}
+
+void Enemy::UpdateInvincibleTime()
+{
+	if (invincibleTime > 0)
+	{
+		invincibleTime -= 1;
+	}
 }
 
 void Enemy::Draw(Matrix4* vpMat_)
@@ -173,19 +248,54 @@ void Enemy::DebugDraw()
 // プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
 {
-	
-
+	//// 衝突したときの処理を書く
+	//me->KnockBack(0.3f);
 }
 
 // プレイヤー弾との衝突
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
-	// 衝突したときの処理を書く
-	me->SetStatus(Status::kInActive);
+	if (me->invincibleTime > 0)
+	{
+		// 無敵時間中は何もしない
+		return;
+	}
+
+	// プレイヤー弾のポインタを取得
+	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+
+	// ノックバック付与
+	me->KnockBack(0.2f);
+
+	// 無敵付与
+	me->invincibleTime = 20;
+
+	// ダメージ処理
+	me->hp = me->hp - playerBullet->GetAttackPower();
+
+	// 死亡した時
+	if (me->hp < 0.0f && playerBullet->GetAttackStage() == 0)
+	{
+		me->SetStatus(Status::kInActive);
+
+		me->targetPlayer->SpawnAlly(me->trans.pos);
+	}
 }
 
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
+	me->KnockBack(2.1f);
 }
 
+// プレイヤー味方との衝突
+void Enemy::CollisionBackToPlayerAlly::operator()()
+{
+	auto* playerAlly = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
+
+	if (playerAlly->formationCurrentIndex != -1)
+	{
+		me->KnockBack(me->knockBackPowerOnAlly);
+		playerAlly->Death();
+	}
+}

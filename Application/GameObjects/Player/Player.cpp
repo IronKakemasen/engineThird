@@ -1,6 +1,11 @@
 #include "Player.h"
 #include "imgui.h"
 #include "../Json/Json.h"
+#include "../GameObjectManager/GameObjectManager.h"
+#include "../../Config/GameConstants.h"
+#include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
+#include "../../Config/InGameConfig.h"
 
 Player::Player()
 {
@@ -23,16 +28,49 @@ void Player::Reset()
 	// モデルのリセット
 	model->Reset();
 
-	// allyExistenceFlagsの初期化
-	allyExistenceFlags.fill(false);
+	// existの初期化
+	exist.fill(false);
+	// deadIndexListの初期化
+	while (!deadIndexList.empty())
+	{
+		deadIndexList.pop_back();
+	}
+	// formedAllyCountの初期化
+	formedAllyCount = 0;
+	// unformedAllyCountの初期化
+	unformedAllyCount = 0;
+	// delayFrameOffsetsの初期化
+	delayFrameOffsets = 0;
 	// posHistoryの初期化
-	posHistory.fill(Vector3(0.0f, 0.0f, 0.0f));
+	posHistory.fill(trans.pos);
+	// headIndexの初期化
+	headIndex = 0;
 
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
 	// データ読み込み
 	LoadData();
+
+	// config反映
+	if (inGameConfig)
+	{
+		// 移動速度反映
+		speed = inGameConfig->playerSpeed;
+		// デフォルト攻撃力反映
+		defaultAttackPower = inGameConfig->playerDefaultAttackPower;
+		// 味方補正値反映
+		allyPowerBonus = inGameConfig->playerAllyPowerBonus;
+		allySizeBonus = inGameConfig->playerAllySizeBonus;
+		// 最大HP反映
+		MaxHP = inGameConfig->playerMaxHP;
+		// 現在HPを最大HPに設定
+		hp = MaxHP;
+		// 攻撃ゲージ回復速度反映
+		attackGaugeRecoverSpeed = inGameConfig->playerAttackGaugeRecoverSpeed;
+		// 攻撃ゲージ回復インターバル反映
+		attackGaugeRecoverInterval = inGameConfig->playerAttackGaugeRecoverInterval;
+	}
 }
 
 void Player::Init()
@@ -50,9 +88,6 @@ void Player::Init()
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
-
-	// 初期化
-	Reset();
 }
 
 void Player::SetCollisionBackTable()
@@ -61,20 +96,31 @@ void Player::SetCollisionBackTable()
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 }
 
+void Player::SpawnAlly(Vector3 pos)
+{
+	for (auto* ally : allies)
+	{
+		if (ally->GetStatus() == GameObjectBehavior::Status::kInActive)
+		{
+			// 配置
+			ally->Spawn(pos);
+			break;
+		}
+	}
+}
+
 // データ保存・読み込み
 void Player::LoadData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
-	Json::LoadParam(path, key + "/velocity", velocity);
 }
 void Player::SaveData()
 {
 	std::string key = "/ID:" + std::to_string(ID);
 
 	Json::SaveParam(path, key + "/position", trans.pos);
-	Json::SaveParam(path, key + "/velocity", velocity);
 	Json::Save(path);
 }
 
@@ -89,6 +135,15 @@ void Player::Update()
 
 	// 座標保存処理
 	SavePos();
+
+	// 視線変更処理
+	UpdateLookDir();
+
+	// 味方データ更新処理
+	UpdateAllyData();
+
+	// 攻撃処理
+	Attack();
 }
 
 // 描画処理
@@ -99,7 +154,73 @@ void Player::Draw(Matrix4 * vpMat_)
 }
 
 void Player::DebugDraw()
-{}
+{
+#ifdef USE_IMGUI
+
+	static std::vector<float> values(100, 0.0f);
+	static int index = 0;
+
+	values[index] = attackGauge;
+	index = (index + 1) % values.size();
+
+	ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
+
+	ImGui::Text("---------------------------------------------\n");
+
+	float arr[1] = { attackGauge };
+	ImGui::PlotHistogram("Gauge", arr, 1, 0, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
+
+	ImGui::Text("---------------------------------------------\n");
+
+	ImDrawList* draw = ImGui::GetWindowDrawList();
+	ImVec2 center = ImGui::GetCursorScreenPos();
+	center.x += 50;
+	center.y += 50;
+
+	float radius = 40.0f;
+	float value = attackGauge / 3.0f;
+
+	draw->PathArcTo(center, radius, -3.1415f / 2.0f, -3.1415f / 2.0f + 3.1415f * 2.0f * value, 32);
+	draw->PathStroke(IM_COL32(0, 255, 0, 255), false, 6.0f);
+
+	ImGui::Text("---------------------------------------------\n");
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		if (exist[i])
+		{
+			ImGui::Text("%d:#\n", i);
+		}
+		else
+		{
+			ImGui::Text("%d: \n", i);
+		}
+	}
+	ImGui::Text("formedAllyCount:%d\n", formedAllyCount);
+
+	for (size_t i = 0; i < deadIndexList.size(); i++)
+	{
+		ImGui::Text("deadIndexList[%d]:%d\n", i, deadIndexList.front());
+	}
+	ImGui::Text("delayFrameOffsets:%d\n", delayFrameOffsets);
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		if (ImGui::Button(("remove##" + std::to_string(i)).c_str()))
+		{
+			for (auto& ally : allies)
+			{
+				if (ally->GetStatus() == GameObjectBehavior::Status::kActive && ally->formationCurrentIndex == i)
+				{
+					ally->Death();
+					break;
+				}
+			}
+		}
+	}
+
+#endif // USE_IMGUI
+}
 
 
 // Enemyとの衝突処理
@@ -121,10 +242,27 @@ void Player::Move()
 
 	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
 	{
-		// 左スティックの入力を取得
-		Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
-		moveDir.x -= leftStick.x;
-		moveDir.z += leftStick.y;
+		bool left = M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT);
+		bool right = M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT);
+		bool up = M::GetInstance()->getPadState.IsHeld(0, PAD_UP);
+		bool down = M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN);
+		if (!left && !right && !up && !down)
+		{
+			// 十字キーの入力がない場合はスティック入力を使う
+			// 左スティックの入力を取得
+			Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
+			if (leftStick.x < 0.2f && leftStick.x > -0.2f) leftStick.x = 0.0f;
+			if (leftStick.y < 0.2f && leftStick.y > -0.2f) leftStick.y = 0.0f;
+			moveDir.x += leftStick.x;
+			moveDir.z += leftStick.y;
+		}
+		else
+		{
+			if (left) moveDir.x -= 1.0f;
+			if (right) moveDir.x += 1.0f;
+			if (up) moveDir.z += 1.0f;
+			if (down) moveDir.z -= 1.0f;
+		}
 	}
 	else
 	{
@@ -135,19 +273,71 @@ void Player::Move()
 	}
 
 	// 正規化
-	moveDir.GetNormalized();
+	moveDir = moveDir.GetNormalized();
 
-	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
+	if (moveDir.x != 0.0f || moveDir.z != 0.0f)
+	{
+		isMoving = true;
+		//stopMoveFrame = 0;
+	}
+	else
+	{
+		//stopMoveFrame++;
+	}
 
-	trans.pos = trans.pos + moveDir * velocity;
+	trans.pos = trans.pos + moveDir * speed;
+}
+
+void Player::Attack()
+{
+	// 攻撃間隔カウンター更新
+	attackIntervalCounter.Add();
+	if (attackIntervalCounter.count >= 1.0f)
+	{
+		// 攻撃間隔経過後はゲージ回復
+		attackGauge += attackGaugeRecoverSpeed;
+		if (attackGauge > 3.0f)
+			attackGauge = 3.0f;
+	}
+
+
+	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	{
+		if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
+	}
+	else
+	{
+		if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE)) return;
+	}
+
+	if (attackGauge < 1.0f)return;
+
+	for (auto* bullet : bullets)
+	{
+		if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
+		{
+			attackGauge -= 1.0f;
+			if (attackGauge < 0.0f)
+				attackGauge = 0.0f;
+
+			int32_t stage = 0;
+			if (attackGauge >= 2.0f)stage = 2;
+			else if (attackGauge >= 1.0f)stage = 1;
+			else stage = 0;
+
+			attackIntervalCounter.Initialize(attackGaugeRecoverInterval);
+
+			// リセット
+			bullet->Fire(trans.pos, trans.lookDir, stage, defaultAttackPower, allyPowerBonus, allySizeBonus);
+
+			break;
+		}
+	}
 }
 
 // 座標保存処理
 void Player::SavePos()
 {
-	// 味方の存在フラグをリセット
-	emptyAllyIndex = 0;
-
 	if (!isMoving)return;
 
 	// 座標履歴を保存
@@ -156,14 +346,155 @@ void Player::SavePos()
 	if (headIndex >= posHistory.size()) { headIndex = 0; }
 }
 
-// 味方の目標座標を取得
-Vector3 Player::GetAllyTargetPos(size_t allyIndex)
+// 視線変更処理
+void Player::UpdateLookDir()
 {
-	size_t index = headIndex + (allyIndex + 1) * GameConstants::kAllyFollowDelayFrames;
-	return posHistory[index % posHistory.size()];
+	// 視線方向ベクトル
+	Vector3 target = Vector3(0.0f, 0.0f, 0.0f);
+
+	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	{
+		// 右スティックの入力を取得
+		Vector2 rightStick = M::GetInstance()->getPadState.GetRightStick(0);
+		if (rightStick.x < 0.2f && rightStick.x > -0.2f) rightStick.x = 0.0f;
+		if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
+		target.x = rightStick.x;
+		target.z = rightStick.y;
+	}
+	else
+	{
+		if (M::GetInstance()->IsKeyPressed(KeyType::UP))	target.z += 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::DOWN))	target.z -= 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) target.x += 1.0f;
+		if (M::GetInstance()->IsKeyPressed(KeyType::LEFT))	target.x -= 1.0f;
+	}
+
+	if (target.x == 0.0f && target.z == 0.0f) return;
+
+	// 正規化
+	trans.lookDir = target.GetNormalized();
 }
-// 次に空いている味方のインデックスを取得
-uint32_t Player::GetNextEmptyAllyIndex()
+
+// プレイヤーのnフレーム前の座標を取得
+Vector3 Player::GetPosHistory(int32_t n)
 {
-	return emptyAllyIndex++;
+	// 座標履歴のインデックス
+	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
+	if (index < 0) index += static_cast<int32_t>(posHistory.size());
+	return posHistory[index];
+}
+
+// 
+// 0 - 1 - 2 - 3 - x - 5 - 6    新　新　新
+// 
+// 上記のように4番目の味方が抜けた場合
+// currentIndex 0,1,2,3 の場合返り値はそのまま0,1,2,3
+// currentIndex 4 のキャラはそもそもこの関数を呼ばない
+// currentIndex 5,6 の場合返り値はそれぞれ4,5となり詰める
+// currentIndex -1(新規) の場合返り値は列を完全に詰めた場合の最後尾(上記例だと6)となり最後尾を指す
+// 
+
+// 味方データ更新処理
+void Player::UpdateAllyData()
+{
+	// 味方の数をリセット
+	formedAllyCount = 0;
+	unformedAllyCount = 0;
+
+	exist.fill(false);
+
+	for (int32_t i = 0; i < allies.size(); ++i)
+	{
+		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+		{
+			// 列に並んでいるなら
+			if (allies[i]->formationCurrentIndex >= 0)
+			{
+				exist[allies[i]->formationCurrentIndex] = true;
+				formedAllyCount++;
+			}
+			else
+			{
+				unformedAllyCount++;
+			}
+		}
+	}
+
+	// 詰めオフセット更新
+	if (!deadIndexList.empty())
+	{
+		if (!isMoving)
+		{
+			delayFrameOffsets++;
+			if (delayFrameOffsets >= GameConstants::kAllyFollowDelayFrames)
+			{
+				// オフセットリセット
+				delayFrameOffsets = 0;
+				// 詰め終わったので存在フラグを更新
+				for (size_t i = deadIndexList.front(); i < exist.size() - 1; ++i)
+				{
+					exist[i] = exist[i + 1];
+				}
+				exist[exist.size() - 1] = false;
+				// 味方の列インデックスを詰める
+				for (auto* ally : allies)
+				{
+					if (ally->formationCurrentIndex > deadIndexList.front())
+					{
+						ally->formationCurrentIndex--;
+					}
+				}
+				// deadIndexList更新
+				for (size_t i = 0; i < deadIndexList.size(); ++i)
+				{
+					if (deadIndexList[i] > deadIndexList.front())
+					{
+						deadIndexList[i]--;
+					}
+				}
+				// 次の味方へ
+				deadIndexList.pop_front();
+			}
+		}
+		else
+		{
+			// 動いている場合はオフセットリセット
+			delayFrameOffsets = 0;
+		}
+	}
+}
+
+
+Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
+{
+	int32_t index = allyIndex;
+	if (index < 0)
+	{
+		index = formedAllyCount;
+	}
+
+	int32_t delayFrames = (index + 1) * GameConstants::kAllyFollowDelayFrames;
+	int32_t offset = 0;
+	if (!deadIndexList.empty() && index >= deadIndexList.front())
+	{
+		offset = delayFrameOffsets;
+	}
+	return GetPosHistory(delayFrames - offset);
+}
+int32_t Player::TryReserveFormationIndex()
+{
+	if (exist[formedAllyCount] == false)
+	{
+		exist[formedAllyCount] = true;
+		return formedAllyCount;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+void Player::NotifyAllyDeath(int32_t formationIndex)
+{
+	deadIndexList.push_back(formationIndex);
 }
