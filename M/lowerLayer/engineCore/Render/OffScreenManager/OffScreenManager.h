@@ -31,5 +31,6 @@ public:
 		ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_);
 	void ChangePostEffection(PostEffectType type_);
 	void Update();
+	PostEffectType WatchEffectType();
 };
 
