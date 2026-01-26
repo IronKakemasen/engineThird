@@ -18,6 +18,9 @@ void WinApp::OffScreenBegin()
 	//ライトの更新処理
 	lightManager.Update();
 
+	//postEffect
+	offScreenManager.Update();
+
 	//入力インターフェースの更新
 	inputInterface.Update();
 
@@ -189,13 +192,7 @@ bool WinApp::InitD3D()
 		vpShaders.Getter_VPShaderTable(), &allPipelineSet, &meshCreator, &lightManager,
 		&cameraParameterSetter, &inputInterface.keyboardKeys,&offScreenManager);
 
-	offScreenManager.Init(&textureDataManager, &exclusiveDraw);
-
-	//ポストエフェクト用オリジナルスクリーンの初期化
-
-
-	//palette.Set(PostEffectType::kNone,
-	//	originalScreen->WatchTextureIndexes(), originalScreen->WathchShaderSetIndex());
+	offScreenManager.Init(&textureDataManager, &exclusiveDraw,deviceSetUp.Getter_Device());
 
 	return true;
 }
@@ -385,11 +382,11 @@ bool WinApp::InitWnd()
 
 #ifdef _DEBUG
 
-	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	//{
-	//	debugController->EnableDebugLayer();
-	//	debugController->SetEnableGPUBasedValidation(TRUE);
-	//}
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+	{
+		debugController->EnableDebugLayer();
+		debugController->SetEnableGPUBasedValidation(TRUE);
+	}
 
 #endif // _DEBUG
 

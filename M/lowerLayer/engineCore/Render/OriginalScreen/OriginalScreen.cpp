@@ -33,6 +33,10 @@ int OffScreenBehavior::WathchShaderSetIndex()
 	return shaderSetIndex;
 }
 
+std::vector<D3D12_GPU_VIRTUAL_ADDRESS> OffScreenBehavior::WatchAddessContainer()
+{
+	return cBufferAddressContainer;
+}
 
 OffScreen::OffScreen(TextureDataManager* textureDataManager_, int numRequired_) :
 	OffScreenBehavior(textureDataManager_, numRequired_) {
@@ -43,7 +47,7 @@ OriginalScreen::OriginalScreen(TextureDataManager* textureDataManager_, int numR
 	OffScreen(textureDataManager_, numRequired_) {
 };
 
-void OriginalScreen::Init()
+void OriginalScreen::Init(ID3D12Device* device_)
 {
 	shaderSetIndex = M::GetInstance()->
 		GetShaderSetIndexFromFileName("NoEffection.VS", "NoEffection.PS");

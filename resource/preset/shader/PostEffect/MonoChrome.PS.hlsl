@@ -1,4 +1,4 @@
-#include "./Conversions/GreyScale/GreyScale.hlsli"
+#include "./Conversions/GreyScale.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 
