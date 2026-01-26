@@ -3,6 +3,8 @@
 #include "imgui.h"
 #include "../../../Config/InGameConfig.h"
 #include "../../../GameObjects/Enemy/Enemy.h"
+#include "../../GameObjectManager/GameObjectManager.h"
+#include "../../../GameObjects/InGameController/InGameController.h"
 
 PlayerTower::PlayerTower()
 {
@@ -26,7 +28,7 @@ void PlayerTower::Reset()
 	model->Reset();
 
 	// 現在選択されているステージでのアクティブ数を取得
-	Json::LoadParam(path, "/stage" + std::to_string(StageCount) + "/ActiveCount", stageActiveCounts);
+	Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
 
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
@@ -59,6 +61,10 @@ void PlayerTower::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
+	// inGameControllerポインタ取得
+	inGameController =
+		reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerTower);
@@ -82,7 +88,7 @@ void PlayerTower::LoadData()
 {
 	if (status == Status::kInActive) return;
 
-	std::string key = "/stage" + std::to_string(StageCount) + "/ID:" + std::to_string(ID);
+	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 }
@@ -90,7 +96,7 @@ void PlayerTower::SaveData()
 {
 	if (status == Status::kInActive) return;
 
-	std::string key = "/stage" + std::to_string(StageCount) + "/ID:" + std::to_string(ID);
+	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
 
 	Json::SaveParam(path, key + "/position", trans.pos);
 	Json::Save(path);

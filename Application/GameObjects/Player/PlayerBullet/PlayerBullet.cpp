@@ -4,6 +4,7 @@
 #include "../../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../../Config/InGameConfig.h"
+#include "../../GameObjectManager/GameObjectManager.h"
 #include "../Json/Json.h"
 
 
@@ -42,6 +43,9 @@ void PlayerBullet::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング

@@ -34,6 +34,8 @@ struct GameObjectBehavior
 		kPlayerTower,
 		kPlayerAlly,
 
+		kInGameController,
+
 		kCount,
 		kNone,
 	};
