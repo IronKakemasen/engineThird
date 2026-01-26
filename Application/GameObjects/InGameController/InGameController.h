@@ -19,6 +19,11 @@ struct InGameController:public GameObject
 		kCount
 	};
 
+	Mode curMode = kEnter;
+	float curCnt = 0.0f;
+	int curStage = 0;
+
+
 private:
 
 	struct ModeData
@@ -35,8 +40,6 @@ private:
 	Player* player = nullptr;
 
 	std::unordered_map<Mode, std::unique_ptr<actor::Actor>> actors;
-	Mode mode = kPlayable;
-	float count = 0.0f;;
 
 	void SetModeData();
 public:

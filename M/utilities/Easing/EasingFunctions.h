@@ -24,8 +24,10 @@ namespace Easing
 
 		if (sinf(arcCos) >= 1.0e-5)  
 		{
-			float len = std::sinf(arcCos * (1.0f - t_)) / sinf(arcCos);
-			float len2 = std::sinf(arcCos * t_) / sinf(arcCos);
+			float invSinT = 1.0f / sinf(arcCos);
+
+			float len = std::sinf(arcCos * (1.0f - t_)) * invSinT;
+			float len2 = std::sinf(arcCos * t_) * invSinT;
 			ret = thisDir_ * len + otherDir_ * len2;
 		}
 

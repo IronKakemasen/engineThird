@@ -5,6 +5,7 @@ void AllMesh::ResetDrawIndexes()
 	triangleMesh->DrawIndexReset();
 	quadMesh->DrawIndexReset();
 	lineMesh->DrawIndexReset();
+	meshForPostEffect->curIndex = 0;
 }
 
 void AllMesh::Init(ID3D12Device* device_, ParticleMeshSrvCreator* ParticleMeshSrvCreator_, AllPipelineSet* allPipelineSet_)

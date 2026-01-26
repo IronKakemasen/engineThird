@@ -46,9 +46,9 @@ void SceneController::Debug()
 			Getter_Parameters()->trans.lookDir;
 	}
 
-	forDebug.p->Getter_Para()->pos = 
+	forDebug.ps[0]->Getter_Para()->pos =
 		axisModel->model->Getter_Appearance(0)->trans.GetWorldPos();
-	forDebug.p->Getter_Para()->pos.z -= 1.5f;
+	forDebug.ps[0]->Getter_Para()->pos.z -= 1.5f;
 
 	static float fps;
 	fps = ImGui::GetIO().Framerate;
@@ -99,6 +99,16 @@ void SceneController::Debug()
 	cur_Scene->cameraController->Debug();
 	cur_Scene->Debug();
 
+	if (runSpeedChanger.IsStop())
+	{
+		cur_Scene->dirLight->Getter_Para()->color =
+			{ 5,5,5};
+	}
+	else
+	{
+		cur_Scene->dirLight->Getter_Para()->color =
+			forDebug.lightBuffer;
+	}
 
 #endif // USE_IMGUI
 
@@ -108,15 +118,14 @@ void SceneController::Update()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	cur_Scene->cameraController->Update();
-
 	if (runSpeedChanger.AdjustRunSpeed())
 	{
-		cur_Scene->Update();
 		cur_Scene->gameObjManager->Update();
+		cur_Scene->Update();
 	}
 
-	Draw();
+	cur_Scene->cameraController->Update();
+
 
 	Debug();
 
@@ -161,10 +170,16 @@ void SceneController::Init(SceneType firstScene_)
 	axisModel->Init(nullptr);
 
 #ifdef _DEBUG
-	forDebug.p = M::GetInstance()->ImportPointLight();
-	forDebug.p->Getter_Para()->isActive = true;
-	forDebug.p->Getter_Para()->invSqrRadius = 200.0f;
-	forDebug.p->Getter_Para()->color = { 200,200,50 };
+	forDebug.lightBuffer = allScene[runningScene]->dirLight->Getter_Para()->color;
+	
+	for (int i = 0; i < 2; ++i)
+	{
+		forDebug.ps[i] = M::GetInstance()->ImportPointLight();
+		forDebug.ps[i]->Getter_Para()->isActive = true;
+		forDebug.ps[i]->Getter_Para()->invSqrRadius = 200.0f;
+		forDebug.ps[i]->Getter_Para()->color = { 200,200,50 };
+
+	}
 #endif // _DEBUG
 
 

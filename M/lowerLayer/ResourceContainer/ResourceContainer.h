@@ -15,6 +15,7 @@ enum class TextureTag
 	kAtlasNumbers,
 	kOh,
 	kCursorImage,
+	kNormalDekoboko,
 
 	kCount
 };

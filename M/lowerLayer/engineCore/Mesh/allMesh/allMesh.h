@@ -41,5 +41,11 @@ public:
 	{
 		return quadMesh.get();
 	}
+
+	inline auto* Getter_MeshForPostEffect()
+	{
+		return meshForPostEffect.get();
+	}
+
 };
 

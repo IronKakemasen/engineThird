@@ -1,6 +1,6 @@
 #include "../HLSLI/Material.hlsli"
 #include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
+#include "../HLSLI/ComputeDiffuse.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
 #include "../HLSLI/PointLight.hlsli"
 
@@ -50,11 +50,8 @@ PixcelShaderOutput main(VertexShaderOutput input)
     float3 lightFinalColor = float3(0, 0, 0);
     
     //直接光
-    float3 dirLightDir = normalize(dirLight.pos);
-    float3 dirColor = dirLight.color * dirLight.intensity * dirLight.isActive;
-    float NL = saturate(dot(normal, dirLightDir));
-    float3 dirLightBRDF = ComputeBRDF(diffuse, dirLightDir, toCamera, normal, NV, Ks, a);
-    lightFinalColor += dirColor * dirLightBRDF;
+    lightFinalColor += ComputeDirectionalLight(input.worldPosition, toCamera,
+        normal, NV, a, Ks, diffuse, dirLight);
 
     //ポイントライト
     uint numLights, stride;
@@ -62,16 +59,10 @@ PixcelShaderOutput main(VertexShaderOutput input)
     
     for (uint i = 0; i < numLights; ++i)
     {
-        if (!pointLights[i].isActive) continue;
-    
-        float3 pointLightDir = normalize(pointLights[i].pos - input.worldPosition);
-
-        float3 poinghtLightColor = EvaluatePointLight(normal, input.worldPosition,
-            pointLights[i].pos, pointLights[i].invSqrRadius,
-            pointLights[i].color) * pointLights[i].intensity;
-        float3 pointLightBRDF = ComputeBRDF(diffuse, pointLightDir, toCamera, normal, NV, Ks, a);
-        lightFinalColor += poinghtLightColor * pointLightBRDF;
+        lightFinalColor += ComputePointLight(input.worldPosition, toCamera, normal, NV,
+            a, Ks, diffuse, pointLights[i]);
     }
+    
     
     output.color = gMaterial.albedoColor * textureColor;
     

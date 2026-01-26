@@ -5,14 +5,13 @@
 #include "../../PSO/pipelineCreators/pipelineComponents.h"
 #include "../../Mesh/allMesh/MeshForModel/MeshForModelCommon.h"
 
-
 class AllPipelineSet;
 class AllMesh;
 struct ShaderBufferData;
 struct DirectionalLightBuffer;
 struct PointLightBuffer;
-
 struct CameraParaBuffer;
+class Palette;
 
 class ExclusiveDraw
 {
@@ -22,6 +21,8 @@ class ExclusiveDraw
 	DirectionalLightBuffer* dirLightBuffer = nullptr;
 	CameraParaBuffer* cameraParaBuffer = nullptr;
 	uint16_t* pLightSrvIndex = nullptr;
+	uint16_t* rLightSrvIndex = nullptr;
+
 
 public:
 	void Init(AllPipelineSet* allPipelineSet_, AllMesh* allMesh_, 
@@ -48,9 +49,11 @@ public:
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
 
 	void ResetDrawIndexes();
+	void DrawOnPalette(Palette* palette_);
 
 	void Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_);
 	void Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_);
+	void Setter_RLightSrvIndex(uint16_t* rLightSrvIndex_);
 
 };
 

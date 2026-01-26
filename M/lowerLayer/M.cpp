@@ -5,6 +5,7 @@
 #include "./engineCore/PSO/allPipelineSet.h"
 #include "./engineCore/Light/LightManager/LightManager.h"
 #include "./engineCore/Buffer/constantBuffer/CameraParaBuffer/CameraParameterSetter/CameraParameterSetter.h"
+#include "./engineCore/Render/OffScreenManager/OffScreenManager.h"
 
 float M::GetDeltaTime()
 {
@@ -34,8 +35,14 @@ DirectionalLight* M::ImportDirLight()
 PointLight* M::ImportPointLight()
 {
 	return lightManager->ExportPointLight();
+}
+
+RectLight* M::ImportRectLight()
+{
+    return lightManager->ExportRectLight();
 
 }
+
 
 
 std::unique_ptr<ModelSimple> M::CreateModel(std::string filePath_)
@@ -116,23 +123,24 @@ int M::GetShaderSetIndexFromFileName(std::string vertexShader_, std::string pixe
 void M::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
 	VPShaderTable* vpShaderTable_, AllPipelineSet* allPipelineSet_, MeshCreator* meshCreator_,
 	LightManager* lightManager_, CameraParameterSetter* cameraParameterSetter_,
-	KeyboardKeys* keyboardKeys_)
+	KeyboardKeys* keyboardKeys_, OffScreenManager* offScreenManager_)
 {
 	//一度だけ初期化
 	static bool initOnlyOnce = true;
 
-	if (initOnlyOnce)
-	{
-		resourceContainer.Init(textureDataManager_);
-		exclusiveDraw = exclusiveDraw_;
-		vpShaderTable = vpShaderTable_;
-		allPipelineSet = allPipelineSet_;
-		meshCreator = meshCreator_;
-		lightManager = lightManager_;
-		cameraParameterSetter = cameraParameterSetter_;
-		keyboardKeys = keyboardKeys_;
-		initOnlyOnce = false;
-	}
+    if (!initOnlyOnce)return;
+    initOnlyOnce = false;
+
+    resourceContainer.Init(textureDataManager_);
+    offScreenManager =  offScreenManager_;
+    exclusiveDraw = exclusiveDraw_;
+    vpShaderTable = vpShaderTable_;
+    allPipelineSet = allPipelineSet_;
+    meshCreator = meshCreator_;
+    lightManager = lightManager_;
+    cameraParameterSetter = cameraParameterSetter_;
+    keyboardKeys = keyboardKeys_;
+
 }
 
 void M::LogM(std::string message_)

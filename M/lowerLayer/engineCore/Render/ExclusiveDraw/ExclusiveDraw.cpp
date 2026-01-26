@@ -6,10 +6,16 @@
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
 #include "../../../M.h"
+#include "../Palette/Palette.h"
 
 void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 {
 	pLightSrvIndex = pLightSrvIndex_;
+}
+
+void ExclusiveDraw::Setter_RLightSrvIndex(uint16_t* rLightSrvIndex_)
+{
+	rLightSrvIndex = rLightSrvIndex_;
 }
 
 void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLightBuffer_)
@@ -20,7 +26,7 @@ void ExclusiveDraw::Setter_DirectionalLightBuffer(DirectionalLightBuffer* dirLig
 void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3 rotation_,
 	Vector4 color_, Matrix4* vpMat_)
 {
-	static float const div = 36.0f;
+	static float const div = 40.0f;
 	static float const deg = 360.0f / div;
 
 	for(float i = -2.0f;i< deg; ++i)
@@ -31,7 +37,7 @@ void ExclusiveDraw::DrawEllipseWireFrame(Vector3 center_, float radius_, Vector3
 		Vector3 st = { cosf(stRad), sinf(stRad) ,0.0f};
 		Vector3 ed = { cosf(edRad), sinf(edRad) ,0.0f };
 
-		float tmp = radius_ * 0.7f;
+		float tmp = radius_;
 		Matrix4 rtMat = Get_SRTMat3D({ tmp ,tmp ,1.0f }, rotation_, center_);
 
 		st = st.GetMultiply(rtMat);
@@ -138,9 +144,13 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		}
 
 		//pointLight
-		cList->SetGraphicsRootDescriptorTable(k,
+		cList->SetGraphicsRootDescriptorTable(k++,
 			shaderBufferData->gpuHandleContainer[*pLightSrvIndex]);
-		++k;
+
+		//areaLight
+		cList->SetGraphicsRootDescriptorTable(k++,
+			shaderBufferData->gpuHandleContainer[*rLightSrvIndex]);
+
 
 		//Cバッファの場所を指定
 		src_pipeline->SetConstantBufferViews(
@@ -242,6 +252,57 @@ void ExclusiveDraw::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& righ
 
 	//次の描画用にインクリメント
 	quadMesh->cur_drawIndex++;
+
+}
+
+void ExclusiveDraw::DrawOnPalette(Palette* palette_)
+{
+	auto* paletteMesh = allMesh->Getter_MeshForPostEffect();
+
+	int i = paletteMesh->curIndex;
+
+	//使用する三角形のマップインデックス
+	uint32_t const usingIndex_index = i * paletteMesh->kIndexCnt;
+	uint32_t const usingVertex_index = i * paletteMesh->kVertexCnt;
+
+	//< データの転送 >
+	auto* src_pipeline = allPipelineSet->Getter_pipelineSet(palette_->WatchShaderSetIndex(),
+		BlendMode::kBlendModeAdd, CullMode::kCullModeNone);
+	auto* cList = src_pipeline->Getter_CommandList();
+
+	*paletteMesh->wvpMatrixBuffer[i].matrix.buffMap =
+		Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+
+	cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	src_pipeline->SetGraphicsRootSignature();
+	src_pipeline->SetPipelineState();
+
+	//VBV
+	cList->IASetVertexBuffers(0, 1, paletteMesh->Getter_VertexBufferView());
+	//IBV
+	cList->IASetIndexBuffer(paletteMesh->Getter_IndexBufferView());
+
+	//texture
+	int k = 0;
+	for (; k < (int)palette_->WatchUseTexture().size(); ++k)
+	{
+		cList->SetGraphicsRootDescriptorTable(k,
+			shaderBufferData->gpuHandleContainer[palette_->WatchUseTexture()[k]]);
+	}
+
+
+	//Cバッファの場所を指定
+	src_pipeline->SetConstantBufferViews(
+		k,
+		paletteMesh->wvpMatrixBuffer[i].matrix.GetVirtualGPUAddress());
+
+
+	//描画(DrawCall)。6インデックスで一つのインスタンス
+	cList->DrawIndexedInstanced(paletteMesh->kIndexCnt, 1, static_cast<UINT>(usingIndex_index), static_cast<UINT>(usingVertex_index), 0);
+
+	//次の描画用にインクリメント
+	paletteMesh->curIndex++;
 
 }
 

@@ -44,6 +44,16 @@ void RunSpeedChanger::AddDebug()
 
 }
 
+bool RunSpeedChanger::IsStop()
+{
+	if (runSpeed == (int)RunSpeed::kStop)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 RunSpeedChanger::RunSpeedChanger()
 {
 	Reset();

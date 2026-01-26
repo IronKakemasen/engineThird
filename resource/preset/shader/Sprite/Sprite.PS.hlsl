@@ -1,9 +1,5 @@
 #include "../HLSLI/Material.hlsli"
-#include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
-#include "../HLSLI/PointLight.hlsli"
-
 
 Texture2D<float4> colorMap : register(t0);
 
@@ -31,6 +27,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
+    if (textureColor.a <= 0.0) discard;
 
     output.color = gMaterial.albedoColor * textureColor;
     

@@ -14,7 +14,7 @@ void PointLight::Init()
 
 void PointLight::Reset()
 {
-
+	para.isActive = 0;
 }
 
 PointLight::PointLight()

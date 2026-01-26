@@ -20,7 +20,7 @@ Enemy::Enemy()
 
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
+	appearance->color = { 200,50,50,255 };
 	
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyData.json";
@@ -158,6 +158,16 @@ void Enemy::MoveToTarget()
 		}
 	}
 
+	//// プレイヤーが近ければプレイヤーを追う
+	//if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
+	//{
+	//	lastDir = dirToPlayer;
+	//}
+	// プレイヤーが近ければプレイヤーを追う
+	//if (!dirToPlayer.IsBigger(GameConstants::kEnemyRecognizeDistance))
+	//{
+	//	lastDir = dirToPlayer;
+  
 	// 最も近いタワーを追う
 	size_t nearestTowerIndex = 0;
 	float nearestDistance = dirToTowers[0].GetMagnitutde();
@@ -196,6 +206,25 @@ void Enemy::LookAtTarget()
 	float nearestDistance = dirToTowers[0].GetMagnitutde();
 	for (size_t i = 1; i < playerTowers.size(); ++i)
 	{
+		//// 最も近いタワーのインデックスを探す
+		//size_t nearestTowerIndex = 0;
+    //
+		////float nearestDistance = dirToTowers[0].GetMagnitutde();
+		//float nearestDistance = dirToTowers[0].GetDot(dirToTowers[0]);
+    //
+		//for (size_t i = 1; i < playerTowers.size(); ++i)
+		//{
+		//	//float distance = dirToTowers[i].GetMagnitutde();
+	  //		float distance = dirToTowers[i].GetDot(dirToTowers[i]);
+    //
+		//	if (distance < nearestDistance)
+		//	{
+	  //			nearestDistance = distance;
+	  //			nearestTowerIndex = i;
+		//	}
+		//}
+		//lastDir = dirToTowers[nearestTowerIndex];
+
 		float distance = dirToTowers[i].GetMagnitutde();
 		if (distance < nearestDistance)
 		{

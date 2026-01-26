@@ -46,7 +46,6 @@ protected:
 	// インデックスバッファとそのびゅー
 	IndexBuffer indexBuffer;
 
-
 	virtual void CreateMesh(ID3D12Device* device_) = 0;
 	void Init(uint16_t kMaxDraw_,UINT vertexCnt_,UINT indexCnt_, AllPipelineSet* allPipelineset_);
 

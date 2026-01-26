@@ -8,11 +8,84 @@
 
 void WinApp::OffScreenBegin()
 {
+	//Imguiにここからフレームが始まる旨を告げる
+#ifdef USE_IMGUI
+	ImGui_ImplDX12_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+#endif
 
+	//ライトの更新処理
+	lightManager.Update();
+
+	//入力インターフェースの更新
+	inputInterface.Update();
+
+	QueryPerformanceFrequency(&fpsController.mTimeFreq);
+	QueryPerformanceCounter(&fpsController.mTimeStart);
+
+	M::GetInstance()->getPadState.Update();
+
+	auto* cList = commandControl.Getter_commandList();
+	auto* depthHandle = swapChainControl.Getter_DepthBuffer()->Getter_Handle();
+	auto* originalScreen = offScreenManager.GetOriginalScreen();
+	auto* rtvHandle = originalScreen->GetBuffer(0)->GetRtvHandle();
+
+	// コマンドの記録を開始.
+	commandControl.PrepareForNextCommandList();
+
+	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
+		originalScreen->GetBuffer(0)->GetShaderBuffer()->Getter_Resource(),
+		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		D3D12_RESOURCE_BARRIER_FLAG_NONE,
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+
+	BarrierControl::Pitch(commandControl.Getter_commandList(), &barrier);
+
+	//オフパコリソースをレンダーターゲットとして設定
+	cList->OMSetRenderTargets(1, rtvHandle, false, depthHandle);
+
+	//指定した深度で画面クリアする
+	cList->ClearDepthStencilView(*depthHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	//指定した色で画面全体をクリアする
+	float clearColor[] = { 0.0f,0.0f,0.0f,1.0f };
+	//指定した色で画面全体をクリアする
+	commandControl.Getter_commandList()->ClearRenderTargetView(
+		*rtvHandle, windowColor, 0, nullptr);
+
+	////描画用のDescriptorHeapの設定
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescHeap.Getter_Descriptorheap() };
+	commandControl.Getter_commandList()->SetDescriptorHeaps(1, descriptorHeaps);
+
+	//行列
+	commandControl.Getter_commandList()->RSSetViewports(1,
+		originalScreen->GetBuffer(0)->GetColorBuffer()->Getter_ViewportMatrix());
+
+	commandControl.Getter_commandList()->RSSetScissorRects(1,
+		originalScreen->GetBuffer(0)->GetColorBuffer()->ScissorRect());
 }
 
 void WinApp::OffScreenEnd()
 {
+	auto* originalScreen = offScreenManager.GetOriginalScreen();
+
+	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
+		originalScreen->GetBuffer(0)->GetShaderBuffer()->Getter_Resource(),
+		D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		D3D12_RESOURCE_BARRIER_FLAG_NONE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+
+	BarrierControl::Pitch(commandControl.Getter_commandList(), &barrier);
+
+	BeginFrame();
+
+	exclusiveDraw.DrawOnPalette(offScreenManager.GetPalette());
+
+	EndFrame();
 
 }
 
@@ -43,7 +116,7 @@ bool WinApp::InitD3D()
 	commandControl.MakeCommandQueue(deviceSetUp.Getter_Device());
 
 	//rtv、srv、dsvそれぞれのdescriptorHeapを作成する
-	rtvDescHeap.Init(deviceSetUp.Getter_Device(), 2);
+	rtvDescHeap.Init(deviceSetUp.Getter_Device(), 12);
 	srvDescHeap.Init(deviceSetUp.Getter_Device(), 64);
 	dsvDescriptorHeap.Init(deviceSetUp.Getter_Device(), 1);
 
@@ -68,7 +141,8 @@ bool WinApp::InitD3D()
 	srvCreator.Init(&srvDescHeap,deviceSetUp.Getter_Device(),&commandControl , &shaderBufferData);
 
 	//textureDataManager,textureDataCreatorの初期化
-	textureDataManager.Init(srvCreator.Getter_TextureSrCreator(), srvCreator.Getter_PostEffectSrCreator());
+	textureDataManager.Init(srvCreator.Getter_TextureSrCreator(), 
+		srvCreator.Getter_PostEffectSrCreator(),&rtvDescHeap,deviceSetUp.Getter_Device());
 
 	//meshCreatorの初期化
 	meshCreator.Init(&allPipelineSet, deviceSetUp.Getter_Device(),
@@ -105,36 +179,29 @@ bool WinApp::InitD3D()
 
 	//メッシュの初期化、生成
 	allMesh.Init(deviceSetUp.Getter_Device(), srvCreator.Getter_ParticleMeshSrvCreator(),&allPipelineSet);
+	
 	//lightManager,lightCreatorの初期化
 	lightManager.Init(&exclusiveDraw, deviceSetUp.Getter_Device(), srvCreator
 		.Getter_StBufferCretaor());
+
+	//テクスチャ読み込み含む（コマンド積む）
+	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
+		vpShaders.Getter_VPShaderTable(), &allPipelineSet, &meshCreator, &lightManager,
+		&cameraParameterSetter, &inputInterface.keyboardKeys,&offScreenManager);
+
+	offScreenManager.Init(&textureDataManager, &exclusiveDraw);
+
+	//ポストエフェクト用オリジナルスクリーンの初期化
+
+
+	//palette.Set(PostEffectType::kNone,
+	//	originalScreen->WatchTextureIndexes(), originalScreen->WathchShaderSetIndex());
 
 	return true;
 }
 
 void WinApp::BeginFrame()
 {
-	QueryPerformanceFrequency(&fpsController.mTimeFreq);
-	QueryPerformanceCounter(&fpsController.mTimeStart);
-
-	M::GetInstance()->getPadState.Update();
-
-	//Imguiにここからフレームが始まる旨を告げる
-#ifdef USE_IMGUI
-	ImGui_ImplDX12_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-#endif
-
-	//ライトの更新処理
-	lightManager.Update();
-
-	//入力インターフェースの更新
-	inputInterface.Update();
-
-	// コマンドの記録を開始.
-	commandControl.PrepareForNextCommandList();
-
 	//バリア
 	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(
 		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->Getter_Resource(),
@@ -170,6 +237,7 @@ void WinApp::BeginFrame()
 
 	commandControl.Getter_commandList()->RSSetScissorRects(1,
 		swapChainControl.Getter_ColorBuffer(swapChainControl.frameIndex)->ScissorRect());
+
 }
 
 void WinApp::EndFrame()
@@ -303,10 +371,6 @@ bool WinApp::InitApp()
 		return false;
 	}
 
-	//テクスチャ読み込み含む（コマンド積む）
-	M::GetInstance()->Init(&textureDataManager, &exclusiveDraw,
-		vpShaders.Getter_VPShaderTable(),&allPipelineSet,&meshCreator,&lightManager,
-		&cameraParameterSetter,&inputInterface.keyboardKeys);
 
 	commandControl.Getter_commandList()->Close();
 	ID3D12CommandList* commandLists[] = { commandControl.Getter_commandList() };
@@ -321,11 +385,11 @@ bool WinApp::InitWnd()
 
 #ifdef _DEBUG
 
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	{
-		debugController->EnableDebugLayer();
-		debugController->SetEnableGPUBasedValidation(TRUE);
-	}
+	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+	//{
+	//	debugController->EnableDebugLayer();
+	//	debugController->SetEnableGPUBasedValidation(TRUE);
+	//}
 
 #endif // _DEBUG
 

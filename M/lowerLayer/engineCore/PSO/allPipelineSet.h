@@ -7,7 +7,7 @@ class VpShaders;
 class AllPipelineSet
 {
 public:
-	static int const kNumShaderSet = 15;
+	static int const kNumShaderSet = 20;
 
 private:
 	//[ pipelineSet ]

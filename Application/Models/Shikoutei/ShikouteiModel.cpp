@@ -29,7 +29,7 @@ void ShikouteiModel::Init(Transform* gameObjectTrans_)
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 	
 	appearance->texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
+		M::GetInstance()->GetTexIndex(TextureTag::kNormalDekoboko);
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 	appearance->SetUsingTextureFromContainer(1, 1, 0, 0);
 

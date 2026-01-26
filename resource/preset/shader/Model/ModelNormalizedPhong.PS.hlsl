@@ -1,11 +1,13 @@
 #include "../HLSLI/Material.hlsli"
 #include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
 #include "../HLSLI/PointLight.hlsli"
+#include "../HLSLI/ComputeDiffuse.hlsli"
+#include "../HLSLI/RectLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 StructuredBuffer<PointLight> pointLights : register(t1);
+StructuredBuffer<RectLight> rectLights : register(t2);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);
@@ -51,7 +53,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     
     specular = SchlickFrensnel(H, toCamera, specular);
 
-    output.color = float4(dirLight.color * dirLight.intensity* textureColor.rgb *
+    output.color = float4(dirLight.color * dirLight.intensity * textureColor.rgb *
         (diffuse + specular) * NL, gMaterial.albedoColor.a * textureColor.a);
     
     return output;

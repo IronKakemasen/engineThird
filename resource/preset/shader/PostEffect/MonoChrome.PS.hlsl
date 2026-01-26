@@ -1,8 +1,4 @@
-#include "../HLSLI/Material.hlsli"
-#include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
-#include "../HLSLI/CameraPara.hlsli"
-#include "../HLSLI/PointLight.hlsli"
+#include "./Conversions/GreyScale/GreyScale.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 
@@ -27,8 +23,9 @@ PixcelShaderOutput main(VertexShaderOutput input)
     PixcelShaderOutput output;
 
     float4 textureColor = colorMap.Sample(baseColorSmp, input.texcoord);
-
-    output.color = textureColor;
+    float3 toGrey = GreyScale(textureColor.rgb);
+    
+    output.color = float4(toGrey, textureColor.a);
     
     return output;
 }

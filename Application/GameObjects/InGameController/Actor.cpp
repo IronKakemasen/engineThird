@@ -10,6 +10,8 @@ void actor::ActorBehavior::Init(InGameController* ing_, float time_)
 
 void actor::Playable::operator()()
 {
+	ing->curCnt = cnt.count;
+
 
 }
 
@@ -21,6 +23,17 @@ void actor::Playable::Reset()
 
 void actor::Enter::operator()()
 {
+	ing->curCnt = cnt.count;
+
+	if (cnt.IsEnd())
+	{
+		ing->curMode = InGameController::Mode::kPlayable;
+		Reset();
+
+		return;
+	}
+
+	cnt.Add();
 
 }
 
@@ -32,6 +45,15 @@ void actor::Enter::Reset()
 
 void actor::GameOver ::operator()()
 {
+	ing->curCnt = cnt.count;
+
+	if (cnt.IsEnd())
+	{
+		Reset();
+		return;
+	}
+
+	cnt.Add();
 
 }
 
@@ -43,6 +65,15 @@ void actor::GameOver::Reset()
 
 void actor::UnPlayable ::operator()()
 {
+	ing->curCnt = cnt.count;
+
+	if (cnt.IsEnd())
+	{
+		Reset();
+		return;
+	}
+
+	cnt.Add();
 
 }
 
@@ -54,6 +85,15 @@ void actor::UnPlayable::Reset()
 
 void actor::Result::operator()()
 {
+	ing->curCnt = cnt.count;
+
+	if (cnt.IsEnd())
+	{
+		Reset();
+		return;
+	}
+
+	cnt.Add();
 
 }
 

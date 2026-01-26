@@ -86,6 +86,9 @@ void ShikouteiScene::Instantiate()
 			enemyInstance->SetTargetTower(playerTower.get());
 	}
 
+	rectLights[0] = M::GetInstance()->ImportRectLight();
+	rectLights[1] = M::GetInstance()->ImportRectLight();
+
 	for (auto& ally : allies)
 	{
 		player->SetAllies(ally.get());
@@ -99,7 +102,8 @@ void ShikouteiScene::Instantiate()
 
 void ShikouteiScene::Init()
 {
-	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
+	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
+		inGameController.get(),player.get());
 	
 	//矩形の初期化
 	quad.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2));
@@ -115,5 +119,8 @@ void ShikouteiScene::Init()
 		M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
 	//アトラス画像に対応させる
 	atlasNumber.ToAtlas(10);
+
+	rectLights[0]->Getter_Para()->isActive = true;
+	rectLights[1]->Getter_Para()->isActive = true;
 
 }

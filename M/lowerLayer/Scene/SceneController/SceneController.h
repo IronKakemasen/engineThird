@@ -41,7 +41,8 @@ private:
 	{
 		//グリッド線を描画するかどうか
 		bool doDrawGridLine = true;
-		PointLight* p;
+		PointLight* ps[2];
+		Vector3 lightBuffer;
 	};
 
 	ForDebug forDebug;
@@ -50,7 +51,7 @@ private:
 
 public:
 	void Update();
-	void Reset();
+	void Draw();
 	SceneController(SceneType firstScene_);
 
 private:
@@ -65,7 +66,7 @@ private:
 	void Debug();
 	void Set(SceneType type_, Scene* scene_);
 	void Init(SceneType firstScene_);
-	void Draw();
+	void Reset();
 
 };
 

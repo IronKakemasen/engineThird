@@ -15,8 +15,11 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kAtlasNumbers, pathToPresetTex + "numbers48x48.png");
 	LoadTextureFile(TextureTag::kOh, pathToPresetTex + "oh.png");
 	LoadTextureFile(TextureTag::kCursorImage, pathToPresetTex + "cursorImage.png");
+	LoadTextureFile(TextureTag::kNormalDekoboko, pathToPresetTex + "dekoboko.png");
+
 	//LoadTextureFile(TextureTag::, pathToTex + " ");
 
+	
 }
 
 int ResourceContainer::GetTextureIndex(TextureTag tag_)

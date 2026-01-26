@@ -1,11 +1,13 @@
 #include "../HLSLI/Material.hlsli"
 #include "../HLSLI/DirectionalLight.hlsli"
-#include "../HLSLI/ComputeLight.hlsli"
+#include "../HLSLI/ComputeDiffuse.hlsli"
 #include "../HLSLI/CameraPara.hlsli"
 #include "../HLSLI/PointLight.hlsli"
+#include "../HLSLI/RectLight.hlsli"
 
 Texture2D<float4> colorMap : register(t0);
 StructuredBuffer<PointLight> pointLights : register(t1);
+StructuredBuffer<RectLight> rectLights : register(t2);
 
 SamplerState baseColorSmp : register(s0);
 SamplerState nomalSmp : register(s1);

@@ -6,10 +6,13 @@ class LightManager
 	std::vector<PointLight*> pointLights;
 	PointLightStructuredBuffer* pointLightStructuredBuffer = nullptr;
 	DirectionalLightBuffer* dirLightBuffer = nullptr;
-
 	DirectionalLight* directionalLight = nullptr;
+	std::vector<RectLight*> rectLights;
+	RectLightStructuredBuffer* rectLightStructuredBuffer = nullptr;
+
 	LightCreator lightCreator;
 	int pointLightID;
+	int rectLightID;
 
 	void Fetch();
 	void Batch();
@@ -17,6 +20,7 @@ public:
 
 	DirectionalLight* ExportDirectionalLight();
 	PointLight* ExportPointLight();
+	RectLight* ExportRectLight();
 
 	LightManager();
 

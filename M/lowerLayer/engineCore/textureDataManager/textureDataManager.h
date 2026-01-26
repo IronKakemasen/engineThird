@@ -6,17 +6,21 @@
 
 class TextureSrCreator;
 class PostEffectSrCreator;
+struct RtvDescriptorHeap;
 
 class TextureDataManager
 {
+	RtvDescriptorHeap* rtvDescriptorHeap = nullptr;
 	TextureSrCreator* textureSrvCreator = nullptr;
 	PostEffectSrCreator* postEffectSrCreator = nullptr;
+	ID3D12Device* device = nullptr;
 	std::vector<ShaderBuffer> data;
 	std::vector<std::unique_ptr<PostEffectBuffer>> postEffectBufferContaier;
 
 public:
 
-	void Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_);
+	void Init(TextureSrCreator* textureSrvCreator_, PostEffectSrCreator* postEffectSrCreator_,
+		RtvDescriptorHeap* rtvDescriptorHeap_, ID3D12Device* device_);
 	int CreateTextureFromFile(std::string filePath_);
 	PostEffectBuffer* CreatePostEffectBuffer();
 };

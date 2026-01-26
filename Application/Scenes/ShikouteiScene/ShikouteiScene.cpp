@@ -16,11 +16,12 @@ void ShikouteiScene::Update()
 	}
 	atlasNumber.ChangeAtlasIndex(timeNum);
 
-
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
 		SceneBehavior::doReset = true;
 	}
+
+	mainCamera.Update();
 }
 
 void ShikouteiScene::Draw()
@@ -44,17 +45,31 @@ void ShikouteiScene::Draw()
 
 void ShikouteiScene::Reset()
 {
-
+	mainCamera.Reset();
 }
 
 void ShikouteiScene::Debug()
 {
 #ifdef USE_IMGUI
 
-	ImGui::Begin("ShikouteiScene Scene Debug");
-	ImGui::Text("PlayerScaleX: %.2f", player->Getter_Trans()->scale.x);
+	ImGui::Begin("InGameController");
+	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
+	ImGui::Text( "Count : %.1f", *inGameController->GetCnt());
 	ImGui::End();
 
+	for (int i = 0; i < 2; ++i)
+	{
+		auto* r = rectLights[i]->Getter_Para();
+		ImGui::Begin(("RectLight" + std::to_string(i)).c_str());
+		ImGui::DragFloat("intensity", &r->intensity);
+		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&r->pos));
+		ImGui::DragFloat3("lookDir", reinterpret_cast<float*>(rectLights[i]->GetLookDirection()), 0.02f);
+		ImGui::DragFloat3("color", reinterpret_cast<float*>(&r->color));
+		ImGui::DragFloat("rad", &r->attenuationRadius);
+
+		ImGui::End();
+
+	}
 
 	ImGui::Begin("Building Debug");
 
