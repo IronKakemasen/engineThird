@@ -16,7 +16,7 @@ void ShikouteiScene::Update()
 	}
 	atlasNumber.ChangeAtlasIndex(timeNum);
 
-	if (M::GetInstance()->IsKeyTriggered(KeyType::R))
+	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
 		SceneBehavior::doReset = true;
 	}
@@ -161,12 +161,60 @@ void ShikouteiScene::Debug()
 			}
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("EnemyTower"))
+		{
+			int32_t Sum = 0;
+			for (auto& tower : enemyTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				enemyTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string path = enemyTowers[0]->path;
+				Json::SaveParam(path, key, Sum);
+				for (auto& tower : enemyTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : enemyTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
+		}
+
+		if (ImGui::BeginTabItem("Player"))
+		{
+			player->DebugDraw();
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
 
+	inGameConfig->DebugDraw();
+	ImGui::End();
 
 
 	//ImGui::Begin("EnemyFactory");

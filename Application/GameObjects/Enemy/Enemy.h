@@ -13,20 +13,60 @@ struct Enemy :public GameObject , public GameObjectEntity
 #pragma region 独自部位
 
 private:
-	// 理想敵な移動速度(攻撃・ノックバック等を受けなかった時)
-	void SetIdealVelocity();
+	// ターゲット方向に移動
+	void MoveToTarget();
 
-	Vector3 velocity = { 0.0f,0.0f,0.0f };
+	// 最寄りターゲット方向を向く
+	void LookAtTarget();
+
+	// ノックバック方向に移動
+	void MoveKnockBack();
+
+	// ノックバック関数(float power:ノックバックの強さ)
+	void KnockBack(float power);
+
+	// 無敵判定更新
+	void UpdateInvincibleTime();
+	int32_t invincibleTime = 0;	// 無敵時間
+
+	// config反映
+	void ConfigHotReload();
+
+	// ノックバック速度
+	Vector3 knockBackVelocity{};
+	// 移動速度
+	Vector3 moveVelocity{};
+
+	// 移動速度の大きさ
 	float speed = 0.05f;
+
+	// 味方と当たったときのノックバック力
+	float knockBackPowerOnAlly = 0.2f;
+
+	// 攻撃力
+	float attackPower = 10.0f;
+
+	// HP最大値
+	float maxHP = 100.0f;
 
 	// 参照ポインタ
 	std::vector<PlayerTower*> playerTowers{};
 	Player* targetPlayer = nullptr;
 
+
+
 public:
 	// ポインタのセット
 	void SetTargetTower(PlayerTower* tower) { playerTowers.push_back(tower); };
 	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
+
+	// 現在無敵かどうか
+	bool IsInvincible() { return invincibleTime > 0; }
+
+	// 工場から生まれる
+	void Spawn(Vector3 pos);
+
+	float GetAttackPower() { return attackPower; }
 
 #pragma	endregion
 
