@@ -268,7 +268,7 @@ void Enemy::DebugDraw()
 {
 #ifdef USE_IMGUI
 
-	std::string tag = "##speed: " + std::to_string(speed);
+	std::string tag = "speed##" + std::to_string(speed);
 	ImGui::DragFloat(tag.c_str(), &speed, 0.01f, 0.0f, 10.0f);
 
 #endif // USE_IMGUI
