@@ -27,6 +27,16 @@ void M::SetCameraBufferPara(CameraBufferPara CameraBufferPara_)
 	cameraParameterSetter->SetCameraPara(CameraBufferPara_);
 }
 
+void M::ChangePostEffect(PostEffectType type_)
+{
+    offScreenManager->ChangePostEffection(type_);
+}
+
+PostEffectType M::WatchEffectType()
+{
+    return offScreenManager->WatchEffectType();
+}
+
 DirectionalLight* M::ImportDirLight()
 {
 	return lightManager->ExportDirectionalLight();

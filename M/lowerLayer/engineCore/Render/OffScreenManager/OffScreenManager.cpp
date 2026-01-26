@@ -45,9 +45,15 @@ void OffScreenManager::SetEffectSysytem(PostEffectType type_,
 void OffScreenManager::ChangePostEffection(PostEffectType type_)
 {
 	palette.ChangeType(type_);
+	curPostEffectType = type_;
 }
 
 void OffScreenManager::Update()
 {
 	effectContainer[curPostEffectType]->Update();
+}
+
+PostEffectType OffScreenManager::WatchEffectType()
+{
+	return curPostEffectType;
 }

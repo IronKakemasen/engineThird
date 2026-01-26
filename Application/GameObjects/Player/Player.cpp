@@ -10,14 +10,7 @@
 Player::Player()
 {
 	// モデルのインスタンス化
-	model.reset(new PlayerModel);
-
-	// 必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-	
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 0,255,0,255 };
+	model.reset(new PlayerModel);	
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerData.json";
@@ -272,13 +265,6 @@ void Player::Move()
 			if (up) moveDir.z += 1.0f;
 			if (down) moveDir.z -= 1.0f;
 		}
-	}
-	else
-	{
-		if (M::GetInstance()->IsKeyPressed(KeyType::W)) moveDir.z += 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::S)) moveDir.z -= 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::D)) moveDir.x += 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::A)) moveDir.x -= 1.0f;
 	}
 
 	// 正規化

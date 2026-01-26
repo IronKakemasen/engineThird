@@ -22,6 +22,32 @@ void ShikouteiScene::Update()
 	}
 
 	mainCamera.Update();
+
+	AdaptToPostEffect();
+}
+
+void ShikouteiScene::AdaptToPostEffect()
+{
+	auto effectType = M::GetInstance()->WatchEffectType();
+	auto* dirPara = dirLight->Getter_Para();
+
+	switch (effectType)
+	{
+	case PostEffectType::kNone:
+		dirPara->intensity = 1.0f;
+
+		break;
+
+	case PostEffectType::kGreyScale:
+		dirPara->intensity = 1.0f;
+
+		break;
+
+	case PostEffectType::kSimpleNeonLike:
+		dirPara->intensity = 12.0f;
+
+		break;
+	}
 }
 
 void ShikouteiScene::Draw()
@@ -52,10 +78,13 @@ void ShikouteiScene::Debug()
 {
 #ifdef USE_IMGUI
 
+	
+
 	ImGui::Begin("InGameController");
 	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
 	ImGui::Text( "Count : %.1f", *inGameController->GetCnt());
 	ImGui::End();
+
 
 	for (int i = 0; i < 2; ++i)
 	{

@@ -26,7 +26,6 @@ namespace GameConstants
 	// 最大ステージ数
 	inline constexpr size_t kMaxStages = 5;
 
-
 	// 味方は何フレーム遅れてついてくるか の MAX
 	inline constexpr uint32_t kAllyFollowDelayFramesMax = 120;
 }
