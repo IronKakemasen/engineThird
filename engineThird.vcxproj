@@ -315,6 +315,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.cpp" />
     <ClCompile Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.cpp" />
     <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
@@ -351,6 +352,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Render\OriginalScreen\OriginalScreen.h" />
     <ClInclude Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

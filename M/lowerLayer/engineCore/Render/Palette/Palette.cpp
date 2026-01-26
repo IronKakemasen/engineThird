@@ -7,10 +7,12 @@ Palette::Para::Para()
 	shaderSetIndex = 0;
 }
 
-void Palette::Set(PostEffectType type_, std::vector<uint16_t> textures_,int shaderSetIndex_)
+void Palette::Set(PostEffectType type_, std::vector<uint16_t> textures_,
+	int shaderSetIndex_, std::vector<D3D12_GPU_VIRTUAL_ADDRESS> cBufferAddressContainer_)
 {
 	paraContainer[type_].offscreenTextureContainer = textures_;
 	paraContainer[type_].shaderSetIndex = shaderSetIndex_;
+	paraContainer[type_].cBufferAddressContainer = cBufferAddressContainer_;
 
 	if (textures_.empty())
 	{
@@ -43,4 +45,9 @@ int Palette::WatchShaderSetIndex()
 std::vector<uint16_t> Palette::WatchUseTexture()
 {
 	return paraContainer[curType].offscreenTextureContainer;
+}
+
+std::vector<D3D12_GPU_VIRTUAL_ADDRESS> Palette::WatchCBufferAddressContainer()
+{
+	return paraContainer[curType].cBufferAddressContainer;
 }

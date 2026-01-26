@@ -2,13 +2,14 @@
 #include "../engineCore/textureDataManager/textureDataManager.h"
 
 
-void OffScreenManager::Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_)
+void OffScreenManager::Init(TextureDataManager* textureDataManager_,
+	ExclusiveDraw* exclusiveDraw_, ID3D12Device* device_)
 {
 	textureDataManager = textureDataManager_;
 	exclusiveDraw = exclusiveDraw_;
 
 	originalScreen.reset(new OriginalScreen(textureDataManager_, 1));
-	originalScreen->Init();
+	originalScreen->Init(device_);
 
 	palette.Init(originalScreen.get());
 
@@ -18,18 +19,21 @@ void OffScreenManager::Init(TextureDataManager* textureDataManager_, ExclusiveDr
 		std::make_unique<PostEffects::Bloom>(textureDataManager_,3));
 	SetEffectSysytem(PostEffectType::kGreyScale,
 		std::make_unique<PostEffects::GreyScale>(textureDataManager_, 0));
+	SetEffectSysytem(PostEffectType::kSimpleNeonLike,
+		std::make_unique<PostEffects::SimpleNeonLike>(textureDataManager_, 0));
 
 	for (int i = 0; i < (int)PostEffectType::kCount; ++i)
 	{
 		auto* it = effectContainer[PostEffectType(i)].get();
 
-		it->Init();
+		it->Init(device_);
 
-		palette.Set(PostEffectType(i),
-			it->WatchTextureIndexes(), it->WathchShaderSetIndex());
+		palette.Set(PostEffectType(i),it->WatchTextureIndexes(),
+			it->WathchShaderSetIndex(), it->WatchAddessContainer());
 	}
 
-	ChangePostEffection(PostEffectType::kGreyScale);
+	ChangePostEffection(PostEffectType::kSimpleNeonLike);
+	curPostEffectType = PostEffectType::kSimpleNeonLike;
 }
 
 void OffScreenManager::SetEffectSysytem(PostEffectType type_,
@@ -41,4 +45,9 @@ void OffScreenManager::SetEffectSysytem(PostEffectType type_,
 void OffScreenManager::ChangePostEffection(PostEffectType type_)
 {
 	palette.ChangeType(type_);
+}
+
+void OffScreenManager::Update()
+{
+	effectContainer[curPostEffectType]->Update();
 }
