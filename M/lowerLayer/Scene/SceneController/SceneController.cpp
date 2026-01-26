@@ -85,6 +85,29 @@ void SceneController::Debug()
 	ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
 	runSpeedChanger.AddDebug();
 
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("PostEffect"))
+		{
+			if (ImGui::MenuItem("NoEffection"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kNone);
+			}
+			if (ImGui::MenuItem("MonoChrome"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kGreyScale);
+			}
+			if (ImGui::MenuItem("NeonLike"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kSimpleNeonLike);
+			}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+
 	if (ImGui::TreeNode("DirectionalLight"))
 	{
 		ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);

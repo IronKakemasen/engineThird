@@ -6,6 +6,7 @@
 #include "./engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include "./engineCore/Mesh/MeshCreator/MeshCreator.h"
 #include "./engineCore/Input/InputInterface/InputInterface.h"
+#include "./engineCore/Render/Palette/PostEffectType.h"
 
 #include <functional>
 #include <d3d12.h>
@@ -47,7 +48,7 @@ class OffScreenManager;
 
 class M
 {
-	OffScreenManager* offScreenManager;
+	OffScreenManager* offScreenManager = nullptr;
 	ResourceContainer resourceContainer;
 	ExclusiveDraw* exclusiveDraw = nullptr;
 	VPShaderTable* vpShaderTable = nullptr;
@@ -109,7 +110,9 @@ public:
 		std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_);
 
 	void SetCameraBufferPara(CameraBufferPara cameraBufferPara_);
-
+	
+	void ChangePostEffect(PostEffectType type_);
+	PostEffectType WatchEffectType();
 private:
 
 	M() = default;

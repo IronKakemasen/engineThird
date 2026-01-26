@@ -393,16 +393,6 @@ Vector3 Player::GetPosHistory(int32_t n)
 	return posHistory[index];
 }
 
-// 
-// 0 - 1 - 2 - 3 - x - 5 - 6    新　新　新
-// 
-// 上記のように4番目の味方が抜けた場合
-// currentIndex 0,1,2,3 の場合返り値はそのまま0,1,2,3
-// currentIndex 4 のキャラはそもそもこの関数を呼ばない
-// currentIndex 5,6 の場合返り値はそれぞれ4,5となり詰める
-// currentIndex -1(新規) の場合返り値は列を完全に詰めた場合の最後尾(上記例だと6)となり最後尾を指す
-// 
-
 // 味方データ更新処理
 void Player::UpdateAllyData()
 {
@@ -435,7 +425,7 @@ void Player::UpdateAllyData()
 		if (!isMoving)
 		{
 			delayFrameOffsets++;
-			if (delayFrameOffsets >= GameConstants::kAllyFollowDelayFrames)
+			if (delayFrameOffsets >= inGameConfig->allyDelayFrames)
 			{
 				// オフセットリセット
 				delayFrameOffsets = 0;
@@ -482,7 +472,7 @@ Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 		index = formedAllyCount;
 	}
 
-	int32_t delayFrames = (index + 1) * GameConstants::kAllyFollowDelayFrames;
+	int32_t delayFrames = (index + 1) * inGameConfig->allyDelayFrames;
 	int32_t offset = 0;
 	if (!deadIndexList.empty() && index >= deadIndexList.front())
 	{

@@ -34,7 +34,7 @@ private:
 	void SavePos();			// 座標履歴の保存
 	Vector3 GetPosHistory(int32_t n);// nフレーム前の座標を取得
 	// 自身の座標履歴[最大味方数 * 味方追従遅延フレーム数]
-	std::array<Vector3, GameConstants::kMaxAllies* GameConstants::kAllyFollowDelayFrames> posHistory = {};
+	std::array<Vector3, GameConstants::kMaxAllies* GameConstants::kAllyFollowDelayFramesMax> posHistory = {};
 	size_t headIndex = 0;	// リングバッファの先頭インデックス
 
 

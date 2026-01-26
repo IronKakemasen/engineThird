@@ -39,6 +39,8 @@ void InGameConfig::Save()
 	Json::SaveParam(path, "/enemy/MaxHP", enemyMaxHP);
 	Json::SaveParam(path, "/enemyFactory/MaxHP", enemyFactoryMaxHP);
 	Json::SaveParam(path, "/enemyTower/MaxHP", enemyTowerMaxHP);
+	Json::SaveParam(path, "/playerTower/invincibleTime", playerTowerInvincibleTime);
+	Json::SaveParam(path, "/player/bullet/lifeTime", playerBulletLifeTime);
 
 	Json::SaveParam(path, "/player/defaultAttackPower", playerDefaultAttackPower);
 	Json::SaveParam(path, "/player/allyPowerBonus", playerAllyPowerBonus);
@@ -47,6 +49,7 @@ void InGameConfig::Save()
 
 	Json::SaveParam(path, "/player/speed", playerSpeed);
 	Json::SaveParam(path, "/enemy/speed", enemySpeed);
+	Json::SaveParam(path, "/player/bullet/speed", playerBulletSpeed);
 
 	Json::SaveParam(path, "/enemy/spawnInterval", enemySpawnInterval);
 	Json::SaveParam(path, "/enemy/knockBackPowerToAlly", enemyKnockBackPowerToAlly);
@@ -75,6 +78,8 @@ void InGameConfig::DebugDraw()
 	ImGui::DragFloat("Enemy		MaxHP", &enemyMaxHP, 1.0f, 0.0f, 100.0f);
 	ImGui::DragFloat("EFactory	MaxHP", &enemyFactoryMaxHP, 1.0f, 0.0f, 100.0f);
 	ImGui::DragFloat("ETower	MaxHP", &enemyTowerMaxHP, 1.0f, 0.0f, 100.0f);
+	ImGui::DragFloat("Bullet	LifeTime", &playerBulletLifeTime, 1.0f, 0.0f, 100.0f);
+	ImGui::DragFloat("PTower	invincibleTime", &playerTowerInvincibleTime, 0.01f, 0.0f, 5.0f);
 	ImGui::Text("---------------------------------------------\n");
 	ImGui::DragFloat("Player	attackPower", &playerDefaultAttackPower, 0.1f, 0.0f, 50.0f);
 	ImGui::DragFloat("Player	allyPowerBonus", &playerAllyPowerBonus, 0.1f, 0.0f, 20.0f);
@@ -83,6 +88,7 @@ void InGameConfig::DebugDraw()
 	ImGui::Text("---------------------------------------------\n");
 	ImGui::DragFloat("Player	speed", &playerSpeed, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Enemy		speed", &enemySpeed, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("Bullet	speed", &playerBulletSpeed, 0.01f, 0.0f, 5.0f);
 	ImGui::Text("---------------------------------------------\n");
 	ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
 	ImGui::DragFloat("Enemy		knockBackPowerToAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
