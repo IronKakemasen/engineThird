@@ -215,8 +215,8 @@ void SceneController::SetScenesToArray()
 	Set(kShikouteiScene, shikoScene.get());
 	Set(kInGame, ingameScene.get());
 	Set(kTitle, titleScene.get());
-	Set(kModelView, modelViewScene.get());
 	Set(kTutorial, tutorialScene.get());
+	Set(kModelView, modelViewScene.get());
 
 }
 

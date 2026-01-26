@@ -34,8 +34,6 @@ private:
 
 	ModeData modeData[Mode::kCount];
 
-	//使用するモデル
-	std::unique_ptr<PlayerModel> model;
 	//プレイヤー
 	Player* player = nullptr;
 

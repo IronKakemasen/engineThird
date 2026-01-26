@@ -75,7 +75,7 @@ void PostEffectSrCreator::CreteResource(PostEffectBuffer* data_)
 	clearValue.Color[0] = 0.0f;
 	clearValue.Color[1] = 0.0f;
 	clearValue.Color[2] = 0.0f;
-	clearValue.Color[3] = 1.0f;
+	clearValue.Color[3] = 0.0f;
 
 	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties,					//Heapの設定
