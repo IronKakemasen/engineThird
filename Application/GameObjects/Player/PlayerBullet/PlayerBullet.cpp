@@ -3,6 +3,7 @@
 #include "../../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
+#include "../../../Config/InGameConfig.h"
 #include "../Json/Json.h"
 
 
@@ -65,6 +66,17 @@ void PlayerBullet::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerAlly, collisionBackToAlly);
 }
 
+void PlayerBullet::ConfigHotReload()
+{
+	if (inGameConfig)
+	{
+		// 速度反映
+		defaultSpeed = inGameConfig->playerBulletSpeed;
+		// 生命時間反映
+		defaultLifeTime = inGameConfig->playerBulletLifeTime;
+	}
+}
+
 void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, float powerBonus, float sizeBonus)
 {
 	// リセット
@@ -77,6 +89,10 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, fl
 	trans.pos = pos;
 	// 何段目の攻撃か設定
 	attackStage = stage;
+	// 速度反映
+	defaultSpeed = inGameConfig->playerBulletSpeed;
+	// 生命時間反映
+	defaultLifeTime = inGameConfig->playerBulletLifeTime;
 	// カウンター設定
 	lifeCounter.Initialize(defaultLifeTime);
 	// 攻撃力リセット

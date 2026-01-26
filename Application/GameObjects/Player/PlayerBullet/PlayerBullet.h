@@ -28,6 +28,8 @@ private:
 	// 何段目の攻撃か
 	int32_t attackStage = 0;
 
+	// config反映
+	void ConfigHotReload();
 
 
 public:

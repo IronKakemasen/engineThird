@@ -27,7 +27,7 @@ namespace GameConstants
 	inline constexpr size_t kMaxStages = 5;
 
 
-	// 味方は何フレーム遅れてついてくるか
-	inline constexpr uint32_t kAllyFollowDelayFrames = 30;
+	// 味方は何フレーム遅れてついてくるか の MAX
+	inline constexpr uint32_t kAllyFollowDelayFramesMax = 120;
 }
 
