@@ -2,7 +2,31 @@
 
 void ModelScene::Update()
 {
+	AdaptToPostEffect();
+}
 
+void ModelScene::AdaptToPostEffect()
+{
+	auto effectType = M::GetInstance()->WatchEffectType();
+	auto* dirPara = dirLight->Getter_Para();
+
+	switch (effectType)
+	{
+	case PostEffectType::kNone:
+		dirPara->intensity = 1.0f;
+
+		break;
+
+	case PostEffectType::kGreyScale:
+		dirPara->intensity = 1.0f;
+
+		break;
+
+	case PostEffectType::kSimpleNeonLike:
+		dirPara->intensity = 12.0f;
+
+		break;
+	}
 }
 
 void ModelScene::Draw()
@@ -17,6 +41,31 @@ void ModelScene::Draw()
 void ModelScene::Reset()
 {
 
+}
+
+void ModelScene::Save()
+{
+	std::string key = "/ID/";
+	Json::SaveParam(path, key + "dirLightIntensityNormal", dirLightIntensityNormal);
+	Json::SaveParam(path, key + "dirLightIntensityNeon", dirLightIntensityNeon);
+	Json::SaveParam(path, key + "dirLightDir", dirLightDir);
+	Json::SaveParam(path, key + "metalicCommonNormal", metalicCommonNormal);
+	Json::SaveParam(path, key + "roughnessCommonNormal", roughnessCommonNormal);
+	Json::SaveParam(path, key + "metalicCommonNeon", metalicCommonNeon);
+	Json::SaveParam(path, key + "roughnessCommonNeon", roughnessCommonNeon);
+	Json::Save(path);
+}
+
+void ModelScene::Load()
+{
+	std::string key = "/ID/";
+	Json::LoadParam(path, key + "dirLightIntensityNormal", dirLightIntensityNormal);
+	Json::LoadParam(path, key + "dirLightIntensityNeon", dirLightIntensityNeon);
+	Json::LoadParam(path, key + "dirLightDir", dirLightDir);
+	Json::LoadParam(path, key + "metalicCommonNormal", metalicCommonNormal);
+	Json::LoadParam(path, key + "roughnessCommonNormal", roughnessCommonNormal);
+	Json::LoadParam(path, key + "metalicCommonNeon", metalicCommonNeon);
+	Json::LoadParam(path, key + "roughnessCommonNeon", roughnessCommonNeon);
 }
 
 void ModelScene::Debug()
