@@ -12,7 +12,7 @@ PointLightPara::PointLightPara()
 
 RectLightPara::RectLightPara()
 {
-	intensity = 100.0f;
+	intensity = 10.0f;
 	color = {255,255,255};
 	attenuationRadius = 10.0f;
 	axisX = {1,0,0};

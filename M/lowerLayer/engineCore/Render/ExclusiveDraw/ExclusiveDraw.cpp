@@ -7,6 +7,8 @@
 #include "../../Buffer/constantBuffer/CameraParaBuffer/CameraParaBuffer.h"
 #include "../../../M.h"
 #include "../Palette/Palette.h"
+#include "../../Buffer/constantBuffer/Time/TimeConstBuffer.h"
+
 
 void ExclusiveDraw::Setter_PLightSrvIndex(uint16_t* pLightSrvIndex_)
 {
@@ -165,6 +167,49 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 		cList->DrawIndexedInstanced(indexCnt, 1, 0, 0,0);
 	}
 }
+
+void ExclusiveDraw::DrawShaderToy(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_,float time_)
+{
+	int n = (int)meshAndData_->Getter_ModelData().resMesh.size();
+
+	for (int i = 0; i < n; ++i)
+	{
+		auto* mesh = meshAndData_->Getter_MeshForModel(i);
+		auto* appearance = &(*meshAndData_->Getter_Appearance())[i];
+		auto* modelData = meshAndData_->Getter_ModelDataOfResMaterials(i);
+		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex,
+			BlendMode::kBlendModeNormal, CullMode::kCullModeNone);
+		auto* cList = src_pipeline->Getter_CommandList();
+
+		//Pipeline
+		cList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		src_pipeline->SetGraphicsRootSignature();
+		src_pipeline->SetPipelineState();
+
+		//VBV
+		cList->IASetVertexBuffers(0, 1, &mesh->vertexBuffer.view);
+		//IBV
+		cList->IASetIndexBuffer(&mesh->indexBuffer.view);
+
+		//[ 行列 ]
+		Matrix4 wMat = appearance->trans.GetWorldMatrix();
+		Matrix4 wvp = wMat.Multiply(*vpMat_);
+		mesh->transformMatrixBuffer.matrix.buffMap->world = wMat;
+		mesh->transformMatrixBuffer.matrix.buffMap->wvp = wvp;
+
+		//Cバッファの場所を指定
+		src_pipeline->SetConstantBufferViews(
+			0,
+			mesh->transformMatrixBuffer.matrix.GetVirtualGPUAddress(),
+			TimeConstBuffer::Get()->buffer.GetVirtualGPUAddress());
+
+		//描画
+		UINT indexCnt = (UINT)meshAndData_->Getter_ModelData().resMesh[i].indices.size();
+		cList->DrawIndexedInstanced(indexCnt, 1, 0, 0, 0);
+	}
+
+}
+
 
 void ExclusiveDraw::ResetDrawIndexes()
 {

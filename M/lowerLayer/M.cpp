@@ -65,6 +65,12 @@ void M::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 	exclusiveDraw->DrawModel(meshAndData_, vpMat_);
 }
 
+void M::DrawShaderToy(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
+{
+    exclusiveDraw->DrawShaderToy(meshAndData_, vpMat_, passedTime);
+}
+
+
 void M::DrawInstancingParticle2D(int numParticles_, Vector4 color_, int texHandle_,
 	BlendMode blendMode_, CullMode cullMode_, int shaderSet_,
 	std::vector<Transform> trans_, UVTransform* uvTrans_, Matrix4* vpMat_)

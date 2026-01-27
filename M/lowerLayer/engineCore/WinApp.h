@@ -97,7 +97,8 @@ public:
 
 private:
 
-	float windowColor[4] = { 0.02f,0.02f,0.02f,1.0f };
+	//float windowColor[4] = { 0.02f,0.02f,0.02f,1.0f };
+	float windowColor[4] = { 0.0f,0.0f,0.0f,1.0f };
 
 #ifdef _DEBUG
 	Microsoft::WRL::ComPtr <ID3D12Debug1> debugController = nullptr;

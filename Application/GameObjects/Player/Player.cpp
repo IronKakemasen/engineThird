@@ -6,9 +6,14 @@
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Config/InGameConfig.h"
+#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
 
 Player::Player()
 {
+	rectLight = M::GetInstance()->ImportRectLight();
+	auto* para = rectLight->Getter_Para();
+	para->isActive = 0;
+
 	// モデルのインスタンス化
 	model.reset(new PlayerModel);	
 
@@ -100,6 +105,8 @@ void Player::SaveData()
 // 更新処理
 void Player::Update()
 {
+	LightFollowPlayer();
+
 	//モデルの更新処理
 	model->Update();
 
@@ -460,4 +467,11 @@ void Player::NotifyAllyDeath(int32_t formationIndex)
 float Player::GetSpeed() const
 {
 	return inGameConfig->playerSpeed;
+}
+
+void Player::LightFollowPlayer()
+{
+	auto* para = rectLight->Getter_Para();
+	para->pos = trans.GetWorldPos();
+	para->pos.z -= 2.0f;
 }
