@@ -3,6 +3,7 @@
 #include <cstdint>
 
 class InGameConfig;
+struct InGameController;
 
 struct GameObjectEntity
 {
@@ -21,6 +22,11 @@ public:
 
 	// Jsonパス
 	std::string path;
+
+	float GetHP() const { return hp; }
+
+	// inGameController参照ポインタ
+	InGameController* inGameController = nullptr;
 
 protected:
 	// ID

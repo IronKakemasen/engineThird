@@ -1,7 +1,7 @@
 #pragma once
 #include <cstddef>
 
-#define StageCount 0
+//#define StageCount 0
 
 namespace GameConstants
 {
@@ -25,7 +25,6 @@ namespace GameConstants
 
 	// 最大ステージ数
 	inline constexpr size_t kMaxStages = 5;
-
 
 	// 味方は何フレーム遅れてついてくるか の MAX
 	inline constexpr uint32_t kAllyFollowDelayFramesMax = 120;

@@ -4,6 +4,7 @@
 #include "../../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../../Config/InGameConfig.h"
+#include "../../GameObjectManager/GameObjectManager.h"
 #include "../Json/Json.h"
 
 
@@ -42,6 +43,9 @@ void PlayerBullet::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -150,11 +154,6 @@ void PlayerBullet::DebugDraw()
 // エネミーとの衝突
 void PlayerBullet::CollisionBackToEnemy::operator()()
 {
-	//auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
-	//if (enemy->IsInvincible()) return;
-
-	////me->trans.scale = me->trans.scale + Vector3{ 0.5f, 0.0f, 0.5f };
-	////me->attackPower += 5.0f;
 }
 // 敵塔との衝突
 void PlayerBullet::CollisionBackToEnemyTower::operator()()

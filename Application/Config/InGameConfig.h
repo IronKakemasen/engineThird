@@ -23,9 +23,17 @@ public:
 	float enemyTowerMaxHP = 200.0f;
 	// 敵の工場の最大HP
 	float enemyFactoryMaxHP = 300.0f;
+	// ＃弾の生命時間
+	float playerBulletLifeTime = 3.0f;
 	
-	// プレイヤーのタワー無敵時間
-	float playerTowerInvincibleTime = 0.5f;
+
+	// ＃プレイヤーの移動速度
+	float playerSpeed = 0.1f;
+	// ＃敵の移動速度
+	float enemySpeed = 0.05f;
+	// ＃弾の速度
+	float playerBulletSpeed = 0.3f;
+	
 
 	// ＃プレイヤーのデフォルト攻撃力
 	float playerDefaultAttackPower = 10.0f;
@@ -35,22 +43,16 @@ public:
 	float playerAllySizeBonus = 0.1f;
 	// ＃敵の攻撃力
 	float enemyAttackPower = 5.0f;
-	
-	// ＃プレイヤーの移動速度
-	float playerSpeed = 0.1f;
-	// ＃敵の移動速度
-	float enemySpeed = 0.05f;
-	// ＃弾の速度
-	float playerBulletSpeed = 0.3f;
 
-	// ＃弾の生命時間
-	float playerBulletLifeTime = 3.0f;
 
 	// ＃敵の生成間隔
 	float enemySpawnInterval = 5.0f;
-
 	// ＃敵の味方と当たった時のノックバック力
-	float enemyKnockBackPowerToAlly = 1.0f;
+	float enemyKnockBackPowerToAlly = 2.0f;
+	// 敵の弾と当たった時のノックバック力
+	float enemyKnockBackPowerToBullet = 0.5f;
+	// 敵のプレイヤータワーと当たった時のノックバック力
+	float enemyKnockBackPowerToPlayerTower = 0.5f;
 
 
 	// 味方の遅延フレーム数

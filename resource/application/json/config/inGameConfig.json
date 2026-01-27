@@ -1,29 +1,31 @@
 {
     "enemy": {
-        "MaxHP": 100.0,
-        "defaultAttackPower": 5.0,
+        "MaxHP": 8.0,
+        "defaultAttackPower": 1.0,
         "knockBackPowerToAlly": 1.0,
-        "spawnInterval": 5.0,
+        "knockBackPowerToBullet": 0.10000000149011612,
+        "knockBackPowerToPTower": 0.30000001192092896,
+        "spawnInterval": 10.0,
         "speed": 0.019999999552965164
     },
     "enemyFactory": {
-        "MaxHP": 100.0
+        "MaxHP": 30.0
     },
     "enemyTower": {
         "MaxHP": 100.0
     },
     "player": {
-        "MaxHP": 100.0,
-        "allyDelayFrames": 30,
+        "MaxHP": 3.0,
+        "allyDelayFrames": 10,
         "allyPowerBonus": 20.0,
         "allySizeBonus": 0.5,
         "attackGaugeRecoverInterval": 0.5,
-        "attackGaugeRecoverSpeed": 0.019999999552965164,
+        "attackGaugeRecoverSpeed": 0.07999999821186066,
         "bullet": {
-            "lifeTime": 3.0,
-            "speed": 0.30000001192092896
+            "lifeTime": 1.0,
+            "speed": 0.20000000298023224
         },
-        "defaultAttackPower": 20.0,
+        "defaultAttackPower": 2.0,
         "speed": 0.10000000149011612
     },
     "playerTower": {

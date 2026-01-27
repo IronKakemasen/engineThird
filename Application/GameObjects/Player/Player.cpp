@@ -46,14 +46,16 @@ void Player::Reset()
 	LoadData();
 
 	// config反映
-	ConfigHotReload();
-	hp = MaxHP;
+	hp = inGameConfig->playerMaxHP;
 }
 
 void Player::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+
+	// inGameControllerポインタ取得
+	//inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -71,26 +73,6 @@ void Player::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
-}
-
-void Player::ConfigHotReload()
-{
-	if (inGameConfig)
-	{
-		// 移動速度反映
-		speed = inGameConfig->playerSpeed;
-		// デフォルト攻撃力反映
-		defaultAttackPower = inGameConfig->playerDefaultAttackPower;
-		// 味方補正値反映
-		allyPowerBonus = inGameConfig->playerAllyPowerBonus;
-		allySizeBonus = inGameConfig->playerAllySizeBonus;
-		// 最大HP反映
-		MaxHP = inGameConfig->playerMaxHP;
-		// 攻撃ゲージ回復速度反映
-		attackGaugeRecoverSpeed = inGameConfig->playerAttackGaugeRecoverSpeed;
-		// 攻撃ゲージ回復インターバル反映
-		attackGaugeRecoverInterval = inGameConfig->playerAttackGaugeRecoverInterval;
-	}
 }
 
 void Player::SpawnAlly(Vector3 pos)
@@ -126,11 +108,6 @@ void Player::Update()
 {
 	//モデルの更新処理
 	model->Update();
-
-#ifdef USE_IMGUI
-	// config反映
-	ConfigHotReload();
-#endif // USE_IMGUI
 
 	// 移動処理
 	Move();
@@ -289,7 +266,7 @@ void Player::Move()
 		//stopMoveFrame++;
 	}
 
-	trans.pos = trans.pos + moveDir * speed;
+	trans.pos = trans.pos + moveDir * inGameConfig->playerSpeed;
 }
 
 void Player::Attack()
@@ -299,7 +276,7 @@ void Player::Attack()
 	if (attackIntervalCounter.count >= 1.0f)
 	{
 		// 攻撃間隔経過後はゲージ回復
-		attackGauge += attackGaugeRecoverSpeed;
+		attackGauge += inGameConfig->playerAttackGaugeRecoverSpeed;
 		if (attackGauge > 3.0f)
 			attackGauge = 3.0f;
 	}
@@ -329,10 +306,10 @@ void Player::Attack()
 			else if (attackGauge >= 1.0f)stage = 1;
 			else stage = 0;
 
-			attackIntervalCounter.Initialize(attackGaugeRecoverInterval);
+			attackIntervalCounter.Initialize(inGameConfig->playerAttackGaugeRecoverInterval);
 
 			// リセット
-			bullet->Fire(trans.pos, trans.lookDir, stage, defaultAttackPower, allyPowerBonus, allySizeBonus);
+			bullet->Fire(trans.pos, trans.lookDir, stage, inGameConfig->playerDefaultAttackPower, inGameConfig->playerAllyPowerBonus, inGameConfig->playerAllySizeBonus);
 
 			break;
 		}
@@ -484,4 +461,9 @@ int32_t Player::TryReserveFormationIndex()
 void Player::NotifyAllyDeath(int32_t formationIndex)
 {
 	deadIndexList.push_back(formationIndex);
+}
+
+float Player::GetSpeed() const
+{
+	return inGameConfig->playerSpeed;
 }

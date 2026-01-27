@@ -11,10 +11,6 @@ private:
 	// config反映
 	void ConfigHotReload();
 
-	// 無敵時間
-	float invincibleTime = 0.5f;
-	Counter invincibleTimeCounter;
-
 public:
 
 #pragma endregion

@@ -99,9 +99,9 @@ void ShikouteiScene::Debug()
 
 	}
 
-	ImGui::Begin("Building Debug");
+	ImGui::Begin("Object Debug");
 
-	if (ImGui::BeginTabBar("Building", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
+	if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
 	{
 		if (ImGui::BeginTabItem("EnemyFactory"))
 		{
@@ -129,7 +129,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = enemyFactories[0]->path;
 
 				Json::SaveParam(path, key, Sum);
@@ -172,7 +172,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = playerTowers[0]->path;
 
 				Json::SaveParam(path, key, Sum);
@@ -214,7 +214,7 @@ void ShikouteiScene::Debug()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				std::string key = "/stage" + std::to_string(StageCount) + "/ActiveCount";
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
 				std::string path = enemyTowers[0]->path;
 				Json::SaveParam(path, key, Sum);
 				for (auto& tower : enemyTowers)
@@ -230,17 +230,53 @@ void ShikouteiScene::Debug()
 			ImGui::EndTabItem();
 		}
 
-		if (ImGui::BeginTabItem("Player"))
-		{
-			player->DebugDraw();
-			ImGui::EndTabItem();
-		}
-
 		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
 
+	ImGui::Begin("Object ");
+
+	if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
+	{
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
+		for (int32_t i = 0; i < playerTowers.size(); ++i)
+		{
+			if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyTowers.size(); ++i)
+		{
+			if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyFactories.size(); ++i)
+		{
+			if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
+			}
+		}
+
+		ImGui::EndTabBar();
+	}
+	ImGui::End();
+
+	ImGui::Begin("Object de");
+	if (ImGui::BeginTabBar("Player"))
+	{
+		player->DebugDraw();
+		ImGui::EndTabBar();
+	}
+
+	ImGui::End();
+
+
+	ImGui::Begin("InGameConfig");
 	inGameConfig->DebugDraw();
 	ImGui::End();
 

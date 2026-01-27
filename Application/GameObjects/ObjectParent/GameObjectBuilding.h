@@ -5,6 +5,7 @@
 #include "../../Config/GameConstants.h"
 
 class InGameConfig;
+struct InGameController;
 
 struct GameObjectBuilding
 {
@@ -24,12 +25,18 @@ public:
 	// Jsonパス
 	std::string path;
 
+	// inGameController参照ポインタ
+	InGameController* inGameController = nullptr;
+
+
+	float GetHP() const { return hp; }
+
 protected:
 	// ID
 	int32_t ID = -1;
 
 	// ステージごとのActive数
-	int32_t stageActiveCounts;
+	int32_t stageActiveCounts = 0;
 
 	// HP
 	float hp = 100.0f;

@@ -7,6 +7,7 @@
 
 struct Player;
 struct PlayerTower;
+struct PlayerBullet;
 
 struct Enemy :public GameObject , public GameObjectEntity
 {
@@ -25,48 +26,36 @@ private:
 	// ノックバック関数(float power:ノックバックの強さ)
 	void KnockBack(float power);
 
-	// 無敵判定更新
-	void UpdateInvincibleTime();
-	int32_t invincibleTime = 0;	// 無敵時間
-
-	// config反映
-	void ConfigHotReload();
-
 	// ノックバック速度
 	Vector3 knockBackVelocity{};
 	// 移動速度
 	Vector3 moveVelocity{};
 
-	// 移動速度の大きさ
-	float speed = 0.05f;
 
-	// 味方と当たったときのノックバック力
-	float knockBackPowerOnAlly = 0.2f;
+	// 衝突弾リスト更新
+	void UpdateHitBullets();
+	// そのターンで衝突した弾のリスト（多重衝突防止用）
+	std::vector<PlayerBullet*> hitBullets{};
 
-	// 攻撃力
-	float attackPower = 10.0f;
-
-	// HP最大値
-	float maxHP = 100.0f;
 
 	// 参照ポインタ
 	std::vector<PlayerTower*> playerTowers{};
 	Player* targetPlayer = nullptr;
-
-
 
 public:
 	// ポインタのセット
 	void SetTargetTower(PlayerTower* tower) { playerTowers.push_back(tower); };
 	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
 
-	// 現在無敵かどうか
-	bool IsInvincible() { return invincibleTime > 0; }
+	// 衝突した弾をリストに追加
+	void AddHitBullet(PlayerBullet* bullet);
+	// その弾が既に衝突リストにあるか
+	bool IsInHitBulletList(PlayerBullet* bullet);
 
 	// 工場から生まれる
 	void Spawn(Vector3 pos);
 
-	float GetAttackPower() { return attackPower; }
+	float GetAttackPower();
 
 #pragma	endregion
 

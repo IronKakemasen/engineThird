@@ -42,15 +42,22 @@ void Enemy::Reset()
 
 	// 初期向きを最近のターゲット方向に設定
 	LookAtTarget();
-
-	// config反映
-	ConfigHotReload();
 }
 
 void Enemy::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+	// プレイヤーポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+	// タワーポインタ取得
+	for (auto& towerObj : gameObjectManager->Find(Tag::kPlayerTower))
+	{
+		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
+	}
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -66,14 +73,25 @@ void Enemy::Init()
 	collisionBackToPlayerTower.Init(this);
 	collisionBackToPlayerAlly.Init(this);
 
-	// ポインタ取得
-	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
-	for (auto& towerObj : gameObjectManager->Find(Tag::kPlayerTower))
-	{
-		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
-	}
 
 	trans.interpolationCoe = 0.1f;
+}
+
+void Enemy::AddHitBullet(PlayerBullet* bullet)
+{
+	hitBullets.push_back(bullet);
+}
+
+bool Enemy::IsInHitBulletList(PlayerBullet* bullet)
+{
+	for (auto& hitBullet : hitBullets)
+	{
+		if (hitBullet == bullet)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Enemy::Spawn(Vector3 pos)
@@ -83,7 +101,12 @@ void Enemy::Spawn(Vector3 pos)
 	// 初期座標設定
 	trans.pos = pos;
 	// 体力初期化
-	hp = maxHP;
+	hp = inGameConfig->enemyMaxHP;
+}
+
+float Enemy::GetAttackPower()
+{
+	return inGameConfig->enemyAttackPower;
 }
 
 void Enemy::SetCollisionBackTable()
@@ -102,18 +125,9 @@ void Enemy::SetCollisionBackTable()
 // データ保存・読み込み
 void Enemy::LoadData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
-
-	Json::LoadParam(path, key + "/position", trans.pos);
-	Json::LoadParam(path, key + "/speed", speed);
 }
 void Enemy::SaveData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
-
-	Json::SaveParam(path, key + "/position", trans.pos);
-	Json::SaveParam(path, key + "/speed", speed);
-	Json::Save(path);
 }
 
 void Enemy::Update()
@@ -121,19 +135,14 @@ void Enemy::Update()
 	//モデルの更新処理
 	model->Update();
 
-#ifdef USE_IMGUI
-	// config反映
-	ConfigHotReload();
-#endif // USE_IMGUI
-
 	// 移動処理
 	MoveToTarget();
 
 	// ノックバック処理
 	MoveKnockBack();
 
-	// 無敵時間更新
-	UpdateInvincibleTime();
+	// 衝突弾リスト更新
+	UpdateHitBullets();
 
 	Vector3 finalVelocity = moveVelocity + knockBackVelocity;
 	trans.pos = trans.pos + finalVelocity;
@@ -152,16 +161,6 @@ void Enemy::MoveToTarget()
 
 		}
 	}
-
-	//// プレイヤーが近ければプレイヤーを追う
-	//if (dirToPlayer.GetMagnitutde() < GameConstants::kEnemyRecognizeDistance)
-	//{
-	//	lastDir = dirToPlayer;
-	//}
-	// プレイヤーが近ければプレイヤーを追う
-	//if (!dirToPlayer.IsBigger(GameConstants::kEnemyRecognizeDistance))
-	//{
-	//	lastDir = dirToPlayer;
   
 	// 最も近いタワーを追う
 	size_t nearestTowerIndex = 0;
@@ -181,7 +180,7 @@ void Enemy::MoveToTarget()
 	trans.lookDir = Easing::SLerp(trans.lookDir, lastDir, trans.interpolationCoe);
 
 	// エネミー ⇒ 塔　移動ベクトル
-	moveVelocity = trans.lookDir.GetNormalized() * speed;
+	moveVelocity = trans.lookDir.GetNormalized() * inGameConfig->enemySpeed;
 }
 
 void Enemy::LookAtTarget()
@@ -242,32 +241,30 @@ void Enemy::MoveKnockBack()
 
 void Enemy::KnockBack(float power)
 {
+	Vector2 randomRotateVec = Vector2(trans.lookDir.x, trans.lookDir.z); 
+	float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
+	float theta = deg * (3.1415f / 180.0f);
+	randomRotateVec = Vector2(
+		trans.lookDir.x * cosf(theta) - trans.lookDir.z * sinf(theta),
+		trans.lookDir.x * sinf(theta) + trans.lookDir.z * cosf(theta)
+	).GetNormalized();
+	trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
+
 	knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
 }
 
-void Enemy::UpdateInvincibleTime()
+void Enemy::UpdateHitBullets()
 {
-	if (invincibleTime > 0)
+	for (size_t i = 0; i < hitBullets.size(); ++i)
 	{
-		invincibleTime -= 1;
+		if (hitBullets[i]->GetStatus() == Status::kInActive)
+		{
+			hitBullets.erase(hitBullets.begin() + i);
+			--i;
+		}
 	}
 }
 
-void Enemy::ConfigHotReload()
-{
-	// config反映
-	if (inGameConfig)
-	{
-		// 移動速度反映
-		speed = inGameConfig->enemySpeed;
-		// 味方と当たったときのノックバック力反映
-		knockBackPowerOnAlly = inGameConfig->enemyKnockBackPowerToAlly;
-		// HP反映
-		maxHP = inGameConfig->enemyMaxHP;
-		// 攻撃力反映
-		attackPower = inGameConfig->enemyAttackPower;
-	}
-}
 
 void Enemy::Draw(Matrix4* vpMat_)
 {
@@ -278,9 +275,6 @@ void Enemy::Draw(Matrix4* vpMat_)
 void Enemy::DebugDraw()
 {
 #ifdef USE_IMGUI
-
-	std::string tag = "speed##" + std::to_string(speed);
-	ImGui::DragFloat(tag.c_str(), &speed, 0.01f, 0.0f, 10.0f);
 
 #endif // USE_IMGUI
 }
@@ -295,26 +289,22 @@ void Enemy::CollisionBackToPlayer::operator()()
 // プレイヤー弾との衝突
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
-	if (me->invincibleTime > 0)
-	{
-		// 無敵時間中は何もしない
-		return;
-	}
+	auto* bullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
 
-	// プレイヤー弾のポインタを取得
-	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+	// 既に衝突済みなら何もしない
+	if (me->IsInHitBulletList(bullet)) return;
+
+	// 衝突リストに追加
+	me->AddHitBullet(bullet);
 
 	// ノックバック付与
-	me->KnockBack(0.2f);
-
-	// 無敵付与
-	me->invincibleTime = 20;
+	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet);
 
 	// ダメージ処理
-	me->hp = me->hp - playerBullet->GetAttackPower();
+	me->hp = me->hp - bullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f && playerBullet->GetAttackStage() == 0)
+	if (me->hp < 0.0f && bullet->GetAttackStage() == 0)
 	{
 		me->SetStatus(Status::kInActive);
 
@@ -325,7 +315,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	me->KnockBack(2.1f);
+	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToPlayerTower);
 }
 
 // プレイヤー味方との衝突
@@ -335,7 +325,7 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 
 	if (playerAlly->formationCurrentIndex != -1)
 	{
-		me->KnockBack(me->knockBackPowerOnAlly);
+		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToAlly);
 		playerAlly->Death();
 	}
 }
