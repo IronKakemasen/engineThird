@@ -94,6 +94,38 @@ void EnemyTower::SaveData()
 void EnemyTower::Update()
 {
 	model->Update();
+
+	// 衝突弾リスト更新
+	UpdateHitBullets();
+}
+
+void EnemyTower::AddHitBullet(PlayerBullet* bullet)
+{
+	hitBullets.push_back(bullet);
+}
+
+bool EnemyTower::IsInHitBulletList(PlayerBullet* bullet)
+{
+	for (auto& hitBullet : hitBullets)
+	{
+		if (hitBullet == bullet)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void EnemyTower::UpdateHitBullets()
+{
+	for (size_t i = 0; i < hitBullets.size(); ++i)
+	{
+		if (hitBullets[i]->GetStatus() == Status::kInActive)
+		{
+			hitBullets.erase(hitBullets.begin() + i);
+			--i;
+		}
+	}
 }
 
 void EnemyTower::Draw(Matrix4* vpMat_)
@@ -136,10 +168,15 @@ void EnemyTower::DebugDraw()
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
 {
 	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+	
+	// 既に衝突リストにあるなら何もしない
+	if (me->IsInHitBulletList(playerBullet)) return;
+
+	// 衝突リストに追加
+	me->AddHitBullet(playerBullet);
 
 	me->hp = me->hp - playerBullet->GetAttackPower();
-
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 	}

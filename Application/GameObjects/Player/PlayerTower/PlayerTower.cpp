@@ -140,7 +140,7 @@ void PlayerTower::CollisionBackToEnemy::operator()()
 
 	me->hp = me->hp - enemy->GetAttackPower();
 
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 	}

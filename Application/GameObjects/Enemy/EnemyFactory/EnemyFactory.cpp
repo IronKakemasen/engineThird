@@ -210,7 +210,7 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 
 	// ダメージ処理
 	me->hp = me->hp - playerBullet->GetAttackPower();
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 	}

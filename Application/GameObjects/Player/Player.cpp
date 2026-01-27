@@ -296,9 +296,9 @@ void Player::Attack()
 				attackGauge = 0.0f;
 
 			int32_t stage = 0;
-			if (attackGauge >= 2.0f)stage = 2;
+			if (attackGauge >= 2.0f)stage = 0;
 			else if (attackGauge >= 1.0f)stage = 1;
-			else stage = 0;
+			else stage = 2;
 
 			attackIntervalCounter.Initialize(inGameConfig->playerAttackGaugeRecoverInterval);
 
