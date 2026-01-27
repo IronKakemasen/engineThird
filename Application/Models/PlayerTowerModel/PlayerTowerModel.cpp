@@ -41,6 +41,7 @@ void PlayerTowerModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
+	appearance->color = { 0,0,255,255 };
 }
 
 void PlayerTowerModel::Reset()

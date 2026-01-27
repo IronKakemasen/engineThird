@@ -4,12 +4,12 @@
 
 void StageSelectScene::Update()
 {
-	//if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
-	//{
-	//	SceneBehavior::doReset = true;
-	//}
+	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
+	{
+		SceneBehavior::doReset = true;
+	}
 
-	//mainCamera.Update();
+	mainCamera.Update();
 
 	//// みたいにカメラターゲットを変える？
 	//mainCamera.player = player[0][0].get();
@@ -54,50 +54,6 @@ void StageSelectScene::Draw()
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
-
-	//for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
-	//{
-	//	// プレイヤー描画
-	//	for (size_t i = 0; i < player[stageIndex].size(); ++i)
-	//	{
-	//		player[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// テスト地面描画
-	//	for (size_t i = 0; i < shikouteis[stageIndex].size(); ++i)
-	//	{
-	//		shikouteis[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// プレイヤータワーのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
-	//	{
-	//		playerTowers[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// プレイヤーアリーのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-	//	{
-	//		allies[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// プレイヤーバレットのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-	//	{
-	//		playerBullets[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// エネミーのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-	//	{
-	//		enemies[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// エネミータワーのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
-	//	{
-	//		enemyTowers[stageIndex][i]->Draw(vpMat);
-	//	}
-	//	// エネミーファクトリーのインスタンス化 & IDセット
-	//	for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
-	//	{
-	//		enemyFactories[stageIndex][i]->Draw(vpMat);
-	//	}
-	//}
 
 }
 

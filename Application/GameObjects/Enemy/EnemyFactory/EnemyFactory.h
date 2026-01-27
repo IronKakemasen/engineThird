@@ -15,7 +15,7 @@ private:
 	// 参照ポインタ
 	std::vector<Enemy*> enemies{};
 
-	Counter timer;
+	Counter spawnCounter;
 
 	// 衝突弾リスト更新
 	void UpdateHitBullets();

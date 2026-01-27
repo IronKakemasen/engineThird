@@ -15,13 +15,6 @@ Enemy::Enemy()
 	// モデルのインスタンス化
 	model.reset(new EnemyModel);
 
-	//必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 200,50,50,255 };
-	
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyData.json";
 }
@@ -49,6 +42,14 @@ void Enemy::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
+	// identityTableにセットされている通りに、identityを定める
+	// タグ、名前、衝突判定マスキング
+	SetIdentity(Tag::kEnemy);
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(1.0f);
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
 	// inGameControllerポインタ取得
 	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 	// プレイヤーポインタ取得
@@ -59,21 +60,13 @@ void Enemy::Init()
 		playerTowers.push_back(reinterpret_cast<PlayerTower*>(towerObj));
 	}
 
-	// identityTableにセットされている通りに、identityを定める
-	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::kEnemy);
-	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
-	// 衝突判定をするかどうか定める
-	SwitchCollisionActivation(true);
-
 	// collisionBackの初期化
 	collisionBackToPlayer.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 	collisionBackToPlayerTower.Init(this);
 	collisionBackToPlayerAlly.Init(this);
 
-
+	// 補完係数設定
 	trans.interpolationCoe = 0.1f;
 }
 
@@ -290,6 +283,7 @@ void Enemy::CollisionBackToPlayer::operator()()
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
 	auto* bullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+	int32_t attackStage = bullet->GetAttackStage();
 
 	// 既に衝突済みなら何もしない
 	if (me->IsInHitBulletList(bullet)) return;
@@ -298,13 +292,18 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->AddHitBullet(bullet);
 
 	// ノックバック付与
-	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet);
+	if (attackStage == 0)
+		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet1);
+	else if (attackStage == 1)
+		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet2);
+	else if (attackStage == 2)
+		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet3);
 
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f && bullet->GetAttackStage() == 0)
+	if (me->hp < 0.0f && attackStage == 0)
 	{
 		me->SetStatus(Status::kInActive);
 

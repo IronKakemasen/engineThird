@@ -4,6 +4,9 @@
         "defaultAttackPower": 1.0,
         "knockBackPowerToAlly": 1.0,
         "knockBackPowerToBullet": 0.10000000149011612,
+        "knockBackPowerToBullet1": 0.10000000149011612,
+        "knockBackPowerToBullet2": 1.0,
+        "knockBackPowerToBullet3": 1.5,
         "knockBackPowerToPTower": 0.30000001192092896,
         "spawnInterval": 10.0,
         "speed": 0.019999999552965164
@@ -21,6 +24,9 @@
         "allySizeBonus": 0.5,
         "attackGaugeRecoverInterval": 0.5,
         "attackGaugeRecoverSpeed": 0.07999999821186066,
+        "attak1Power": 3.0,
+        "attak2Power": 15.0,
+        "attak3Power": 25.0,
         "bullet": {
             "lifeTime": 1.0,
             "speed": 0.20000000298023224

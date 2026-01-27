@@ -36,7 +36,9 @@ public:
 	
 
 	// ＃プレイヤーのデフォルト攻撃力
-	float playerDefaultAttackPower = 10.0f;
+	float playerAttack1Power = 5.0f;
+	float playerAttack2Power = 20.0f;
+	float playerAttack3Power = 30.0f;
 	// ＃味方を経由するごとに増える攻撃力補正値
 	float playerAllyPowerBonus = 2.0f;
 	// ＃味方を経由するごとに増えるサイズ補正値
@@ -50,7 +52,9 @@ public:
 	// ＃敵の味方と当たった時のノックバック力
 	float enemyKnockBackPowerToAlly = 2.0f;
 	// 敵の弾と当たった時のノックバック力
-	float enemyKnockBackPowerToBullet = 0.5f;
+	float enemyKnockBackPowerToBullet1 = 0.1f;
+	float enemyKnockBackPowerToBullet2 = 1.0f;
+	float enemyKnockBackPowerToBullet3 = 1.5f;
 	// 敵のプレイヤータワーと当たった時のノックバック力
 	float enemyKnockBackPowerToPlayerTower = 0.5f;
 
