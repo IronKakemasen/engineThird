@@ -179,6 +179,9 @@
     <ClCompile Include="Application\Config\InGameConfig.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
     <ClCompile Include="Application\Models\GroundPlane\GroundPlane.cpp" />
+    <ClCompile Include="Application\GameObjects\ForModelView\PM.cpp" />
+    <ClCompile Include="Application\GameObjects\ForModelView\groundM.cpp" />
+    <ClCompile Include="Application\GameObjects\Ground\Ground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -359,6 +362,9 @@
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
     <ClInclude Include="Application\Models\GroundPlane\GroundPlane.h" />
+    <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
+    <ClInclude Include="Application\GameObjects\ForModelView\groundM.h" />
+    <ClInclude Include="Application\GameObjects\Ground\Ground.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

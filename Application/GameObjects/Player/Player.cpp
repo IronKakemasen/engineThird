@@ -266,6 +266,15 @@ void Player::Move()
 			if (down) moveDir.z -= 1.0f;
 		}
 	}
+	else
+	{
+		auto* m = M::GetInstance();
+
+		if (m ->IsKeyPressed(KeyType::A)) moveDir.x -= 1.0f;
+		if (m ->IsKeyPressed(KeyType::D)) moveDir.x += 1.0f;
+		if (m ->IsKeyPressed(KeyType::W)) moveDir.z += 1.0f;
+		if (m ->IsKeyPressed(KeyType::S)) moveDir.z -= 1.0f;
+	}
 
 	// 正規化
 	moveDir = moveDir.GetNormalized();
@@ -355,13 +364,6 @@ void Player::UpdateLookDir()
 		if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
 		target.x = rightStick.x;
 		target.z = rightStick.y;
-	}
-	else
-	{
-		if (M::GetInstance()->IsKeyPressed(KeyType::UP))	target.z += 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::DOWN))	target.z -= 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) target.x += 1.0f;
-		if (M::GetInstance()->IsKeyPressed(KeyType::LEFT))	target.x -= 1.0f;
 	}
 
 	if (target.x == 0.0f && target.z == 0.0f) return;

@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\GameObjects\ForModelView\PM.cpp" />
     <ClCompile Include="Application\GameObjects\InGameController\Actor.cpp" />
     <ClCompile Include="Application\Scenes\InGameScene\InGameConstructor.cpp" />
     <ClCompile Include="Application\Scenes\ModelScene\ModelSceneConstructor.cpp" />
@@ -154,6 +155,8 @@
     <ClCompile Include="Application\Cameras\MainCamera\CameraActions.cpp" />
     <ClCompile Include="Application\Config\InGameConfig.cpp" />
     <ClCompile Include="Application\Models\GroundPlane\GroundPlane.cpp" />
+    <ClCompile Include="Application\GameObjects\ForModelView\groundM.cpp" />
+    <ClCompile Include="Application\GameObjects\Ground\Ground.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -319,6 +322,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
     <ClInclude Include="Application\GameObjects\InGameController\Actor.h" />
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
     <ClInclude Include="Application\Config\GameConstants.h" />
@@ -330,6 +334,8 @@
     <ClInclude Include="Application\GameObjects\InGameController\InGameController.h" />
     <ClInclude Include="Application\Cameras\MainCamera\CameraActions.h" />
     <ClInclude Include="Application\Models\GroundPlane\GroundPlane.h" />
+    <ClInclude Include="Application\GameObjects\ForModelView\groundM.h" />
+    <ClInclude Include="Application\GameObjects\Ground\Ground.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />

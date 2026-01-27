@@ -1,5 +1,41 @@
 #include "PlayerModel.h"
 
+void PlayerModel::Save()
+{
+	std::string key = "/ID/";
+	int i = 0;
+	for (auto* m : models)
+	{
+		Json::SaveParam(path, key + "pos" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.pos);
+		Json::SaveParam(path, key + "rotation" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.rotation);
+		Json::SaveParam(path, key + "lookDir" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.lookDir);
+
+		++i;
+	}
+
+	Json::Save(path);
+}
+
+void PlayerModel::Load()
+{
+	std::string key = "/ID/";
+	int i = 0;
+	for (auto* m : models)
+	{
+		Json::LoadParam(path, key + "pos" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.pos);
+		Json::LoadParam(path, key + "rotation" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.rotation);
+		Json::LoadParam(path, key + "lookDir" + std::to_string(i),
+			m->Getter_Appearance(0)->trans.lookDir);
+
+		++i;
+	}
+}
+
 PlayerModel::PlayerModel()
 {
 	//モデルの生成(必須)
@@ -59,6 +95,8 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 		appe->SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	}
+
+	Load();
 
 	//appearance->metalic = 0.72f;
 	//appearance->roughness = 0.4f;
