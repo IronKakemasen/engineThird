@@ -202,7 +202,7 @@ void SceneController::Init(SceneType firstScene_)
 		forDebug.ps[i] = M::GetInstance()->ImportPointLight();
 		forDebug.ps[i]->Getter_Para()->isActive = true;
 		forDebug.ps[i]->Getter_Para()->invSqrRadius = 200.0f;
-		forDebug.ps[i]->Getter_Para()->color = { 200,200,50 };
+		forDebug.ps[i]->Getter_Para()->color = { 200,200,200};
 
 	}
 #endif // _DEBUG

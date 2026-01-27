@@ -79,7 +79,6 @@ void ShikouteiScene::Debug()
 #ifdef USE_IMGUI
 
 	
-
 	ImGui::Begin("InGameController");
 	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
 	ImGui::Text( "Count : %.1f", *inGameController->GetCnt());

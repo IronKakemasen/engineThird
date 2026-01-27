@@ -1,12 +1,14 @@
 #pragma once
 #include "ModelBehavior.h"
-
+#include "../../utilities/Json/Json.h"
 
 class PlayerModel :public ModelBehavior
 {
 
-
+	void Load();
 public:
+
+	void Save();
 
 	std::unique_ptr<ModelSimple> head;
 	std::unique_ptr<ModelSimple> body;
@@ -16,6 +18,8 @@ public:
 	std::unique_ptr<ModelSimple> leg_R;
 
 	std::vector<ModelSimple*> models;
+
+	std::string path = "./resource/application/json/PlayerModel/PlayerModel.json";
 
 	PlayerModel();
 	virtual void Update()override;
