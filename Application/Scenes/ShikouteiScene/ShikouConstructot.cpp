@@ -10,9 +10,6 @@ void ShikouteiScene::Instantiate()
 {
 	inGameController.reset(new InGameController);
 
-	// resource/application/json からデータをロード
-	Json::LoadAll("./resource/application/json/");
-
 	inGameConfig = std::make_unique<InGameConfig>();
 	inGameConfig->Load();
 

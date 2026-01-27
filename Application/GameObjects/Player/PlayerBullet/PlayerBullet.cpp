@@ -7,18 +7,10 @@
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../Json/Json.h"
 
-
 PlayerBullet::PlayerBullet()
 {
 	//モデルのインスタンス化
 	model.reset(new PlayerBulletModel);
-
-	//必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/PlayerBulletData.json";
@@ -44,9 +36,6 @@ void PlayerBullet::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
-	// inGameControllerポインタ取得
-	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
-
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerBullet);
@@ -54,6 +43,9 @@ void PlayerBullet::Init()
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// collisionBackToEnemyの初期化
 	collisionBackToEnemy.Init(this);
@@ -81,7 +73,7 @@ void PlayerBullet::ConfigHotReload()
 	}
 }
 
-void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, float powerBonus, float sizeBonus)
+void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 {
 	// リセット
 	trans.scale = Vector3(0.5f, 0.2f, 0.5f);
@@ -100,11 +92,16 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage, float power, fl
 	// カウンター設定
 	lifeCounter.Initialize(defaultLifeTime);
 	// 攻撃力リセット
-	attackPower = power;
+	if (stage == 0)
+		attackPower = inGameConfig->playerAttack1Power;
+	else if (stage == 1)
+		attackPower = inGameConfig->playerAttack2Power;
+	else if (stage == 2)
+		attackPower = inGameConfig->playerAttack3Power;
 	// 味方経由攻撃力補正値設定
-	allyPowerBonus = powerBonus;
+	allyPowerBonus = inGameConfig->playerAllyPowerBonus;
 	// 味方経由サイズ補正値設定
-	allySizeBonus = sizeBonus;
+	allySizeBonus = inGameConfig->playerAllySizeBonus;
 }
 
 // データ保存・読み込み

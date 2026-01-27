@@ -11,13 +11,6 @@ PlayerTower::PlayerTower()
 	// モデルのインスタンス化
 	model.reset(new PlayerTowerModel);
 
-	// 必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 0,0,255,255 };
-
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerTowerData.json";
 }
@@ -47,23 +40,12 @@ void PlayerTower::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
-
-	// config反映
-	if (inGameConfig)
-	{
-		// HP反映
-		hp = inGameConfig->playerTowerMaxHP;
-	}
 }
 
 void PlayerTower::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
-
-	// inGameControllerポインタ取得
-	inGameController =
-		reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -72,6 +54,9 @@ void PlayerTower::Init()
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
@@ -91,6 +76,10 @@ void PlayerTower::LoadData()
 	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
+
+	/// config反映
+	// HP反映
+	hp = inGameConfig->playerTowerMaxHP;
 }
 void PlayerTower::SaveData()
 {

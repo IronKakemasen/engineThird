@@ -39,8 +39,9 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.0f;
-	appearance->roughness = 1.0f;
+	appearance->metalic = 0.72f;
+	appearance->roughness = 0.4f;
+	appearance->color = { 200,50,50,255 };
 }
 
 void EnemyModel::Reset()

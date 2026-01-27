@@ -44,18 +44,12 @@ void Player::Reset()
 
 	// データ読み込み
 	LoadData();
-
-	// config反映
-	hp = inGameConfig->playerMaxHP;
 }
 
 void Player::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
-
-	// inGameControllerポインタ取得
-	//inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -64,6 +58,10 @@ void Player::Init()
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// inGameControllerポインタ取得
+	//inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
@@ -91,16 +89,12 @@ void Player::SpawnAlly(Vector3 pos)
 // データ保存・読み込み
 void Player::LoadData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
 
-	Json::LoadParam(path, key + "/position", trans.pos);
+	// config反映
+	hp = inGameConfig->playerMaxHP;
 }
 void Player::SaveData()
 {
-	std::string key = "/ID:" + std::to_string(ID);
-
-	Json::SaveParam(path, key + "/position", trans.pos);
-	Json::Save(path);
 }
 
 // 更新処理
@@ -309,7 +303,7 @@ void Player::Attack()
 			attackIntervalCounter.Initialize(inGameConfig->playerAttackGaugeRecoverInterval);
 
 			// リセット
-			bullet->Fire(trans.pos, trans.lookDir, stage, inGameConfig->playerDefaultAttackPower, inGameConfig->playerAllyPowerBonus, inGameConfig->playerAllySizeBonus);
+			bullet->Fire(trans.pos, trans.lookDir, stage);
 
 			break;
 		}

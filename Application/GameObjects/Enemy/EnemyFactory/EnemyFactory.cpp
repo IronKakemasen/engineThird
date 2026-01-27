@@ -8,22 +8,17 @@
 #include "../../Enemy/Enemy.h"
 #include "../../InGameController/InGameController.h"
 
+// 
 EnemyFactory::EnemyFactory()
 {
 	//モデルのインスタンス化
 	model.reset(new EnemyFactoryModel);
 
-	//必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
-
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyFactoryData.json";
 }
 
+// リセット処理(ステージ切り替え毎に呼び出す)
 void EnemyFactory::Reset()
 {
 	// モデルのリセット（中身が書いてあれば）
@@ -49,15 +44,21 @@ void EnemyFactory::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
-
-	// タイマーリセット
-	timer.Initialize(inGameConfig->enemySpawnInterval);
 }
 
+// 初期化処理
 void EnemyFactory::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	
+	// identityTableにセットされている通りに、identityを定める
+	// タグ、名前、衝突判定マスキング
+	SetIdentity(Tag::kEnemyFactory);
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(1.0f);
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
 
 	// inGameControllerポインタ取得
 	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
@@ -66,26 +67,17 @@ void EnemyFactory::Init()
 	{
 		enemies.push_back(reinterpret_cast<Enemy*>(towerObj));
 	}
-	
-	// identityTableにセットされている通りに、identityを定める
-	// タグ、名前、衝突判定マスキング
-	SetIdentity(Tag::kEnemyFactory);
-	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
-
-	// 衝突判定をするかどうか定める
-	SwitchCollisionActivation(true);
 
 	// collisionBackToPlayerBulletの初期化
 	collisionBackToPlayerBullet.Init(this);
 }
 
+// コリジョンバックテーブル設定
 void EnemyFactory::SetCollisionBackTable()
 {
 	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
 }
-
 
 // データ保存・読み込み
 void EnemyFactory::LoadData()
@@ -96,7 +88,11 @@ void EnemyFactory::LoadData()
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 
+	/// config反映
+	// HP設定
 	hp = inGameConfig->enemyFactoryMaxHP;
+	// スポーン頻度初期化
+	spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
 }
 void EnemyFactory::SaveData()
 {
@@ -149,15 +145,15 @@ void EnemyFactory::UpdateHitBullets()
 }
 void EnemyFactory::SpawnEnemy()
 {
-	timer.Add();
-	if (timer.IsEnd())
+	spawnCounter.Add();
+	if (spawnCounter.IsEnd())
 	{
 		for (auto& enemy : enemies)
 		{
 			if (enemy->GetStatus() == Status::kInActive)
 			{
 				enemy->Spawn(trans.pos);
-				timer.Initialize(inGameConfig->enemySpawnInterval);
+				spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
 				break;
 			}
 		}
