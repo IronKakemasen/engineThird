@@ -14,7 +14,8 @@ void ModelScene::Init()
 {
 	M::GetInstance()->ChangePostEffect(PostEffectType::kNone);
 	p.Init();
+	gm.Init();
 
-	gameObjManager->RegisterForContainer(&p);
+	gameObjManager->RegisterForContainer(&p,&gm);
 
 }

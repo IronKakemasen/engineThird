@@ -1,14 +1,15 @@
 #pragma once
 #include "SceneBehavior.h"
-#include "../../GameObjects/Player/Player.h"
+#include "../../GameObjects/ForModelView/PM.h"
+#include "../../GameObjects/ForModelView/groundM.h"
 
 class ModelScene final : public Scene
 {
 
 public:
 	ModelScene();
-	Player p;
-
+	PM p;
+	groundM gm;
 	//↓呼び出す必要なし。↓
 	//更新処理
 	virtual void Update() override;
