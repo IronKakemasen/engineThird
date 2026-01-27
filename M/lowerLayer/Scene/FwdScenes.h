@@ -4,3 +4,4 @@
 #include "../../../Application/Scenes/ModelScene/ModelScene.h"
 #include "../../../Application/Scenes/TitleScene/TitleScene.h"
 #include "../../../Application/Scenes/TutorialScene/TutorialScene.h"
+#include "../../../Application/Scenes/StageSelectScene/StageSelectScene.h"

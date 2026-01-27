@@ -1,22 +1,18 @@
 #pragma once
 #include "GameObjectBehavior.h"
+#include "../../GameObjects/ObjectParent/GameObjectBuilding.h"
 #include "../../Models/Shikoutei/ShikouteiModel.h"
 
 
-struct Shikoutei :public GameObject
+struct Shikoutei :public GameObject, public GameObjectBuilding
 {
 private:
 	//使用するモデル
 	std::unique_ptr<ShikouteiModel> shikoModel;
-	
-	//コリジョンバック用の関数オブジェクト
-	struct CollisionBackToTheFuture
-	{
-		Shikoutei* shikoutei = nullptr;
-		void operator()();
-		void Init(Shikoutei* shikoutei_);
-	};
-	CollisionBackToTheFuture collisionBackToTheFuture;
+
+	void LoadData() override;
+	void SaveData() override;
+	void DebugDraw() override;
 
 
 public:

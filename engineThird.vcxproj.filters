@@ -179,6 +179,8 @@
     <ClCompile Include="Application\Config\InGameConfig.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
     <ClCompile Include="Application\Models\GroundPlane\GroundPlane.cpp" />
+    <ClCompile Include="Application\Scenes\StageSelectScene\StageSelectConstructot.cpp" />
+    <ClCompile Include="Application\Scenes\StageSelectScene\StageSelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -359,6 +361,7 @@
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
     <ClInclude Include="Application\Models\GroundPlane\GroundPlane.h" />
+    <ClInclude Include="Application\Scenes\StageSelectScene\StageSelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />
