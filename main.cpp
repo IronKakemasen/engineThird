@@ -2,7 +2,7 @@
 #include "./M/lowerLayer/M.h"
 #include "M/lowerLayer/Scene/SceneController/SceneController.h"
 #include "./M/lowerLayer/engineCore/Essential/leakChecker/leakChecker.h"
-
+#include "../../utilities/Json/Json.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {

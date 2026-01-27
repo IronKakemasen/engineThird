@@ -3,13 +3,24 @@
 #include "../../../Models/EnemyTowerModel/EnemyTowerModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
 
+struct PlayerBullet;
+
 struct EnemyTower :public GameObject, public GameObjectBuilding
 {
 #pragma region 独自部位
 
 private:
+	// 衝突弾リスト更新
+	void UpdateHitBullets();
+	// そのターンで衝突した弾のリスト（多重衝突防止用）
+	std::vector<PlayerBullet*> hitBullets{};
 
 public:
+
+	// 衝突した弾をリストに追加
+	void AddHitBullet(PlayerBullet* bullet);
+	// その弾が既に衝突リストにあるか
+	bool IsInHitBulletList(PlayerBullet* bullet);
 
 #pragma	endregion
 
