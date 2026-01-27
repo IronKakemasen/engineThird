@@ -16,6 +16,7 @@ public:
 		kTitle,
 		kTutorial,
 		kModelView,
+		kStageSelect,
 		kCount
 	};
 
@@ -25,6 +26,7 @@ private:
 	std::unique_ptr<TitleScene> titleScene;
 	std::unique_ptr<TutorialScene> tutorialScene;
 	std::unique_ptr<ModelScene> modelViewScene;
+	std::unique_ptr<StageSelectScene> stageSelectScene;
 	std::unique_ptr<AxisModel> axisModel;
 
 	//現在稼働しているシーン

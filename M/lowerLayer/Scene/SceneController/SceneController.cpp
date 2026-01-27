@@ -217,7 +217,7 @@ void SceneController::SetScenesToArray()
 	Set(kTitle, titleScene.get());
 	Set(kTutorial, tutorialScene.get());
 	Set(kModelView, modelViewScene.get());
-
+	Set(kStageSelect, stageSelectScene.get());
 }
 
 void SceneController::InstantiateScenes()
@@ -227,8 +227,8 @@ void SceneController::InstantiateScenes()
 	titleScene.reset(new TitleScene);
 	tutorialScene.reset(new TutorialScene);
 	modelViewScene.reset(new ModelScene);
+	stageSelectScene.reset(new StageSelectScene);
 	axisModel.reset(new AxisModel);
-
 }
 
 
@@ -246,6 +246,7 @@ std::string SceneController::GetName(SceneType type_)
 		"Title",
 		"Tutorial",
 		"ModelView",
+		"StageSelect"
 	};
 
 	return names[(int)type_];
@@ -259,7 +260,8 @@ SceneController::SceneType SceneController::GetType(int index_)
 		kInGame,
 		kTitle,
 		kTutorial,
-		kModelView
+		kModelView,
+		kStageSelect
 	};
 
 	return types[index_];

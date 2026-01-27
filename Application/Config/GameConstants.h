@@ -1,8 +1,6 @@
 #pragma once
 #include <cstddef>
 
-//#define StageCount 0
-
 namespace GameConstants
 {
 	// 最大エネミー数

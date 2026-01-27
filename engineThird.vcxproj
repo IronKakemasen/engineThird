@@ -148,6 +148,7 @@
     <ClCompile Include="Application\Cameras\MainCamera\MainCamera.cpp" />
     <ClCompile Include="Application\Scenes\InGameScene\InGameScene.cpp" />
     <ClCompile Include="Application\Scenes\ModelScene\ModelScene.cpp" />
+    <ClCompile Include="Application\Scenes\StageSelectScene\StageSelectScene.cpp" />
     <ClCompile Include="Application\Scenes\TitleScene\TitleConstructor.cpp" />
     <ClCompile Include="Application\Scenes\TutorialScene\TutorialConstructor.cpp" />
     <ClCompile Include="Application\GameObjects\ExampleTyan\ExampleTyan.cpp" />
@@ -320,6 +321,7 @@
     <ClCompile Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.cpp" />
     <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
+    <ClCompile Include="Application\Scenes\StageSelectScene\StageSelectConstructot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -361,6 +363,7 @@
     <ClInclude Include="Application\GameObjects\Player\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
+    <ClInclude Include="Application\Scenes\StageSelectScene\StageSelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

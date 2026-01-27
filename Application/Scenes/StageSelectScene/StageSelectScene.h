@@ -3,8 +3,6 @@
 #include <array>
 #include <vector>
 #include "../../Config/GameConstants.h"
-#include "../../GameObjects/Shikoutei/Shikoutei.h"
-#include "../../GameObjects/ExampleTyan/ExampleTyan.h"
 
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
@@ -13,24 +11,26 @@
 #include "../../GameObjects/Enemy/Enemy.h"
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
+#include "../../GameObjects/Shikoutei/Shikoutei.h"
 #include "../../GameObjects/InGameController/InGameController.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
 
-class InGameScene final : public Scene
+class StageSelectScene final : public Scene
 {
 	//そのシーンのカメラのトランスフォームをいただく
 	MainCamera mainCamera;
 
 	//使用するゲームオブジェクト
-	std::unique_ptr<Player> player;
-	std::array<std::unique_ptr<PlayerTower>, GameConstants::kMaxPlayerTowers> playerTowers;
-	std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies> allies;
-	std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies> enemies;
-	std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers> enemyTowers;
-	std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories> enemyFactories;
-	std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets> playerBullets;
+	std::array<std::array<std::unique_ptr<Player>, 1>, GameConstants::kMaxStages> player;
+	std::array<std::array<std::unique_ptr<PlayerTower>, GameConstants::kMaxPlayerTowers>, GameConstants::kMaxStages> playerTowers;
+	std::array<std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies>, GameConstants::kMaxStages> allies;
+	std::array<std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies>, GameConstants::kMaxStages> enemies;
+	std::array<std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers>, GameConstants::kMaxStages> enemyTowers;
+	std::array<std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories>, GameConstants::kMaxStages> enemyFactories;
+	std::array<std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets>, GameConstants::kMaxStages> playerBullets;
+	std::array<std::array<std::unique_ptr<Shikoutei>, 1>, GameConstants::kMaxStages> shikouteis;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
 
@@ -42,7 +42,7 @@ class InGameScene final : public Scene
 	void AdaptToPostEffect();
 
 public:
-	InGameScene();
+	StageSelectScene();
 
 	//↓呼び出す必要なし。↓
 	//更新処理
