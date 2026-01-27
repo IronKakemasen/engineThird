@@ -2,14 +2,34 @@
 #include "SceneBehavior.h"
 #include "../../GameObjects/ForModelView/PM.h"
 #include "../../GameObjects/ForModelView/groundM.h"
+#include "../../M/utilities/Json/Json.h"
 
 class ModelScene final : public Scene
 {
+	PM p;
+	groundM gm;
+
+	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
+
+	float dirLightIntensityNormal = 0.0f;
+	float dirLightIntensityNeon = 0.0f;
+	Vector3 dirLightDir;
+	float metalicCommonNormal = 0.72f;
+	float roughnessCommonNormal = 0.4f;
+	float metalicCommonNeon = 0.72f;
+	float roughnessCommonNeon = 0.4f;
+
+
+	void Save();
+	void Load();
+
+
 
 public:
 	ModelScene();
-	PM p;
-	groundM gm;
+
+	void AdaptToPostEffect();
+
 	//↓呼び出す必要なし。↓
 	//更新処理
 	virtual void Update() override;
