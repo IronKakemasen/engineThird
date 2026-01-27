@@ -3,22 +3,12 @@
 #include "./RunSpeedChanger/RunSpeedChanger.h"
 #include "../FwdScenes.h"
 #include "./AxisModel/AxisModel.h"
+#include "SceneType.h"
 
 class PointLight;
 
 class SceneController
 {
-public:
-	enum SceneType
-	{
-		kShikouteiScene,
-		kInGame,
-		kTitle,
-		kTutorial,
-		kModelView,
-		kStageSelect,
-		kCount
-	};
 
 private:
 	std::unique_ptr<ShikouteiScene> shikoScene;
@@ -31,9 +21,9 @@ private:
 
 	//現在稼働しているシーン
 	SceneType runningScene;
-	SceneType nextScene;
+	static inline SceneType nextScene;
 	//すべてのシーン
-	SceneBehavior* allScene[SceneType::kCount];
+	Scene* allScene[SceneType::kCount];
 	//処理間隔を調整する
 	RunSpeedChanger runSpeedChanger;
 	std::vector<std::string> sceneNameContainer;
@@ -54,6 +44,7 @@ public:
 	void Update();
 	void Draw();
 	SceneController(SceneType firstScene_);
+	static void ChangeScene(SceneType nextSceneType_);
 
 private:
 	//稼働するシーンを切り替える

@@ -125,6 +125,8 @@ private:
 
 
 public:
+
+	static inline Vector3 deltaPos;
 	// 使用するモデル
 	std::unique_ptr<PlayerModel> model;
 

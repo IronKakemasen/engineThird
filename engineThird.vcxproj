@@ -371,6 +371,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneType.h" />
     <ClInclude Include="M\utilities\Json\Json.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Mesh\allMesh\LineMesh\LineMesh.h" />
     <ClInclude Include="M\lowerLayer\Camera\DebugCamera\DebugCamera.h" />

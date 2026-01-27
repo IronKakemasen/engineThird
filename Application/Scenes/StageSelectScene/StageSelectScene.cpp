@@ -1,6 +1,7 @@
 #include "StageSelectScene.h"
 #include "../../utilities/Json/Json.h"
 
+
 void StageSelectScene::Update()
 {
 	//if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
@@ -16,6 +17,11 @@ void StageSelectScene::Update()
 
 
 	//AdaptToPostEffect();
+
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+	//ChangeScene(SceneType::kInGame);
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+
 }
 
 void StageSelectScene::AdaptToPostEffect()

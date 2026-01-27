@@ -372,6 +372,7 @@
     <ClInclude Include="Application\GameObjects\Ground\Ground.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\Time\TimeConstBuffer.h" />
     <ClInclude Include="Application\Models\Tenkyu\Tenkyu.h" />
+    <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

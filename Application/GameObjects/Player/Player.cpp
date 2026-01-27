@@ -274,6 +274,9 @@ void Player::Move()
 	}
 
 	trans.pos = trans.pos + moveDir * inGameConfig->playerSpeed;
+
+	//まんてじゃみ追加事項
+	deltaPos = moveDir * inGameConfig->playerSpeed;
 }
 
 void Player::Attack()
