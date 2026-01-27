@@ -144,42 +144,42 @@ void StageSelectScene::Init()
 		// プレイヤーのインスタンス化 & IDセット
 		for (size_t i = 0; i < player[stageIndex].size(); ++i)
 		{
-			player[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			player[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// テスト地面のインスタンス化 & IDセット
 		for (size_t i = 0; i < shikouteis[stageIndex].size(); ++i)
 		{
-			shikouteis[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			shikouteis[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// プレイヤータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
 		{
-			playerTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			playerTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// プレイヤーアリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
 		{
-			allies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			allies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// プレイヤーバレットのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
 		{
-			playerBullets[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			playerBullets[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// エネミーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
 		{
-			enemies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			enemies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// エネミータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
-			enemyTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			enemyTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 		// エネミーファクトリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
 		{
-			enemyFactories[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kInActive);
+			enemyFactories[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 		}
 	}
 

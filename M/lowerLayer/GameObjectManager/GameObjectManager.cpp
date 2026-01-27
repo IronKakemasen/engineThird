@@ -182,7 +182,7 @@ void GameObjectManager::Update()
 	for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 	{
 		if ((*itr) == nullptr) continue;
-		else if ((*itr)->GetStatus() == GameObjectBehavior::Status::kInActive)
+		else if ((*itr)->GetStatus() != GameObjectBehavior::Status::kActive)
 		{
 			continue;
 		}
