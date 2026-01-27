@@ -1,6 +1,7 @@
 #include "StageSelectScene.h"
 #include "../../utilities/Json/Json.h"
 
+
 void StageSelectScene::Update()
 {
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
@@ -15,7 +16,12 @@ void StageSelectScene::Update()
 	//// カメラは固定？
 
 
-	AdaptToPostEffect();
+	//AdaptToPostEffect();
+
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+	//ChangeScene(SceneType::kInGame);
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+
 }
 
 void StageSelectScene::AdaptToPostEffect()

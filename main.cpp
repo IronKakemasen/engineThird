@@ -17,7 +17,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
 
 	std::unique_ptr<SceneController> sceneController = 
-		std::make_unique<SceneController>(SceneController::kModelView);
+		std::make_unique<SceneController>(kModelView);
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)

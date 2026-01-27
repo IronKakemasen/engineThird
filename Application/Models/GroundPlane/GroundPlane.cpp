@@ -3,7 +3,7 @@
 GroundPlane::GroundPlane()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/application/Model/Ground/G2.obj");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/Ground/Ground.obj");
 }
 
 void GroundPlane::Update()

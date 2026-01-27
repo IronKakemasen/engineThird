@@ -48,10 +48,8 @@ float3 mainImage(float4 fragColor, float2 fragCoord,float time_)
     float val = voronoi(fragCoord, time_) / length(gradient(fragCoord, 0.0235, time_));
     float colVal = pow(val, 3.0) * 3.9;
     
-    fragColor.rgb = lerp(float3(0.0 + colVal, 0.5 + colVal, 0.0 + colVal),
-                        float3(0.1, 0, 0.6),
+    return lerp(float3(0.0 + colVal, 0.3 + colVal, 0.0 + colVal),
+                        float3(0.0, 0, 0.6),
                         clamp(0.9, 0.0, 0.4));
-
-    return fragColor.rgb;
 
 }

@@ -10,7 +10,7 @@ namespace CameraActions
 	public:
 		MainCamera* camera = nullptr;
 		static inline Vector3 const kPlayableDefaultLookDir =
-			{ 0,-0.85f,0.25f };
+			{ 0,-0.85f,0.35f };
 
 		virtual void operator()() = 0;
 		virtual void Reset() = 0;
@@ -26,6 +26,8 @@ namespace CameraActions
 	class FollowPlayer : public Action
 	{
 		Vector3 offsetFollow = { 0,10,-1 };
+		Vector3 offsetBeyond;
+		Vector3 offsetDebug;
 		float const kDefaultFollowCoe = 0.02f;
 
 	public:

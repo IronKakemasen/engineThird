@@ -178,6 +178,7 @@ void SceneController::Init(SceneType firstScene_)
 	runningScene = firstScene_;
 
 	SetScenesToArray();
+	int i = 0;
 	for (auto* scene : allScene)
 	{
 		if (!scene)continue;
@@ -185,6 +186,8 @@ void SceneController::Init(SceneType firstScene_)
 		scene->Instantiate();
 		scene->Init();
 		scene->gameObjManager->Init();
+		scene->nextScene = SceneType(i);
+		i++;
 	}
 
 	axisModel->Init(nullptr);
@@ -221,6 +224,13 @@ void SceneController::InstantiateScenes()
 
 void SceneController::ChangeScene()
 {
+	Scene* cur_Scene = allScene[runningScene];
+	if (runningScene != cur_Scene->SendSignal())
+	{
+		nextScene = cur_Scene->SendSignal();
+		cur_Scene->nextScene = runningScene;
+	}
+
 	runningScene = nextScene;
 }
 
@@ -239,7 +249,7 @@ std::string SceneController::GetName(SceneType type_)
 	return names[(int)type_];
 }
 
-SceneController::SceneType SceneController::GetType(int index_)
+SceneType SceneController::GetType(int index_)
 {
 	SceneType types[SceneType::kCount]
 	{
@@ -259,4 +269,9 @@ void SceneController::Set(SceneType type_, Scene* scene_)
 {
 	allScene[type_] = scene_;
 	sceneNameContainer.emplace_back(GetName(type_));
+}
+
+void SceneController::ChangeScene(SceneType nextSceneType_)
+{
+	nextScene = nextSceneType_;
 }
