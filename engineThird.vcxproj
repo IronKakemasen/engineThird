@@ -322,6 +322,8 @@
     <ClCompile Include="Application\Models\PlayerBulletModel\PlayerBulletModel.cpp" />
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.cpp" />
     <ClCompile Include="Application\Scenes\StageSelectScene\StageSelectConstructot.cpp" />
+    <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\Time\TimeConstBuffer.cpp" />
+    <ClCompile Include="Application\Models\Tenkyu\Tenkyu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -364,6 +366,8 @@
     <ClInclude Include="Application\Models\PlayerBulletModel\PlayerBulletModel.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\SimpleNeonLikeBuffer\SimpleNeonLikeBuffer.h" />
     <ClInclude Include="Application\Scenes\StageSelectScene\StageSelectScene.h" />
+    <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\Time\TimeConstBuffer.h" />
+    <ClInclude Include="Application\Models\Tenkyu\Tenkyu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

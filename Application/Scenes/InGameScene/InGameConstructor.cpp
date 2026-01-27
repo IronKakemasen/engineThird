@@ -86,8 +86,6 @@ void InGameScene::Instantiate()
 			enemyInstance->SetTargetTower(playerTower.get());
 	}
 
-	rectLights[0] = M::GetInstance()->ImportRectLight();
-	rectLights[1] = M::GetInstance()->ImportRectLight();
 
 	for (auto& ally : allies)
 	{
@@ -119,8 +117,5 @@ void InGameScene::Init()
 		M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
 	//アトラス画像に対応させる
 	atlasNumber.ToAtlas(10);
-
-	rectLights[0]->Getter_Para()->isActive = true;
-	rectLights[1]->Getter_Para()->isActive = true;
 
 }

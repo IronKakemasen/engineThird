@@ -75,20 +75,6 @@ void InGameScene::Debug()
 	ImGui::End();
 
 
-	for (int i = 0; i < 2; ++i)
-	{
-		auto* r = rectLights[i]->Getter_Para();
-		ImGui::Begin(("RectLight" + std::to_string(i)).c_str());
-		ImGui::DragFloat("intensity", &r->intensity);
-		ImGui::DragFloat3("pos", reinterpret_cast<float*>(&r->pos));
-		ImGui::DragFloat3("lookDir", reinterpret_cast<float*>(rectLights[i]->GetLookDirection()), 0.02f);
-		ImGui::DragFloat3("color", reinterpret_cast<float*>(&r->color));
-		ImGui::DragFloat("rad", &r->attenuationRadius);
-
-		ImGui::End();
-
-	}
-
 	ImGui::Begin("Object Debug");
 
 	if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))

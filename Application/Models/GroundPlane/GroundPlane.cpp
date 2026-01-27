@@ -3,7 +3,7 @@
 GroundPlane::GroundPlane()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/application/Model/Ground/Ground.obj");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/Ground/G2.obj");
 }
 
 void GroundPlane::Update()
@@ -36,8 +36,8 @@ void GroundPlane::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.0f;
-	appearance->roughness = 1.0f;
+	appearance->metalic = 0.3f;
+	appearance->roughness = 0.5f;
 
 }
 

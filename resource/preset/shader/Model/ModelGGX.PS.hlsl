@@ -49,9 +49,12 @@ PixcelShaderOutput main(VertexShaderOutput input)
 
     float3 lightFinalColor = float3(0, 0, 0);
     
+    float3 tmp = input.worldPosition;
+    DirectionalLight tmp1 = dirLight;
+    
     //直接光
-    lightFinalColor += ComputeDirectionalLight(input.worldPosition, toCamera, 
-        normal, NV, a, Ks, diffuse, dirLight);
+    lightFinalColor += ComputeDirectionalLight(tmp, toCamera,
+        normal, NV, a, Ks, diffuse, tmp1);
 
     //ポイントライト
     uint numLights, stride;

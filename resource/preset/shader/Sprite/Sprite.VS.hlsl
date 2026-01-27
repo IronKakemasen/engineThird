@@ -1,6 +1,7 @@
 #include "../HLSLI/TransformMatrix.hlsli"
 #include "../HLSLI/VertexShaderInput.hlsli"
 
+
 struct VertexShaderOutput
 {
     float4 position : SV_POSITION;

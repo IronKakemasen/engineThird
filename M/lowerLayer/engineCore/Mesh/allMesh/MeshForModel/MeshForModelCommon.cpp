@@ -80,8 +80,18 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 		return meters;
 	};
 
+	auto modelShaderToy = []() {
+
+		std::vector<D3D12_ROOT_PARAMETER> meters;
+
+		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::VS, 0));
+		meters.emplace_back(RootSignatureCreator::GetRootparameterCBV(ShaderStage::PS, 1));
+		return meters;
+		};
+
 
 	std::string folderPath = "Model/";
+	std::string folderPathShaderToy = "ShaderToy/";
 
 	//modelNoLight
 	allPipelineset_->CreateNewPipeline(folderPath, "ModelNoLight.VS", "ModelNoLight.PS", inputLayOutFunc, modelSimpleRP);
@@ -97,6 +107,8 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 	allPipelineset_->CreateNewPipeline(folderPath, "ModelCookTorrance.VS", "ModelCookTorrance.PS", inputLayOutFunc, modelSimpleRP);
 	//ModelGGX
 	allPipelineset_->CreateNewPipeline(folderPath, "ModelGGX.VS", "ModelGGX.PS", inputLayOutFunc, modelSimpleRP);
+	//shaderToy
+	allPipelineset_->CreateNewPipeline(folderPathShaderToy, "tft3RH.VS", "tft3RH.PS", inputLayOutFunc, modelShaderToy);
 
 		
 	onlyOnce = false;

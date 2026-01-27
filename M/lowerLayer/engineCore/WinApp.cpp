@@ -1,10 +1,9 @@
 #include "WinApp.h"
 #include "./Essential/BarrierControl/BarrierControl.h"
 #include <assert.h>
-#include "./PSO/pipelineCreators/pipelineCreators.h"
 #include "../M.h"
 #include <dxgidebug.h>
-
+#include "./Buffer/constantBuffer/Time/TimeConstBuffer.h"
 
 void WinApp::OffScreenBegin()
 {
@@ -27,7 +26,13 @@ void WinApp::OffScreenBegin()
 	QueryPerformanceFrequency(&fpsController.mTimeFreq);
 	QueryPerformanceCounter(&fpsController.mTimeStart);
 
-	M::GetInstance()->getPadState.Update();
+	auto* m = M::GetInstance();
+	m->getPadState.Update();
+
+	m->passedTime+=0.0166666f;
+	TimeConstBuffer::Get()->buffer.buffMap->passedTime = m->passedTime;
+	if (m->passedTime >= INT_MAX)m->passedTime = 0.0f;
+
 
 	auto* cList = commandControl.Getter_commandList();
 	auto* depthHandle = swapChainControl.Getter_DepthBuffer()->Getter_Handle();
@@ -193,7 +198,8 @@ bool WinApp::InitD3D()
 		&cameraParameterSetter, &inputInterface.keyboardKeys,&offScreenManager);
 
 	offScreenManager.Init(&textureDataManager, &exclusiveDraw,deviceSetUp.Getter_Device());
-
+	
+	TimeConstBuffer::Get()->Init(deviceSetUp.Getter_Device());
 	return true;
 }
 

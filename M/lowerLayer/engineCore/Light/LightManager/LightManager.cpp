@@ -17,6 +17,16 @@ void LightManager::Update()
 		pointLights[i]->Update();
 	}
 
+	for (int i = 0; i < sum; ++i)
+	{
+		if (!rectLights[i]->IsActive())
+		{
+			continue;
+		}
+
+		rectLights[i]->Update();
+	}
+
 	directionalLight->Update();
 
 	Batch();
@@ -141,7 +151,7 @@ void LightManager::Batch()
 		rectLightStructuredBuffer->rLight.buffMap[i].axisX = para->axisX;
 		rectLightStructuredBuffer->rLight.buffMap[i].axisY = para->axisY;
 		rectLightStructuredBuffer->rLight.buffMap[i].halfSize =
-		{ para->width * 0.5f,para->height * 0.5f };
+		{ para->width * 0.5f, para->height * 0.5f };
 	}
 
 

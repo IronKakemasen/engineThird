@@ -43,7 +43,6 @@ private:
 	{
 		//グリッド線を描画するかどうか
 		bool doDrawGridLine = true;
-		PointLight* ps[2];
 		Vector3 lightBuffer;
 	};
 

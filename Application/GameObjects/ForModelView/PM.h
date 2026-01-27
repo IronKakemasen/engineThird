@@ -4,6 +4,7 @@
 
 struct PM :public GameObject
 {
+	RectLight* rectLight = nullptr;
 
 public:
 	// 使用するモデル

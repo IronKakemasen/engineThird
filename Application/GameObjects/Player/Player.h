@@ -142,7 +142,12 @@ public:
 	virtual void SetCollisionBackTable()override;
 	inline bool WatchIsMove() { return isMoving; }
 
+
 	Player();
+
+private:
+	RectLight* rectLight = nullptr;
+	void LightFollowPlayer();
 
 #pragma endregion
 };

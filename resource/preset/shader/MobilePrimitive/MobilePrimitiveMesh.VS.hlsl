@@ -21,7 +21,7 @@ VertexShaderOutput main(VertexShaderInput input)
     
     output.position = mul(tmp, gWVPMatrix.WVP);
     output.normal = normalize(mul(input.normal, (float3x3) gWorldMatrix.World));
-    output.worldPosition = float3(gWorldMatrix.World[3][0], gWorldMatrix.World[3][1], gWorldMatrix.World[3][2]);
+    output.worldPosition = input.position.xyz + float3(gWorldMatrix.World[3][0], gWorldMatrix.World[3][1], gWorldMatrix.World[3][2]);
     
 	return output;
 }
