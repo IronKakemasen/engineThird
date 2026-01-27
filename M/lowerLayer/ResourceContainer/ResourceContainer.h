@@ -16,6 +16,7 @@ enum class TextureTag
 	kOh,
 	kCursorImage,
 	kNormalDekoboko,
+	kEnemyN,
 
 	kCount
 };

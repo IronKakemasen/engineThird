@@ -19,6 +19,7 @@ struct GameObjectBehavior
 	enum class Status
 	{
 		kActive,	//更新や描画処理します
+		kDrawOnly,  //描画オンリー
 		kInActive,	//しません
 	};
 

@@ -126,8 +126,8 @@ void SceneController::Debug()
 
 	if (runSpeedChanger.IsStop())
 	{
-		cur_Scene->dirLight->Getter_Para()->color =
-			{ 5,5,5};
+		//cur_Scene->dirLight->Getter_Para()->color =
+		//	{ 5,5,5};
 	}
 	else
 	{

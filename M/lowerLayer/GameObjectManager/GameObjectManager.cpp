@@ -197,7 +197,7 @@ void GameObjectManager::Render(Matrix4* vpMat_)
 	for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 	{
 		if ((*itr) == nullptr) continue;
-		else if ((*itr)->GetStatus() == GameObjectBehavior::Status::kInActive)
+		else if ((*itr)->GetStatus() != GameObjectBehavior::Status::kInActive)
 		{
 			continue;
 		}
