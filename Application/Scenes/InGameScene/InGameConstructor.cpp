@@ -1,5 +1,4 @@
 #include "InGameScene.h"
-#include "../../utilities/Json/Json.h"
 
 InGameScene::InGameScene()
 {
@@ -9,9 +8,6 @@ InGameScene::InGameScene()
 void InGameScene::Instantiate()
 {
 	inGameController.reset(new InGameController);
-
-	// resource/application/json 以下データをロード
-	Json::LoadAll("./resource/application/json/");
 
 	inGameConfig = std::make_unique<InGameConfig>();
 	inGameConfig->Load();

@@ -9,12 +9,6 @@ PlayerAlly::PlayerAlly()
 	// モデルのインスタンス化
 	model.reset(new PlayerAllyModel);
 
-	// 必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerAllyData.json";
 }
@@ -39,11 +33,6 @@ void PlayerAlly::Init()
 	// モデルの初期化
 	model->Init(&trans);
 
-	// inGameControllerポインタ取得
-	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
-	// プレイヤーポインタ取得
-	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
-
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerAlly);
@@ -52,15 +41,17 @@ void PlayerAlly::Init()
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
+	// プレイヤーポインタ取得
+	targetPlayer = reinterpret_cast<Player*>(gameObjectManager->Find(Tag::kPlayer)[0]);
+
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
 	collisionBackToPlayerBullet.Init(this);
 
 	// 補完係数設定
 	trans.interpolationCoe = 0.9f;
-
-	// 初期無効化
-	status = Status::kInActive;
 }
 
 void PlayerAlly::SetCollisionBackTable()

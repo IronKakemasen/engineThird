@@ -11,13 +11,6 @@ EnemyTower::EnemyTower()
 	//モデルのインスタンス化
 	model.reset(new EnemyTowerModel);
 
-	//必須でない
-	auto* appearance = model->model->Getter_Appearance(0);
-
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
-
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyTowerData.json";
 }
@@ -47,18 +40,12 @@ void EnemyTower::Reset()
 		// 衝突判定をするかどうか定める
 		SwitchCollisionActivation(false);
 	}
-
-	// config反映
-	hp = inGameConfig->enemyTowerMaxHP;
 }
 
 void EnemyTower::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
-
-	// inGameControllerポインタ取得
-	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -67,6 +54,9 @@ void EnemyTower::Init()
 	SetCircleCollision(1.0f);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
+
+	// inGameControllerポインタ取得
+	inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
 
 	// collisionBackToPlayerBulletの初期化
 	collisionBackToPlayerBullet.Init(this);
@@ -86,6 +76,10 @@ void EnemyTower::LoadData()
 	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
+
+	/// config反映
+	// HP設定
+	hp = inGameConfig->enemyTowerMaxHP;
 }
 void EnemyTower::SaveData()
 {
@@ -100,6 +94,38 @@ void EnemyTower::SaveData()
 void EnemyTower::Update()
 {
 	model->Update();
+
+	// 衝突弾リスト更新
+	UpdateHitBullets();
+}
+
+void EnemyTower::AddHitBullet(PlayerBullet* bullet)
+{
+	hitBullets.push_back(bullet);
+}
+
+bool EnemyTower::IsInHitBulletList(PlayerBullet* bullet)
+{
+	for (auto& hitBullet : hitBullets)
+	{
+		if (hitBullet == bullet)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void EnemyTower::UpdateHitBullets()
+{
+	for (size_t i = 0; i < hitBullets.size(); ++i)
+	{
+		if (hitBullets[i]->GetStatus() == Status::kInActive)
+		{
+			hitBullets.erase(hitBullets.begin() + i);
+			--i;
+		}
+	}
 }
 
 void EnemyTower::Draw(Matrix4* vpMat_)
@@ -142,10 +168,15 @@ void EnemyTower::DebugDraw()
 void EnemyTower::CollisionBackToPlayerBullet::operator()()
 {
 	auto* playerBullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
+	
+	// 既に衝突リストにあるなら何もしない
+	if (me->IsInHitBulletList(playerBullet)) return;
+
+	// 衝突リストに追加
+	me->AddHitBullet(playerBullet);
 
 	me->hp = me->hp - playerBullet->GetAttackPower();
-
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 	}
