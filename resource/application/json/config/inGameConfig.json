@@ -1,7 +1,7 @@
 {
     "AttackGauge": {
         "player": {
-            "attackGaugeRecoverInterval": 1.0,
+            "attackGaugeRecoverInterval": 0.75,
             "attackGaugeRecoverSpeed": 0.07999999821186066
         }
     },
