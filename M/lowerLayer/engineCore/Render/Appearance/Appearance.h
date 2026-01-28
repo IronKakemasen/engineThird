@@ -32,6 +32,8 @@ struct Appearance
 	void SetUsingTextureFromContainer(bool colorMap_, bool normalMap_,
 		bool metalicMap_, bool roughnessMap_);
 
+	static Vector4 GetComplementaryColor(Vector4 color_);
 	Appearance();
 };
+
 

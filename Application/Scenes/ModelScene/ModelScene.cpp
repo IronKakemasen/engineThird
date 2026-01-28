@@ -1,4 +1,5 @@
 #include "ModelScene.h"
+#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
 
 void ModelScene::Update()
 {
@@ -36,6 +37,10 @@ void ModelScene::AdaptToPostEffect()
 			enemyMat->roughness = roughnessCommonNormal;
 		}
 
+		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		playerMat->metalic = metalicCommonNormal;
+		playerMat->roughness = roughnessCommonNormal;
+
 		break;
 	}
 	case PostEffectType::kGreyScale:
@@ -56,6 +61,9 @@ void ModelScene::AdaptToPostEffect()
 			enemyMat->roughness = roughnessCommonNormal;
 		}
 
+		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		playerMat->metalic = metalicCommonNormal;
+		playerMat->roughness = roughnessCommonNormal;
 
 		break;
 	}
@@ -74,9 +82,14 @@ void ModelScene::AdaptToPostEffect()
 		for (auto* m : enemyModel.models)
 		{
 			auto* enemyMat = m->Getter_Appearance(0);
-			enemyMat->metalic = metalicCommonNormal;
-			enemyMat->roughness = roughnessCommonNormal;
+			enemyMat->metalic = metalicCommonNeon;
+			enemyMat->roughness = roughnessCommonNeon;
 		}
+
+		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		playerMat->metalic = metalicCommonNeon;
+		playerMat->roughness = roughnessCommonNeon;
+
 
 		break;
 	}
@@ -92,6 +105,7 @@ void ModelScene::Draw()
 
 	enemyModel.Draw(vpMat);
 	tenkyu.Draw(vpMat);
+	playerAllyModel.Draw(vpMat);
 }
 
 void ModelScene::Reset()
@@ -144,6 +158,16 @@ void ModelScene::Debug()
 
 		++i;
 	}
+
+	auto* pp = p.rectLight->Getter_Para();
+	ImGui::DragFloat("in", &pp->intensity, 1.0f);
+	ImGui::DragFloat("width", &pp->width, 0.1f);
+	ImGui::DragFloat("height", &pp->height, 0.1f);
+	ImGui::DragFloat3("target", reinterpret_cast<float*>(p.rectLight->GetLookDirection()), 0.1f);
+
+
+
+
 
 	if (ImGui::Button("Save"))
 	{

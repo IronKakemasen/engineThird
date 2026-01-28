@@ -12,6 +12,8 @@ void PlayerModel::Save()
 			m->Getter_Appearance(0)->trans.rotation);
 		Json::SaveParam(path, key + "lookDir" + std::to_string(i),
 			m->Getter_Appearance(0)->trans.lookDir);
+		Json::SaveParam(path, key + "color" + std::to_string(i),
+			m->Getter_Appearance(0)->color);
 
 		++i;
 	}
@@ -31,6 +33,8 @@ void PlayerModel::Load()
 			m->Getter_Appearance(0)->trans.rotation);
 		Json::LoadParam(path, key + "lookDir" + std::to_string(i),
 			m->Getter_Appearance(0)->trans.lookDir);
+		Json::LoadParam(path, key + "color" + std::to_string(i),
+			m->Getter_Appearance(0)->color);
 
 		++i;
 	}
