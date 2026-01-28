@@ -38,7 +38,7 @@ void PlayerAlly::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerAlly);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->playerAllyCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -154,6 +154,8 @@ void PlayerAlly::Spawn(Vector3 pos)
 	trans.pos = pos;
 	// 自分は列の何番目か
 	formationCurrentIndex = -1;
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerAllyCollisonSize);
 }
 
 void PlayerAlly::Death()

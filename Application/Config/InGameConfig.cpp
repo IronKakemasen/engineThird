@@ -10,6 +10,15 @@ InGameConfig::~InGameConfig()
 
 void InGameConfig::Load()
 {
+	std::string collisonSize = "/CollisonSize/";
+	Json::LoadParam(path, collisonSize + "player", playerCollisonSize);
+	Json::LoadParam(path, collisonSize + "playerTower", playerTowerCollisonSize);
+	Json::LoadParam(path, collisonSize + "bullet", playerBulletCollisonSize);
+	Json::LoadParam(path, collisonSize + "ally", playerAllyCollisonSize);
+	Json::LoadParam(path, collisonSize + "enemy", enemyCollisonSize);
+	Json::LoadParam(path, collisonSize + "enemyTower", enemyTowerCollisonSize);
+	Json::LoadParam(path, collisonSize + "enemyFactory", enemyFactoryCollisonSize);
+
 	std::string maxHP = "/MaxHP/";
 	Json::LoadParam(path, maxHP + "player", playerMaxHP);
 	Json::LoadParam(path, maxHP + "playerTower", playerTowerMaxHP);
@@ -50,11 +59,19 @@ void InGameConfig::Load()
 	std::string attackGauge = "/AttackGauge/";
 	Json::LoadParam(path, attackGauge + "player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
 	Json::LoadParam(path, attackGauge + "player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
-
 }
 
 void InGameConfig::Save()
 {
+	std::string CollisonSize = "/CollisonSize/";
+	Json::SaveParam(path, CollisonSize + "player", playerCollisonSize);
+	Json::SaveParam(path, CollisonSize + "playerTower", playerTowerCollisonSize);
+	Json::SaveParam(path, CollisonSize + "bullet", playerBulletCollisonSize);
+	Json::SaveParam(path, CollisonSize + "ally", playerAllyCollisonSize);
+	Json::SaveParam(path, CollisonSize + "enemy", enemyCollisonSize);
+	Json::SaveParam(path, CollisonSize + "enemyTower", enemyTowerCollisonSize);
+	Json::SaveParam(path, CollisonSize + "enemyFactory", enemyFactoryCollisonSize);
+
 	std::string maxHP = "/MaxHP/";
 	Json::SaveParam(path, maxHP + "player", playerMaxHP);
 	Json::SaveParam(path, maxHP + "playerTower", playerTowerMaxHP);
@@ -110,7 +127,18 @@ void InGameConfig::DebugDraw()
 		Save();
 	}
 
+	if (ImGui::TreeNode("CollisonSize"))
+	{
+		ImGui::DragFloat("Player    CollisonSize", &playerCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("PTower    CollisonSize", &playerTowerCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("Bullet    CollisonSize", &playerBulletCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("Ally      CollisonSize", &playerAllyCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("Enemy     CollisonSize", &enemyCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("ETower    CollisonSize", &enemyTowerCollisonSize, 0.1f, 0.0f, 10.0f);
+		ImGui::DragFloat("EFactory  CollisonSize", &enemyFactoryCollisonSize, 0.1f, 0.0f, 10.0f);
 
+		ImGui::TreePop();
+	}
 	if (ImGui::TreeNode("MaxHP"))
 	{
 		ImGui::DragFloat("Player    MaxHP", &playerMaxHP, 1.0f, 0.0f, 100.0f);

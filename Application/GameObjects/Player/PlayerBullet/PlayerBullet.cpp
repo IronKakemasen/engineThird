@@ -40,7 +40,7 @@ void PlayerBullet::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerBullet);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -91,6 +91,8 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	allyPowerBonus = inGameConfig->playerAllyPowerBonus;
 	// 味方経由サイズ補正値設定
 	allySizeBonus = inGameConfig->playerAllySizeBonus;
+	// コリジョンサイズ反映
+	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
 }
 
 // データ保存・読み込み

@@ -56,7 +56,7 @@ void EnemyFactory::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemyFactory);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->enemyFactoryCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 

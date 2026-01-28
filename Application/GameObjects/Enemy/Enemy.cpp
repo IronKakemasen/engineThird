@@ -43,7 +43,7 @@ void Enemy::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemy);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->enemyCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -97,6 +97,9 @@ void Enemy::Spawn(Vector3 pos)
 
 	// 初期向きを最近のターゲット方向に設定
 	LookAtTarget();
+
+	// コリジョンサイズ設定
+	SetCircleCollision(inGameConfig->enemyCollisonSize);
 }
 
 float Enemy::GetAttackPower()

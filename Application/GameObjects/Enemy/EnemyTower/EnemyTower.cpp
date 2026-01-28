@@ -51,7 +51,7 @@ void EnemyTower::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemyTower);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->enemyTowerCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
