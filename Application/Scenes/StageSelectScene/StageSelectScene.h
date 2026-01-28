@@ -14,14 +14,14 @@
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../GameObjects/Shikoutei/Shikoutei.h"
 #include "../../GameObjects/InGameController/InGameController.h"
-#include "../../Cameras/MainCamera/MainCamera.h"
+#include "../../Cameras/StageCamera/StageCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
 
 class StageSelectScene final : public Scene
 {
 	//そのシーンのカメラのトランスフォームをいただく
-	MainCamera mainCamera;
+	StageCamera mainCamera;
 
 	//使用するゲームオブジェクト
 	std::array<std::array<std::unique_ptr<Shikoutei>, 1>, GameConstants::kMaxStages> centerObject;
@@ -46,7 +46,16 @@ class StageSelectScene final : public Scene
 
 	void AdaptToPostEffect();
 
+	// 選択ステージ変更
 	void UpdateStageSelectRotation();
+
+	// ステージ決定
+	void DecideStage();
+	bool selected = false;
+
+	// 決定後演出
+	void UpdateAfterDecideStage();
+	Counter afterDecideCounter;
 
 public:
 	StageSelectScene();

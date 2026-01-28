@@ -121,7 +121,6 @@ void StageSelectScene::Instantiate()
 	}
 	gameObjManager->RegisterForContainer(inGameController.get());
 
-
 	// ポインタを渡す
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
@@ -148,8 +147,10 @@ void StageSelectScene::Instantiate()
 
 void StageSelectScene::Init()
 {
-	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
-		inGameController.get(), player[0][0].get());
+	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
+
+	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 15.0f, -65.0f);
+	mainCamera.cameraPara->trans.lookDir = Vector3(0.0f, -0.714f, 0.7f);
 
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
@@ -194,5 +195,4 @@ void StageSelectScene::Init()
 			enemyFactories[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
 	}
-
 }

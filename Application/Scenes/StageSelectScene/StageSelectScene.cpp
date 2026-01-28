@@ -5,23 +5,24 @@
 
 void StageSelectScene::Update()
 {
-
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
 		SceneBehavior::doReset = true;
 	}
 
+	mainCamera.Update();
 
 	// ステージセレクトの回転処理
 	UpdateStageSelectRotation();
 
+	// ステージ決定
+	DecideStage();
+
+	// 決定後演出
+	UpdateAfterDecideStage();
+
 	// ポストエフェクト
 	AdaptToPostEffect();
-
-	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
-	//ChangeScene(SceneType::kInGame);
-	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
-
 }
 
 void StageSelectScene::AdaptToPostEffect()
@@ -50,6 +51,8 @@ void StageSelectScene::AdaptToPostEffect()
 
 void StageSelectScene::UpdateStageSelectRotation()
 {
+	if (selected) return;
+
 	bool right = false;
 	bool left = false;
 
@@ -58,11 +61,14 @@ void StageSelectScene::UpdateStageSelectRotation()
 		Vector2 dir = M::GetInstance()->getPadState.GetLeftStick(0);
 		if (dir.x > 0.3f) right = true;
 		else if (dir.x < -0.3f) left = true;
+
+		if (M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT)) right = true;
+		else if (M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT)) left = true;
 	}
 	else
 	{
-		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) right = true;
-		else if (M::GetInstance()->IsKeyPressed(KeyType::LEFT)) left = true;
+		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) left = true;
+		else if (M::GetInstance()->IsKeyPressed(KeyType::LEFT)) right = true;
 	}
 
 	if (selectCounter.count >= 1.0f)
@@ -91,13 +97,10 @@ void StageSelectScene::UpdateStageSelectRotation()
 		}
 	}
 
-	mainCamera.Update();
-
-
 	const Vector2 baseDist = { 0.0f,50.0f };
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
-		float rotateY = 180.0f + baseCenterRotateY + (stagePerYRotate * stageIndex);
+		float rotateY = 180.0f + baseCenterRotateY + (stagePerYRotate * (GameConstants::kMaxStages - stageIndex));
 		Vector3 dist = Vector3(baseDist.x, 0.0f, baseDist.y);
 		dist.x = baseDist.x * std::cos(rotateY * std::numbers::pi_v<float> / 180.0f) - baseDist.y * std::sin(rotateY * std::numbers::pi_v<float> / 180.0f);
 		dist.z = baseDist.x * std::sin(rotateY * std::numbers::pi_v<float> / 180.0f) + baseDist.y * std::cos(rotateY * std::numbers::pi_v<float> / 180.0f);
@@ -108,6 +111,61 @@ void StageSelectScene::UpdateStageSelectRotation()
 	baseCenterRotateY = Easing::EaseOutSine(startRotateY, targetRotateY, selectCounter.count);
 
 	selectCounter.Add();
+}
+
+void StageSelectScene::DecideStage()
+{
+	if (selectCounter.count < 1.0f) return;
+
+	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	{
+		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
+		{
+			selected = true;
+			afterDecideCounter.Initialize(3.0f);
+		}
+	}
+	else
+	{
+		if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
+		{
+			selected = true;
+			afterDecideCounter.Initialize(3.0f);
+		}
+	}
+}
+
+
+void StageSelectScene::UpdateAfterDecideStage()
+{
+	if (selected)
+	{
+		for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
+		{
+			if (stageIndex != static_cast<size_t>(inGameController->curStage))
+			{
+				centerObject[stageIndex][0]->trans.pos.y -= 0.5f;
+			}
+			else
+			{
+				float siko = (afterDecideCounter.count * 2.5f);
+				if (siko > 1.0f) siko = 1.0f;
+				centerObject[stageIndex][0]->trans.pos.y =
+					std::sinf(siko * 3.14f) * 10;
+
+				centerObject[stageIndex][0]->trans.rotation.y = 
+					Easing::EaseOutSine(0.0f, 360.0f, siko);
+			}
+		}
+
+		afterDecideCounter.Add();
+		if (afterDecideCounter.IsEnd())
+		{
+			//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+
+			ChangeScene(SceneType::kInGame);
+			//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+
+		}
+	}
 }
 
 void StageSelectScene::Draw()
@@ -129,10 +187,14 @@ void StageSelectScene::Debug()
 #ifdef USE_IMGUI
 
 	ImGui::Begin("StageSelectScene");
+	auto* para = mainCamera.cameraPara;
+
 
 	ImGui::Text("---------------------------");
-	ImGui::DragFloat3("cameraPos", &mainCamera.cameraPara->trans.pos.x);
-	ImGui::DragFloat3("cameraRot", &mainCamera.cameraPara->trans.rotation.x, 0.1f);
+	ImGui::DragFloat3("cameraPos", reinterpret_cast<float*> (&para->trans.pos),0.1f);
+	ImGui::DragFloat3("CameralookDir", reinterpret_cast<float*> (&para->trans.lookDir), 0.01f);
+	ImGui::DragFloat("kaitenHokan", &para->trans.interpolationCoe, 0.01f);
+	ImGui::DragFloat("FOV", &para->fov, 0.01f);
 
 
 
