@@ -1,13 +1,17 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../Models/GroundPlane/GroundPlane.h"
+#include "../../GameObjects/ObjectParent/GameObjectBuilding.h"
 
-
-struct Ground :public GameObject
+struct Ground :public GameObject, public GameObjectBuilding
 {
 private:
 	//使用するモデル
 	std::unique_ptr<GroundPlane> groundPlane;
+
+	void LoadData()override;
+	void SaveData()override;
+	void DebugDraw()override;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

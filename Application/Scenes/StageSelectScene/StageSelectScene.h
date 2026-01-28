@@ -5,6 +5,7 @@
 #include "../../Config/GameConstants.h"
 
 #include "../../GameObjects/Player/Player.h"
+#include "../../GameObjects/Ground/Ground.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
@@ -23,6 +24,7 @@ class StageSelectScene final : public Scene
 	MainCamera mainCamera;
 
 	//使用するゲームオブジェクト
+	std::array<std::array<std::unique_ptr<Shikoutei>, 1>, GameConstants::kMaxStages> centerObject;
 	std::array<std::array<std::unique_ptr<Player>, 1>, GameConstants::kMaxStages> player;
 	std::array<std::array<std::unique_ptr<PlayerTower>, GameConstants::kMaxPlayerTowers>, GameConstants::kMaxStages> playerTowers;
 	std::array<std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies>, GameConstants::kMaxStages> allies;
@@ -30,16 +32,21 @@ class StageSelectScene final : public Scene
 	std::array<std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers>, GameConstants::kMaxStages> enemyTowers;
 	std::array<std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories>, GameConstants::kMaxStages> enemyFactories;
 	std::array<std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets>, GameConstants::kMaxStages> playerBullets;
-	std::array<std::array<std::unique_ptr<Shikoutei>, 1>, GameConstants::kMaxStages> shikouteis;
+	std::array<std::array<std::unique_ptr<Ground>, 1>, GameConstants::kMaxStages> grounds;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
 
-	MQuad quad;
-	Sprite sprite;
-	Sprite atlasNumber;
-	RectLight* rectLights[2];
+	float baseCenterRotateY = 0.0f;
+	const float stagePerYRotate = (360.0f / float(GameConstants::kMaxStages));
+	Counter selectCounter;
+
+	// イージング用
+	float startRotateY = 0.0f;
+	float targetRotateY = 0.0f;
 
 	void AdaptToPostEffect();
+
+	void UpdateStageSelectRotation();
 
 public:
 	StageSelectScene();

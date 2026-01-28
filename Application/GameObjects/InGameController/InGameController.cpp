@@ -2,6 +2,8 @@
 #include "GameObjectManager.h"
 #include "../../GameObjects/Player/Player.h"
 
+int InGameController::curStage = 0;
+
 void InGameController::ModeData::Set(float time_)
 {
 	time = time_;

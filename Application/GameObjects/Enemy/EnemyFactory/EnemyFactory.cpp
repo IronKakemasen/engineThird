@@ -91,8 +91,6 @@ void EnemyFactory::LoadData()
 	/// config反映
 	// HP設定
 	hp = inGameConfig->enemyFactoryMaxHP;
-	// スポーン頻度初期化
-	spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
 }
 void EnemyFactory::SaveData()
 {

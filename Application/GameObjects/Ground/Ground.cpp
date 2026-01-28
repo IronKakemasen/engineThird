@@ -7,6 +7,15 @@ void Ground::SetCollisionBackTable()
 
 
 
+void Ground::LoadData()
+{}
+
+void Ground::SaveData()
+{}
+
+void Ground::DebugDraw()
+{}
+
 void Ground::Update()
 {
 	//モデルの更新処理（中身を書いていれば）
