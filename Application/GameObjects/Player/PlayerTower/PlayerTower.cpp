@@ -51,7 +51,7 @@ void PlayerTower::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerTower);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->playerTowerCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -95,6 +95,11 @@ void PlayerTower::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerTowerCollisonSize);
+#endif // _DEBUG
 }
 
 void PlayerTower::Draw(Matrix4* vpMat_)

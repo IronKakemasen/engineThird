@@ -12,63 +12,57 @@ public:
 
 	void DebugDraw();
 
+	/////////////// collisonSize  ///////////////
+	float playerCollisonSize = 1.0f;			// プレイヤー
+	float playerTowerCollisonSize = 1.0f;		// プレイヤータワー
+	float playerBulletCollisonSize = 1.0f;		// プレイヤー弾
+	float playerAllyCollisonSize = 1.0f;		// プレイヤー味方
+	float enemyCollisonSize = 1.0f;				// 敵
+	float enemyTowerCollisonSize = 1.0f;		// 敵タワー
+	float enemyFactoryCollisonSize = 1.0f;		// 敵工場
 
-	// プレイヤーの最大HP
-	float playerMaxHP = 100.0f;
-	// プレイヤーのタワーの最大HP
-	float playerTowerMaxHP = 200.0f;
-	// 敵の最大HP
-	float enemyMaxHP = 100.0f;
-	// 敵のタワーの最大HP
-	float enemyTowerMaxHP = 200.0f;
-	// 敵の工場の最大HP
-	float enemyFactoryMaxHP = 300.0f;
-	// 弾の生命時間
-	float playerBulletLifeTime = 3.0f;
+	//////////////////  MaxHP  //////////////////
+	float playerMaxHP = 100.0f;			// プレイヤー
+	float playerTowerMaxHP = 200.0f;	// プレイヤータワー
+	float enemyMaxHP = 100.0f;			// 敵
+	float enemyTowerMaxHP = 200.0f;		// 敵タワー
+	float enemyFactoryMaxHP = 300.0f;	// 敵工場
+	float playerBulletLifeTime = 3.0f;	// 弾の生命時間
 	
 
-	// プレイヤーの移動速度
-	float playerSpeed = 0.1f;
-	// 敵の移動速度
-	float enemySpeed = 0.05f;
-	// 弾の速度
-	float playerBulletSpeed = 0.3f;
+	//////////////////  Speed  //////////////////
+	float playerSpeed = 0.1f;			// プレイヤー
+	float enemySpeed = 0.05f;			// 敵
+	float playerBulletSpeed = 0.3f;		// プレイヤーの弾
+	float playerAllySpeed = 1.5f;		// 味方(プレイヤー速度×playerAllySpeed)(列非加入時)
 	
 
-	// プレイヤーのデフォルト攻撃力
-	float playerAttack1Power = 5.0f;
-	float playerAttack2Power = 20.0f;
-	float playerAttack3Power = 30.0f;
-	// 味方を経由するごとに増える攻撃力補正値
-	float playerAllyPowerBonus = 2.0f;
-	// 味方を経由するごとに増えるサイズ補正値
-	float playerAllySizeBonus = 0.1f;
-	// 敵の攻撃力
-	float enemyAttackPower = 5.0f;
+	//////////////////  Power  //////////////////
+	float playerAttack1Power = 5.0f;	// プレイヤーアタック1段目の攻撃力
+	float playerAttack2Power = 20.0f;	// プレイヤーアタック2段目の攻撃力
+	float playerAttack3Power = 30.0f;	// プレイヤーアタック3段目の攻撃力
+	float playerAllyPowerBonus = 2.0f;	// 味方を経由するごとに増える攻撃力補正値
+	float playerAllySizeBonus = 0.1f;	// 味方を経由するごとに増えるサイズ補正値
+	float enemyAttackPower = 5.0f;		// 敵の攻撃力
 
+	///////////// SpawnInterval  ////////////////
+	float enemySpawnInterval = 5.0f;	// 敵のスポーン間隔
+	float playerAllySpawnInterval = 1.0f;// 味方のスポーン間隔
 
-	// 敵の生成間隔
-	float enemySpawnInterval = 5.0f;
-	// 敵の味方と当たった時のノックバック力
-	float enemyKnockBackPowerToAlly = 2.0f;
-	// 敵の弾と当たった時のノックバック力
-	float enemyKnockBackPowerToBullet1 = 0.1f;
-	float enemyKnockBackPowerToBullet2 = 1.0f;
-	float enemyKnockBackPowerToBullet3 = 1.5f;
-	// 敵のプレイヤータワーと当たった時のノックバック力
-	float enemyKnockBackPowerToPlayerTower = 0.5f;
+	/////////////  KnockBack  ////////////////
+	float enemyKnockBackPowerToAlly = 2.0f;		// [敵 - 味方]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToBullet1 = 0.1f;	// [敵 - プレイヤー弾1段目]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToBullet2 = 1.0f;	// [敵 - プレイヤー弾2段目]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToBullet3 = 1.5f;	// [敵 - プレイヤー弾3段目]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToPlayerTower = 0.5f;// [敵 - プレイヤータワー]衝突で 敵が受けるノックバック力
 
+	//////////////  Distance  ////////////////
+	int32_t allyToAllyDelayFrames = 30;		// ally - ally 間の遅延フレーム数
+	int32_t playerToAllyDelayFrames = 30;	// player - ally 間の遅延フレーム数
 
-	// ally - ally 間の遅延フレーム数
-	int32_t allyToAllyDelayFrames = 30;
-	// player - ally 間の遅延フレーム数
-	int32_t playerToAllyDelayFrames = 30;
-
-	// プレイヤーの攻撃ゲージ回復速度
-	float playerAttackGaugeRecoverSpeed = 0.02f;
-
-	// プレイヤーのゲージ回復インターバル
-	float playerAttackGaugeRecoverInterval = 0.5f;
+	/////////////  AttackGauge  ///////////////
+	float playerAttackGaugeRecoverSpeed = 0.02f;	// プレイヤー攻撃ゲージ回復速度
+	float playerAttackGaugeRecoverInterval = 0.5f;	// プレイヤー攻撃ゲージ回復インターバル
 
 private:
 	std::string path = "./resource/application/json/config/inGameConfig.json";

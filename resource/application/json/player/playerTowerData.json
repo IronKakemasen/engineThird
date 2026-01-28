@@ -1,11 +1,11 @@
 {
     "stage0": {
-        "ActiveCount": 2,
+        "ActiveCount": 1,
         "ID:0": {
             "position": {
-                "x": 3.0,
+                "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": -3.0
             }
         },
         "ID:1": {
@@ -13,6 +13,46 @@
                 "x": -3.0,
                 "y": 0.0,
                 "z": 0.0
+            }
+        }
+    },
+    "stage1": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -3.0
+            }
+        }
+    },
+    "stage2": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -3.0
+            }
+        }
+    },
+    "stage3": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -3.0
+            }
+        }
+    },
+    "stage4": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -3.0
             }
         }
     }

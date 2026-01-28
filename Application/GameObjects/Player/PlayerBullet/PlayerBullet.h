@@ -24,12 +24,10 @@ private:
 	float attackPower = 0.0f;
 	float allyPowerBonus = 0.0f;
 	float allySizeBonus = 0.0f;
+	float currentSizeBonus = 0.0f;
 
 	// 何段目の攻撃か
 	int32_t attackStage = 0;
-
-	// config反映
-	void ConfigHotReload();
 
 
 public:

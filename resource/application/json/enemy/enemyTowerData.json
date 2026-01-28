@@ -5,7 +5,47 @@
             "position": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 30.0
+                "z": 25.0
+            }
+        }
+    },
+    "stage1": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 15.0
+            }
+        }
+    },
+    "stage2": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 10.0
+            }
+        }
+    },
+    "stage3": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 15.0
+            }
+        }
+    },
+    "stage4": {
+        "ActiveCount": 1,
+        "ID:0": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 10.0
             }
         }
     }

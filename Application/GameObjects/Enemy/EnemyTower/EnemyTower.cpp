@@ -51,7 +51,7 @@ void EnemyTower::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemyTower);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->enemyTowerCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -97,6 +97,11 @@ void EnemyTower::Update()
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->enemyTowerCollisonSize);
+#endif // _DEBUG
 }
 
 void EnemyTower::AddHitBullet(PlayerBullet* bullet)

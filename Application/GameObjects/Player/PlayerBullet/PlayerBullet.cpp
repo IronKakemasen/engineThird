@@ -40,7 +40,7 @@ void PlayerBullet::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayerBullet);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -60,17 +60,6 @@ void PlayerBullet::SetCollisionBackTable()
 	SetCollisionBack(Tag::kEnemyTower, collisionBackToEnemyTower);
 	SetCollisionBack(Tag::kEnemyFactory, collisionBackToEnemyFactory);
 	SetCollisionBack(Tag::kPlayerAlly, collisionBackToAlly);
-}
-
-void PlayerBullet::ConfigHotReload()
-{
-	if (inGameConfig)
-	{
-		// 速度反映
-		defaultSpeed = inGameConfig->playerBulletSpeed;
-		// 生命時間反映
-		defaultLifeTime = inGameConfig->playerBulletLifeTime;
-	}
 }
 
 void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
@@ -102,6 +91,10 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	allyPowerBonus = inGameConfig->playerAllyPowerBonus;
 	// 味方経由サイズ補正値設定
 	allySizeBonus = inGameConfig->playerAllySizeBonus;
+	// コリジョンサイズ反映
+	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
+	// 現在サイズリセット
+	currentSizeBonus = 0.0f;
 }
 
 // データ保存・読み込み
@@ -167,5 +160,7 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	if (ally->formationCurrentIndex == -1) return;
 
 	me->trans.scale = me->trans.scale + Vector3{ me->allySizeBonus, 0.0f, me->allySizeBonus };
+	me->currentSizeBonus += me->allySizeBonus;
+	me->SetCircleCollision(me->inGameConfig->playerBulletCollisonSize + me->currentSizeBonus);
 	me->attackPower += me->allyPowerBonus;
 }

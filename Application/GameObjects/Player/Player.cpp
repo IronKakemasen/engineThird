@@ -60,7 +60,7 @@ void Player::Init()
 	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kPlayer);
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(1.0f);
+	SetCircleCollision(inGameConfig->playerCollisonSize);
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
@@ -124,6 +124,11 @@ void Player::Update()
 
 	// 攻撃処理
 	Attack();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerCollisonSize);
+#endif // _DEBUG
 }
 
 // 描画処理
