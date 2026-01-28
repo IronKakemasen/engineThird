@@ -5,6 +5,7 @@
 #include "../../M/utilities/Json/Json.h"
 #include "../../Models/EnemyModel/EnemyModel.h"
 #include "../../Models/Tenkyu/Tenkyu.h"
+#include "../../Models/PlayerAllyModel/PlayerAllyModel.h"
 
 class ModelScene final : public Scene
 {
@@ -12,6 +13,7 @@ class ModelScene final : public Scene
 	groundM gm;
 	EnemyModel enemyModel;
 	Tenkyu tenkyu;
+	PlayerAllyModel playerAllyModel;
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 
@@ -26,8 +28,6 @@ class ModelScene final : public Scene
 
 	void Save();
 	void Load();
-
-
 
 public:
 	ModelScene();

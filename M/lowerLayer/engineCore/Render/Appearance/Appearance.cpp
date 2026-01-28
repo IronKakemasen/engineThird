@@ -16,8 +16,13 @@ Appearance::Appearance()
 	texHandlesContainer[kShininessMap] = kNone;		
 	roughness = 1.0f;
 	metalic = 0.75f;
-
 }
+
+Vector4 Appearance::GetComplementaryColor(Vector4 color_)
+{
+	return { 255 - color_.x, 255 - color_.y, 255 - color_.z, 255.0f };
+}
+
 
 void Appearance::SetUsingTextureFromContainer(bool colorMap_, bool normalMap_,
 	bool metalicMap_, bool roughnessMap_)

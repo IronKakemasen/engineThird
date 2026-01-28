@@ -8,6 +8,7 @@ void PM::Update()
 	auto* para = rectLight->Getter_Para();
 	para->pos = trans.GetWorldPos();
 	para->pos.y = 3.0f;
+	para->pos.z -= 1.0f;
 	auto* m = M::GetInstance();
 	if (m->IsKeyPressed(KeyType::A))
 	{
@@ -25,6 +26,7 @@ void PM::Update()
 	{
 		trans.pos.z -= 0.25f;
 	}
+
 
 }
 
@@ -57,6 +59,11 @@ PM::PM()
 {
 	model.reset(new PlayerModel);
 	rectLight = M::GetInstance()->ImportRectLight();
-	rectLight->Getter_Para()->isActive = 0;
-	*rectLight->GetLookDirection() = { 0,-1,0.01f };
+	auto* para = rectLight->Getter_Para();
+	para->isActive = 1;
+	para->intensity = 123.0f;
+	para->width = 3.8f;
+	para->height = 2.3f;
+	para->color = { 100,100,200 };
+	*rectLight->GetLookDirection() = { 0,-0.364f,0.931f};
 }
