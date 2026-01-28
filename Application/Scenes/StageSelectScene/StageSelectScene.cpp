@@ -5,11 +5,6 @@
 
 void StageSelectScene::Update()
 {
-	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
-	{
-		SceneBehavior::doReset = true;
-	}
-
 	mainCamera.Update();
 
 	// ステージセレクトの回転処理
@@ -135,7 +130,6 @@ void StageSelectScene::DecideStage()
 	}
 }
 
-
 void StageSelectScene::UpdateAfterDecideStage()
 {
 	if (selected)
@@ -175,6 +169,8 @@ void StageSelectScene::Draw()
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
+
+
 }
 
 void StageSelectScene::Reset()
@@ -213,5 +209,4 @@ void StageSelectScene::Debug()
 #endif // USE_IMGUI
 
 }
-
 

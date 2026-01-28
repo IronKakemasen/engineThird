@@ -70,9 +70,6 @@ public:
 	// プレイヤーのゲージ回復インターバル
 	float playerAttackGaugeRecoverInterval = 0.5f;
 
-
-
-
 private:
 	std::string path = "./resource/application/json/config/inGameConfig.json";
 

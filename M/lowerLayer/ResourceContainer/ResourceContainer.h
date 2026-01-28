@@ -21,6 +21,18 @@ enum class TextureTag
 	kEnemyThornN,
 	kAllyN,
 
+	kButtonBack900x250,
+	kButtonDecision900x250,
+	kButtonMove900x250,
+	kButtonOption900x250,
+	kButtonPause900x250,
+	kButtonShot900x250,
+	kButtonZoom900x250,
+	kNumbers100x100,
+
+	kStageName1000x100,
+
+
 	kCount
 };
 

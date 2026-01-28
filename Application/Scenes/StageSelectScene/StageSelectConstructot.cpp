@@ -42,27 +42,6 @@ void StageSelectScene::Instantiate()
 			playerTowers[stageIndex][i]->SetID(static_cast<int32_t>(i));
 			playerTowers[stageIndex][i]->SetInGameConfig(inGameConfig.get());
 		}
-		// プレイヤーアリーのインスタンス化 & IDセット
-		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-		{
-			allies[stageIndex][i].reset(new PlayerAlly);
-			allies[stageIndex][i]->SetID(static_cast<int32_t>(i));
-			allies[stageIndex][i]->SetInGameConfig(inGameConfig.get());
-		}
-		// プレイヤーバレットのインスタンス化 & IDセット
-		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-		{
-			playerBullets[stageIndex][i].reset(new PlayerBullet);
-			playerBullets[stageIndex][i]->SetID(static_cast<int32_t>(i));
-			playerBullets[stageIndex][i]->SetInGameConfig(inGameConfig.get());
-		}
-		// エネミーのインスタンス化 & IDセット
-		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-		{
-			enemies[stageIndex][i].reset(new Enemy);
-			enemies[stageIndex][i]->SetID(static_cast<int32_t>(i));
-			enemies[stageIndex][i]->SetInGameConfig(inGameConfig.get());
-		}
 		// エネミータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
@@ -98,18 +77,6 @@ void StageSelectScene::Instantiate()
 		{
 			gameObjManager->RegisterForContainer(playerTowers[stageIndex][i].get());
 		}
-		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-		{
-			gameObjManager->RegisterForContainer(allies[stageIndex][i].get());
-		}
-		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-		{
-			gameObjManager->RegisterForContainer(playerBullets[stageIndex][i].get());
-		}
-		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-		{
-			gameObjManager->RegisterForContainer(enemies[stageIndex][i].get());
-		}
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
 			gameObjManager->RegisterForContainer(enemyTowers[stageIndex][i].get());
@@ -120,29 +87,6 @@ void StageSelectScene::Instantiate()
 		}
 	}
 	gameObjManager->RegisterForContainer(inGameController.get());
-
-	// ポインタを渡す
-	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
-	{
-		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-		{
-			enemies[stageIndex][i]->SetTargetPlayer(player[stageIndex][0].get());
-			for (size_t playerTowerIndex = 0; playerTowerIndex < playerTowers[stageIndex].size(); ++playerTowerIndex)
-			{
-				enemies[stageIndex][i]->SetTargetTower(playerTowers[stageIndex][playerTowerIndex].get());
-			}
-		}
-
-		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-		{
-			player[stageIndex][0]->SetAllies(allies[stageIndex][i].get());
-		}
-
-		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-		{
-			player[stageIndex][0]->SetBullets(playerBullets[stageIndex][i].get());
-		}
-	}
 }
 
 void StageSelectScene::Init()
@@ -151,6 +95,9 @@ void StageSelectScene::Init()
 
 	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 15.0f, -65.0f);
 	mainCamera.cameraPara->trans.lookDir = Vector3(0.0f, -0.714f, 0.7f);
+
+	Reset();
+	gameObjManager->Reset();
 
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
@@ -168,21 +115,6 @@ void StageSelectScene::Init()
 		{
 			playerTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
 			playerTowers[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
-		}
-		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-		{
-			allies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			allies[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
-		}
-		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-		{
-			playerBullets[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			playerBullets[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
-		}
-		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-		{
-			enemies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			enemies[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
