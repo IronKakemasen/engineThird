@@ -2,7 +2,7 @@
 
 StageSelectScene::StageSelectScene()
 {
-
+	selectCounter.Initialize(0.1f);
 }
 
 void StageSelectScene::Instantiate()
@@ -14,6 +14,13 @@ void StageSelectScene::Instantiate()
 
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
+		// 回転中心オブジェクトのインスタンス化 & IDセット
+		for (size_t i = 0; i < centerObject[stageIndex].size(); ++i)
+		{
+			centerObject[stageIndex][i].reset(new Shikoutei);
+			centerObject[stageIndex][i]->SetID(static_cast<int32_t>(i));
+			centerObject[stageIndex][i]->SetInGameConfig(inGameConfig.get());
+		}
 		// プレイヤーのインスタンス化 & IDセット
 		for (size_t i = 0; i < player[stageIndex].size(); ++i)
 		{
@@ -22,11 +29,11 @@ void StageSelectScene::Instantiate()
 			player[stageIndex][i]->SetInGameConfig(inGameConfig.get());
 		}
 		// テスト地面のインスタンス化 & IDセット
-		for (size_t i = 0; i < shikouteis[stageIndex].size(); ++i)
+		for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
 		{
-			shikouteis[stageIndex][i].reset(new Shikoutei);
-			shikouteis[stageIndex][i]->SetID(static_cast<int32_t>(i));
-			shikouteis[stageIndex][i]->SetInGameConfig(inGameConfig.get());
+			grounds[stageIndex][i].reset(new Ground);
+			grounds[stageIndex][i]->SetID(static_cast<int32_t>(i));
+			grounds[stageIndex][i]->SetInGameConfig(inGameConfig.get());
 		}
 		// プレイヤータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
@@ -75,13 +82,17 @@ void StageSelectScene::Instantiate()
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
+		for (size_t i = 0; i < centerObject[stageIndex].size(); ++i)
+		{
+			gameObjManager->RegisterForContainer(centerObject[stageIndex][i].get());
+		}
 		for (size_t i = 0; i < player[stageIndex].size(); ++i)
 		{
 			gameObjManager->RegisterForContainer(player[stageIndex][i].get());
 		}
-		for (size_t i = 0; i < shikouteis[stageIndex].size(); ++i)
+		for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
 		{
-			gameObjManager->RegisterForContainer(shikouteis[stageIndex][i].get());
+			gameObjManager->RegisterForContainer(grounds[stageIndex][i].get());
 		}
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
 		{
@@ -139,47 +150,48 @@ void StageSelectScene::Init()
 {
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
 		inGameController.get(), player[0][0].get());
+
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
-		// プレイヤーのインスタンス化 & IDセット
 		for (size_t i = 0; i < player[stageIndex].size(); ++i)
 		{
 			player[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			player[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// テスト地面のインスタンス化 & IDセット
-		for (size_t i = 0; i < shikouteis[stageIndex].size(); ++i)
+		for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
 		{
-			shikouteis[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			grounds[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			grounds[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// プレイヤータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
 		{
 			playerTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			playerTowers[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// プレイヤーアリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < allies[stageIndex].size(); ++i)
 		{
 			allies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			allies[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// プレイヤーバレットのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
 		{
 			playerBullets[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			playerBullets[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// エネミーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
 		{
 			enemies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			enemies[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// エネミータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
 			enemyTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			enemyTowers[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
-		// エネミーファクトリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
 		{
 			enemyFactories[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
+			enemyFactories[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
 	}
 
