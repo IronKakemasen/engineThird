@@ -394,7 +394,7 @@ void Player::UpdateAllyData()
 		if (!isMoving)
 		{
 			delayFrameOffsets++;
-			if (delayFrameOffsets >= inGameConfig->allyDelayFrames)
+			if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
 			{
 				// オフセットリセット
 				delayFrameOffsets = 0;
@@ -441,7 +441,8 @@ Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 		index = formedAllyCount;
 	}
 
-	int32_t delayFrames = (index + 1) * inGameConfig->allyDelayFrames;
+	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
+	delayFrames += inGameConfig->playerToAllyDelayFrames;
 	int32_t offset = 0;
 	if (!deadIndexList.empty() && index >= deadIndexList.front())
 	{

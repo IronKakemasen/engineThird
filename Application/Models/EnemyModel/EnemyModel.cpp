@@ -46,6 +46,7 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
 
+
 		//必須でない
 		appe->metalic = 0.72f;
 		appe->roughness = 0.4f;
