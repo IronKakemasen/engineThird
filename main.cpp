@@ -15,8 +15,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #endif // DEBUG
 
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
-	Json::LoadAll("./resource/application/json/");
-
 
 	// resource/application/json 以下データをロード
 	Json::LoadAll("./resource/application/json/");
