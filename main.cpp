@@ -15,10 +15,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #endif // DEBUG
 
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
+
+	// resource/application/json 以下データをロード
 	Json::LoadAll("./resource/application/json/");
 
 	std::unique_ptr<SceneController> sceneController =
-		std::make_unique<SceneController>(kModelView);
+		std::make_unique<SceneController>(kInGame);
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)
