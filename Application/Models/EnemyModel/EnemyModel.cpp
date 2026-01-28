@@ -60,6 +60,8 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->roughness = 0.4f;
 	}
 
+	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
 
 }
 
