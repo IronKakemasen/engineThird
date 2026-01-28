@@ -10,6 +10,7 @@ InGameConfig::~InGameConfig()
 
 void InGameConfig::Load()
 {
+
 	Json::LoadParam(path, "/player/MaxHP", playerMaxHP);
 	Json::LoadParam(path, "/playerTower/MaxHP", playerTowerMaxHP);
 	Json::LoadParam(path, "/enemy/MaxHP", enemyMaxHP);
