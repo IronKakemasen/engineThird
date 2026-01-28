@@ -19,6 +19,7 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kEnemyN, pathToTex + "EnemyN.png");
 	LoadTextureFile(TextureTag::kEnemyBodyN, pathToTex + "Enemy/" +"E_Body_normal.png");
 	LoadTextureFile(TextureTag::kEnemyThornN, pathToTex + "Enemy/" + "E_Thorn_normal.png");
+	LoadTextureFile(TextureTag::kAllyN, pathToTex + "Ally/" + "Ally_Body_normal.png");
 
 	
 }
