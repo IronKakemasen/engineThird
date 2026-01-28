@@ -27,11 +27,8 @@ class StageSelectScene final : public Scene
 	std::array<std::array<std::unique_ptr<Shikoutei>, 1>, GameConstants::kMaxStages> centerObject;
 	std::array<std::array<std::unique_ptr<Player>, 1>, GameConstants::kMaxStages> player;
 	std::array<std::array<std::unique_ptr<PlayerTower>, GameConstants::kMaxPlayerTowers>, GameConstants::kMaxStages> playerTowers;
-	std::array<std::array<std::unique_ptr<PlayerAlly>, GameConstants::kMaxAllies>, GameConstants::kMaxStages> allies;
-	std::array<std::array<std::unique_ptr<Enemy>, GameConstants::kMaxEnemies>, GameConstants::kMaxStages> enemies;
 	std::array<std::array<std::unique_ptr<EnemyTower>, GameConstants::kMaxEnemyTowers>, GameConstants::kMaxStages> enemyTowers;
 	std::array<std::array<std::unique_ptr<EnemyFactory>, GameConstants::kMaxEnemyFactories>, GameConstants::kMaxStages> enemyFactories;
-	std::array<std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets>, GameConstants::kMaxStages> playerBullets;
 	std::array<std::array<std::unique_ptr<Ground>, 1>, GameConstants::kMaxStages> grounds;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;

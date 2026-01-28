@@ -5,47 +5,6 @@
 
 void StageSelectScene::Update()
 {
-	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
-	{
-		Reset();
-		gameObjManager->Reset();
-		for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
-		{
-			for (size_t i = 0; i < player[stageIndex].size(); ++i)
-			{
-				player[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
-			{
-				grounds[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
-			{
-				playerTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < allies[stageIndex].size(); ++i)
-			{
-				allies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < playerBullets[stageIndex].size(); ++i)
-			{
-				playerBullets[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < enemies[stageIndex].size(); ++i)
-			{
-				enemies[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
-			{
-				enemyTowers[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-			for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
-			{
-				enemyFactories[stageIndex][i]->SetStatus(GameObjectBehavior::Status::kDrawOnly);
-			}
-		}
-	}
-
 	mainCamera.Update();
 
 	// ステージセレクトの回転処理
