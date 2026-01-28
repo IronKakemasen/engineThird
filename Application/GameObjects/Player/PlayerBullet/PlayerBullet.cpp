@@ -93,6 +93,8 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	allySizeBonus = inGameConfig->playerAllySizeBonus;
 	// コリジョンサイズ反映
 	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
+	// 現在サイズリセット
+	currentSizeBonus = 0.0f;
 }
 
 // データ保存・読み込み
@@ -158,5 +160,7 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	if (ally->formationCurrentIndex == -1) return;
 
 	me->trans.scale = me->trans.scale + Vector3{ me->allySizeBonus, 0.0f, me->allySizeBonus };
+	me->currentSizeBonus += me->allySizeBonus;
+	me->SetCircleCollision(me->inGameConfig->playerBulletCollisonSize + me->currentSizeBonus);
 	me->attackPower += me->allyPowerBonus;
 }
