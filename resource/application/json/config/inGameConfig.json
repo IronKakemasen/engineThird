@@ -1,12 +1,12 @@
 {
     "enemy": {
-        "MaxHP": 8.0,
+        "MaxHP": 10.0,
         "defaultAttackPower": 1.0,
         "knockBackPowerToAlly": 1.0,
         "knockBackPowerToBullet": 0.10000000149011612,
         "knockBackPowerToBullet1": 0.10000000149011612,
-        "knockBackPowerToBullet2": 1.0,
-        "knockBackPowerToBullet3": 1.5,
+        "knockBackPowerToBullet2": 0.10000000149011612,
+        "knockBackPowerToBullet3": 0.10000000149011612,
         "knockBackPowerToPTower": 0.30000001192092896,
         "spawnInterval": 10.0,
         "speed": 0.019999999552965164
@@ -20,17 +20,17 @@
     "player": {
         "MaxHP": 3.0,
         "allyDelayFrames": 10,
-        "allyDelayFramesToAlly": 10,
-        "allyDelayFramesToPlayer": 20,
-        "allyPowerBonus": 20.0,
+        "allyDelayFramesToAlly": 15,
+        "allyDelayFramesToPlayer": 5,
+        "allyPowerBonus": 2.0,
         "allySizeBonus": 0.5,
-        "attackGaugeRecoverInterval": 0.5,
+        "attackGaugeRecoverInterval": 1.0,
         "attackGaugeRecoverSpeed": 0.07999999821186066,
-        "attak1Power": 5.0,
-        "attak2Power": 20.0,
-        "attak3Power": 30.0,
+        "attak1Power": 1.0,
+        "attak2Power": 3.0,
+        "attak3Power": 3.0,
         "bullet": {
-            "lifeTime": 1.0,
+            "lifeTime": 0.800000011920929,
             "speed": 0.20000000298023224
         },
         "defaultAttackPower": 2.0,
