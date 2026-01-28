@@ -31,7 +31,7 @@ PixcelShaderOutput main(VertexShaderOutput input)
     input.texcoord = (input.texcoord + float2(0.5, 0.5)) * 8.0;
     
     float tp = gTime.passedTime * 4.0f;
-    float tp2 = 0.5 + saturate(+sin(3.14 * gTime.passedTime * 0.05));
+    float tp2 = 0.5 + saturate(sin(3.14 * gTime.passedTime * 0.2));
     float4 finalColor = float4(0, 0, 0, tp2);
 
     finalColor.rgb = mainImage(finalColor, input.texcoord, tp);
