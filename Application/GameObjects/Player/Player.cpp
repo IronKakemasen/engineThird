@@ -124,6 +124,11 @@ void Player::Update()
 
 	// 攻撃処理
 	Attack();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerCollisonSize);
+#endif // _DEBUG
 }
 
 // 描画処理

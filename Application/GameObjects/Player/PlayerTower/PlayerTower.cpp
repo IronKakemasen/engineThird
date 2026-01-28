@@ -95,6 +95,11 @@ void PlayerTower::Update()
 {
 	//モデルの更新処理
 	model->Update();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerTowerCollisonSize);
+#endif // _DEBUG
 }
 
 void PlayerTower::Draw(Matrix4* vpMat_)

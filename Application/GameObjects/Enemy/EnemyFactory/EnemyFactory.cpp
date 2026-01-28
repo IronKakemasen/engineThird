@@ -113,6 +113,12 @@ void EnemyFactory::Update()
 
 	// スポーン処理
 	SpawnEnemy();
+
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->enemyFactoryCollisonSize);
+#endif // _DEBUG
 }
 
 void EnemyFactory::AddHitBullet(PlayerBullet* bullet)

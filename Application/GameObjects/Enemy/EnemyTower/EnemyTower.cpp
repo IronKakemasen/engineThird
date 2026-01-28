@@ -97,6 +97,11 @@ void EnemyTower::Update()
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
+
+#ifdef _DEBUG
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->enemyTowerCollisonSize);
+#endif // _DEBUG
 }
 
 void EnemyTower::AddHitBullet(PlayerBullet* bullet)
