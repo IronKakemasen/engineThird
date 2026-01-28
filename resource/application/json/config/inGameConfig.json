@@ -5,6 +5,15 @@
             "attackGaugeRecoverSpeed": 0.07999999821186066
         }
     },
+    "CollisonSize": {
+        "ally": 0.75,
+        "bullet": 0.6000000238418579,
+        "enemy": 0.6000000238418579,
+        "enemyFactory": 1.0,
+        "enemyTower": 1.0,
+        "player": 0.6000000238418579,
+        "playerTower": 1.0
+    },
     "Distance": {
         "allyToAlly": 15,
         "playerToAlly": 5
