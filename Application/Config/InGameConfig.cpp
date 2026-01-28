@@ -35,7 +35,8 @@ void InGameConfig::Load()
 	Json::LoadParam(path, "/enemy/knockBackPowerToBullet3", enemyKnockBackPowerToBullet3);
 	Json::LoadParam(path, "/enemy/knockBackPowerToPTower", enemyKnockBackPowerToPlayerTower);
 
-	Json::LoadParam(path, "/player/allyDelayFrames", allyDelayFrames);
+	Json::LoadParam(path, "/player/allyDelayFramesToAlly", allyToAllyDelayFrames);
+	Json::LoadParam(path, "/player/allyDelayFramesToPlayer", playerToAllyDelayFrames);
 	Json::LoadParam(path, "/player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
 	Json::LoadParam(path, "/player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
 }
@@ -67,7 +68,8 @@ void InGameConfig::Save()
 	Json::SaveParam(path, "/enemy/knockBackPowerToBullet3", enemyKnockBackPowerToBullet3);
 	Json::SaveParam(path, "/enemy/knockBackPowerToPTower", enemyKnockBackPowerToPlayerTower);
 
-	Json::SaveParam(path, "/player/allyDelayFrames", allyDelayFrames);
+	Json::SaveParam(path, "/player/allyDelayFramesToAlly", allyToAllyDelayFrames);
+	Json::SaveParam(path, "/player/allyDelayFramesToPlayer", playerToAllyDelayFrames);
 	Json::SaveParam(path, "/player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
 	Json::SaveParam(path, "/player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
 
@@ -108,9 +110,11 @@ void InGameConfig::DebugDraw()
 	ImGui::DragFloat("Enemy 	toBullet3", &enemyKnockBackPowerToBullet3, 0.1f, 0.0f, 20.0f);
 	ImGui::DragFloat("Enemy 	toPTower", &enemyKnockBackPowerToPlayerTower, 0.1f, 0.0f, 20.0f);
 	ImGui::Text("---------------------Player-------------------\n");
-	ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
-	ImGui::DragInt("Ally		delayFrames", &allyDelayFrames, 1, 0, 120);
+	ImGui::DragInt("Ally		A-A delayFrames", &allyToAllyDelayFrames, 1, 0, 120);
+	ImGui::DragInt("Ally		P-A delayFrames", &playerToAllyDelayFrames, 1, 0, 120);
 	ImGui::DragFloat("Player	attackGaugeRecoverSpeed", &playerAttackGaugeRecoverSpeed, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Player	attackGaugeRecoverInterval", &playerAttackGaugeRecoverInterval, 0.01f, 0.0f, 5.0f);
+	ImGui::Text("---------------------Factory-------------------\n");
+	ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
 
 }
