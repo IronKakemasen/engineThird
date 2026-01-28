@@ -3,7 +3,6 @@
 #include "../../GameObjects/Player/Player.h"
 #include "../../M/lowerLayer/Camera/CameraBehavior.h"
 
-
 void CameraActions::ActionBehavior::Init(MainCamera* camera_)
 {
 	camera = camera_;
@@ -13,11 +12,24 @@ void CameraActions::ActionBehavior::Init(MainCamera* camera_)
 void CameraActions::FollowPlayer::operator()()
 {
 	Vector3 nextPos = camera->player->Getter_Trans()->GetWorldPos() + offsetFollow;
+	float const adjustMul = 35.0f;
 
 	camera->cameraPara->trans.pos =
-		Easing::EaseOutCubic(camera->cameraPara->trans.pos, nextPos, kDefaultFollowCoe);
+		Easing::EaseOutCubic(camera->cameraPara->trans.pos, nextPos + Player::deltaPos* adjustMul,
+			kDefaultFollowCoe)+ offsetDebug ;
 
-	camera->cameraPara->trans.lookDir = kPlayableDefaultLookDir;
+#ifdef _DEBUG
+	auto* m = M::GetInstance();
+	float const speed = 0.01f;
+	if (m->IsKeyPressed(KeyType::J))offsetDebug.x -= speed ;
+	if (m->IsKeyPressed(KeyType::L))offsetDebug.x += speed ;
+	if (m->IsKeyPressed(KeyType::I))offsetDebug.z += speed ;
+	if (m->IsKeyPressed(KeyType::K))offsetDebug.z -= speed ;
+	if (m->IsKeyTriggered(KeyType::ESCAPE))offsetDebug = {};
+
+#endif // _DEBUG
+
+	camera->cameraPara->trans.lookDir = kPlayableDefaultLookDir ;
 
 }
 

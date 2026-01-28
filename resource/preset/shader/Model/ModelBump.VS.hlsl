@@ -21,7 +21,7 @@ VertexShaderOutput main(VertexShaderInput input)
     output.position = mul(tmp, transformMatrix.WVP);
     output.texcoord = input.texcoord;
     output.normal = normalize(mul(input.normal, (float3x3) transformMatrix.World));
-    output.worldPosition = float3(transformMatrix.World[3][0], transformMatrix.World[3][1], transformMatrix.World[3][2]);
+    output.worldPosition = input.position.xyz + float3(transformMatrix.World[3][0], transformMatrix.World[3][1], transformMatrix.World[3][2]);
     
     //基底ベクトル
     float3 N = normalize(mul((float3x3) transformMatrix.World, input.normal));

@@ -2,6 +2,7 @@
 #include "../../utilities/Json/Json.h"
 #include <numbers>
 
+
 void StageSelectScene::Update()
 {
 
@@ -16,6 +17,11 @@ void StageSelectScene::Update()
 
 	// ポストエフェクト
 	AdaptToPostEffect();
+
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+	//ChangeScene(SceneType::kInGame);
+	//+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+**+*+*+***********
+
 }
 
 void StageSelectScene::AdaptToPostEffect()

@@ -1,6 +1,15 @@
 #include "SceneBehavior.h"
 #include "../SceneController/SceneController.h"
 
+void Scene::ChangeScene(SceneType next_)
+{
+	nextScene = next_;
+}
+
+SceneType Scene::SendSignal()
+{
+	return nextScene;
+}
 
 SceneBehavior::SceneBehavior() 
 {

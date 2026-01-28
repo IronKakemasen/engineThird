@@ -13,19 +13,60 @@ void ModelScene::AdaptToPostEffect()
 	switch (effectType)
 	{
 	case PostEffectType::kNone:
-		dirPara->intensity = 1.0f;
+	{
+
+		dirPara->intensity = dirLightIntensityNormal;
+		dirPara->pos = dirLightDir;
+
+		for (auto* m : p.model->models)
+		{
+			auto* appe = m->Getter_Appearance(0);
+			appe->metalic = metalicCommonNormal;
+			appe->roughness = roughnessCommonNormal;
+		}
+		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
+
+		enemyMat->metalic = metalicCommonNormal;
+		enemyMat->roughness = roughnessCommonNormal;
 
 		break;
-
+	}
 	case PostEffectType::kGreyScale:
-		dirPara->intensity = 1.0f;
+	{
+		dirPara->intensity = dirLightIntensityNormal;
+		dirPara->pos = dirLightDir;
+
+		for (auto* m : p.model->models)
+		{
+			auto* appe = m->Getter_Appearance(0);
+			appe->metalic = metalicCommonNormal;
+			appe->roughness = roughnessCommonNormal;
+		}
+		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
+
+		enemyMat->metalic = metalicCommonNormal;
+		enemyMat->roughness = roughnessCommonNormal;
 
 		break;
-
+	}
 	case PostEffectType::kSimpleNeonLike:
-		dirPara->intensity = 12.0f;
+	{
+		dirPara->intensity = dirLightIntensityNeon;
+		dirPara->pos = dirLightDir;
+
+		for (auto* m : p.model->models)
+		{
+			auto* appe = m->Getter_Appearance(0);
+			appe->metalic = metalicCommonNeon;
+			appe->roughness = roughnessCommonNeon;
+		}
+
+		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
+		enemyMat->metalic = metalicCommonNeon;
+		enemyMat->roughness = roughnessCommonNeon;
 
 		break;
+	}
 	}
 }
 
@@ -36,6 +77,8 @@ void ModelScene::Draw()
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
+	enemyModel.Draw(vpMat);
+	tenkyu.Draw(vpMat);
 }
 
 void ModelScene::Reset()
@@ -83,6 +126,8 @@ void ModelScene::Debug()
 			reinterpret_cast<float*>(&appe->trans.rotation), 0.1f);
 		ImGui::DragFloat3(("lookDIr" + std::to_string(i)).c_str(),
 			reinterpret_cast<float*>(&appe->trans.lookDir), 0.1f);
+		ImGui::DragFloat3(("color" + std::to_string(i)).c_str(),
+			reinterpret_cast<float*>(&appe->color), 0.1f);
 
 		++i;
 	}
@@ -95,9 +140,26 @@ void ModelScene::Debug()
 	ImGui::End();
 
 
-	ImGui::Begin("ground");
-	ImGui::DragFloat3(("pos" + std::to_string(i)).c_str(),
+	ImGui::Begin("Dowa");
+	ImGui::DragFloat3(("ground" + std::to_string(i)).c_str(),
 		reinterpret_cast<float*>(&gm.model->model->Getter_Appearance(0)->trans.pos), 0.1f);
+	ImGui::DragFloat3(("enemy" + std::to_string(i)).c_str(),
+		reinterpret_cast<float*>(&enemyModel.model->Getter_Appearance(0)->trans.pos), 0.1f);
+
+	ImGui::End();
+
+	ImGui::Begin("CommonParameters");
+	ImGui::DragFloat("dirLightIntensityNormal", &dirLightIntensityNormal, 0.1f);
+	ImGui::DragFloat("dirLightIntensityNeon", &dirLightIntensityNeon, 0.1f);
+	ImGui::DragFloat3("dirLightDir", reinterpret_cast<float*>(&dirLightDir), 0.1f);
+	ImGui::SliderFloat("metalicCommonNormal", &metalicCommonNormal, 0.0f,1.0f);
+	ImGui::SliderFloat("roughnessCommonNormal", &roughnessCommonNormal, 0.0f, 1.0f);
+	ImGui::SliderFloat("metalicCommonNeon", &metalicCommonNeon, 0.0f, 1.0f);
+	ImGui::SliderFloat("roughnessCommonNeon", &roughnessCommonNeon, 0.0f, 1.0f);
+	if (ImGui::Button("Save"))
+	{
+		Save();
+	}
 	ImGui::End();
 
 

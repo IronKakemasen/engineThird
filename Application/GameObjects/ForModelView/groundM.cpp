@@ -9,7 +9,6 @@ void groundM::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
-
 }
 
 void groundM::Reset()

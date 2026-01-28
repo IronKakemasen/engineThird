@@ -59,6 +59,8 @@ class M
 	KeyboardKeys* keyboardKeys = nullptr;
 
 public:
+	float passedTime = 0.0f;
+
 	static M* GetInstance();
 
 	void Init(TextureDataManager* textureDataManager_, ExclusiveDraw* exclusiveDraw_, 
@@ -86,6 +88,7 @@ public:
 
 	//モデルの描画
 	void DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
+	void DrawShaderToy(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_);
 
 	//モバイルトライアングルの描画
 	void DrawMTriangle(Vertex& left_, Vertex& top_, Vertex& right_,
@@ -171,8 +174,6 @@ private:
 		SHORT rightStickY[4];        // 右スティックY軸（-32768〜32767）
 		Vector2 leftStickDir[4];        // 左スティック方向({-1〜1},{-1〜1})
 		Vector2 rightStickDir[4];        // 右スティック方向({-1〜1},{-1〜1})
-
-
 
 		XINPUT_STATE state[4];
 		XINPUT_STATE preState[4];

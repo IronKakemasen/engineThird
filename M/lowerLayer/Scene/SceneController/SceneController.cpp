@@ -46,10 +46,6 @@ void SceneController::Debug()
 			Getter_Parameters()->trans.lookDir;
 	}
 
-	forDebug.ps[0]->Getter_Para()->pos =
-		axisModel->model->Getter_Appearance(0)->trans.GetWorldPos();
-	forDebug.ps[0]->Getter_Para()->pos.z -= 1.5f;
-
 	static float fps;
 	fps = ImGui::GetIO().Framerate;
 
@@ -111,7 +107,6 @@ void SceneController::Debug()
 	if (ImGui::TreeNode("DirectionalLight"))
 	{
 		ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);
-		ImGui::DragFloat3("color", reinterpret_cast<float*>(&forDebug.lightBuffer), 0.01f);
 		ImGui::DragFloat("intensity", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->intensity), 0.1f);
 		ImGui::TreePop();
 	}
@@ -183,6 +178,7 @@ void SceneController::Init(SceneType firstScene_)
 	runningScene = firstScene_;
 
 	SetScenesToArray();
+	int i = 0;
 	for (auto* scene : allScene)
 	{
 		if (!scene)continue;
@@ -190,6 +186,8 @@ void SceneController::Init(SceneType firstScene_)
 		scene->Instantiate();
 		scene->Init();
 		scene->gameObjManager->Init();
+		scene->nextScene = SceneType(i);
+		i++;
 	}
 
 	axisModel->Init(nullptr);
@@ -197,14 +195,6 @@ void SceneController::Init(SceneType firstScene_)
 #ifdef _DEBUG
 	forDebug.lightBuffer = allScene[runningScene]->dirLight->Getter_Para()->color;
 	
-	for (int i = 0; i < 2; ++i)
-	{
-		forDebug.ps[i] = M::GetInstance()->ImportPointLight();
-		forDebug.ps[i]->Getter_Para()->isActive = true;
-		forDebug.ps[i]->Getter_Para()->invSqrRadius = 200.0f;
-		forDebug.ps[i]->Getter_Para()->color = { 200,200,200};
-
-	}
 #endif // _DEBUG
 
 
@@ -234,6 +224,13 @@ void SceneController::InstantiateScenes()
 
 void SceneController::ChangeScene()
 {
+	Scene* cur_Scene = allScene[runningScene];
+	if (runningScene != cur_Scene->SendSignal())
+	{
+		nextScene = cur_Scene->SendSignal();
+		cur_Scene->nextScene = runningScene;
+	}
+
 	runningScene = nextScene;
 }
 
@@ -252,7 +249,7 @@ std::string SceneController::GetName(SceneType type_)
 	return names[(int)type_];
 }
 
-SceneController::SceneType SceneController::GetType(int index_)
+SceneType SceneController::GetType(int index_)
 {
 	SceneType types[SceneType::kCount]
 	{
@@ -272,4 +269,9 @@ void SceneController::Set(SceneType type_, Scene* scene_)
 {
 	allScene[type_] = scene_;
 	sceneNameContainer.emplace_back(GetName(type_));
+}
+
+void SceneController::ChangeScene(SceneType nextSceneType_)
+{
+	nextScene = nextSceneType_;
 }

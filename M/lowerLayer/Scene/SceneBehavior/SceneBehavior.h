@@ -7,6 +7,7 @@
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../../MobilePrimitive/MobileQuad/MQuad/MQuad.h"
 #include "../../MobilePrimitive/Sprite/Sprite.h"
+#include "../SceneController/SceneType.h"
 
 #ifdef USE_IMGUI
 #include "../../../../external/imgui/imgui.h"
@@ -38,7 +39,10 @@ class Scene : public SceneBehavior
 {
 public:
 	Scene() {};
+	SceneType nextScene;
 
+	void ChangeScene(SceneType next_);
+	SceneType SendSignal();
 	virtual void Update()override {};
 	virtual void Draw() override {};
 	virtual void Reset() override {};

@@ -3,17 +3,21 @@
 #include "../../GameObjects/ForModelView/PM.h"
 #include "../../GameObjects/ForModelView/groundM.h"
 #include "../../M/utilities/Json/Json.h"
+#include "../../Models/EnemyModel/EnemyModel.h"
+#include "../../Models/Tenkyu/Tenkyu.h"
 
 class ModelScene final : public Scene
 {
 	PM p;
 	groundM gm;
+	EnemyModel enemyModel;
+	Tenkyu tenkyu;
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 
 	float dirLightIntensityNormal = 0.0f;
 	float dirLightIntensityNeon = 0.0f;
-	Vector3 dirLightDir;
+	Vector3 dirLightDir = {0,0,1};
 	float metalicCommonNormal = 0.72f;
 	float roughnessCommonNormal = 0.4f;
 	float metalicCommonNeon = 0.72f;

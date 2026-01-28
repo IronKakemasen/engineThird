@@ -37,7 +37,6 @@ class InGameScene final : public Scene
 	MQuad quad;
 	Sprite sprite;
 	Sprite atlasNumber;
-	RectLight* rectLights[2];
 
 	void AdaptToPostEffect();
 
