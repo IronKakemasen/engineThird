@@ -21,7 +21,7 @@ struct InGameController:public GameObject
 
 	Mode curMode = kEnter;
 	float curCnt = 0.0f;
-	int curStage = 0;
+	static int curStage;
 
 
 private:

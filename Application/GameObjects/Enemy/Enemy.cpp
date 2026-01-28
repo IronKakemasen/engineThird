@@ -32,9 +32,6 @@ void Enemy::Reset()
 
 	// データ読み込み
 	LoadData();
-
-	// 初期向きを最近のターゲット方向に設定
-	LookAtTarget();
 }
 
 void Enemy::Init()
@@ -91,10 +88,15 @@ void Enemy::Spawn(Vector3 pos)
 {
 	// 有効化
 	SetStatus(Status::kActive);
+	
 	// 初期座標設定
 	trans.pos = pos;
+	
 	// 体力初期化
 	hp = inGameConfig->enemyMaxHP;
+
+	// 初期向きを最近のターゲット方向に設定
+	LookAtTarget();
 }
 
 float Enemy::GetAttackPower()

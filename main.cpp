@@ -16,8 +16,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
 
-	std::unique_ptr<SceneController> sceneController = 
-		std::make_unique<SceneController>(kModelView);
+	// resource/application/json 以下データをロード
+	Json::LoadAll("./resource/application/json/");
+
+	std::unique_ptr<SceneController> sceneController =
+		std::make_unique<SceneController>(SceneController::kStageSelect);
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)
