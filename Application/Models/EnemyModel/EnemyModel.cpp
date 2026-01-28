@@ -40,7 +40,6 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->shaderSetIndex =
 			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
-
 		appe->texHandlesContainer[Appearance::kNormalmap] =
 			M::GetInstance()->GetTexIndex(TextureTag::kEnemyN);
 
@@ -51,10 +50,10 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->metalic = 0.72f;
 		appe->roughness = 0.4f;
 		appe->color = { 200,50,50,255 };
-
-
 	}
-	//↑↑↑↑↑必須↑↑↑↑↑
+
+	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[1]->Getter_Appearance(1)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
 
 }
 
