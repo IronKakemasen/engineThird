@@ -58,6 +58,8 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->color = { 200,50,50,255 };
 	}
 
+	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
 
 }
 
