@@ -33,15 +33,20 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 {
 	//↓↓↓↓↓必須↓↓↓↓↓
 
+	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[0]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		M::GetInstance()->GetTexIndex(TextureTag::kEnemyBodyN);
+	models[0]->Getter_Appearance(0)->trans.pos.y += 0.25f;
+	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
+	models[1]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		M::GetInstance()->GetTexIndex(TextureTag::kEnemyThornN);
+
 	for (auto* m : models)
 	{
 		auto* appe = m->Getter_Appearance(0);
 		//使用するシェーダーの選択
 		appe->shaderSetIndex =
 			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
-
-		appe->texHandlesContainer[Appearance::kNormalmap] =
-			M::GetInstance()->GetTexIndex(TextureTag::kEnemyN);
 
 		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
@@ -52,8 +57,6 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->color = { 200,50,50,255 };
 	}
 
-	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
-	models[1]->Getter_Appearance(1)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
 
 }
 

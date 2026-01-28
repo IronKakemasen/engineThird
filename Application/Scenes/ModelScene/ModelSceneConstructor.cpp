@@ -21,5 +21,7 @@ void ModelScene::Init()
 
 	gameObjManager->RegisterForContainer(&p,&gm);
 
+	enemyModel.models[0]->Getter_Appearance(0)->trans.pos.x = -1.5f;
+
 	Load();
 }

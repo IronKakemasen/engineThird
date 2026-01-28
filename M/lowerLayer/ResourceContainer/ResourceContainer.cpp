@@ -5,7 +5,7 @@
 void ResourceContainer::LoadAllTextureFile()
 {
 	std::string pathToPresetTex = "./resource/preset/texture/";
-	std::string pathToTex = "./resource/Application/Texture/";
+	std::string pathToTex = "./resource/application/Texture/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
@@ -17,8 +17,8 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kCursorImage, pathToPresetTex + "cursorImage.png");
 	LoadTextureFile(TextureTag::kNormalDekoboko, pathToPresetTex + "dekoboko.png");
 	LoadTextureFile(TextureTag::kEnemyN, pathToTex + "EnemyN.png");
-
-	//LoadTextureFile(TextureTag::, pathToTex + " ");
+	LoadTextureFile(TextureTag::kEnemyBodyN, pathToTex + "Enemy/" +"E_Body_normal.png");
+	LoadTextureFile(TextureTag::kEnemyThornN, pathToTex + "Enemy/" + "E_Thorn_normal.png");
 
 	
 }

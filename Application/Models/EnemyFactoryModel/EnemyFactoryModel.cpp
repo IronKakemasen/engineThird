@@ -3,7 +3,7 @@
 EnemyFactoryModel::EnemyFactoryModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.gltf");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/Factory/Factory.gltf");
 }
 
 void EnemyFactoryModel::Update()
