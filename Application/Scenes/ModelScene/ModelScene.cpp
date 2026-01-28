@@ -24,10 +24,13 @@ void ModelScene::AdaptToPostEffect()
 			appe->metalic = metalicCommonNormal;
 			appe->roughness = roughnessCommonNormal;
 		}
-		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
 
-		enemyMat->metalic = metalicCommonNormal;
-		enemyMat->roughness = roughnessCommonNormal;
+		for (auto* m : enemyModel.models)
+		{
+			auto* enemyMat = m->Getter_Appearance(0);
+			enemyMat->metalic = metalicCommonNormal;
+			enemyMat->roughness = roughnessCommonNormal;
+		}
 
 		break;
 	}
@@ -42,10 +45,13 @@ void ModelScene::AdaptToPostEffect()
 			appe->metalic = metalicCommonNormal;
 			appe->roughness = roughnessCommonNormal;
 		}
-		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
+		for (auto* m : enemyModel.models)
+		{
+			auto* enemyMat = m->Getter_Appearance(0);
+			enemyMat->metalic = metalicCommonNormal;
+			enemyMat->roughness = roughnessCommonNormal;
+		}
 
-		enemyMat->metalic = metalicCommonNormal;
-		enemyMat->roughness = roughnessCommonNormal;
 
 		break;
 	}
@@ -61,9 +67,12 @@ void ModelScene::AdaptToPostEffect()
 			appe->roughness = roughnessCommonNeon;
 		}
 
-		auto* enemyMat = enemyModel.model->Getter_Appearance(0);
-		enemyMat->metalic = metalicCommonNeon;
-		enemyMat->roughness = roughnessCommonNeon;
+		for (auto* m : enemyModel.models)
+		{
+			auto* enemyMat = m->Getter_Appearance(0);
+			enemyMat->metalic = metalicCommonNormal;
+			enemyMat->roughness = roughnessCommonNormal;
+		}
 
 		break;
 	}
@@ -143,8 +152,6 @@ void ModelScene::Debug()
 	ImGui::Begin("Dowa");
 	ImGui::DragFloat3(("ground" + std::to_string(i)).c_str(),
 		reinterpret_cast<float*>(&gm.model->model->Getter_Appearance(0)->trans.pos), 0.1f);
-	ImGui::DragFloat3(("enemy" + std::to_string(i)).c_str(),
-		reinterpret_cast<float*>(&enemyModel.model->Getter_Appearance(0)->trans.pos), 0.1f);
 
 	ImGui::End();
 

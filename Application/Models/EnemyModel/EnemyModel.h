@@ -4,8 +4,13 @@
 
 class EnemyModel :public ModelBehavior
 {
+	std::unique_ptr<ModelSimple> body;
+	std::unique_ptr<ModelSimple> thorn;
+
 
 public:
+	std::vector<ModelSimple*> models;
+
 	EnemyModel();
 	virtual void Update()override;
 	virtual void Draw(Matrix4* vpMat_)override;

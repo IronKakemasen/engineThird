@@ -39,12 +39,12 @@ void PlayerModel::Load()
 PlayerModel::PlayerModel()
 {
 	//モデルの生成(必須)
-	body = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Body/Player_Body.obj");
-	hand_L = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Hand_L/Player_Hand_L.obj");
-	hand_R = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Hand_R/Player_Hand_R.obj");
-	head = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Head/Player_Head.obj");
-	leg_L = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Leg_L/Player_Leg_L.obj");
-	leg_R = M::GetInstance()->CreateModel("./resource/application/Model/PlayerModels/Player_Leg_R/Player_Leg_R.obj");
+	body = M::GetInstance()->CreateModel(  "./resource/application/Model/Player/P_Body/P_Body.gltf");
+	hand_L = M::GetInstance()->CreateModel("./resource/application/Model/Player/P_Hand_L/P_Hand_L.gltf");
+	hand_R = M::GetInstance()->CreateModel("./resource/application/Model/Player/P_Hand_R/P_Hand_R.gltf");
+	head = M::GetInstance()->CreateModel(  "./resource/application/Model/Player/P_Head/P_Head.gltf");
+	leg_L = M::GetInstance()->CreateModel( "./resource/application/Model/Player/P_Leg_L/P_Leg_L.gltf");
+	leg_R = M::GetInstance()->CreateModel( "./resource/application/Model/Player/P_Leg_R/P_Leg_R.gltf");
 
 	models.emplace_back(body.get());
 	models.emplace_back(hand_L.get());
