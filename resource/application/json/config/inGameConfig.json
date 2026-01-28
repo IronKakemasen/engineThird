@@ -20,13 +20,15 @@
     "player": {
         "MaxHP": 3.0,
         "allyDelayFrames": 10,
+        "allyDelayFramesToAlly": 10,
+        "allyDelayFramesToPlayer": 20,
         "allyPowerBonus": 20.0,
         "allySizeBonus": 0.5,
         "attackGaugeRecoverInterval": 0.5,
         "attackGaugeRecoverSpeed": 0.07999999821186066,
-        "attak1Power": 3.0,
-        "attak2Power": 15.0,
-        "attak3Power": 25.0,
+        "attak1Power": 5.0,
+        "attak2Power": 20.0,
+        "attak3Power": 30.0,
         "bullet": {
             "lifeTime": 1.0,
             "speed": 0.20000000298023224
