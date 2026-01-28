@@ -13,18 +13,13 @@ public:
 	void DebugDraw();
 
 
-	// プレイヤーの最大HP
-	float playerMaxHP = 100.0f;
-	// プレイヤーのタワーの最大HP
-	float playerTowerMaxHP = 200.0f;
-	// 敵の最大HP
-	float enemyMaxHP = 100.0f;
-	// 敵のタワーの最大HP
-	float enemyTowerMaxHP = 200.0f;
-	// 敵の工場の最大HP
-	float enemyFactoryMaxHP = 300.0f;
-	// 弾の生命時間
-	float playerBulletLifeTime = 3.0f;
+	//////////////////  MaxHP  //////////////////
+	float playerMaxHP = 100.0f;			// プレイヤー
+	float playerTowerMaxHP = 200.0f;	// プレイヤータワー
+	float enemyMaxHP = 100.0f;			// 敵
+	float enemyTowerMaxHP = 200.0f;		// 敵タワー
+	float enemyFactoryMaxHP = 300.0f;	// 敵工場
+	float playerBulletLifeTime = 3.0f;	// 弾の生命時間
 	
 
 	// プレイヤーの移動速度
