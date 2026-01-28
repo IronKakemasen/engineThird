@@ -3,50 +3,62 @@
 EnemyModel::EnemyModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/application/Model/Enemy03/Enemy03.gltf");
+	body = M::GetInstance()->CreateModel("./resource/application/Model/Enemy04/Enemy/E_Body/E_Body.gltf");
+	thorn = M::GetInstance()->CreateModel("./resource/application/Model/Enemy04/Enemy/E_Thorn/E_Thorn.gltf");
+
+	models.emplace_back(body.get());
+	models.emplace_back(thorn.get());
 
 }
 
 void EnemyModel::Update()
 {
-	auto* appearance = model->Getter_Appearance(0);
+	for (auto* m : models)
+	{
+		auto* appe = m->Getter_Appearance(0);
+		appe->trans.rotation.y += 3.0f;
 
-	appearance->trans.rotation.y += 3.0f;
+	}
 }
 
 void EnemyModel::Draw(Matrix4* vpMat_)
 {
-	M::GetInstance()->DrawModel(model.get(), vpMat_);
+	for (auto* m : models)
+	{
+		M::GetInstance()->DrawModel(m, vpMat_);
+	}
 }
 
 void EnemyModel::Init(Transform* gameObjectTrans_)
 {
 	//↓↓↓↓↓必須↓↓↓↓↓
 
-	//見た目のパラメーター
-	//複数モデルを考慮しているためインデックスで指定する
-	auto* appearance = model->Getter_Appearance(0);
-	//使用するシェーダーの選択
-	appearance->shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
+	for (auto* m : models)
+	{
+		auto* appe = m->Getter_Appearance(0);
+		//使用するシェーダーの選択
+		appe->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
 
-	appearance->texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kEnemyN);
+		appe->texHandlesContainer[Appearance::kNormalmap] =
+			M::GetInstance()->GetTexIndex(TextureTag::kEnemyN);
 
-	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
-	appearance->SetUsingTextureFromContainer(1, 1, 0, 0);
+		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
+		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
 
-	//ゲームオブジェクトと全モデルのペアレント化
-	MakeAllPartsBeChildren(gameObjectTrans_);
+		//必須でない
+		appe->metalic = 0.72f;
+		appe->roughness = 0.4f;
+		appe->color = { 200,50,50,255 };
 
+
+	}
 	//↑↑↑↑↑必須↑↑↑↑↑
 
-	//必須でない
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 200,50,50,255 };
 }
 
 void EnemyModel::Reset()
-{}
+{
+
+}
