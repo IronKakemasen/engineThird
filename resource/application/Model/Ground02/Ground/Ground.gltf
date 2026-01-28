@@ -17,16 +17,16 @@
 			"mesh":0,
 			"name":"Cube",
 			"scale":[
-				1.5,
-				2,
-				1.5
+				3,
+				3,
+				3
 			]
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material.001",
+			"name":"Material",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -38,7 +38,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Cube.001",
+			"name":"Cube",
 			"primitives":[
 				{
 					"attributes":{

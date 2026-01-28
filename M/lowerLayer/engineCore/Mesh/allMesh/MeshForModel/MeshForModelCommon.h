@@ -48,11 +48,11 @@ public:
 		appearance.resize(size_);
 	}
 
-	auto* Getter_Appearance()
+	auto* GetAppearance()
 	{
 		return &appearance;
 	}
-	auto* Getter_Appearance(int index_)
+	auto* GetAppearance(int index_)
 	{
 		return &appearance[index_];
 	}

@@ -22,7 +22,7 @@ void GroundPlane::Init(Transform* gameObjectTrans_)
 
 //見た目のパラメーター
 //複数モデルを考慮しているためインデックスで指定する
-	auto* appearance = model->Getter_Appearance(0);
+	auto* appearance = model->GetAppearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
@@ -36,9 +36,9 @@ void GroundPlane::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.3f;
+	appearance->metalic = 0.0f;
 	appearance->roughness = 0.5f;
-	appearance->trans.pos.y -= 10.0f;
+	appearance->trans.pos.y -= 15;
 }
 
 void GroundPlane::Reset()

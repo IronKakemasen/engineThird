@@ -6,8 +6,8 @@ ModelBehavior::ModelBehavior()
 
 void ModelBehavior::MakeAllPartsBeChildren(Transform* gameObject_)
 {
-	auto appearance = model->Getter_Appearance()->begin();
-	for (; appearance != model->Getter_Appearance()->end(); ++appearance)
+	auto appearance = model->GetAppearance()->begin();
+	for (; appearance != model->GetAppearance()->end(); ++appearance)
 	{
 		appearance->trans.BeChildren(gameObject_);
 	}

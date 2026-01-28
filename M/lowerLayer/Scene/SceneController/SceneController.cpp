@@ -39,8 +39,8 @@ void SceneController::Debug()
 
 	axisModel->MakeAllPartsBeChildren(
 		&cur_Scene->cameraController->GetUsingCamera()->Getter_Parameters()->trans);
-	for (auto a = axisModel->model->Getter_Appearance()->begin();
-		a != axisModel->model->Getter_Appearance()->end(); ++a)
+	for (auto a = axisModel->model->GetAppearance()->begin();
+		a != axisModel->model->GetAppearance()->end(); ++a)
 	{
 		a->trans.lookDir = cur_Scene->cameraController->GetUsingCamera()->
 			Getter_Parameters()->trans.lookDir;

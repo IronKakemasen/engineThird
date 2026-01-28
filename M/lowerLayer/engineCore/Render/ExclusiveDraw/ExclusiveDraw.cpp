@@ -108,7 +108,7 @@ void ExclusiveDraw::DrawModel(MeshAndDataCommon* meshAndData_, Matrix4* vpMat_)
 	for (int i = 0; i < n; ++i)
 	{
 		auto* mesh = meshAndData_->Getter_MeshForModel(i);
-		auto* appearance = &(*meshAndData_->Getter_Appearance())[i];
+		auto* appearance = &(*meshAndData_->GetAppearance())[i];
 		auto* modelData = meshAndData_->Getter_ModelDataOfResMaterials(i);
 		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex, 
 			appearance->blendMode, appearance->cullMode);
@@ -175,7 +175,7 @@ void ExclusiveDraw::DrawShaderToy(MeshAndDataCommon* meshAndData_, Matrix4* vpMa
 	for (int i = 0; i < n; ++i)
 	{
 		auto* mesh = meshAndData_->Getter_MeshForModel(i);
-		auto* appearance = &(*meshAndData_->Getter_Appearance())[i];
+		auto* appearance = &(*meshAndData_->GetAppearance())[i];
 		auto* modelData = meshAndData_->Getter_ModelDataOfResMaterials(i);
 		auto* src_pipeline = allPipelineSet->Getter_pipelineSet(appearance->shaderSetIndex,
 			BlendMode::kBlendModeNormal, CullMode::kCullModeNone);

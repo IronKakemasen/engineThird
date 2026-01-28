@@ -27,7 +27,7 @@ void Ground::Init()
 {
 	//モデルの初期化
 	groundPlane->Init(&trans);
-	groundPlane->model->Getter_Appearance(0)->color = { 200,0,0,255 };
+	groundPlane->model->GetAppearance(0)->color = { 200,0,0,255 };
 
 	//identityTableにセットされている通りに、identityを定める
 	//タグ、名前、衝突判定マスキング

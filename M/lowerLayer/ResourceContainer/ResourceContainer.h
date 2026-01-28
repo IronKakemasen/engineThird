@@ -32,6 +32,15 @@ enum class TextureTag
 
 	kStageName1000x100,
 
+	kGroundN,
+
+	kPlayerHeadN,
+	kPlayerHandN,
+	kPlayerLegN,
+	kPlayerBodyN,
+
+	kTowerN,
+	kFactoryN,
 
 	kCount
 };

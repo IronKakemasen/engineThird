@@ -7,6 +7,9 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string pathToPresetTex = "./resource/preset/texture/";
 	std::string pathToTex = "./resource/application/Texture/";
 	std::string pathToUI = "./resource/application/Texture/UI/";
+	std::string pathToPlayer = "./resource/application/Texture/Player/";
+	std::string pathToTower = "./resource/application/Texture/Tower/";
+	std::string pathToFactory = "./resource/application/Texture/Factory/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
@@ -30,6 +33,17 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kButtonShot900x250, pathToUI + "ButtonShot900x250.png");
 	LoadTextureFile(TextureTag::kButtonZoom900x250, pathToUI + "ButtonZoom900x250.png");
 	LoadTextureFile(TextureTag::kNumbers100x100, pathToUI + "Numbers100x100.png");
+	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
+
+	LoadTextureFile(TextureTag::kPlayerHeadN, pathToPlayer + "P_Head_normal.png");
+	LoadTextureFile(TextureTag::kPlayerHandN, pathToPlayer + "P_Hand_normal.png");
+	LoadTextureFile(TextureTag::kPlayerBodyN, pathToPlayer + "P_Body_normal.png");
+	LoadTextureFile(TextureTag::kPlayerLegN, pathToPlayer +  "P_Leg_normal.png");
+
+	LoadTextureFile(TextureTag::kTowerN, pathToTower + "Tower_normal.png");
+	LoadTextureFile(TextureTag::kFactoryN, pathToFactory + "Factory_normal.png");
+
+
 }
 
 int ResourceContainer::GetTextureIndex(TextureTag tag_)

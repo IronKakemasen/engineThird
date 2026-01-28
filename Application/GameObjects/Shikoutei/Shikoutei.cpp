@@ -49,7 +49,7 @@ Shikoutei::Shikoutei()
 	//モデルのインスタンス化
 	shikoModel.reset(new ShikouteiModel);
 	//必須でない
-	auto* appearance = shikoModel->model->Getter_Appearance(0);
+	auto* appearance = shikoModel->model->GetAppearance(0);
 
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;

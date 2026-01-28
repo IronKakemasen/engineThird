@@ -20,7 +20,7 @@ void ExampleTyan::Init()
 {
 	//モデルの初期化
 	shikoModel->Init(&trans);
-	shikoModel->model->Getter_Appearance(0)->color = { 200,0,0,255 };
+	shikoModel->model->GetAppearance(0)->color = { 200,0,0,255 };
 
 	//identityTableにセットされている通りに、identityを定める
 	//タグ、名前、衝突判定マスキング

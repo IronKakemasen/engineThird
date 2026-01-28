@@ -23,7 +23,7 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 
 	//見た目のパラメーター
 	//複数モデルを考慮しているためインデックスで指定する
-	auto* appearance = model->Getter_Appearance(0);
+	auto* appearance = model->GetAppearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
@@ -42,7 +42,7 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->trans.pos.y += 0.25f;
+	appearance->trans.pos.y += 0.125f;
 	appearance->color = { 50.0f,255.0f,255.0f,255.0f };
 }
 

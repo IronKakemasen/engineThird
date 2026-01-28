@@ -15,7 +15,7 @@ void EnemyModel::Update()
 {
 	for (auto* m : models)
 	{
-		auto* appe = m->Getter_Appearance(0);
+		auto* appe = m->GetAppearance(0);
 		appe->trans.rotation.y += 3.0f;
 
 	}
@@ -33,20 +33,20 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 {
 	//↓↓↓↓↓必須↓↓↓↓↓
 
-	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
-	models[0]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+	models[0]->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[0]->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		M::GetInstance()->GetTexIndex(TextureTag::kEnemyBodyN);
-	models[0]->Getter_Appearance(0)->trans.pos.y += 0.25f;
-	models[0]->Getter_Appearance(0)->color = { 200,50,50,255 };
+	models[0]->GetAppearance(0)->trans.pos.y += 0.25f;
+	models[0]->GetAppearance(0)->color = { 200,50,50,255 };
 
-	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
-	models[1]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+	models[1]->GetAppearance(0)->trans.BeChildren(&models[0]->GetAppearance(0)->trans);
+	models[1]->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		M::GetInstance()->GetTexIndex(TextureTag::kEnemyThornN);
-	models[1]->Getter_Appearance(0)->color = { 255 ,200 ,50,255 };
+	models[1]->GetAppearance(0)->color = { 255 ,200 ,50,255 };
 
 	for (auto* m : models)
 	{
-		auto* appe = m->Getter_Appearance(0);
+		auto* appe = m->GetAppearance(0);
 		//使用するシェーダーの選択
 		appe->shaderSetIndex =
 			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
@@ -60,8 +60,8 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		appe->roughness = 0.4f;
 	}
 
-	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
-	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
+	models[0]->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
+	models[1]->GetAppearance(0)->trans.BeChildren(&models[0]->GetAppearance(0)->trans);
 
 }
 

@@ -76,7 +76,7 @@ float3 ComputeBRDF(float3 diffuse_, float3 lightDir_, float3 toCamera_, float3 n
         
     float3 specular = float3((Fr * D * G2 ) / (4.0f * NV_ * NL));
     
-    return saturate((diffuse_ + specular) * NL);
+    return saturate((diffuse_ + specular) );
 
 }
     

@@ -25,19 +25,19 @@ void ModelScene::AdaptToPostEffect()
 
 		for (auto* m : p.model->models)
 		{
-			auto* appe = m->Getter_Appearance(0);
+			auto* appe = m->GetAppearance(0);
 			appe->metalic = metalicCommonNormal;
 			appe->roughness = roughnessCommonNormal;
 		}
 
 		for (auto* m : enemyModel.models)
 		{
-			auto* enemyMat = m->Getter_Appearance(0);
+			auto* enemyMat = m->GetAppearance(0);
 			enemyMat->metalic = metalicCommonNormal;
 			enemyMat->roughness = roughnessCommonNormal;
 		}
 
-		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		auto* playerMat = playerAllyModel.model->GetAppearance(0);
 		playerMat->metalic = metalicCommonNormal;
 		playerMat->roughness = roughnessCommonNormal;
 
@@ -50,18 +50,18 @@ void ModelScene::AdaptToPostEffect()
 
 		for (auto* m : p.model->models)
 		{
-			auto* appe = m->Getter_Appearance(0);
+			auto* appe = m->GetAppearance(0);
 			appe->metalic = metalicCommonNormal;
 			appe->roughness = roughnessCommonNormal;
 		}
 		for (auto* m : enemyModel.models)
 		{
-			auto* enemyMat = m->Getter_Appearance(0);
+			auto* enemyMat = m->GetAppearance(0);
 			enemyMat->metalic = metalicCommonNormal;
 			enemyMat->roughness = roughnessCommonNormal;
 		}
 
-		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		auto* playerMat = playerAllyModel.model->GetAppearance(0);
 		playerMat->metalic = metalicCommonNormal;
 		playerMat->roughness = roughnessCommonNormal;
 
@@ -74,19 +74,19 @@ void ModelScene::AdaptToPostEffect()
 
 		for (auto* m : p.model->models)
 		{
-			auto* appe = m->Getter_Appearance(0);
+			auto* appe = m->GetAppearance(0);
 			appe->metalic = metalicCommonNeon;
 			appe->roughness = roughnessCommonNeon;
 		}
 
 		for (auto* m : enemyModel.models)
 		{
-			auto* enemyMat = m->Getter_Appearance(0);
+			auto* enemyMat = m->GetAppearance(0);
 			enemyMat->metalic = metalicCommonNeon;
 			enemyMat->roughness = roughnessCommonNeon;
 		}
 
-		auto* playerMat = playerAllyModel.model->Getter_Appearance(0);
+		auto* playerMat = playerAllyModel.model->GetAppearance(0);
 		playerMat->metalic = metalicCommonNeon;
 		playerMat->roughness = roughnessCommonNeon;
 
@@ -106,6 +106,9 @@ void ModelScene::Draw()
 	enemyModel.Draw(vpMat);
 	tenkyu.Draw(vpMat);
 	playerAllyModel.Draw(vpMat);
+	playerTowerModel.Draw(vpMat);
+	enemyTowerModel.Draw(vpMat);
+	enemyFactoryModel.Draw(vpMat);
 }
 
 void ModelScene::Reset()
@@ -145,7 +148,7 @@ void ModelScene::Debug()
 	int i = 0;
 	for (auto* m : p.model->models)
 	{
-		auto* appe = m->Getter_Appearance(0);
+		auto* appe = m->GetAppearance(0);
 		ImGui::Text(std::to_string(i * 100).c_str());
 		ImGui::DragFloat3(("pos" + std::to_string(i)).c_str(),
 			reinterpret_cast<float*>(&appe->trans.pos),0.1f);
@@ -179,7 +182,7 @@ void ModelScene::Debug()
 
 	ImGui::Begin("Dowa");
 	ImGui::DragFloat3(("ground" + std::to_string(i)).c_str(),
-		reinterpret_cast<float*>(&gm.model->model->Getter_Appearance(0)->trans.pos), 0.1f);
+		reinterpret_cast<float*>(&gm.model->model->GetAppearance(0)->trans.pos), 0.1f);
 
 	ImGui::End();
 

@@ -30,12 +30,12 @@ SampleObj::SampleObj()
 	sModel.reset(new SampleModel);
 	sModel2.reset(new SampleModel2);
 
-	for (Appearance& appearance : *sModel->model->Getter_Appearance())
+	for (Appearance& appearance : *sModel->model->GetAppearance())
 	{
 		appearance.trans.BeChildren(&trans);
 	}	
 
-	for (Appearance& appearance : *sModel2->model->Getter_Appearance())
+	for (Appearance& appearance : *sModel2->model->GetAppearance())
 	{
 		appearance.trans.BeChildren(&trans);
 	}

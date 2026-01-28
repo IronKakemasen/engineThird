@@ -36,7 +36,7 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 	if (it != loadedModelMap.end())
 	{
 		model->Getter_ModelData() = it->second->Getter_ModelData();
-		*model->Getter_Appearance() = *it->second->Getter_Appearance();
+		*model->GetAppearance() = *it->second->GetAppearance();
 		*model->Getter_MeshForModel() = *it->second->Getter_MeshForModel();
 		
 		int size = (int)model->Getter_ModelData().resMesh.size();
@@ -87,7 +87,7 @@ std::unique_ptr<ModelSimple> MeshCreator::CreateModel(std::string filePath_)
 			//カラーマップがない場合
 			if (resMaterial->colorMap.empty())
 			{
-				(*model->Getter_Appearance())[i].texHandlesContainer[Appearance::kColormap] =
+				(*model->GetAppearance())[i].texHandlesContainer[Appearance::kColormap] =
 					M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2);
 			}
 		}
@@ -114,7 +114,7 @@ void MeshCreator::InputTextureIndex(ModelSimple* model_,int index_,
 
 	//colorMapのインデックスの読み込み
 	std::string texMapFilePath = dirPath_ + ConvertString(textureFile_);
-	(*model_->Getter_Appearance())[index_].texHandlesContainer[textureHandleIndex_] =
+	(*model_->GetAppearance())[index_].texHandlesContainer[textureHandleIndex_] =
 		textureDataManager->CreateTextureFromFile(texMapFilePath);
 
 }

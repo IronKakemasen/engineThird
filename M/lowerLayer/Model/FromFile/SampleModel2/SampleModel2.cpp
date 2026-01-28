@@ -28,38 +28,38 @@ SampleModel2::SampleModel2()
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
 	////使用するシェーダーの選択
-	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//(*model->GetAppearance())[0].shaderSetIndex =
 	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelPhong.VS", "ModelPhong.PS");
 	////使用するテクスチャの選択
-	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	//(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
 	////使用するシェーダーの選択
-	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//(*model->GetAppearance())[0].shaderSetIndex =
 	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelCookTorrance.VS", "ModelCookTorrance.PS");
 	////使用するテクスチャの選択
-	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	//(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	//モデルの生成
 	model = M::GetInstance()->CreateModel("./resource/preset/model/test/axis.obj");
 	//使用するシェーダーの選択
-	(*model->Getter_Appearance())[0].shaderSetIndex =
+	(*model->GetAppearance())[0].shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 	//使用するテクスチャの選択
-	(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 }
 
 void SampleModel2::Init(Transform* gameObjectTrans_)
 {
-	(*model->Getter_Appearance())[0].trans.pos.x = 1.0f;
-	(*model->Getter_Appearance())[0].trans.pos.z = 3.0f;
+	(*model->GetAppearance())[0].trans.pos.x = 1.0f;
+	(*model->GetAppearance())[0].trans.pos.z = 3.0f;
 
-	(*model->Getter_Appearance())[0].trans.pos.y = -1.0f;
+	(*model->GetAppearance())[0].trans.pos.y = -1.0f;
 
-	(*model->Getter_Appearance())[0].metalic = 0.72f;
-	(*model->Getter_Appearance())[0].roughness = 0.4f;
+	(*model->GetAppearance())[0].metalic = 0.72f;
+	(*model->GetAppearance())[0].roughness = 0.4f;
 
 	//0.72 0.4
 }

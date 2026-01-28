@@ -6,6 +6,9 @@
 #include "../../Models/EnemyModel/EnemyModel.h"
 #include "../../Models/Tenkyu/Tenkyu.h"
 #include "../../Models/PlayerAllyModel/PlayerAllyModel.h"
+#include "../../Models/PlayerTowerModel/PlayerTowerModel.h"
+#include "../../Models/EnemyTowerModel/EnemyTowerModel.h"
+#include "../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 
 class ModelScene final : public Scene
 {
@@ -14,6 +17,9 @@ class ModelScene final : public Scene
 	EnemyModel enemyModel;
 	Tenkyu tenkyu;
 	PlayerAllyModel playerAllyModel;
+	PlayerTowerModel playerTowerModel;
+	EnemyTowerModel enemyTowerModel;
+	EnemyFactoryModel enemyFactoryModel;
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 

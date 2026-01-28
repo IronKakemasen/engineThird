@@ -21,8 +21,8 @@ void AxisModel::Init(Transform* gameObjectTrans_)
 {
 
 	//見た目のパラメーター
-	for (auto appearance = model->Getter_Appearance()->begin();
-		appearance != model->Getter_Appearance()->end(); ++appearance)
+	for (auto appearance = model->GetAppearance()->begin();
+		appearance != model->GetAppearance()->end(); ++appearance)
 	{
 		//使用するシェーダーの選択
 		appearance->shaderSetIndex =
@@ -42,10 +42,10 @@ void AxisModel::Init(Transform* gameObjectTrans_)
 		appearance->trans.pos = { 20,10,15 };
 	}
 
-	model->Getter_Appearance(0)->color = { 0,50,200,255 };
-	model->Getter_Appearance(1)->color = { 200,0,50,255 };
-	model->Getter_Appearance(2)->color = { 0,200,50,255 };
-	model->Getter_Appearance(3)->color = { 200,200,100,255 };
+	model->GetAppearance(0)->color = { 0,50,200,255 };
+	model->GetAppearance(1)->color = { 200,0,50,255 };
+	model->GetAppearance(2)->color = { 0,200,50,255 };
+	model->GetAppearance(3)->color = { 200,200,100,255 };
 
 }
 

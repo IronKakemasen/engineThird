@@ -7,13 +7,13 @@ void PlayerModel::Save()
 	for (auto* m : models)
 	{
 		Json::SaveParam(path, key + "pos" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.pos);
+			m->GetAppearance(0)->trans.pos);
 		Json::SaveParam(path, key + "rotation" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.rotation);
+			m->GetAppearance(0)->trans.rotation);
 		Json::SaveParam(path, key + "lookDir" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.lookDir);
+			m->GetAppearance(0)->trans.lookDir);
 		Json::SaveParam(path, key + "color" + std::to_string(i),
-			m->Getter_Appearance(0)->color);
+			m->GetAppearance(0)->color);
 
 		++i;
 	}
@@ -28,13 +28,13 @@ void PlayerModel::Load()
 	for (auto* m : models)
 	{
 		Json::LoadParam(path, key + "pos" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.pos);
+			m->GetAppearance(0)->trans.pos);
 		Json::LoadParam(path, key + "rotation" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.rotation);
+			m->GetAppearance(0)->trans.rotation);
 		Json::LoadParam(path, key + "lookDir" + std::to_string(i),
-			m->Getter_Appearance(0)->trans.lookDir);
+			m->GetAppearance(0)->trans.lookDir);
 		Json::LoadParam(path, key + "color" + std::to_string(i),
-			m->Getter_Appearance(0)->color);
+			m->GetAppearance(0)->color);
 
 		++i;
 	}
@@ -75,37 +75,46 @@ void PlayerModel::Draw(Matrix4* vpMat_)
 
 void PlayerModel::Init(Transform* gameObjectTrans_)
 {
+	auto* m = M::GetInstance();
 
 	//ゲームオブジェクトと全モデルのペアレント化
-	body->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
-	hand_L->Getter_Appearance(0)->trans.BeChildren(&body->Getter_Appearance(0)->trans);
-	hand_R->Getter_Appearance(0)->trans.BeChildren(&body->Getter_Appearance(0)->trans);
-	head->Getter_Appearance(0)->trans.BeChildren(&body->Getter_Appearance(0)->trans);
-	leg_L->Getter_Appearance(0)->trans.BeChildren(&body->Getter_Appearance(0)->trans);
-	leg_R->Getter_Appearance(0)->trans.BeChildren(&body->Getter_Appearance(0)->trans);
+	body->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
+	body->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap]=
+		m->GetTexIndex(TextureTag::kPlayerBodyN);
 
-	//↑↑↑↑↑必須↑↑↑↑↑
+	hand_L->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
+	hand_L->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		m->GetTexIndex(TextureTag::kPlayerHandN);
+
+	hand_R->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
+	hand_R->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		m->GetTexIndex(TextureTag::kPlayerHandN);
+
+	head->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
+	head->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		m->GetTexIndex(TextureTag::kPlayerHeadN);
+
+	leg_L->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
+	leg_L->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		m->GetTexIndex(TextureTag::kPlayerLegN);
+
+	leg_R->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
+	leg_R->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
+		m->GetTexIndex(TextureTag::kPlayerLegN);
 
 	for (auto* m : models)
 	{
-		auto* appe = m->Getter_Appearance(0);
-		appe->metalic = 0.0f;
-		appe->roughness = 1.0f;
+		auto* appe = m->GetAppearance(0);
 		//使用するシェーダーの選択
 		appe->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
 		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
-		appe->SetUsingTextureFromContainer(1, 0, 0, 0);
+		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
 
 	}
 
 	Load();
-
-	//appearance->metalic = 0.72f;
-	//appearance->roughness = 0.4f;
-	//appearance->color = { 0,255,0,255 };
-
 
 }
 

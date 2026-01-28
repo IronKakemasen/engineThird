@@ -16,35 +16,35 @@ SampleModel::SampleModel()
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/nomalMappedTeapot/teapot.obj");
 	////使用するシェーダーの選択
-	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//(*model->GetAppearance())[0].shaderSetIndex =
 	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 	////使用するテクスチャの選択
-	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 1, 0, 0);
+	//(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 1, 0, 0);
 
 
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
 	////使用するシェーダーの選択
-	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//(*model->GetAppearance())[0].shaderSetIndex =
 	//M::GetInstance()->GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
 	////使用するテクスチャの選択
-	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	//(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	////モデルの生成
 	//model = M::GetInstance()->CreateModel("./M/resource/preset/model/test/teapot/teapot.obj");
 	////使用するシェーダーの選択
-	//(*model->Getter_Appearance())[0].shaderSetIndex =
+	//(*model->GetAppearance())[0].shaderSetIndex =
 	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelPhong.VS", "ModelPhong.PS");
 	////使用するテクスチャの選択
-	//(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	//(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 	//モデルの生成
 	model = M::GetInstance()->CreateModel("./resource/preset/model/test/axis.obj");
 	//使用するシェーダーの選択
-	(*model->Getter_Appearance())[0].shaderSetIndex =
+	(*model->GetAppearance())[0].shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 	//使用するテクスチャの選択
-	(*model->Getter_Appearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
+	(*model->GetAppearance())[0].SetUsingTextureFromContainer(1, 0, 0, 0);
 
 
 	////モデルの生成
@@ -59,9 +59,9 @@ SampleModel::SampleModel()
 
 void SampleModel::Init(Transform* gameObjectTrans_)
 {
-	(*model->Getter_Appearance())[0].trans.pos.x = -0.5f;
-	(*model->Getter_Appearance())[0].metalic = 0.72f;
-	(*model->Getter_Appearance())[0].roughness = 0.4f;
+	(*model->GetAppearance())[0].trans.pos.x = -0.5f;
+	(*model->GetAppearance())[0].metalic = 0.72f;
+	(*model->GetAppearance())[0].roughness = 0.4f;
 
 }
 
