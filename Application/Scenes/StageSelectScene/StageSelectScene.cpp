@@ -110,6 +110,8 @@ void StageSelectScene::UpdateStageSelectRotation()
 
 void StageSelectScene::DecideStage()
 {
+	if (selected) return;
+
 	if (selectCounter.count < 1.0f) return;
 
 	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)

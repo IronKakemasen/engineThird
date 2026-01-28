@@ -1,43 +1,51 @@
 {
-    "enemy": {
-        "MaxHP": 8.0,
-        "defaultAttackPower": 1.0,
-        "knockBackPowerToAlly": 1.0,
-        "knockBackPowerToBullet": 0.10000000149011612,
-        "knockBackPowerToBullet1": 0.10000000149011612,
-        "knockBackPowerToBullet2": 1.0,
-        "knockBackPowerToBullet3": 1.5,
-        "knockBackPowerToPTower": 0.30000001192092896,
-        "spawnInterval": 10.0,
-        "speed": 0.019999999552965164
+    "AttackGauge": {
+        "player": {
+            "attackGaugeRecoverInterval": 1.0,
+            "attackGaugeRecoverSpeed": 0.07999999821186066
+        }
     },
-    "enemyFactory": {
-        "MaxHP": 30.0
+    "Distance": {
+        "allyToAlly": 15,
+        "playerToAlly": 5
     },
-    "enemyTower": {
-        "MaxHP": 100.0
+    "KnockBackPower": {
+        "enemy": {
+            "ToAlly": 1.0,
+            "ToBullet1": 0.10000000149011612,
+            "ToBullet2": 0.10000000149011612,
+            "ToBullet3": 0.10000000149011612,
+            "ToPTower": 0.30000001192092896
+        }
     },
-    "player": {
-        "MaxHP": 3.0,
-        "allyDelayFrames": 10,
-        "allyDelayFramesToAlly": 10,
-        "allyDelayFramesToPlayer": 20,
-        "allyPowerBonus": 20.0,
-        "allySizeBonus": 0.5,
-        "attackGaugeRecoverInterval": 0.5,
-        "attackGaugeRecoverSpeed": 0.07999999821186066,
-        "attak1Power": 5.0,
-        "attak2Power": 20.0,
-        "attak3Power": 30.0,
-        "bullet": {
-            "lifeTime": 1.0,
-            "speed": 0.20000000298023224
+    "MaxHP": {
+        "enemy": 10.0,
+        "enemyFactory": 30.0,
+        "enemyTower": 100.0,
+        "player": 3.0,
+        "playerBullet": 0.800000011920929,
+        "playerTower": 100.0
+    },
+    "Power": {
+        "enemy": {
+            "defaultAttackPower": 1.0
         },
-        "defaultAttackPower": 2.0,
-        "speed": 0.10000000149011612
+        "player": {
+            "allyPowerBonus": 2.0,
+            "allySizeBonus": 0.5,
+            "attak1Power": 5.0,
+            "attak2Power": 20.0,
+            "attak3Power": 30.0
+        }
     },
-    "playerTower": {
-        "MaxHP": 100.0,
-        "invincibleTime": 0.5
+    "SpawnInterval": {
+        "enemy": 10.0,
+        "playerAlly": 1.0
+    },
+    "Speed": {
+        "enemy": 0.019999999552965164,
+        "player": 0.10000000149011612,
+        "playerAlly": 1.5,
+        "playerBullet": 0.15000000596046448
     }
 }
