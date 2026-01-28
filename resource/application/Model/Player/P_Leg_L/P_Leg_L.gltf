@@ -15,12 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"P_Leg_L",
-			"translation":[
-				1,
-				-2.5,
-				0
-			]
+			"name":"P_Leg_L"
 		}
 	],
 	"materials":[
@@ -70,35 +65,35 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":58,
+			"count":56,
 			"max":[
-				0.6000000238418579,
-				0.7000000476837158,
-				1
+				0.15863101184368134,
+				0.1850695163011551,
+				0.26438501477241516
 			],
 			"min":[
-				-0.6000000238418579,
-				-0.5,
-				-1
+				-0.15863101184368134,
+				-0.13219250738620758,
+				-0.26438501477241516
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":58,
+			"count":56,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":58,
+			"count":56,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":58,
+			"count":56,
 			"type":"VEC4"
 		},
 		{
@@ -111,32 +106,32 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":696,
+			"byteLength":672,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":696,
-			"byteOffset":696,
+			"byteLength":672,
+			"byteOffset":672,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":464,
-			"byteOffset":1392,
+			"byteLength":448,
+			"byteOffset":1344,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":928,
-			"byteOffset":1856,
+			"byteLength":896,
+			"byteOffset":1792,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":168,
-			"byteOffset":2784,
+			"byteOffset":2688,
 			"target":34963
 		}
 	],
@@ -148,7 +143,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":2952,
+			"byteLength":2856,
 			"uri":"P_Leg_L.bin"
 		}
 	]
