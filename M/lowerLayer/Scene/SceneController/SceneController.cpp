@@ -118,7 +118,6 @@ void SceneController::Debug()
 	cur_Scene->Debug();
 
 
-
 	if (runSpeedChanger.IsStop())
 	{
 		//cur_Scene->dirLight->Getter_Para()->color =
@@ -138,20 +137,23 @@ void SceneController::Update()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
 
-	if (runSpeedChanger.AdjustRunSpeed())
+	if (!cur_Scene->doReset)
 	{
-		cur_Scene->gameObjManager->Update();
-		cur_Scene->Update();
+
+		if (runSpeedChanger.AdjustRunSpeed())
+		{
+			cur_Scene->gameObjManager->Update();
+			cur_Scene->Update();
+		}
+
+		cur_Scene->cameraController->Update();
+
+		Debug();
 	}
 
-	cur_Scene->cameraController->Update();
-
-
-	Debug();
-
+	Reset();
 	ChangeScene();
 
-	Reset();
 }
 
 SceneController::SceneController(SceneType firstScene_)
@@ -169,6 +171,7 @@ void SceneController::Reset()
 		cur_Scene->Reset();
 		cur_Scene->gameObjManager->Reset();
 	}
+
 	cur_Scene->doReset = false;
 }
 
@@ -229,6 +232,7 @@ void SceneController::ChangeScene()
 	{
 		nextScene = cur_Scene->SendSignal();
 		cur_Scene->nextScene = runningScene;
+		cur_Scene->doReset = true;
 	}
 
 	runningScene = nextScene;

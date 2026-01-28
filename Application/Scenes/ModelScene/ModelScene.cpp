@@ -3,6 +3,11 @@
 void ModelScene::Update()
 {
 	AdaptToPostEffect();
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::B))
+	{
+		ChangeScene(SceneType::kStageSelect);
+	}
 }
 
 void ModelScene::AdaptToPostEffect()
@@ -14,7 +19,6 @@ void ModelScene::AdaptToPostEffect()
 	{
 	case PostEffectType::kNone:
 	{
-
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 
