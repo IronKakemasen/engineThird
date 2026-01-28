@@ -3,6 +3,7 @@
 #include "../../../GameObjects/Player/Player.h"
 #include "../../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
+#include "../../../Config/InGameConfig.h"
 
 PlayerAlly::PlayerAlly()
 {
@@ -122,7 +123,7 @@ void PlayerAlly::Move()
 		if (direction.GetMagnitutde() > 0.0001f)
 		{
 			trans.lookDir = Easing::SLerp(trans.lookDir, direction, trans.interpolationCoe);
-			trans.pos = trans.pos + (trans.lookDir.GetNormalized() * targetPlayer->GetSpeed());
+			trans.pos = trans.pos + (trans.lookDir.GetNormalized() * inGameConfig->playerAllySpeed);
 		}
 
 		// 目的地に到達した かつ

@@ -1,7 +1,8 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "Sprite.h"
-
+#include <array>
+#include <map>
 
 struct UIDisplayer :public GameObject
 {
@@ -13,32 +14,52 @@ struct UIDisplayer :public GameObject
 		None,
 	};
 
+	struct uiData
+	{
+		std::unique_ptr<Sprite> sprite;
+		Vector2 position;
+	};
+	enum class uiType
+	{
+		Back900x250,
+		Decision900x250,
+		Move900x250,
+		Option900x250,
+		Pause900x250,
+		Shot900x250,
+		Zoom900x250,
+		Numbers100x100,
+		Stage1Name1000x100,
+		Stage2Name1000x100,
+		Stage3Name1000x100,
+		Stage4Name1000x100,
+		Stage5Name1000x100,
+
+		MAX,
+	};
+
 private:
 
 	UIMode mode = UIMode::None;
 
 public:
 
-	void SetUIMode(UIMode mode_) { mode = mode_; };
+	// UIモード設定
+	void SetUIMode(UIMode mode_);
 
+	// スーパードロー
 	void SuperDraw(Matrix4* vpMat_);
+
+	// デバッグ描画
+	void DebugDraw();
+
+	void LoadData();
+	void SaveData();
+
 private:
-	//使用するテクスチャ
-	std::unique_ptr<Sprite> buttonBack900x250;
-	std::unique_ptr<Sprite> buttonDecision900x250;
-	std::unique_ptr<Sprite> buttonMove900x250;
-	std::unique_ptr<Sprite> buttonOption900x250;
-	std::unique_ptr<Sprite> buttonPause900x250;
-	std::unique_ptr<Sprite> buttonShot900x250;
-	std::unique_ptr<Sprite> buttonZoom900x250;
 
-	std::unique_ptr<Sprite> numbers100x100;
-
-	std::unique_ptr<Sprite> stage1Name1000x100;
-	std::unique_ptr<Sprite> stage2Name1000x100;
-	std::unique_ptr<Sprite> stage3Name1000x100;
-	std::unique_ptr<Sprite> stage4Name1000x100;
-	std::unique_ptr<Sprite> stage5Name1000x100;
+	std::vector<size_t> drawOrder;
+	std::map<uiType, uiData> uiElements;
 
 	void DrawTitleUI(Matrix4* vpMat_);
 	void DrawStageSelectUI(Matrix4* vpMat_);

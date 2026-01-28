@@ -33,6 +33,8 @@ public:
 	float enemySpeed = 0.05f;
 	// 弾の速度
 	float playerBulletSpeed = 0.3f;
+	// 味方の速度(列非加入時)
+	float playerAllySpeed = 1.5f;
 	
 
 	// プレイヤーのデフォルト攻撃力
@@ -49,6 +51,9 @@ public:
 
 	// 敵の生成間隔
 	float enemySpawnInterval = 5.0f;
+	// 味方の生成間隔
+	float playerAllySpawnInterval = 1.0f;
+
 	// 敵の味方と当たった時のノックバック力
 	float enemyKnockBackPowerToAlly = 2.0f;
 	// 敵の弾と当たった時のノックバック力
@@ -66,7 +71,6 @@ public:
 
 	// プレイヤーの攻撃ゲージ回復速度
 	float playerAttackGaugeRecoverSpeed = 0.02f;
-
 	// プレイヤーのゲージ回復インターバル
 	float playerAttackGaugeRecoverInterval = 0.5f;
 

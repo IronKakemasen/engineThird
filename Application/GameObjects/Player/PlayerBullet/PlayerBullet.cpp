@@ -62,17 +62,6 @@ void PlayerBullet::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerAlly, collisionBackToAlly);
 }
 
-void PlayerBullet::ConfigHotReload()
-{
-	if (inGameConfig)
-	{
-		// 速度反映
-		defaultSpeed = inGameConfig->playerBulletSpeed;
-		// 生命時間反映
-		defaultLifeTime = inGameConfig->playerBulletLifeTime;
-	}
-}
-
 void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 {
 	// リセット
