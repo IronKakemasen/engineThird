@@ -42,6 +42,8 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
+	appearance->trans.pos.y += 0.25f;
+	appearance->color = { 50.0f,255.0f,255.0f,255.0f };
 }
 
 void PlayerAllyModel::Reset()

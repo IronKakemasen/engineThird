@@ -37,9 +37,12 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 	models[0]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		M::GetInstance()->GetTexIndex(TextureTag::kEnemyBodyN);
 	models[0]->Getter_Appearance(0)->trans.pos.y += 0.25f;
+	models[0]->Getter_Appearance(0)->color = { 200,50,50,255 };
+
 	models[1]->Getter_Appearance(0)->trans.BeChildren(&models[0]->Getter_Appearance(0)->trans);
 	models[1]->Getter_Appearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		M::GetInstance()->GetTexIndex(TextureTag::kEnemyThornN);
+	models[1]->Getter_Appearance(0)->color = { 255 ,200 ,50,255 };
 
 	for (auto* m : models)
 	{
@@ -55,7 +58,6 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 		//必須でない
 		appe->metalic = 0.72f;
 		appe->roughness = 0.4f;
-		appe->color = { 200,50,50,255 };
 	}
 
 	models[0]->Getter_Appearance(0)->trans.BeChildren(gameObjectTrans_);
