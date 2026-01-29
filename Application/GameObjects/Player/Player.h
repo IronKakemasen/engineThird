@@ -37,6 +37,10 @@ private:
 	void UpdateLookDir();
 	
 
+	////// 味方自動補充処理  //////
+	void AutoSpawnAlly();
+	Counter autoSpawnAllyCounter;
+
 	////// 味方管理処理  //////
 	void UpdateAllyData(); // 味方データ更新処理
 	std::vector<PlayerAlly*> allies{};	// 参照ポインタ

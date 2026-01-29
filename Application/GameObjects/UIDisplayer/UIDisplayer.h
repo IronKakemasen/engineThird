@@ -13,12 +13,28 @@ struct UIDisplayer :public GameObject
 		InGame,
 		None,
 	};
-
-	struct uiData
+	std::string toString(UIMode uiMode)
 	{
-		std::unique_ptr<Sprite> sprite;
-		Vector2 position;
-	};
+		switch (uiMode)
+		{
+		case UIDisplayer::UIMode::TiTle:
+			return "TiTle";
+			break;
+		case UIDisplayer::UIMode::StageSelect:
+			return "StageSelect";
+			break;
+		case UIDisplayer::UIMode::InGame:
+			return "InGame";
+			break;
+		case UIDisplayer::UIMode::None:
+			return "None";
+			break;
+		default:
+			break;
+		}
+		return "";
+	}
+
 	enum class uiType
 	{
 		Back900x250,
@@ -37,10 +53,69 @@ struct UIDisplayer :public GameObject
 
 		MAX,
 	};
+	std::string toString(uiType ui)
+	{
+		switch (ui)
+		{
+		case UIDisplayer::uiType::Back900x250:
+			return "Back";
+			break;
+		case UIDisplayer::uiType::Decision900x250:
+			return "Decision";
+			break;
+		case UIDisplayer::uiType::Move900x250:
+			return "Move";
+			break;
+		case UIDisplayer::uiType::Option900x250:
+			return "Option";
+			break;
+		case UIDisplayer::uiType::Pause900x250:
+			return "Pause";
+			break;
+		case UIDisplayer::uiType::Shot900x250:
+			return "Shot";
+			break;
+		case UIDisplayer::uiType::Zoom900x250:
+			return "Zoom";
+			break;
+		case UIDisplayer::uiType::Numbers100x100:
+			return "Numbers";
+			break;
+		case UIDisplayer::uiType::Stage1Name1000x100:
+			return "Stage1Name";
+			break;
+		case UIDisplayer::uiType::Stage2Name1000x100:
+			return "Stage2Name";
+			break;
+		case UIDisplayer::uiType::Stage3Name1000x100:
+			return "Stage3Name";
+			break;
+		case UIDisplayer::uiType::Stage4Name1000x100:
+			return "Stage4Name";
+			break;
+		case UIDisplayer::uiType::Stage5Name1000x100:
+			return "Stage5Name";
+			break;
+		case UIDisplayer::uiType::MAX:
+			break;
+		default:
+			break;
+		}
+		return "";
+	}
+
+	struct uiData
+	{
+		std::unique_ptr<Sprite> sprite;
+		Vector2 position;
+		Vector2 scale = Vector2(1.1f, 1.1f);
+	};
 
 private:
 
 	UIMode mode = UIMode::None;
+
+	std::string path = "./resource/application/json/config/ui.json";
 
 public:
 
@@ -48,7 +123,7 @@ public:
 	void SetUIMode(UIMode mode_);
 
 	// スーパードロー
-	void SuperDraw(Matrix4* vpMat_);
+	void SuperDraw(Matrix4* ortho_);
 
 	// デバッグ描画
 	void DebugDraw();
@@ -58,12 +133,8 @@ public:
 
 private:
 
-	std::vector<size_t> drawOrder;
+	std::vector<uiType> drawOrder;
 	std::map<uiType, uiData> uiElements;
-
-	void DrawTitleUI(Matrix4* vpMat_);
-	void DrawStageSelectUI(Matrix4* vpMat_);
-	void DrawInGameUI(Matrix4* vpMat_);
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

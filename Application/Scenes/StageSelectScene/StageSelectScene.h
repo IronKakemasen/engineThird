@@ -17,6 +17,7 @@
 #include "../../Cameras/StageCamera/StageCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
+#include "../../GameObjects/UIDisplayer/UIDisplayer.h"
 
 class StageSelectScene final : public Scene
 {
@@ -32,6 +33,7 @@ class StageSelectScene final : public Scene
 	std::array<std::array<std::unique_ptr<Ground>, 1>, GameConstants::kMaxStages> grounds;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
+	std::unique_ptr<UIDisplayer> uiDisplayer;
 
 	float baseCenterRotateY = 0.0f;
 	const float stagePerYRotate = (360.0f / float(GameConstants::kMaxStages));

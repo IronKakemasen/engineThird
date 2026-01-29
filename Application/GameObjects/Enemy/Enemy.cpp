@@ -276,12 +276,7 @@ void Enemy::Draw(Matrix4* vpMat_)
 	model->Draw(vpMat_);
 }
 
-void Enemy::DebugDraw()
-{
-#ifdef USE_IMGUI
-
-#endif // USE_IMGUI
-}
+void Enemy::DebugDraw(){}
 
 // プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
@@ -314,11 +309,14 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->hp = me->hp - bullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f && attackStage == 0)
+	if (me->hp < 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 
-		me->targetPlayer->SpawnAlly(me->trans.pos);
+		if (attackStage == 0)
+		{
+			me->targetPlayer->SpawnAlly(me->trans.pos);
+		}
 	}
 }
 

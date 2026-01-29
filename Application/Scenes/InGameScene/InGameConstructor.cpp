@@ -12,6 +12,8 @@ void InGameScene::Instantiate()
 	Load();
 	dirLight->Getter_Para()->pos = { 1.0f,0.1f,0.0f };
 	ground.reset(new Ground);
+	uiDisplayer = std::make_unique<UIDisplayer>();
+
 	inGameController.reset(new InGameController);
 
 	inGameConfig = std::make_unique<InGameConfig>();

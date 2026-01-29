@@ -6,7 +6,6 @@
 #include "./UglyGrid/UglyGrid.h"
 #include "../engineCore/Light/PointLight/PointLight.h"
 
-
 void SceneController::Draw()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];
@@ -27,10 +26,7 @@ void SceneController::Draw()
 	cur_Scene->cameraController->DrawDebugUI(&orthoMat);
 
 	#endif
-
-
 }
-
 void SceneController::Debug()
 {
 	SceneBehavior* cur_Scene = allScene[runningScene];

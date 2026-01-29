@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ResourceLeakChecker r;
 #endif // DEBUG
 
-	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
+	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"2308_loool");
 
 	// resource/application/json 以下データをロード
 	Json::LoadAll("./resource/application/json/");

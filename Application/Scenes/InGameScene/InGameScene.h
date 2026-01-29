@@ -14,6 +14,7 @@
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../GameObjects/InGameController/InGameController.h"
+#include "../../GameObjects/UIDisplayer/UIDisplayer.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
@@ -38,7 +39,11 @@ class InGameScene final : public Scene
 	std::unique_ptr<Ground> ground;
 	std::unique_ptr < TenkyuuClass> tenkyuuClass;
 
-	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
+	std::unique_ptr<UIDisplayer> uiDisplayer;
+
+	MQuad quad;
+	Sprite sprite;
+	Sprite atlasNumber;
 
 	PostEffectType curEffectType = PostEffectType::kSimpleNeonLike;
 	void AdaptToPostEffect();

@@ -151,11 +151,16 @@ void InGameScene::Draw()
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+
+	uiDisplayer->SuperDraw(&ortho);
+	uiDisplayer->DebugDraw();
 }
 
 void InGameScene::Reset()
 {
 	mainCamera.Reset();
+
+	uiDisplayer->SetUIMode(UIDisplayer::UIMode::InGame);
 }
 
 void InGameScene::Debug()

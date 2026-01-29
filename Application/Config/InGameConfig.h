@@ -45,9 +45,10 @@ public:
 	float playerAllySizeBonus = 0.1f;	// 味方を経由するごとに増えるサイズ補正値
 	float enemyAttackPower = 5.0f;		// 敵の攻撃力
 
-	///////////// SpawnInterval  ////////////////
+	////////////////// AutSpawn  ////////////////
 	float enemySpawnInterval = 5.0f;	// 敵のスポーン間隔
 	float playerAllySpawnInterval = 1.0f;// 味方のスポーン間隔
+	int32_t maxAllyCount = 10;      // 最大味方数
 
 	/////////////  KnockBack  ////////////////
 	float enemyKnockBackPowerToAlly = 2.0f;		// [敵 - 味方]衝突で 敵が受けるノックバック力
