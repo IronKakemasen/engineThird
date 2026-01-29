@@ -39,7 +39,7 @@ void PlayerTowerModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->trans.pos.y += 1.5f;
+	appearance->trans.pos.y = 1.5f;
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->color = { 20,50,200,255 };

@@ -326,6 +326,7 @@
     <ClCompile Include="M\lowerLayer\engineCore\Buffer\constantBuffer\Time\TimeConstBuffer.cpp" />
     <ClCompile Include="Application\Models\Tenkyu\Tenkyu.cpp" />
     <ClCompile Include="Application\Cameras\StageCamera\StageCamera.cpp" />
+    <ClCompile Include="Application\GameObjects\Tenkyuu\TenkyuuClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -372,6 +373,7 @@
     <ClInclude Include="M\lowerLayer\engineCore\Buffer\constantBuffer\Time\TimeConstBuffer.h" />
     <ClInclude Include="Application\Models\Tenkyu\Tenkyu.h" />
     <ClInclude Include="Application\Cameras\StageCamera\StageCamera.h" />
+    <ClInclude Include="Application\GameObjects\Tenkyuu\TenkyuuClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

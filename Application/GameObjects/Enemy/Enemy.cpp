@@ -9,6 +9,7 @@
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../Config/InGameConfig.h"
 #include <array>
+#include "../../Scenes/InGameScene/InGameScene.h"
 
 Enemy::Enemy()
 {
@@ -38,6 +39,11 @@ void Enemy::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	for (auto* it : model->models)
+	{
+		it->GetAppearance(0)->metalic = InGameScene::metalicCommon;
+		it->GetAppearance(0)->roughness = InGameScene::roughnessCommon;
+	}
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング

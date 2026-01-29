@@ -18,6 +18,8 @@
 #include "../../Cameras/MainCamera/MainCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
+#include "../../GameObjects/Ground/Ground.h"
+#include "../../GameObjects/Tenkyuu/TenkyuuClass.h"
 
 class InGameScene final : public Scene
 {
@@ -34,6 +36,8 @@ class InGameScene final : public Scene
 	std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets> playerBullets;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
+	std::unique_ptr<Ground> ground;
+	std::unique_ptr < TenkyuuClass> tenkyuuClass;
 
 	std::unique_ptr<UIDisplayer> uiDisplayer;
 
@@ -41,9 +45,23 @@ class InGameScene final : public Scene
 	Sprite sprite;
 	Sprite atlasNumber;
 
+	PostEffectType curEffectType = PostEffectType::kSimpleNeonLike;
 	void AdaptToPostEffect();
+	void Load();
 
 public:
+
+	static inline float metalicCommon = 0.5139999985694885f;
+	static inline float roughnessCommon = 0.703000009059906f;
+
+	float dirLightIntensityNormal = 0.0f;
+	float dirLightIntensityNeon = 0.0f;
+	Vector3 dirLightDir = { 0,0,1 };
+	float metalicCommonNormal = 0.72f;
+	float roughnessCommonNormal = 0.4f;
+	float metalicCommonNeon = 0.72f;
+	float roughnessCommonNeon = 0.4f;
+
 	InGameScene();
 
 	//↓呼び出す必要なし。↓
