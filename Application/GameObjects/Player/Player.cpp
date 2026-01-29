@@ -12,7 +12,7 @@ Player::Player()
 {
 	rectLight = M::GetInstance()->ImportRectLight();
 	auto* para = rectLight->Getter_Para();
-	para->isActive = 1;
+	para->isActive = 0;
 	para->intensity = 20;
 	*rectLight->GetLookDirection() = { 0.0f,-1.0f,0.5f };
 

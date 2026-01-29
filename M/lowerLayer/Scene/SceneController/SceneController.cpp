@@ -33,84 +33,84 @@ void SceneController::Debug()
 
 #ifdef USE_IMGUI
 
-	//axisModel->MakeAllPartsBeChildren(
-	//	&cur_Scene->cameraController->GetUsingCamera()->Getter_Parameters()->trans);
-	//for (auto a = axisModel->model->GetAppearance()->begin();
-	//	a != axisModel->model->GetAppearance()->end(); ++a)
-	//{
-	//	a->trans.lookDir = cur_Scene->cameraController->GetUsingCamera()->
-	//		Getter_Parameters()->trans.lookDir;
-	//}
+	axisModel->MakeAllPartsBeChildren(
+		&cur_Scene->cameraController->GetUsingCamera()->Getter_Parameters()->trans);
+	for (auto a = axisModel->model->GetAppearance()->begin();
+		a != axisModel->model->GetAppearance()->end(); ++a)
+	{
+		a->trans.lookDir = cur_Scene->cameraController->GetUsingCamera()->
+			Getter_Parameters()->trans.lookDir;
+	}
 
-	//static float fps;
-	//fps = ImGui::GetIO().Framerate;
+	static float fps;
+	fps = ImGui::GetIO().Framerate;
 
-	//ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);
-	//
-	//if (ImGui::BeginMenuBar())
-	//{
-	//	if (ImGui::BeginMenu("Select Scene"))
-	//	{
-	//		int i = 0;
-	//		for (auto name : sceneNameContainer)
-	//		{
-	//			if (ImGui::MenuItem(name.c_str()))
-	//			{
-	//				nextScene = GetType(i);
-	//			}
-	//			++i;
-	//		}
+	ImGui::Begin("SceneController" , nullptr, ImGuiWindowFlags_MenuBar);
+	
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("Select Scene"))
+		{
+			int i = 0;
+			for (auto name : sceneNameContainer)
+			{
+				if (ImGui::MenuItem(name.c_str()))
+				{
+					nextScene = GetType(i);
+				}
+				++i;
+			}
 
-	//		ImGui::EndMenu();
-	//	}
-	//	ImGui::EndMenuBar();
-	//}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 
-	//if (M::GetInstance()->IsKeyTriggered(KeyType::G))
-	//{
-	//	forDebug.doDrawGridLine = !forDebug.doDrawGridLine;
-	//}
+	if (M::GetInstance()->IsKeyTriggered(KeyType::G))
+	{
+		forDebug.doDrawGridLine = !forDebug.doDrawGridLine;
+	}
 
-	//ImGui::Text(GetName(runningScene).c_str());
-	//ImGui::Text("FPS : %.2f ", fps); 
-	//ImGui::Text("GridLine : "); ImGui::SameLine();
-	//ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
-	//runSpeedChanger.AddDebug();
+	ImGui::Text(GetName(runningScene).c_str());
+	ImGui::Text("FPS : %.2f ", fps); 
+	ImGui::Text("GridLine : "); ImGui::SameLine();
+	ImGui::Checkbox("(G)", &forDebug.doDrawGridLine);
+	runSpeedChanger.AddDebug();
 
-	//if (ImGui::BeginMenuBar())
-	//{
-	//	if (ImGui::BeginMenu("PostEffect"))
-	//	{
-	//		if (ImGui::MenuItem("NoEffection"))
-	//		{
-	//			M::GetInstance()->ChangePostEffect(PostEffectType::kNone);
-	//		}
-	//		if (ImGui::MenuItem("MonoChrome"))
-	//		{
-	//			M::GetInstance()->ChangePostEffect(PostEffectType::kGreyScale);
-	//		}
-	//		if (ImGui::MenuItem("NeonLike"))
-	//		{
-	//			M::GetInstance()->ChangePostEffect(PostEffectType::kSimpleNeonLike);
-	//		}
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("PostEffect"))
+		{
+			if (ImGui::MenuItem("NoEffection"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kNone);
+			}
+			if (ImGui::MenuItem("MonoChrome"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kGreyScale);
+			}
+			if (ImGui::MenuItem("NeonLike"))
+			{
+				M::GetInstance()->ChangePostEffect(PostEffectType::kSimpleNeonLike);
+			}
 
-	//		ImGui::EndMenu();
-	//	}
-	//	ImGui::EndMenuBar();
-	//}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 
 
-	//if (ImGui::TreeNode("DirectionalLight"))
-	//{
-	//	ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);
-	//	ImGui::DragFloat("intensity", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->intensity), 0.1f);
-	//	ImGui::TreePop();
-	//}
+	if (ImGui::TreeNode("DirectionalLight"))
+	{
+		ImGui::DragFloat3("Pos", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->pos), 0.1f);
+		ImGui::DragFloat("intensity", reinterpret_cast<float*>(&cur_Scene->dirLight->Getter_Para()->intensity), 0.1f);
+		ImGui::TreePop();
+	}
 
-	//ImGui::End();
+	ImGui::End();
 
-	//cur_Scene->gameObjManager->Debug();
-	//cur_Scene->cameraController->Debug();
+	cur_Scene->gameObjManager->Debug();
+	cur_Scene->cameraController->Debug();
 	cur_Scene->Debug();
 
 
