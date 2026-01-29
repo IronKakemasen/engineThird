@@ -3,18 +3,18 @@
 
 void InGameScene::Update()
 {
-	//アトラス画像の更新
-	atlasNumber.Update();
-	//実践
-	static Counter timer(1.0f);
-	static float timeNum;
-	timer.Add();
-	if (timer.IsEnd())
-	{
-		timeNum++;
-		Benri::AdjustMax(timeNum, 9.0f, 0.0f);
-	}
-	atlasNumber.ChangeAtlasIndex(timeNum);
+	////アトラス画像の更新
+	//atlasNumber.Update();
+	////実践
+	//static Counter timer(1.0f);
+	//static float timeNum;
+	//timer.Add();
+	//if (timer.IsEnd())
+	//{
+	//	timeNum++;
+	//	Benri::AdjustMax(timeNum, 9.0f, 0.0f);
+	//}
+	//atlasNumber.ChangeAtlasIndex(timeNum);
 
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
@@ -29,26 +29,121 @@ void InGameScene::Update()
 void InGameScene::AdaptToPostEffect()
 {
 	auto effectType = M::GetInstance()->WatchEffectType();
+	if (curEffectType == effectType) return;
+	curEffectType = effectType;
+
+	std::vector<GameObject*> enemies = gameObjManager->Find(GameObject::kEnemy);
+	GameObject* player = gameObjManager->Find(GameObject::kPlayer)[0];
+	std::vector<GameObject*> ets = gameObjManager->Find(GameObject::kEnemyTower);
+	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
+	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
+	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+
 	auto* dirPara = dirLight->Getter_Para();
 
-	switch (effectType)
+	switch (curEffectType)
 	{
 	case PostEffectType::kNone:
-		dirPara->intensity = 1.0f;
-
-		break;
-
-	case PostEffectType::kGreyScale:
-		dirPara->intensity = 1.0f;
-
-		break;
-
-	case PostEffectType::kSimpleNeonLike:
-		dirPara->intensity = 12.0f;
+	{
+		dirPara->intensity = dirLightIntensityNormal;
+		dirPara->pos = dirLightDir;
+		metalicCommon = metalicCommonNormal;
+		roughnessCommon = roughnessCommonNormal;
 
 		break;
 	}
+	case PostEffectType::kGreyScale:
+	{
+		dirPara->intensity = dirLightIntensityNormal;
+		dirPara->pos = dirLightDir;
+		metalicCommon = metalicCommonNormal;
+		roughnessCommon = roughnessCommonNormal;
+
+		break;
+	}
+	case PostEffectType::kSimpleNeonLike:
+	{
+		dirPara->intensity = dirLightIntensityNeon;
+		dirPara->pos = {1.0f,0.1f,0.0f};
+		metalicCommon = metalicCommonNeon;
+		roughnessCommon = roughnessCommonNeon;
+
+		break;
+	}
+	}
+
+	//Enemy
+	for (auto* e : enemies)
+	{
+		auto* enemy = reinterpret_cast<Enemy*>(e);
+		for (auto* m : enemy->model->models)
+		{
+			m->GetAppearance(0)->metalic = metalicCommon;
+			m->GetAppearance(0)->roughness = roughnessCommon;
+		}
+	}
+
+	//ETower
+	for (auto* enemyTower : ets)
+	{
+		auto* enemeyTower_ = reinterpret_cast<EnemyTower*>(enemyTower);
+		auto* appe = enemeyTower_->model->model->GetAppearance(0);
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
+
+	//PTower
+	for (auto* playerTower : pts)
+	{
+		auto* playerTower_ = reinterpret_cast<PlayerTower*>(playerTower);
+		auto* appe = playerTower_->model->model->GetAppearance(0);
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
+
+	//Factory
+	for (auto* fac : factories)
+	{
+		auto* fac_ = reinterpret_cast<EnemyFactory*>(fac);
+		auto* appe = fac_->model->model->GetAppearance(0);
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
+
+	//Enemy
+	for (auto* alli : alliance)
+	{
+		auto* ally = reinterpret_cast<PlayerAlly*>(alli);		
+		auto* appe = ally->model->model->GetAppearance(0);
+
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
+
+	auto* player_ = reinterpret_cast<Player*>(player);
+	for (auto* m : player_->model->models)
+	{
+		m->GetAppearance(0)->metalic = metalicCommon;
+		m->GetAppearance(0)->roughness = roughnessCommon;	
+	}
+
 }
+
+void InGameScene::Load()
+{
+	std::string key = "/ID/";
+	Json::LoadParam(path, key + "dirLightIntensityNormal", dirLightIntensityNormal);
+	Json::LoadParam(path, key + "dirLightIntensityNeon", dirLightIntensityNeon);
+	Json::LoadParam(path, key + "dirLightDir", dirLightDir);
+	Json::LoadParam(path, key + "metalicCommonNormal", metalicCommonNormal);
+	Json::LoadParam(path, key + "roughnessCommonNormal", roughnessCommonNormal);
+	Json::LoadParam(path, key + "metalicCommonNeon", metalicCommonNeon);
+	Json::LoadParam(path, key + "roughnessCommonNeon", roughnessCommonNeon);
+
+	metalicCommon = metalicCommonNeon;
+	roughnessCommon = roughnessCommonNeon;
+}
+
 
 void InGameScene::Draw()
 {
@@ -67,13 +162,10 @@ void InGameScene::Debug()
 {
 #ifdef USE_IMGUI
 
-
-
 	ImGui::Begin("InGameController");
 	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
 	ImGui::Text("Count : %.1f", *inGameController->GetCnt());
 	ImGui::End();
-
 
 	ImGui::Begin("Object Debug");
 

@@ -7,10 +7,17 @@ InGameScene::InGameScene()
 
 void InGameScene::Instantiate()
 {
+	M::GetInstance()->ChangePostEffect(PostEffectType::kSimpleNeonLike);
+	curEffectType = PostEffectType::kSimpleNeonLike;
+	Load();
+	dirLight->Getter_Para()->pos = { 1.0f,0.1f,0.0f };
+	ground.reset(new Ground);
 	inGameController.reset(new InGameController);
 
 	inGameConfig = std::make_unique<InGameConfig>();
 	inGameConfig->Load();
+
+	tenkyuuClass.reset(new TenkyuuClass);
 
 	// プレイヤーのインスタンス化 & IDセット
 	player.reset(new Player);
@@ -60,7 +67,8 @@ void InGameScene::Instantiate()
 	}
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(player.get(), inGameController.get());
+	gameObjManager->RegisterForContainer(player.get(), 
+		inGameController.get(), ground.get(), tenkyuuClass.get());
 	for (auto& enemyInstance : enemies)
 		gameObjManager->RegisterForContainer(enemyInstance.get());
 	for (auto& ally : allies)
@@ -82,7 +90,6 @@ void InGameScene::Instantiate()
 			enemyInstance->SetTargetTower(playerTower.get());
 	}
 
-
 	for (auto& ally : allies)
 	{
 		player->SetAllies(ally.get());
@@ -99,19 +106,20 @@ void InGameScene::Init()
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
 		inGameController.get(), player.get());
 
-	//矩形の初期化
-	quad.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2));
-	//両面描画にする
-	quad.appearance.cullMode = CullMode::kCullModeNone;
 
-	//スプライトの初期化
-	sprite.Initialize(100, 100, { 1000,100,0.0f },
-		M::GetInstance()->GetTexIndex(TextureTag::kSouhei));
+	////矩形の初期化
+	//quad.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2));
+	////両面描画にする
+	//quad.appearance.cullMode = CullMode::kCullModeNone;
 
-	//アトラススプライトの初期化
-	atlasNumber.Initialize(48, 48, { 1000,200,0.0f },
-		M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
-	//アトラス画像に対応させる
-	atlasNumber.ToAtlas(10);
+	////スプライトの初期化
+	//sprite.Initialize(100, 100, { 1000,100,0.0f },
+	//	M::GetInstance()->GetTexIndex(TextureTag::kSouhei));
+
+	////アトラススプライトの初期化
+	//atlasNumber.Initialize(48, 48, { 1000,200,0.0f },
+	//	M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
+	////アトラス画像に対応させる
+	//atlasNumber.ToAtlas(10);
 
 }

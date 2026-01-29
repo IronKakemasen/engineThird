@@ -12,7 +12,9 @@ void ModelScene::Instantiate()
 
 void ModelScene::Init()
 {
-	M::GetInstance()->ChangePostEffect(PostEffectType::kNone);
+	Load();
+
+	M::GetInstance()->ChangePostEffect(PostEffectType::kSimpleNeonLike);
 	p.Init();
 	gm.Init();
 	playerAllyModel.Init(nullptr);

@@ -188,6 +188,7 @@
     <ClCompile Include="Application\Models\Tenkyu\Tenkyu.cpp" />
     <ClCompile Include="Application\Cameras\StageCamera\StageCamera.cpp" />
     <ClCompile Include="Application\GameObjects\UIDisplayer\UIDisplayer.cpp" />
+    <ClCompile Include="Application\GameObjects\Tenkyuu\TenkyuuClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -377,6 +378,7 @@
     <ClInclude Include="M\lowerLayer\Scene\SceneController\SceneType.h" />
     <ClInclude Include="Application\Cameras\StageCamera\StageCamera.h" />
     <ClInclude Include="Application\GameObjects\UIDisplayer\UIDisplayer.h" />
+    <ClInclude Include="Application\GameObjects\Tenkyuu\TenkyuuClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

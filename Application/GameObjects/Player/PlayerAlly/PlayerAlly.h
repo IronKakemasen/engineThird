@@ -39,8 +39,6 @@ public:
 #pragma region 基盤部位
 
 private:
-	// 使用するモデル
-	std::unique_ptr<PlayerAllyModel> model;
 
 	//コリジョンバック用の関数オブジェクト
 	struct CollisionBackToEnemy
@@ -61,6 +59,9 @@ private:
 	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
 
 public:
+	// 使用するモデル
+	std::unique_ptr<PlayerAllyModel> model;
+
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
 	// GameObject::StateがinActiveの場合は呼び出されない

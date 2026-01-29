@@ -36,7 +36,7 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 	models[0]->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
 	models[0]->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		M::GetInstance()->GetTexIndex(TextureTag::kEnemyBodyN);
-	models[0]->GetAppearance(0)->trans.pos.y += 0.25f;
+	models[0]->GetAppearance(0)->trans.pos.y = 0.25f;
 	models[0]->GetAppearance(0)->color = { 200,50,50,255 };
 
 	models[1]->GetAppearance(0)->trans.BeChildren(&models[0]->GetAppearance(0)->trans);

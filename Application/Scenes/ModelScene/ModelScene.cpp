@@ -41,6 +41,18 @@ void ModelScene::AdaptToPostEffect()
 		playerMat->metalic = metalicCommonNormal;
 		playerMat->roughness = roughnessCommonNormal;
 
+		auto* playerTowerMat = playerTowerModel.model->GetAppearance(0);
+		playerTowerMat->metalic = metalicCommonNormal;
+		playerTowerMat->roughness = roughnessCommonNormal;
+
+		auto* enemyTowerMat = enemyTowerModel.model->GetAppearance(0);
+		enemyTowerMat->metalic = metalicCommonNormal;
+		enemyTowerMat->roughness = roughnessCommonNormal;
+
+		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		enemyFactoryMat->metalic = metalicCommonNormal;
+		enemyFactoryMat->roughness = roughnessCommonNormal;
+
 		break;
 	}
 	case PostEffectType::kGreyScale:
@@ -64,6 +76,18 @@ void ModelScene::AdaptToPostEffect()
 		auto* playerMat = playerAllyModel.model->GetAppearance(0);
 		playerMat->metalic = metalicCommonNormal;
 		playerMat->roughness = roughnessCommonNormal;
+
+		auto* playerTowerMat = playerTowerModel.model->GetAppearance(0);
+		playerTowerMat->metalic = metalicCommonNormal;
+		playerTowerMat->roughness = roughnessCommonNormal;
+
+		auto* enemyTowerMat = enemyTowerModel.model->GetAppearance(0);
+		enemyTowerMat->metalic = metalicCommonNormal;
+		enemyTowerMat->roughness = roughnessCommonNormal;
+
+		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		enemyFactoryMat->metalic = metalicCommonNormal;
+		enemyFactoryMat->roughness = roughnessCommonNormal;
 
 		break;
 	}
@@ -90,6 +114,17 @@ void ModelScene::AdaptToPostEffect()
 		playerMat->metalic = metalicCommonNeon;
 		playerMat->roughness = roughnessCommonNeon;
 
+		auto* playerTowerMat = playerTowerModel.model->GetAppearance(0);
+		playerTowerMat->metalic = metalicCommonNeon;
+		playerTowerMat->roughness = roughnessCommonNeon;
+
+		auto* enemyTowerMat = enemyTowerModel.model->GetAppearance(0);
+		enemyTowerMat->metalic = metalicCommonNeon;
+		enemyTowerMat->roughness = roughnessCommonNeon;
+
+		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		enemyFactoryMat->metalic = metalicCommonNeon;
+		enemyFactoryMat->roughness = roughnessCommonNeon;
 
 		break;
 	}
@@ -167,10 +202,6 @@ void ModelScene::Debug()
 	ImGui::DragFloat("width", &pp->width, 0.1f);
 	ImGui::DragFloat("height", &pp->height, 0.1f);
 	ImGui::DragFloat3("target", reinterpret_cast<float*>(p.rectLight->GetLookDirection()), 0.1f);
-
-
-
-
 
 	if (ImGui::Button("Save"))
 	{

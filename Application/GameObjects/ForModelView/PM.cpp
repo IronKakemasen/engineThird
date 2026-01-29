@@ -60,7 +60,7 @@ PM::PM()
 	model.reset(new PlayerModel);
 	rectLight = M::GetInstance()->ImportRectLight();
 	auto* para = rectLight->Getter_Para();
-	para->isActive = 1;
+	para->isActive = 0;
 	para->intensity = 123.0f;
 	para->width = 3.8f;
 	para->height = 2.3f;
