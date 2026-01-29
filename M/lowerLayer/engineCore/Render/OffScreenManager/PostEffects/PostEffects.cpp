@@ -53,12 +53,12 @@ void PostEffects::GreyScale::Init(ID3D12Device* device_)
 
 void PostEffects::SimpleNeonLike::Update()
 {
-	ImGui::Begin("ci@subva@oau");
-	ImGui::DragFloat("edgeWidth", &para.edgeWidth, 0.1f);
-	ImGui::DragFloat("backgroundDim", &para.backgroundDim, 0.1f);
-	ImGui::DragFloat2("edgeWidth", reinterpret_cast<float*>(&para.texelSize), 0.1f);
+	//ImGui::Begin("ci@subva@oau");
+	//ImGui::DragFloat("edgeWidth", &para.edgeWidth, 0.1f);
+	//ImGui::DragFloat("backgroundDim", &para.backgroundDim, 0.1f);
+	//ImGui::DragFloat2("edgeWidth", reinterpret_cast<float*>(&para.texelSize), 0.1f);
 
-	ImGui::End();
+	//ImGui::End();
 
 
 	cBuffer.buffer.buffMap->backgroundDim = para.backgroundDim;

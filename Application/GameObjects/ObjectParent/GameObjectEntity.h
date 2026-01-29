@@ -33,7 +33,7 @@ protected:
 
 	inline void ClampPosition(Vector3& worldPos_)
 	{
-		Vector3 clampMin = { -30,0,30 };
+		Vector3 clampMin = { -30,0,-30 };
 		Vector3 clampMax = { 30,0,30 };
 
 		float const adjust = 0.1f;

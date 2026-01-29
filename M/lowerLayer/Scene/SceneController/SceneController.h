@@ -32,7 +32,7 @@ private:
 	struct ForDebug
 	{
 		//グリッド線を描画するかどうか
-		bool doDrawGridLine = true;
+		bool doDrawGridLine = false;
 		Vector3 lightBuffer;
 	};
 
