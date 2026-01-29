@@ -14,13 +14,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ResourceLeakChecker r;
 #endif // DEBUG
 
-	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"ReadME");
+	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"2308_loool");
 
 	// resource/application/json 以下データをロード
 	Json::LoadAll("./resource/application/json/");
 
 	std::unique_ptr<SceneController> sceneController =
-		std::make_unique<SceneController>(kModelView);
+		std::make_unique<SceneController>(kStageSelect);
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)
