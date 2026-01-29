@@ -21,8 +21,6 @@ private:
 	//////  攻撃処理  //////
 	void Attack();		// 攻撃
 	std::vector<PlayerBullet*> bullets{}; // 参照ポインタ
-	float allySizeBonus;			// 味方を経由するごとに増える弾サイズ補正値
-	float attackGauge = 3.0f;			// 攻撃ゲージ(0.0f ~ 3.0f)攻撃一回で1.0f減少 減った後残3.0f~2.0fの攻撃はステージ１　2.0f~1.0f
 	Counter attackIntervalCounter;		// 攻撃間隔カウンター
 
 	///// 座標履歴管理処理  //////

@@ -53,7 +53,9 @@ void Player::Reset()
 	// データ読み込み
 	LoadData();
 
+	// カウンター初期化
 	autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);
+	attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
 }
 
 void Player::Init()
@@ -151,32 +153,6 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
-	static std::vector<float> values(100, 0.0f);
-	static int index = 0;
-
-	values[index] = attackGauge;
-	index = (index + 1) % values.size();
-
-	//ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
-
-	//ImGui::Text("---------------------------------------------\n");
-	//
-	//float arr[1] = { attackGauge };
-	//ImGui::PlotHistogram("Gauge", arr, 1, 0, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
-	//
-	//ImGui::Text("---------------------------------------------\n");
-	//
-	ImDrawList* draw = ImGui::GetWindowDrawList();
-	ImVec2 center = ImGui::GetCursorScreenPos();
-	center.x += 50;
-	center.y += 50;
-	//
-	float radius = 40.0f;
-	float value = attackGauge / 3.0f;
-	
-	draw->PathArcTo(center, radius, -3.1415f / 2.0f, -3.1415f / 2.0f + 3.1415f * 2.0f * value, 32);
-	draw->PathStroke(IM_COL32(0, 255, 0, 255), false, 6.0f);
-	
 	//ImGui::Text("---------------------------------------------\n");
 	//
 	//for (size_t i = 0; i < 10; i++)
@@ -229,112 +205,100 @@ void Player::CollisionBackToEnemy::operator()()
 // 移動処理
 void Player::Move()
 {
-	isMoving = false;
-
 	// 移動方向ベクトル
 	Vector3 moveDir = Vector3(0.0f, 0.0f, 0.0f);
+	// 移動フラグ初期化
+	isMoving = false;
 
-	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	bool left = M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT);
+	bool right = M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT);
+	bool up = M::GetInstance()->getPadState.IsHeld(0, PAD_UP);
+	bool down = M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN);
+	if (!left && !right && !up && !down)
 	{
-		bool left = M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT);
-		bool right = M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT);
-		bool up = M::GetInstance()->getPadState.IsHeld(0, PAD_UP);
-		bool down = M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN);
-		if (!left && !right && !up && !down)
-		{
-			// 十字キーの入力がない場合はスティック入力を使う
-			// 左スティックの入力を取得
-			Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
-			if (leftStick.x < 0.2f && leftStick.x > -0.2f) leftStick.x = 0.0f;
-			if (leftStick.y < 0.2f && leftStick.y > -0.2f) leftStick.y = 0.0f;
-			moveDir.x += leftStick.x;
-			moveDir.z += leftStick.y;
-		}
-		else
-		{
-			if (left) moveDir.x -= 1.0f;
-			if (right) moveDir.x += 1.0f;
-			if (up) moveDir.z += 1.0f;
-			if (down) moveDir.z -= 1.0f;
-		}
+		// 十字キーの入力がない場合はスティック入力を使う
+		// 左スティックの入力を取得
+		Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
+		if (leftStick.x < 0.2f && leftStick.x > -0.2f) leftStick.x = 0.0f;
+		if (leftStick.y < 0.2f && leftStick.y > -0.2f) leftStick.y = 0.0f;
+		moveDir.x += leftStick.x;
+		moveDir.z += leftStick.y;
 	}
 	else
 	{
-		auto* m = M::GetInstance();
-
-		if (m ->IsKeyPressed(KeyType::A)) moveDir.x -= 1.0f;
-		if (m ->IsKeyPressed(KeyType::D)) moveDir.x += 1.0f;
-		if (m ->IsKeyPressed(KeyType::W)) moveDir.z += 1.0f;
-		if (m ->IsKeyPressed(KeyType::S)) moveDir.z -= 1.0f;
+		if (left) moveDir.x -= 1.0f;
+		if (right) moveDir.x += 1.0f;
+		if (up) moveDir.z += 1.0f;
+		if (down) moveDir.z -= 1.0f;
 	}
+
+#ifdef _DEBUG
+
+	if (M::GetInstance()->IsKeyPressed(KeyType::A)) moveDir.x -= 1.0f;
+	if (M::GetInstance()->IsKeyPressed(KeyType::D)) moveDir.x += 1.0f;
+	if (M::GetInstance()->IsKeyPressed(KeyType::W)) moveDir.z += 1.0f;
+	if (M::GetInstance()->IsKeyPressed(KeyType::S)) moveDir.z -= 1.0f;
+
+#endif // _DEBUG
 
 	// 正規化
 	moveDir = moveDir.GetNormalized();
 
-	if (moveDir.x != 0.0f || moveDir.z != 0.0f)
-	{
-		isMoving = true;
-		//stopMoveFrame = 0;
-	}
-	else
-	{
-		//stopMoveFrame++;
-	}
+	// 移動判定
+	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
 
+	// 移動処理
 	trans.pos = trans.pos + moveDir * inGameConfig->playerSpeed;
 
-
+	// 画面外に出ないようにクランプ
 	ClampPosition(trans.pos);
 
 	//まんてじゃみ追加事項
 	deltaPos = moveDir * inGameConfig->playerSpeed;
 }
 
+// 攻撃処理
 void Player::Attack()
 {
 	// 攻撃間隔カウンター更新
 	attackIntervalCounter.Add();
-	if (attackIntervalCounter.count >= 1.0f)
-	{
-		// 攻撃間隔経過後はゲージ回復
-		attackGauge += inGameConfig->playerAttackGaugeRecoverSpeed;
-		if (attackGauge > 3.0f)
-			attackGauge = 3.0f;
-	}
+	if (attackIntervalCounter.count < 1.0f) return;
 
-
-	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB))
 	{
-		if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
-	}
-	else
-	{
-		if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE)) return;
-	}
-
-	if (attackGauge < 1.0f)return;
-
-	for (auto* bullet : bullets)
-	{
-		if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
+		for (auto* bullet : bullets)
 		{
-			attackGauge -= 1.0f;
-			if (attackGauge < 0.0f)
-				attackGauge = 0.0f;
+			if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
+			{
+				// カウンター初期化
+				attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
 
-			int32_t stage = 0;
-			if (attackGauge >= 2.0f)stage = 0;
-			else if (attackGauge >= 1.0f)stage = 1;
-			else stage = 2;
+				// 発射
+				bullet->Fire(trans.pos, trans.lookDir);
 
-			attackIntervalCounter.Initialize(inGameConfig->playerAttackGaugeRecoverInterval);
-
-			// リセット
-			bullet->Fire(trans.pos, trans.lookDir, stage);
-
-			break;
+				break;
+			}
 		}
 	}
+
+#ifdef _DEBUG
+	if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
+	{
+		for (auto* bullet : bullets)
+		{
+			if (bullet->GetStatus() == GameObjectBehavior::Status::kInActive)
+			{
+				// カウンター初期化
+				attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
+
+				// 発射
+				bullet->Fire(trans.pos, trans.lookDir);
+
+				break;
+			}
+		}
+	}
+#endif // _DEBUG
 }
 
 // 座標保存処理
@@ -347,6 +311,14 @@ void Player::SavePos()
 	headIndex++;
 	if (headIndex >= posHistory.size()) { headIndex = 0; }
 }
+// プレイヤーのnフレーム前の座標を取得
+Vector3 Player::GetPosHistory(int32_t n)
+{
+	// 座標履歴のインデックス
+	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
+	if (index < 0) index += static_cast<int32_t>(posHistory.size());
+	return posHistory[index];
+}
 
 // 視線変更処理
 void Player::UpdateLookDir()
@@ -354,16 +326,12 @@ void Player::UpdateLookDir()
 	// 視線方向ベクトル
 	Vector3 target = Vector3(0.0f, 0.0f, 0.0f);
 
-	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
-	{
-		// 右スティックの入力を取得
-		Vector2 rightStick = M::GetInstance()->getPadState.GetRightStick(0);
-		if (rightStick.x < 0.2f && rightStick.x > -0.2f) rightStick.x = 0.0f;
-		if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
-		target.x = rightStick.x;
-		target.z = rightStick.y;
-	}
-
+	// 右スティックの入力を取得
+	Vector2 rightStick = M::GetInstance()->getPadState.GetRightStick(0);
+	if (rightStick.x < 0.2f && rightStick.x > -0.2f) rightStick.x = 0.0f;
+	if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
+	target.x = rightStick.x;
+	target.z = rightStick.y;
 	if (target.x == 0.0f && target.z == 0.0f) return;
 
 	// 正規化
@@ -385,14 +353,6 @@ void Player::AutoSpawnAlly()
 	}
 }
 
-// プレイヤーのnフレーム前の座標を取得
-Vector3 Player::GetPosHistory(int32_t n)
-{
-	// 座標履歴のインデックス
-	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
-	if (index < 0) index += static_cast<int32_t>(posHistory.size());
-	return posHistory[index];
-}
 
 // 味方データ更新処理
 void Player::UpdateAllyData()

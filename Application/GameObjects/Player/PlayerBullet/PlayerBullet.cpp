@@ -62,7 +62,7 @@ void PlayerBullet::SetCollisionBackTable()
 	SetCollisionBack(Tag::kPlayerAlly, collisionBackToAlly);
 }
 
-void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
+void PlayerBullet::Fire(Vector3 pos, Vector3 dir)
 {
 	// リセット
 	trans.scale = Vector3(0.5f, 0.2f, 0.5f);
@@ -72,8 +72,6 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	targetDir = dir;
 	// 座標設定
 	trans.pos = pos;
-	// 何段目の攻撃か設定
-	attackStage = stage;
 	// 速度反映
 	defaultSpeed = inGameConfig->playerBulletSpeed;
 	// 生命時間反映
@@ -81,16 +79,7 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir, int32_t stage)
 	// カウンター設定
 	lifeCounter.Initialize(defaultLifeTime);
 	// 攻撃力リセット
-	if (stage == 0)
-		attackPower = inGameConfig->playerAttack1Power;
-	else if (stage == 1)
-		attackPower = inGameConfig->playerAttack2Power;
-	else if (stage == 2)
-		attackPower = inGameConfig->playerAttack3Power;
-	// 味方経由攻撃力補正値設定
-	allyPowerBonus = inGameConfig->playerAllyPowerBonus;
-	// 味方経由サイズ補正値設定
-	allySizeBonus = inGameConfig->playerAllySizeBonus;
+	attackPower = inGameConfig->playerPower;
 	// コリジョンサイズ反映
 	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
 	// 現在サイズリセット
@@ -159,8 +148,8 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	auto* ally = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 	if (ally->formationCurrentIndex == -1) return;
 
-	me->trans.scale = me->trans.scale + Vector3{ me->allySizeBonus, 0.0f, me->allySizeBonus };
-	me->currentSizeBonus += me->allySizeBonus;
+	me->trans.scale = me->trans.scale + Vector3{ me->inGameConfig->playerAllySizeBonus, 0.0f, me->inGameConfig->playerAllySizeBonus };
+	me->currentSizeBonus += me->inGameConfig->playerAllySizeBonus;
 	me->SetCircleCollision(me->inGameConfig->playerBulletCollisonSize + me->currentSizeBonus);
-	me->attackPower += me->allyPowerBonus;
+	me->attackPower += me->inGameConfig->playerAllyPowerBonus;
 }

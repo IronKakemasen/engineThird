@@ -289,7 +289,6 @@ void Enemy::CollisionBackToPlayer::operator()()
 void Enemy::CollisionBackToPlayerBullet::operator()()
 {
 	auto* bullet = reinterpret_cast<PlayerBullet*>(me->Getter_ColObj());
-	int32_t attackStage = bullet->GetAttackStage();
 
 	// 既に衝突済みなら何もしない
 	if (me->IsInHitBulletList(bullet)) return;
@@ -298,12 +297,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->AddHitBullet(bullet);
 
 	// ノックバック付与
-	if (attackStage == 0)
-		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet1);
-	else if (attackStage == 1)
-		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet2);
-	else if (attackStage == 2)
-		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet3);
+	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet);
 
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
@@ -313,10 +307,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	{
 		me->SetStatus(Status::kInActive);
 
-		if (attackStage == 0)
-		{
-			me->targetPlayer->SpawnAlly(me->trans.pos);
-		}
+		me->targetPlayer->SpawnAlly(me->trans.pos);
 	}
 }
 
