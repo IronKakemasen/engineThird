@@ -9,10 +9,10 @@
         "ally": 0.6000000238418579,
         "bullet": 0.75,
         "enemy": 0.6000000238418579,
-        "enemyFactory": 1.0,
-        "enemyTower": 1.0,
+        "enemyFactory": 2.0,
+        "enemyTower": 3.0,
         "player": 0.6000000238418579,
-        "playerTower": 1.0
+        "playerTower": 3.0
     },
     "Distance": {
         "allyToAlly": 10,
