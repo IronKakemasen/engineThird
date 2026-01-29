@@ -33,6 +33,7 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kButtonShot900x250, pathToUI + "ButtonShot900x250.png");
 	LoadTextureFile(TextureTag::kButtonZoom900x250, pathToUI + "ButtonZoom900x250.png");
 	LoadTextureFile(TextureTag::kNumbers100x100, pathToUI + "Numbers100x100.png");
+	LoadTextureFile(TextureTag::kButtonReticle900x250, pathToUI + "ButtonReticle900x250.png");
 	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
 
 	LoadTextureFile(TextureTag::kPlayerHeadN, pathToPlayer + "P_Head_normal.png");

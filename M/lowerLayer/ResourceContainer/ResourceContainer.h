@@ -29,6 +29,7 @@ enum class TextureTag
 	kButtonShot900x250,
 	kButtonZoom900x250,
 	kNumbers100x100,
+	kButtonReticle900x250,
 
 	kStageName1000x100,
 

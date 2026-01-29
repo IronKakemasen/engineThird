@@ -44,6 +44,7 @@ struct UIDisplayer :public GameObject
 		Pause900x250,
 		Shot900x250,
 		Zoom900x250,
+		Reticle900x250,
 		Numbers100x100,
 		Stage1Name1000x100,
 		Stage2Name1000x100,
