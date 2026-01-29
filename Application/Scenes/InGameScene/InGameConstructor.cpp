@@ -7,6 +7,10 @@ InGameScene::InGameScene()
 
 void InGameScene::Instantiate()
 {
+	uiDisplayer = std::make_unique<UIDisplayer>();
+
+	inGameConfig = std::make_unique<InGameConfig>();
+
 	inGameController.reset(new InGameController);
 
 	inGameConfig = std::make_unique<InGameConfig>();
@@ -113,5 +117,4 @@ void InGameScene::Init()
 		M::GetInstance()->GetTexIndex(TextureTag::kAtlasNumbers));
 	//アトラス画像に対応させる
 	atlasNumber.ToAtlas(10);
-
 }

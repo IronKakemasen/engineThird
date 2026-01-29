@@ -14,6 +14,7 @@
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../GameObjects/InGameController/InGameController.h"
+#include "../../GameObjects/UIDisplayer/UIDisplayer.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
 #include "../../Config/InGameConfig.h"
@@ -33,6 +34,8 @@ class InGameScene final : public Scene
 	std::array<std::unique_ptr<PlayerBullet>, GameConstants::kMaxPlayerBullets> playerBullets;
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
+
+	std::unique_ptr<UIDisplayer> uiDisplayer;
 
 	MQuad quad;
 	Sprite sprite;

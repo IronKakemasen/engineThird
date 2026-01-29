@@ -7,6 +7,8 @@ StageSelectScene::StageSelectScene()
 
 void StageSelectScene::Instantiate()
 {
+	uiDisplayer = std::make_unique<UIDisplayer>();
+
 	inGameController.reset(new InGameController);
 
 	inGameConfig = std::make_unique<InGameConfig>();

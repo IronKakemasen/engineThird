@@ -51,6 +51,7 @@ void InGameConfig::Load()
 	std::string interval = "/SpawnInterval/";
 	Json::LoadParam(path, interval + "enemy", enemySpawnInterval);
 	Json::LoadParam(path, interval + "playerAlly", playerAllySpawnInterval);
+	Json::LoadParam(path, interval + "maxAllyCount", maxAllyCount);
 
 	std::string distance = "/Distance/";
 	Json::LoadParam(path, distance + "allyToAlly", allyToAllyDelayFrames);
@@ -104,6 +105,7 @@ void InGameConfig::Save()
 	std::string interval = "/SpawnInterval/";
 	Json::SaveParam(path, interval + "enemy", enemySpawnInterval);
 	Json::SaveParam(path, interval + "playerAlly", playerAllySpawnInterval);
+	Json::SaveParam(path, interval + "maxAllyCount", maxAllyCount);
 
 	std::string distance = "/Distance/";
 	Json::SaveParam(path, distance + "allyToAlly", allyToAllyDelayFrames);
@@ -180,10 +182,11 @@ void InGameConfig::DebugDraw()
 
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("SpawnInterval"))
+	if (ImGui::TreeNode("AutoSpawn"))
 	{
 		ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Ally		spawnInterval", &playerAllySpawnInterval, 0.1f, 0.0f, 20.0f);
+		ImGui::DragInt("Ally		maxAllyCount", &maxAllyCount, 1, 1, 100);
 
 		ImGui::TreePop();
 	}

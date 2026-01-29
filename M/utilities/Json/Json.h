@@ -62,6 +62,17 @@ private:
 	static std::unordered_map<std::string, nlohmann::json> dataMap;
 };
 
+inline void to_json(nlohmann::json& j, const Vector2& v)
+{
+	j = nlohmann::json{ {"x", v.x}, {"y", v.y} };
+}
+
+inline void from_json(const nlohmann::json& j, Vector2& v)
+{
+	j.at("x").get_to(v.x);
+	j.at("y").get_to(v.y);
+}
+
 inline void to_json(nlohmann::json& j, const Vector3& v)
 {
 	j = nlohmann::json{ {"x", v.x}, {"y", v.y}, {"z", v.z} };

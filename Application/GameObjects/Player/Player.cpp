@@ -80,16 +80,9 @@ void Player::SetCollisionBackTable()
 
 void Player::SpawnAlly(Vector3 pos)
 {
-	for (auto* ally : allies)
-	{
-		if (ally->GetStatus() == GameObjectBehavior::Status::kInActive)
-		{
-			// 配置
-			ally->Spawn(pos);
-			break;
-		}
-	}
+
 }
+
 
 // データ保存・読み込み
 void Player::LoadData()
@@ -365,6 +358,13 @@ Vector3 Player::GetPosHistory(int32_t n)
 	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
 	if (index < 0) index += static_cast<int32_t>(posHistory.size());
 	return posHistory[index];
+}
+
+void Player::AutoSpawnAlly()
+{
+	if (formedAllyCount > 10) return;
+
+
 }
 
 // 味方データ更新処理
