@@ -50,7 +50,7 @@
     "SpawnInterval": {
         "enemy": 10.0,
         "maxAllyCount": 5,
-        "playerAlly": 4.199999809265137
+        "playerAlly": 10.0
     },
     "Speed": {
         "enemy": 0.019999999552965164,
