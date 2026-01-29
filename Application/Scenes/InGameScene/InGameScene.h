@@ -39,6 +39,8 @@ class InGameScene final : public Scene
 	std::unique_ptr<Ground> ground;
 	std::unique_ptr < TenkyuuClass> tenkyuuClass;
 
+	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
+
 	std::unique_ptr<UIDisplayer> uiDisplayer;
 
 	MQuad quad;
