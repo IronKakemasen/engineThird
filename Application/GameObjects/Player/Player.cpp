@@ -49,6 +49,8 @@ void Player::Reset()
 
 	// データ読み込み
 	LoadData();
+
+	autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);
 }
 
 void Player::Init()
@@ -125,6 +127,9 @@ void Player::Update()
 
 	// 攻撃処理
 	Attack();
+
+	// 味方自動補充処理
+	AutoSpawnAlly();
 
 #ifdef _DEBUG
 	// 円形コリジョンをアタッチ
@@ -359,6 +364,21 @@ void Player::UpdateLookDir()
 	trans.lookDir = target.GetNormalized();
 }
 
+// 味方自動補充処理
+void Player::AutoSpawnAlly()
+{
+	if (formedAllyCount > inGameConfig->maxAllyCount) return;
+
+	autoSpawnAllyCounter.Add();
+
+	if (autoSpawnAllyCounter.count >= 1.0f)
+	{
+		autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);
+		// 味方をスポ
+		SpawnAlly(trans.pos);
+	}
+}
+
 // プレイヤーのnフレーム前の座標を取得
 Vector3 Player::GetPosHistory(int32_t n)
 {
@@ -366,13 +386,6 @@ Vector3 Player::GetPosHistory(int32_t n)
 	int32_t index = (static_cast<int32_t>(headIndex) - n - 1);
 	if (index < 0) index += static_cast<int32_t>(posHistory.size());
 	return posHistory[index];
-}
-
-void Player::AutoSpawnAlly()
-{
-	if (formedAllyCount > 10) return;
-
-
 }
 
 // 味方データ更新処理
