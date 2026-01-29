@@ -157,7 +157,7 @@ void Player::DebugDraw()
 	values[index] = attackGauge;
 	index = (index + 1) % values.size();
 
-	ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
+	//ImGui::PlotLines("AttackGauge", values.data(), int(values.size()), index, nullptr, 0.0f, 3.0f, ImVec2(0, 80));
 
 	//ImGui::Text("---------------------------------------------\n");
 	//
@@ -166,17 +166,17 @@ void Player::DebugDraw()
 	//
 	//ImGui::Text("---------------------------------------------\n");
 	//
-	//ImDrawList* draw = ImGui::GetWindowDrawList();
-	//ImVec2 center = ImGui::GetCursorScreenPos();
-	//center.x += 50;
-	//center.y += 50;
+	ImDrawList* draw = ImGui::GetWindowDrawList();
+	ImVec2 center = ImGui::GetCursorScreenPos();
+	center.x += 50;
+	center.y += 50;
 	//
-	//float radius = 40.0f;
-	//float value = attackGauge / 3.0f;
-	//
-	//draw->PathArcTo(center, radius, -3.1415f / 2.0f, -3.1415f / 2.0f + 3.1415f * 2.0f * value, 32);
-	//draw->PathStroke(IM_COL32(0, 255, 0, 255), false, 6.0f);
-	//
+	float radius = 40.0f;
+	float value = attackGauge / 3.0f;
+	
+	draw->PathArcTo(center, radius, -3.1415f / 2.0f, -3.1415f / 2.0f + 3.1415f * 2.0f * value, 32);
+	draw->PathStroke(IM_COL32(0, 255, 0, 255), false, 6.0f);
+	
 	//ImGui::Text("---------------------------------------------\n");
 	//
 	//for (size_t i = 0; i < 10; i++)
