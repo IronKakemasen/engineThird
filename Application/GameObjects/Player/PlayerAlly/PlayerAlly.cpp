@@ -127,7 +127,7 @@ void PlayerAlly::Move()
 		}
 
 		// 目的地に到達した かつ
-		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.08f)
+		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.1f)
 		{
 			int32_t tryFormationIndex = targetPlayer->TryReserveFormationIndex();
 			if (tryFormationIndex != -1)
