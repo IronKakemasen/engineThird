@@ -50,6 +50,7 @@ public:
 
 	/////////////  KnockBack  ////////////////
 	float enemyKnockBackPowerToAlly = 2.0f;		// [敵 - 味方]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToPlayer = 0.0f;	// [敵 - プレイヤー]衝突で 敵が受けるノックバック力
 	float enemyKnockBackPowerToBullet = 0.1f;	// [敵 - プレイヤー弾]衝突で 敵が受けるノックバック力
 	float enemyKnockBackPowerToPlayerTower = 0.5f;// [敵 - プレイヤータワー]衝突で 敵が受けるノックバック力
 

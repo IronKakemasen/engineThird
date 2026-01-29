@@ -282,7 +282,7 @@ void Player::Attack()
 	}
 
 #ifdef _DEBUG
-	if (!M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
 	{
 		for (auto* bullet : bullets)
 		{

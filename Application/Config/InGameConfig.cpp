@@ -41,6 +41,7 @@ void InGameConfig::Load()
 
 	std::string knockBack = "/KnockBackPower/";
 	Json::LoadParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
+	Json::LoadParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::LoadParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::LoadParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
 
@@ -90,6 +91,7 @@ void InGameConfig::Save()
 
 	std::string knockBack = "/KnockBackPower/";
 	Json::SaveParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
+	Json::SaveParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::SaveParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::SaveParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
 
@@ -163,6 +165,7 @@ void InGameConfig::DebugDraw()
 	if (ImGui::TreeNode("KnockBackPower"))
 	{
 		ImGui::DragFloat("Enemy		toAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toPTower", &enemyKnockBackPowerToPlayerTower, 0.1f, 0.0f, 20.0f);
 

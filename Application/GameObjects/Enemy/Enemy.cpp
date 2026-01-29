@@ -178,6 +178,10 @@ void Enemy::MoveToTarget()
 			nearestTowerIndex = i;
 		}
 	}
+	if (nearestTowerIndex < 0 || nearestTowerIndex >= playerTowers.size())
+	{
+		return;
+	}
 	Vector3 lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
 
 	// 補完
@@ -191,7 +195,7 @@ void Enemy::LookAtTarget()
 {
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
-	for (size_t i = 0; i < playerTowers.size(); ++i)
+	for (size_t i = 0; i < GameConstants::kMaxPlayerTowers; ++i)
 	{
 		dirToTowers[i] = Vector3(9999.9f, 9999.9f, 9999.9f);
 		if (playerTowers[i]->GetStatus() == Status::kActive)
@@ -202,27 +206,8 @@ void Enemy::LookAtTarget()
 	// 最も近いタワーを追う
 	size_t nearestTowerIndex = 0;
 	float nearestDistance = dirToTowers[0].GetMagnitutde();
-	for (size_t i = 1; i < playerTowers.size(); ++i)
+	for (size_t i = 1; i < GameConstants::kMaxPlayerTowers; ++i)
 	{
-		//// 最も近いタワーのインデックスを探す
-		//size_t nearestTowerIndex = 0;
-    //
-		////float nearestDistance = dirToTowers[0].GetMagnitutde();
-		//float nearestDistance = dirToTowers[0].GetDot(dirToTowers[0]);
-    //
-		//for (size_t i = 1; i < playerTowers.size(); ++i)
-		//{
-		//	//float distance = dirToTowers[i].GetMagnitutde();
-	  //		float distance = dirToTowers[i].GetDot(dirToTowers[i]);
-    //
-		//	if (distance < nearestDistance)
-		//	{
-	  //			nearestDistance = distance;
-	  //			nearestTowerIndex = i;
-		//	}
-		//}
-		//lastDir = dirToTowers[nearestTowerIndex];
-
 		float distance = dirToTowers[i].GetMagnitutde();
 		if (distance < nearestDistance)
 		{
@@ -230,10 +215,13 @@ void Enemy::LookAtTarget()
 			nearestTowerIndex = i;
 		}
 	}
-
+	if (nearestTowerIndex < 0 || nearestTowerIndex >= playerTowers.size())
+	{
+		return;
+	}
 	Vector3 lastDir = dirToTowers[nearestTowerIndex].GetNormalized();
-	// 一直線になるのを防ぐためほんの少しだけ右回転する
-	lastDir.x += 0.001f;
+	// ランダムに回転
+	lastDir.x += ((rand() / float(RAND_MAX)) * 0.4f - 0.2f);
 
 	trans.lookDir = lastDir;
 }
@@ -243,14 +231,14 @@ void Enemy::MoveKnockBack()
 	knockBackVelocity = knockBackVelocity * 0.9f;
 }
 
-void Enemy::KnockBack(float power)
+void Enemy::KnockBack(Vector3 dir, float power)
 {
-	Vector2 randomRotateVec = Vector2(trans.lookDir.x, trans.lookDir.z); 
+	Vector2 randomRotateVec = Vector2(dir.x, dir.z);
 	float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
 	float theta = deg * (3.1415f / 180.0f);
 	randomRotateVec = Vector2(
-		trans.lookDir.x * cosf(theta) - trans.lookDir.z * sinf(theta),
-		trans.lookDir.x * sinf(theta) + trans.lookDir.z * cosf(theta)
+		dir.x * cosf(theta) - dir.z * sinf(theta),
+		dir.x * sinf(theta) + dir.z * cosf(theta)
 	).GetNormalized();
 	trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
 
@@ -281,8 +269,12 @@ void Enemy::DebugDraw(){}
 // プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
 {
-	//// 衝突したときの処理を書く
-	//me->KnockBack(0.3f);
+	auto* player = reinterpret_cast<Player*>(me->Getter_ColObj());
+	// ノックバック方向計算
+	Vector3 dir = player->trans.pos - me->trans.pos;
+
+	// ノックバック付与
+	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToPlayer);
 }
 
 // プレイヤー弾との衝突
@@ -296,8 +288,11 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	// 衝突リストに追加
 	me->AddHitBullet(bullet);
 
+	// ノックバック方向計算
+	Vector3 dir = bullet->trans.pos - me->trans.pos;
+
 	// ノックバック付与
-	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToBullet);
+	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToBullet);
 
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
@@ -314,7 +309,13 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 // プレイヤータワーとの衝突
 void Enemy::CollisionBackToPlayerTower::operator()()
 {
-	me->KnockBack(me->inGameConfig->enemyKnockBackPowerToPlayerTower);
+	auto* playerTower = reinterpret_cast<PlayerTower*>(me->Getter_ColObj());
+
+	// ノックバック方向計算
+	Vector3 dir = playerTower->trans.pos - me->trans.pos;
+
+	// ノックバック付与
+	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToPlayerTower);
 }
 
 // プレイヤー味方との衝突
@@ -324,7 +325,13 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 
 	if (playerAlly->formationCurrentIndex != -1)
 	{
-		me->KnockBack(me->inGameConfig->enemyKnockBackPowerToAlly);
+		// ノックバック方向計算
+		Vector3 dir = playerAlly->trans.pos - me->trans.pos;
+
+		// ノックバック付与
+		me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToAlly);
+
+		// 味方を殺す(本来味方側で行うべき処理だが、inActiveにすると衝突処理が走らなくなるためここで行う)
 		playerAlly->Death();
 	}
 }
