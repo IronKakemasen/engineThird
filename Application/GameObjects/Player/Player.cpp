@@ -80,7 +80,15 @@ void Player::SetCollisionBackTable()
 
 void Player::SpawnAlly(Vector3 pos)
 {
-
+	for (auto* ally : allies)
+	{
+		if (ally->GetStatus() == GameObjectBehavior::Status::kInActive)
+		{
+			// 配置
+			ally->Spawn(pos);
+			break;
+		}
+	}
 }
 
 
