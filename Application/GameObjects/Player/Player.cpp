@@ -12,7 +12,10 @@ Player::Player()
 {
 	rectLight = M::GetInstance()->ImportRectLight();
 	auto* para = rectLight->Getter_Para();
-	para->isActive = 0;
+	para->isActive = 1;
+	para->intensity = 20;
+	*rectLight->GetLookDirection() = { 0.0f,-1.0f,0.5f };
+
 
 	// モデルのインスタンス化
 	model.reset(new PlayerModel);	
@@ -507,4 +510,5 @@ void Player::LightFollowPlayer()
 	auto* para = rectLight->Getter_Para();
 	para->pos = trans.GetWorldPos();
 	para->pos.z -= 2.0f;
+	para->pos.y += 1.0f;
 }
