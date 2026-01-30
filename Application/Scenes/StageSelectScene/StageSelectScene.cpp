@@ -138,7 +138,7 @@ void StageSelectScene::UpdateAfterDecideStage()
 		{
 			if (stageIndex != static_cast<size_t>(inGameController->curStage))
 			{
-				centerObject[stageIndex][0]->trans.pos.y -= 0.5f;
+				centerObject[stageIndex][0]->trans.pos.y -= 0.8f;
 			}
 			else
 			{
