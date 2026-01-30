@@ -373,7 +373,11 @@ void Player::UpdateAllyData()
 			// 列に並んでいるなら
 			if (allies[i]->GetCurrentState() == PlayerAlly::State::kFormed)
 			{
-				exist[allies[i]->formationCurrentIndex] = true;
+				// allies[i]->formationCurrentIndexはフレーム単位なので味方同士の遅延フレーム数で割ってインデックスに変換
+				size_t index = static_cast<size_t>(allies[i]->formationCurrentIndex / inGameConfig->allyToAllyDelayFrames);
+				// 味方が存在するフラグを立てる
+				exist[index] = true;
+				// 味方の数をカウント
 				formedAllyCount++;
 			}
 			else
