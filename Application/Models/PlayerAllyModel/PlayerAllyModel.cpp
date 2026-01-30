@@ -46,6 +46,7 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	appearance->trans.pos.y = 0.125f;
 	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
 	moveAnimCnt.Initialize(1.0f);
+	appearance->trans.rotation.y = 180.0f;
 
 }
 

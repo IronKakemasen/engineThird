@@ -21,6 +21,7 @@
 #include "../../GameObjects/Ground/Ground.h"
 #include "../../GameObjects/Tenkyuu/TenkyuuClass.h"
 #include "../../Models/LightModel/LightModel.h"
+#include "../../Config/GameConstants.h"
 
 class InGameScene final : public Scene
 {
@@ -49,7 +50,7 @@ class InGameScene final : public Scene
 		std::vector<Vector3> dstPositions;
 	};
 
-	FieldLightData fieldLightData[InGameController::kStageNum];
+	FieldLightData fieldLightData[GameConstants::kMaxStages];
 	static int const kNumPLight = 9;
 	PointLight* fieldpointLights[kNumPLight];
 	LightModel lightModels[kNumPLight];
