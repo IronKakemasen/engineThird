@@ -6,15 +6,16 @@ class Sprite :MobileBehavior
 {
 	std::unique_ptr<Atlas> atlas;
 
-	Vertex leftTop;
-	Vertex rightTop;
-	Vertex leftBottom;
-	Vertex rightBottom;	
 	static inline int count = -1;
 	void SetVertex(float width_, float height_);
 	void SetVertex(Vector3 local_leftTop_, Vector3 local_rightTop_, Vector3 local_rightBottom_, Vector3 local_leftBottom_);
 
 public:
+
+	Vertex leftTop;
+	Vertex rightTop;
+	Vertex leftBottom;
+	Vertex rightBottom;
 
 	virtual void Update()override;
 	virtual void Draw(Matrix4* ortho_)override;

@@ -3,13 +3,15 @@
 PlayerBulletModel::PlayerBulletModel()
 {
 	//モデルの生成(必須)
-	model = M::GetInstance()->CreateModel("./resource/preset/model/Block/Block.gltf");
+	model = M::GetInstance()->CreateModel("./resource/application/Model/PlayerBullet/PlayerBullet.gltf");
 
 }
 
 void PlayerBulletModel::Update()
 {
+	auto* appearance = model->GetAppearance(0);
 
+	appearance->trans.rotation.z += rotateSpeed;
 }
 
 void PlayerBulletModel::Draw(Matrix4* vpMat_)
@@ -29,7 +31,8 @@ void PlayerBulletModel::Init(Transform* gameObjectTrans_)
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
 	appearance->texHandlesContainer[Appearance::kNormalmap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
+		M::GetInstance()->GetTexIndex(TextureTag::kBulletN);
+
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 	appearance->SetUsingTextureFromContainer(1, 1, 0, 0);
 
@@ -39,9 +42,10 @@ void PlayerBulletModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
-	appearance->color = { 255,0,0,255 };
+	appearance->metalic = 0.7f;
+	appearance->roughness = 0.2f;
+	appearance->trans.pos.y = 3.0f;
+	appearance->color = { 40,80,220,255 };
 }
 
 void PlayerBulletModel::Reset()

@@ -3,7 +3,6 @@
 #include "../../Buffer/constantBuffer/DirectionalLightBuffer/DirectionalLightBuffer.h"
 #include "../../../../commonVariables.h"
 
-
 void LightManager::Update()
 {	
 	int sum = (int)pointLights.size();

@@ -6,14 +6,15 @@
 struct Ground :public GameObject, public GameObjectBuilding
 {
 private:
-	//使用するモデル
-	std::unique_ptr<GroundPlane> groundPlane;
 
 	void LoadData()override;
 	void SaveData()override;
 	void DebugDraw()override;
 
 public:
+	//使用するモデル
+	std::unique_ptr<GroundPlane> groundPlane;
+
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
 	// GameObject::StateがinActiveの場合は呼び出されない

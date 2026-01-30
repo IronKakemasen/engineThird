@@ -3,18 +3,31 @@
 
 void InGameScene::Update()
 {
-	////アトラス画像の更新
-	//atlasNumber.Update();
-	////実践
-	//static Counter timer(1.0f);
-	//static float timeNum;
-	//timer.Add();
-	//if (timer.IsEnd())
-	//{
-	//	timeNum++;
-	//	Benri::AdjustMax(timeNum, 9.0f, 0.0f);
-	//}
-	//atlasNumber.ChangeAtlasIndex(timeNum);
+
+	switch (inGameController->curMode)
+	{
+	case InGameController::kEnter : 
+
+		EnterMode();
+		break;
+
+	case InGameController::kPlayable:
+		PlayableMode();
+		break;
+
+	case InGameController::kUnPlayable:
+
+		break;
+
+	case InGameController::kGameOver:
+
+		break;
+
+	case InGameController::kResult:
+
+		break;
+
+	}
 
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
@@ -24,6 +37,10 @@ void InGameScene::Update()
 	mainCamera.Update();
 
 	AdaptToPostEffect();
+
+	//現在使用しているカメラのビュープロジェクション
+	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
+
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -38,6 +55,7 @@ void InGameScene::AdaptToPostEffect()
 	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
 	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
 	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+	std::vector<GameObject*> bullets = gameObjManager->Find(GameObject::kPlayerBullet);
 
 	auto* dirPara = dirLight->Getter_Para();
 
@@ -45,6 +63,8 @@ void InGameScene::AdaptToPostEffect()
 	{
 	case PostEffectType::kNone:
 	{
+		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -54,6 +74,9 @@ void InGameScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kGreyScale:
 	{
+		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -63,8 +86,13 @@ void InGameScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kSimpleNeonLike:
 	{
+		auto* appe = ground->groundPlane->model->GetAppearance(0);
+		appe->color = { 255,255,255,255 };
+		appe->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
+
 		dirPara->intensity = dirLightIntensityNeon;
-		dirPara->pos = {1.0f,0.1f,0.0f};
+		dirPara->pos = {1.0f,5.7f,0.0f};
 		metalicCommon = metalicCommonNeon;
 		roughnessCommon = roughnessCommonNeon;
 
@@ -120,6 +148,7 @@ void InGameScene::AdaptToPostEffect()
 		appe->roughness = roughnessCommon;
 	}
 
+	//PLayer
 	auto* player_ = reinterpret_cast<Player*>(player);
 	for (auto* m : player_->model->models)
 	{
@@ -127,6 +156,15 @@ void InGameScene::AdaptToPostEffect()
 		m->GetAppearance(0)->roughness = roughnessCommon;	
 	}
 
+	//Bullets
+	for (auto* bullet : bullets)
+	{
+		auto* bullet_ = reinterpret_cast<PlayerBullet*>(bullet);
+		auto* appe = bullet_->model->model->GetAppearance(0);
+
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
 }
 
 void InGameScene::Load()
@@ -154,6 +192,21 @@ void InGameScene::Draw()
 
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
+
+#ifdef _DEBUG
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		auto* para = fieldpointLights[i]->Getter_Para();
+
+		if (!para->isActive)continue;
+
+		M::GetInstance()->DrawEllipseWireFrame(para->pos, 0.5f,
+			{ 90,0,0 }, { 0,255,0,255 }, vpMat);
+	}
+
+#endif // _DEBUG
+
+
 }
 
 void InGameScene::Reset()
@@ -170,6 +223,8 @@ void InGameScene::Debug()
 	ImGui::Begin("InGameController");
 	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
 	ImGui::Text("Count : %.1f", *inGameController->GetCnt());
+	ImGui::DragFloat("lightradiusCommon", &lightradiusCommon);
+	ImGui::DragFloat("intensityCommon", &intensityCommon);
 	ImGui::End();
 
 	ImGui::Begin("Object Debug");
@@ -342,11 +397,80 @@ void InGameScene::Debug()
 	ImGui::Begin("InGameConfig");
 	inGameConfig->DebugDraw();
 	ImGui::End();
+  
+//ImGui::Begin("playerAttackGauge");
+//	if (ImGui::BeginTabBar("Player"))
+//	{
+//		player->DebugDraw();
+//		ImGui::EndTabBar();
+//	}
 
+	ImGui::End();
 
+	ImGui::Begin("InGameConfig");
+	inGameConfig->DebugDraw();
+	ImGui::End();
 
 #endif // USE_IMGUI
 
 }
 
 
+void InGameScene::EnterMode()
+{
+	float cnt = inGameController->curCnt;
+	auto data = fieldLightData[inGameController->curStage];
+
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		if (i >= data.useNum)
+		{
+			fieldpointLights[i]->Getter_Para()->isActive = false;
+			continue;
+		}
+
+		Vector3 fstPos = data.dstPositions[i] + Vector3{ 0,-10,0 };
+		auto* para = fieldpointLights[i]->Getter_Para();
+		para->isActive = true;
+		para->invSqrRadius = lightradiusCommon;
+		para->intensity = intensityCommon;
+
+		para->pos = Easing::Lerp(fstPos, data.dstPositions[i], cnt);
+	}
+}
+
+void InGameScene::PlayableMode()
+{
+	auto data = fieldLightData[inGameController->curStage];
+	static float const zyougeSpeed = 1.0f / 3.14f / 2.0f;
+
+	commonDeltaTheta += zyougeSpeed;
+	commonDeltaTheta2 += zyougeSpeed;
+
+
+	auto* para = fieldpointLights[0]->Getter_Para();
+	para->invSqrRadius = lightradiusCommon;
+	para->intensity = intensityCommon;
+
+	para->isActive = true;
+	para->invSqrRadius = lightradiusCommon;
+	para->intensity = intensityCommon;
+	//para->pos.y 
+
+
+	for (int i = 1; i < kNumPLight; ++i)
+	{
+		para = fieldpointLights[i]->Getter_Para();
+
+		if (i >= data.useNum)
+		{
+			para->isActive = false;
+			continue;
+		}
+
+		para->isActive = true;
+		para->invSqrRadius = lightradiusCommon;
+		para->intensity = intensityCommon;
+	}
+
+}

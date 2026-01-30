@@ -4,6 +4,12 @@
 
 class PlayerAllyModel :public ModelBehavior
 {
+	void MoveAnim(int animPattern_);
+	Counter moveAnimCnt;
+	int pyonNum = 0;
+	int pyonPattern = 0;
+	int animPattern = 0;
+
 
 public:
 	PlayerAllyModel();

@@ -40,7 +40,7 @@ void EnemyFactoryModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 255,255,255,255 };
+	appearance->color = { 255,80,50,255 };
 }
 
 void EnemyFactoryModel::Reset()

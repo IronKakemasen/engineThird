@@ -155,8 +155,6 @@ public:
 	Player();
 
 private:
-	RectLight* rectLight = nullptr;
-	void LightFollowPlayer();
 
 #pragma endregion
 };

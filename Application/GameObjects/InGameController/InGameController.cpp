@@ -2,7 +2,6 @@
 #include "GameObjectManager.h"
 #include "../../GameObjects/Player/Player.h"
 
-int InGameController::curStage = 0;
 
 void InGameController::ModeData::Set(float time_)
 {
@@ -22,7 +21,7 @@ void InGameController::SetModeData()
 	actors[Mode::kResult].reset(new actor::Result);
 	actors[Mode::kGameOver].reset(new actor::GameOver);
 
-	modeData[Mode::kEnter].Set(1.0f);
+	modeData[Mode::kEnter].Set(3.0f);
 	modeData[Mode::kPlayable].Set(1.0f);
 	modeData[Mode::kUnPlayable].Set(1.0f);
 	modeData[Mode::kResult].Set(1.0f);
