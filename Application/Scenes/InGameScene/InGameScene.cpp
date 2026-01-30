@@ -3,18 +3,31 @@
 
 void InGameScene::Update()
 {
-	////アトラス画像の更新
-	//atlasNumber.Update();
-	////実践
-	//static Counter timer(1.0f);
-	//static float timeNum;
-	//timer.Add();
-	//if (timer.IsEnd())
-	//{
-	//	timeNum++;
-	//	Benri::AdjustMax(timeNum, 9.0f, 0.0f);
-	//}
-	//atlasNumber.ChangeAtlasIndex(timeNum);
+
+	switch (inGameController->curMode)
+	{
+	case InGameController::kEnter : 
+
+		EnterMode();
+		break;
+
+	case InGameController::kPlayable:
+		PlayableMode();
+		break;
+
+	case InGameController::kUnPlayable:
+
+		break;
+
+	case InGameController::kGameOver:
+
+		break;
+
+	case InGameController::kResult:
+
+		break;
+
+	}
 
 	if (M::GetInstance()->IsKeyTriggered(KeyType::Q))
 	{
@@ -25,23 +38,9 @@ void InGameScene::Update()
 
 	AdaptToPostEffect();
 
-	auto* rPara = pointLights[0]->Getter_Para();
-	//rPara->pos = player->Getter_Trans()->GetWorldPos();
-	//rPara->pos.y += 1.5f; rPara->intensity = intensityCommon;
-
-	ImGui::Begin("Dian");
-	ImGui::DragFloat("intensityCommon", &intensityCommon);
-	ImGui::DragFloat("radius", &rPara->invSqrRadius);
-	ImGui::DragFloat3("pos", reinterpret_cast<float*>(&rPara->pos),0.1f);
-	ImGui::End();
-
-	rPara->intensity = intensityCommon;
-
 	//現在使用しているカメラのビュープロジェクション
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 
-	M::GetInstance()->DrawEllipseWireFrame(rPara->pos, 0.5f,
-		{ 90,0,0 }, { 255,255,255,255 }, vpMat);
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -63,6 +62,8 @@ void InGameScene::AdaptToPostEffect()
 	{
 	case PostEffectType::kNone:
 	{
+		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -72,6 +73,9 @@ void InGameScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kGreyScale:
 	{
+		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -81,8 +85,13 @@ void InGameScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kSimpleNeonLike:
 	{
+		auto* appe = ground->groundPlane->model->GetAppearance(0);
+		appe->color = { 255,255,255,255 };
+		appe->shaderSetIndex =
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
+
 		dirPara->intensity = dirLightIntensityNeon;
-		dirPara->pos = {1.0f,0.1f,0.0f};
+		dirPara->pos = {1.0f,5.7f,0.0f};
 		metalicCommon = metalicCommonNeon;
 		roughnessCommon = roughnessCommonNeon;
 
@@ -172,6 +181,21 @@ void InGameScene::Draw()
 
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
+
+#ifdef _DEBUG
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		auto* para = fieldpointLights[i]->Getter_Para();
+
+		if (!para->isActive)continue;
+
+		M::GetInstance()->DrawEllipseWireFrame(para->pos, 0.5f,
+			{ 90,0,0 }, { 0,255,0,255 }, vpMat);
+	}
+
+#endif // _DEBUG
+
+
 }
 
 void InGameScene::Reset()
@@ -185,196 +209,253 @@ void InGameScene::Debug()
 {
 #ifdef USE_IMGUI
 
-	//ImGui::Begin("InGameController");
-	//ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
-	//ImGui::Text("Count : %.1f", *inGameController->GetCnt());
-	//ImGui::End();
+	ImGui::Begin("InGameController");
+	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
+	ImGui::Text("Count : %.1f", *inGameController->GetCnt());
+	ImGui::DragFloat("lightradiusCommon", &lightradiusCommon);
+	ImGui::DragFloat("intensityCommon", &intensityCommon);
+	ImGui::End();
 
-	//ImGui::Begin("Object Debug");
+	ImGui::Begin("Object Debug");
 
-	//if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
-	//{
-	//	if (ImGui::BeginTabItem("EnemyFactory"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& factory : enemyFactories)
-	//		{
-	//			if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = enemyFactories[0]->path;
-
-	//			Json::SaveParam(path, key, Sum);
-
-	//			for (auto& factory : enemyFactories)
-	//			{
-	//				factory->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& factory : enemyFactories)
-	//		{
-	//			factory->DebugDraw();
-	//		}
-
-	//		ImGui::EndTabItem();
-	//	}
-	//	if (ImGui::BeginTabItem("PlayerTower"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& tower : playerTowers)
-	//		{
-	//			if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			playerTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				playerTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = playerTowers[0]->path;
-
-	//			Json::SaveParam(path, key, Sum);
-
-	//			for (auto& tower : playerTowers)
-	//			{
-	//				tower->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& tower : playerTowers)
-	//		{
-	//			tower->DebugDraw();
-	//		}
-	//		ImGui::EndTabItem();
-	//	}
-	//	if (ImGui::BeginTabItem("EnemyTower"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& tower : enemyTowers)
-	//		{
-	//			if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			enemyTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				enemyTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = enemyTowers[0]->path;
-	//			Json::SaveParam(path, key, Sum);
-	//			for (auto& tower : enemyTowers)
-	//			{
-	//				tower->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& tower : enemyTowers)
-	//		{
-	//			tower->DebugDraw();
-	//		}
-	//		ImGui::EndTabItem();
-	//	}
-
-	//	ImGui::EndTabBar();
-	//}
-
-	//ImGui::End();
-
-	//ImGui::Begin("Object ");
-
-	//if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
-	//{
-	//	ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
-	//	for (int32_t i = 0; i < playerTowers.size(); ++i)
-	//	{
-	//		if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
-	//		}
-	//	}
-	//	for (int32_t i = 0; i < enemyTowers.size(); ++i)
-	//	{
-	//		if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
-	//		}
-	//	}
-	//	for (int32_t i = 0; i < enemyFactories.size(); ++i)
-	//	{
-	//		if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
-	//		}
-	//	}
-
-	//	ImGui::EndTabBar();
-	//}
-	//ImGui::End();
-
-ImGui::Begin("playerAttackGauge");
-	//if (ImGui::BeginTabBar("Player"))
+	if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
 	{
-		player->DebugDraw();
-		//ImGui::EndTabBar();
+		if (ImGui::BeginTabItem("EnemyFactory"))
+		{
+			int32_t Sum = 0;
+			for (auto& factory : enemyFactories)
+			{
+				if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+
+			if (ImGui::Button("Add"))
+			{
+				enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = enemyFactories[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& factory : enemyFactories)
+				{
+					factory->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& factory : enemyFactories)
+			{
+				factory->DebugDraw();
+			}
+
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PlayerTower"))
+		{
+			int32_t Sum = 0;
+			for (auto& tower : playerTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				playerTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					playerTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = playerTowers[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& tower : playerTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : playerTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("EnemyTower"))
+		{
+			int32_t Sum = 0;
+			for (auto& tower : enemyTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				enemyTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = enemyTowers[0]->path;
+				Json::SaveParam(path, key, Sum);
+				for (auto& tower : enemyTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : enemyTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
+		}
+
+		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
 
+	ImGui::Begin("Object ");
 
-	//ImGui::Begin("InGameConfig");
-	//inGameConfig->DebugDraw();
-	//ImGui::End();
+	if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
+	{
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
+		for (int32_t i = 0; i < playerTowers.size(); ++i)
+		{
+			if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyTowers.size(); ++i)
+		{
+			if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyFactories.size(); ++i)
+		{
+			if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
+			}
+		}
 
+		ImGui::EndTabBar();
+	}
+	ImGui::End();
 
+ImGui::Begin("playerAttackGauge");
+	if (ImGui::BeginTabBar("Player"))
+	{
+		player->DebugDraw();
+		ImGui::EndTabBar();
+	}
+
+	ImGui::End();
+
+	ImGui::Begin("InGameConfig");
+	inGameConfig->DebugDraw();
+	ImGui::End();
 
 #endif // USE_IMGUI
 
 }
 
 
+void InGameScene::EnterMode()
+{
+	float cnt = inGameController->curCnt;
+	auto data = fieldLightData[inGameController->curStage];
+
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		if (i >= data.useNum)
+		{
+			fieldpointLights[i]->Getter_Para()->isActive = false;
+			continue;
+		}
+
+		Vector3 fstPos = data.dstPositions[i] + Vector3{ 0,-10,0 };
+		auto* para = fieldpointLights[i]->Getter_Para();
+		para->isActive = true;
+		para->invSqrRadius = lightradiusCommon;
+		para->intensity = intensityCommon;
+
+		para->pos = Easing::Lerp(fstPos, data.dstPositions[i], cnt);
+	}
+}
+
+void InGameScene::PlayableMode()
+{
+	auto data = fieldLightData[inGameController->curStage];
+	static float const zyougeSpeed = 1.0f / 3.14f / 2.0f;
+
+	commonDeltaTheta += zyougeSpeed;
+	commonDeltaTheta2 += zyougeSpeed;
+
+
+	auto* para = fieldpointLights[0]->Getter_Para();
+	para->invSqrRadius = lightradiusCommon;
+	para->intensity = intensityCommon;
+
+	para->isActive = true;
+	para->invSqrRadius = lightradiusCommon;
+	para->intensity = intensityCommon;
+	//para->pos.y 
+
+
+	for (int i = 1; i < kNumPLight; ++i)
+	{
+		para = fieldpointLights[i]->Getter_Para();
+
+		if (i >= data.useNum)
+		{
+			para->isActive = false;
+			continue;
+		}
+
+		para->isActive = true;
+		para->invSqrRadius = lightradiusCommon;
+		para->intensity = intensityCommon;
+	}
+
+}

@@ -42,9 +42,17 @@ class InGameScene final : public Scene
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 
 	std::unique_ptr<UIDisplayer> uiDisplayer;
-	PointLight* pointLights[9];
+	struct FieldLightData
+	{
+		int useNum = 0;
+		std::vector<Vector3> dstPositions;
+	};
 
-	PostEffectType curEffectType = PostEffectType::kSimpleNeonLike;
+	FieldLightData fieldLightData[InGameController::kStageNum];
+	static int const kNumPLight = 9;
+	PointLight* fieldpointLights[kNumPLight];
+	float const lightHeight = 5.0f;
+	PostEffectType curEffectType = PostEffectType::kNone;
 
 
 	float dirLightIntensityNormal = 0.0f;
@@ -54,10 +62,18 @@ class InGameScene final : public Scene
 	float roughnessCommonNormal = 0.4f;
 	float metalicCommonNeon = 0.72f;
 	float roughnessCommonNeon = 0.4f;
-	float intensityCommon = 123.0f;
+	float intensityCommon = 714.0f;
+	float lightradiusCommon = 113.0f;
+	float commonDeltaTheta = 0.0f;
+	float commonDeltaTheta2 = 0.0f;
+
+
 
 	void AdaptToPostEffect();
 	void Load();
+	void InputFieldLightData();
+	void EnterMode();
+	void PlayableMode();
 
 public:
 
