@@ -10,6 +10,7 @@ void InGameScene::InputFieldLightData()
 	for (int i = 0; i < kNumPLight; ++i)
 	{
 		fieldpointLights[i] = M::GetInstance()->ImportPointLight();
+		fieldpointLights[i]->Getter_Para()->color = { 20,255,20};
 	}
 
 	//STAGE1
@@ -208,5 +209,9 @@ void InGameScene::Init()
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
 		inGameController.get(), player.get());
 
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		lightModels[i].Init(nullptr);
+	}
 }
 

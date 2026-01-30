@@ -20,6 +20,7 @@
 #include "../../Config/InGameConfig.h"
 #include "../../GameObjects/Ground/Ground.h"
 #include "../../GameObjects/Tenkyuu/TenkyuuClass.h"
+#include "../../Models/LightModel/LightModel.h"
 
 class InGameScene final : public Scene
 {
@@ -51,11 +52,12 @@ class InGameScene final : public Scene
 	FieldLightData fieldLightData[InGameController::kStageNum];
 	static int const kNumPLight = 9;
 	PointLight* fieldpointLights[kNumPLight];
-	float const lightHeight = 5.0f;
+	LightModel lightModels[kNumPLight];
+	float const lightHeight = 6.0f;
 	PostEffectType curEffectType = PostEffectType::kNone;
 
 
-	float dirLightIntensityNormal = 0.0f;
+	float dirLightIntensityNormal = 0.3f;
 	float dirLightIntensityNeon = 0.0f;
 	Vector3 dirLightDir = { 0,0,1 };
 	float metalicCommonNormal = 0.72f;
@@ -63,11 +65,9 @@ class InGameScene final : public Scene
 	float metalicCommonNeon = 0.72f;
 	float roughnessCommonNeon = 0.4f;
 	float intensityCommon = 714.0f;
-	float lightradiusCommon = 113.0f;
+	float lightradiusCommon = 11.0f;
 	float commonDeltaTheta = 0.0f;
 	float commonDeltaTheta2 = 0.0f;
-
-
 
 	void AdaptToPostEffect();
 	void Load();

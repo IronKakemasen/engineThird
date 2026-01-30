@@ -69,6 +69,13 @@ void InGameScene::AdaptToPostEffect()
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
 		roughnessCommon = roughnessCommonNormal;
+		lightradiusCommon = 300.0f;
+		for (int i = 0; i < kNumPLight; ++i)
+		{
+			fieldpointLights[i]->Getter_Para()->intensity = intensityCommon;
+			fieldpointLights[i]->Getter_Para()->color = { 200,255,200 };
+
+		}
 
 		break;
 	}
@@ -81,6 +88,14 @@ void InGameScene::AdaptToPostEffect()
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
 		roughnessCommon = roughnessCommonNormal;
+
+		for (int i = 0; i < kNumPLight; ++i)
+		{
+			fieldpointLights[i]->Getter_Para()->intensity = intensityCommon;
+			fieldpointLights[i]->Getter_Para()->color = { 200,255,200 };
+
+		}
+		lightradiusCommon = 300.0f;
 
 		break;
 	}
@@ -95,6 +110,16 @@ void InGameScene::AdaptToPostEffect()
 		dirPara->pos = {1.0f,5.7f,0.0f};
 		metalicCommon = metalicCommonNeon;
 		roughnessCommon = roughnessCommonNeon;
+
+		lightradiusCommon = 11.0f;
+
+		for (int i = 0; i < kNumPLight; ++i)
+		{
+			fieldpointLights[i]->Getter_Para()->intensity = 8000.0f;
+			fieldpointLights[i]->Getter_Para()->color = { 20,255,20 };
+
+		}
+
 
 		break;
 	}
@@ -193,18 +218,21 @@ void InGameScene::Draw()
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
 
-#ifdef _DEBUG
 	for (int i = 0; i < kNumPLight; ++i)
 	{
 		auto* para = fieldpointLights[i]->Getter_Para();
 
 		if (!para->isActive)continue;
+		lightModels[i].Draw(vpMat);
 
-		M::GetInstance()->DrawEllipseWireFrame(para->pos, 0.5f,
-			{ 90,0,0 }, { 0,255,0,255 }, vpMat);
+//#ifdef _DEBUG
+//
+//		M::GetInstance()->DrawEllipseWireFrame(para->pos, 0.5f,
+//			{ 90,0,0 }, { 0,255,0,255 }, vpMat);
+//#endif // _DEBUG
+
 	}
 
-#endif // _DEBUG
 
 
 }
@@ -429,29 +457,29 @@ void InGameScene::EnterMode()
 		auto* para = fieldpointLights[i]->Getter_Para();
 		para->isActive = true;
 		para->invSqrRadius = lightradiusCommon;
-		para->intensity = intensityCommon;
 
 		para->pos = Easing::Lerp(fstPos, data.dstPositions[i], cnt);
+		lightModels[i].model->GetAppearance(0)->trans.pos = para->pos;
+
 	}
 }
 
 void InGameScene::PlayableMode()
 {
 	auto data = fieldLightData[inGameController->curStage];
-	static float const zyougeSpeed = 1.0f / 3.14f / 2.0f;
+	static float const zyougeSpeed = 1.0f / 3.14f / 20.0f;
 
 	commonDeltaTheta += zyougeSpeed;
 	commonDeltaTheta2 += zyougeSpeed;
+	float deltaPosY1 = sinf(commonDeltaTheta)*1.25f ;
+	float deltaPosY2 = cosf(commonDeltaTheta2) * 1.25f;
 
 
 	auto* para = fieldpointLights[0]->Getter_Para();
 	para->invSqrRadius = lightradiusCommon;
-	para->intensity = intensityCommon;
-
 	para->isActive = true;
-	para->invSqrRadius = lightradiusCommon;
-	para->intensity = intensityCommon;
-	//para->pos.y 
+	para->pos.y = lightHeight + deltaPosY1;
+	lightModels[0].model->GetAppearance(0)->trans.pos = para->pos;
 
 
 	for (int i = 1; i < kNumPLight; ++i)
@@ -466,7 +494,17 @@ void InGameScene::PlayableMode()
 
 		para->isActive = true;
 		para->invSqrRadius = lightradiusCommon;
-		para->intensity = intensityCommon;
+		lightModels[i].model->GetAppearance(0)->trans.pos = para->pos;
+
+		if (i % 2 == 0)
+		{
+			para->pos.y = lightHeight + deltaPosY1;
+
+		}
+		else
+		{
+			para->pos.y = lightHeight + deltaPosY2;
+		}
 	}
 
 }
