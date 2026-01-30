@@ -9,7 +9,8 @@ PlayerAllyModel::PlayerAllyModel()
 
 void PlayerAllyModel::Update()
 {
-
+	auto* appearance = model->GetAppearance(0);
+	MoveAnim(0);
 }
 
 void PlayerAllyModel::Draw(Matrix4* vpMat_)
@@ -43,8 +44,71 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->trans.pos.y = 0.125f;
-	appearance->color = { 50.0f,255.0f,255.0f,255.0f };
+	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
+	moveAnimCnt.Initialize(1.0f);
+
 }
 
 void PlayerAllyModel::Reset()
-{}
+{
+	moveAnimCnt.Initialize(1.0f);
+	pyonNum = 0;
+}
+
+void PlayerAllyModel::MoveAnim(int animPattern_)
+{
+	auto* appearance = model->GetAppearance(0);
+	float const kizyunY = 0.125f;
+	float const maxY = 2.5f;
+
+	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
+	{
+		return;
+	}
+
+	if (moveAnimCnt.IsEnd())
+	{
+		pyonNum++;
+		pyonPattern = pyonNum % 4;
+	}
+
+	if (moveAnimCnt.count >= 0.0f && moveAnimCnt.count < 0.5f)
+	{
+		float t = Counter::GetNormalizedCount(0.0f, 0.5f, moveAnimCnt.count);
+		appearance->trans.pos.y =
+			Easing::EaseOutCubic(kizyunY, maxY,t);
+
+	}
+	else
+	{
+		float t = Counter::GetNormalizedCount(0.5f, 1.0f, moveAnimCnt.count);
+		appearance->trans.pos.y =
+			Easing::EaseInExpo(maxY,kizyunY, t);
+	}
+
+	if (pyonPattern == 0)
+	{
+		appearance->trans.rotation.x =
+			Easing::EaseOutCubic(0.0f, 360.0f, moveAnimCnt.count);
+	}
+	else if (pyonPattern == 1)
+	{
+		appearance->trans.rotation.x =
+			Easing::EaseOutCubic(0.0f, -360.0f, moveAnimCnt.count);
+	}
+
+	else if (pyonPattern == 2)
+	{
+		appearance->trans.rotation.z =
+			Easing::EaseOutCubic(0.0f, 360.0f, moveAnimCnt.count);
+	}
+
+	else if (pyonPattern == 3)
+	{
+		appearance->trans.rotation.z =
+			Easing::EaseOutCubic(0.0f, -360.0f, moveAnimCnt.count);
+	}
+
+	moveAnimCnt.Add();
+
+}

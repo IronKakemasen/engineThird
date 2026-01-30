@@ -3,6 +3,8 @@
 #include "../../../lowerLayer/engineCore/Mesh/meshStructure/Vertex/Vertex.h"
 #include "../../../lowerLayer/engineCore/Render/Appearance/Appearance.h"
 #include "../../../lowerLayer/engineCore/Mesh/allMesh/MeshForModel/ModelSimple/ModelSimple.h"
+#include "../../M/utilities/Counter/Counter.h"
+#include "../../M/utilities/Easing/EasingFunctions.h"
 
 struct ModelBehavior
 {

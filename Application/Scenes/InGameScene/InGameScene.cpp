@@ -55,6 +55,7 @@ void InGameScene::AdaptToPostEffect()
 	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
 	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
 	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+	std::vector<GameObject*> bullets = gameObjManager->Find(GameObject::kPlayerBullet);
 
 	auto* dirPara = dirLight->Getter_Para();
 
@@ -147,6 +148,7 @@ void InGameScene::AdaptToPostEffect()
 		appe->roughness = roughnessCommon;
 	}
 
+	//PLayer
 	auto* player_ = reinterpret_cast<Player*>(player);
 	for (auto* m : player_->model->models)
 	{
@@ -154,6 +156,15 @@ void InGameScene::AdaptToPostEffect()
 		m->GetAppearance(0)->roughness = roughnessCommon;	
 	}
 
+	//Bullets
+	for (auto* bullet : bullets)
+	{
+		auto* bullet_ = reinterpret_cast<PlayerBullet*>(bullet);
+		auto* appe = bullet_->model->model->GetAppearance(0);
+
+		appe->metalic = metalicCommon;
+		appe->roughness = roughnessCommon;
+	}
 }
 
 void InGameScene::Load()

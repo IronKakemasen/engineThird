@@ -159,6 +159,7 @@
     <ClCompile Include="Application\Models\GroundPlane\GroundPlane.cpp" />
     <ClCompile Include="Application\GameObjects\ForModelView\groundM.cpp" />
     <ClCompile Include="Application\GameObjects\Ground\Ground.cpp" />
+    <ClCompile Include="Application\Models\LightModel\LightModel.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="Application\Models\GroundPlane\GroundPlane.h" />
     <ClInclude Include="Application\GameObjects\ForModelView\groundM.h" />
     <ClInclude Include="Application\GameObjects\Ground\Ground.h" />
+    <ClInclude Include="Application\Models\LightModel\LightModel.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
