@@ -182,12 +182,12 @@ void PlayerAlly::FollowPlayer()
 	/// 分離がある かつ 自身のインデックスが分離数以内なら
 	if (allySeparationCount != -1 && formationCurrentIndex < allySeparationCount)
 	{
+		// プレイヤーに報告(死んではないが実質死んでる)
+		targetPlayer->NotifyAllyDeath(formationCurrentIndex);
 		// 列から分離
 		formationCurrentIndex = -1;
 		// 状態遷移
 		nextState = State::kLocked;
-		// プレイヤーに報告(死んではないが実質死んでる)
-		targetPlayer->NotifyAllyDeath(formationCurrentIndex);
 
 		return;
 	}

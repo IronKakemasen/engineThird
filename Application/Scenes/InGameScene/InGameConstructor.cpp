@@ -69,7 +69,8 @@ void InGameScene::Instantiate()
 	}
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
-	gameObjManager->RegisterForContainer(player.get(), 
+	gameObjManager->RegisterForContainer(player.get());
+	gameObjManager->RegisterForContainer(
 		inGameController.get(), ground.get(), tenkyuuClass.get());
 	for (auto& enemyInstance : enemies)
 		gameObjManager->RegisterForContainer(enemyInstance.get());
@@ -83,6 +84,7 @@ void InGameScene::Instantiate()
 		gameObjManager->RegisterForContainer(enemyTower.get());
 	for (auto& enemyFactory : enemyFactories)
 		gameObjManager->RegisterForContainer(enemyFactory.get());
+
 
 	// ポインタを渡す
 	for (auto& enemyInstance : enemies)

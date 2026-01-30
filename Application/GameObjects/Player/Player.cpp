@@ -102,7 +102,6 @@ void Player::SpawnAlly(Vector3 pos)
 // データ保存・読み込み
 void Player::LoadData()
 {
-
 	// config反映
 	hp = inGameConfig->playerMaxHP;
 }
@@ -373,10 +372,8 @@ void Player::UpdateAllyData()
 			// 列に並んでいるなら
 			if (allies[i]->GetCurrentState() == PlayerAlly::State::kFormed)
 			{
-				// allies[i]->formationCurrentIndexはフレーム単位なので味方同士の遅延フレーム数で割ってインデックスに変換
-				size_t index = static_cast<size_t>(allies[i]->formationCurrentIndex / inGameConfig->allyToAllyDelayFrames);
 				// 味方が存在するフラグを立てる
-				exist[index] = true;
+				exist[allies[i]->formationCurrentIndex] = true;
 				// 味方の数をカウント
 				formedAllyCount++;
 			}
@@ -408,6 +405,15 @@ void Player::UpdateAllyData()
 				}
 			}
 
+			// deadIndexList更新
+			for (size_t i = 0; i < deadIndexList.size(); ++i)
+			{
+				if (deadIndexList[i] > deadIndexList.front())
+				{
+					deadIndexList[i]--;
+				}
+			}
+
 			// 次の味方へ
 			deadIndexList.pop_front();
 		}
@@ -419,15 +425,23 @@ Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
 	int32_t index = allyIndex;
 	if (index < 0) index = formedAllyCount;
-	// プレイヤーからindexフレーム遅れた座標を返す
-	return GetPosHistory(index);
+
+	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
+	delayFrames += inGameConfig->playerToAllyDelayFrames;
+	int32_t offset = 0;
+	// 前に空きがあれば
+	if (!deadIndexList.empty() && deadIndexList.front() < allyIndex)
+	{
+		offset = delayFrameOffsets;
+	}
+	return GetPosHistory(delayFrames - offset);
 }
 int32_t Player::TryReserveFormationIndex()
 {
 	if (exist[formedAllyCount] == false)
 	{
 		exist[formedAllyCount] = true;
-		return formedAllyCount * inGameConfig->allyToAllyDelayFrames;
+		return formedAllyCount;
 	}
 	else
 	{
@@ -442,6 +456,7 @@ int32_t Player::GetSeparateAllyCount() const
 
 void Player::NotifyAllyDeath(int32_t formationIndex)
 {
+	if (formationIndex < 0 || formationIndex >= GameConstants::kMaxAllies) return;
 	deadIndexList.push_back(formationIndex);
 }
 
