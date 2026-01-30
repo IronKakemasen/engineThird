@@ -43,6 +43,8 @@ enum class TextureTag
 	kTowerN,
 	kFactoryN,
 
+	kBulletN,
+
 	kCount
 };
 
