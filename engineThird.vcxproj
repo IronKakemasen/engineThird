@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Config\GameConstants.cpp" />
     <ClCompile Include="Application\GameObjects\ForModelView\PM.cpp" />
     <ClCompile Include="Application\GameObjects\InGameController\Actor.cpp" />
     <ClCompile Include="Application\GameObjects\UIDisplayer\UIDisplayer.cpp" />

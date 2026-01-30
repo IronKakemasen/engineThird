@@ -392,9 +392,6 @@ void Player::UpdateAllyData()
 			// オフセットリセット
 			delayFrameOffsets = 0;
 
-			// 次の味方へ
-			deadIndexList.pop_front();
-
 			// 味方の列インデックスを詰める
 			for (auto* ally : allies)
 			{
@@ -406,6 +403,9 @@ void Player::UpdateAllyData()
 					}
 				}
 			}
+
+			// 次の味方へ
+			deadIndexList.pop_front();
 		}
 	}
 }
@@ -414,26 +414,16 @@ void Player::UpdateAllyData()
 Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
 	int32_t index = allyIndex;
-	int32_t front = allyIndex - 1;
 	if (index < 0) index = formedAllyCount;
-	if (front < 0) front = 0;
-
-	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
-	delayFrames += inGameConfig->playerToAllyDelayFrames;
-	int32_t offset = 0;
-	// 前に空きがあれば
-	if (!deadIndexList.empty() && deadIndexList.front() < allyIndex)
-	{
-		offset = delayFrameOffsets;
-	}
-	return GetPosHistory(delayFrames - offset);
+	// プレイヤーからindexフレーム遅れた座標を返す
+	return GetPosHistory(index);
 }
 int32_t Player::TryReserveFormationIndex()
 {
 	if (exist[formedAllyCount] == false)
 	{
 		exist[formedAllyCount] = true;
-		return formedAllyCount;
+		return formedAllyCount * inGameConfig->allyToAllyDelayFrames;
 	}
 	else
 	{

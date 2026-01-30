@@ -38,7 +38,7 @@ private:
 	State nextState = State::kNone;
 
 public:
-	// 自分は列の何番目か(-1の時はまだたどり着いていない)
+	// 自分はプレイヤーから何フレーム遅れているか(-1なら列未加入)
 	int32_t formationCurrentIndex = -1;
 
 	State GetCurrentState() const { return currentState; }
