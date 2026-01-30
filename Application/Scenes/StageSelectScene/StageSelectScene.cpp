@@ -117,7 +117,7 @@ void StageSelectScene::DecideStage()
 		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
 		{
 			selected = true;
-			afterDecideCounter.Initialize(3.0f);
+			afterDecideCounter.Initialize(2.0f);
 		}
 	}
 	else
@@ -125,7 +125,7 @@ void StageSelectScene::DecideStage()
 		if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
 		{
 			selected = true;
-			afterDecideCounter.Initialize(3.0f);
+			afterDecideCounter.Initialize(2.0f);
 		}
 	}
 }
@@ -138,11 +138,11 @@ void StageSelectScene::UpdateAfterDecideStage()
 		{
 			if (stageIndex != static_cast<size_t>(inGameController->curStage))
 			{
-				centerObject[stageIndex][0]->trans.pos.y -= 0.8f;
+				centerObject[stageIndex][0]->trans.pos.y -= 1.0f;
 			}
 			else
 			{
-				float siko = (afterDecideCounter.count * 2.5f);
+				float siko = (afterDecideCounter.count * 2.2f);
 				if (siko > 1.0f) siko = 1.0f;
 				centerObject[stageIndex][0]->trans.pos.y =
 					std::sinf(siko * 3.14f) * 10;
