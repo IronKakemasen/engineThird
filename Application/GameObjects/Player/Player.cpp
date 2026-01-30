@@ -264,7 +264,7 @@ void Player::Attack()
 	attackIntervalCounter.Add();
 	if (attackIntervalCounter.count < 1.0f) return;
 
-	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB))
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_RB))
 	{
 		for (auto* bullet : bullets)
 		{
@@ -282,7 +282,7 @@ void Player::Attack()
 	}
 
 #ifdef _DEBUG
-	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
+	if (M::GetInstance()->IsKeyPressed(KeyType::SPACE))
 	{
 		for (auto* bullet : bullets)
 		{

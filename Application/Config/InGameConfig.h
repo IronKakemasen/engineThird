@@ -12,6 +12,9 @@ public:
 
 	void DebugDraw();
 
+	/////////////// controller ///////////////
+	float deadZone = 0.3f;				// コントローラーのデッドゾーン
+
 	/////////////// collisonSize  ///////////////
 	float playerCollisonSize = 1.0f;			// プレイヤー
 	float playerTowerCollisonSize = 1.0f;		// プレイヤータワー
