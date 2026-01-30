@@ -1,12 +1,15 @@
 #include "Player.h"
 #include "imgui.h"
 #include "../Json/Json.h"
+#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
 #include "../GameObjectManager/GameObjectManager.h"
-#include "../../Config/GameConstants.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Config/InGameConfig.h"
-#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
+#include "../../Config/GameConstants.h"
+
+#include <algorithm>
+#include <numeric>
 
 Player::Player()
 {
@@ -31,11 +34,6 @@ void Player::Reset()
 
 	// existの初期化
 	exist.fill(false);
-	// deadIndexListの初期化
-	while (!deadIndexList.empty())
-	{
-		deadIndexList.pop_back();
-	}
 	// formedAllyCountの初期化
 	formedAllyCount = 0;
 	// unformedAllyCountの初期化
@@ -365,6 +363,10 @@ void Player::UpdateAllyData()
 
 	exist.fill(false);
 
+	// formed の ally を集める
+	std::vector<PlayerAlly*> formedAllies;
+	formedAllies.reserve(allies.size());
+
 	for (int32_t i = 0; i < allies.size(); ++i)
 	{
 		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
@@ -372,9 +374,7 @@ void Player::UpdateAllyData()
 			// 列に並んでいるなら
 			if (allies[i]->GetCurrentState() == PlayerAlly::State::kFormed)
 			{
-				// 味方が存在するフラグを立てる
-				exist[allies[i]->formationCurrentIndex] = true;
-				// 味方の数をカウント
+				formedAllies.push_back(allies[i]);
 				formedAllyCount++;
 			}
 			else
@@ -384,39 +384,62 @@ void Player::UpdateAllyData()
 		}
 	}
 
-	// 詰めオフセット更新
-	if (!deadIndexList.empty())
+	// formationCurrentIndex を昇順に並べる
+	std::sort(formedAllies.begin(), formedAllies.end(),
+		[](const PlayerAlly* a, const PlayerAlly* b)
+		{
+			const int32_t ia = a ? a->formationCurrentIndex : GameConstants::kMaxAllies;
+			const int32_t ib = b ? b->formationCurrentIndex : GameConstants::kMaxAllies;
+			return ia < ib;
+		});
+
+	// 現在の exist を構築
+	for (auto* ally : formedAllies)
+	{
+		exist[ally->formationCurrentIndex] = true;
+		if (ally->formationCurrentIndex < 0)
+		{
+			// ありえない
+			DebugBreak();
+		}
+	}
+
+	// 列に隙間が存在するか？
+	int32_t gapIndex = -1;
+	for (int32_t i = 0; i < formedAllyCount; ++i)
+	{
+		if (!exist[i])
+		{
+			gapIndex = i;
+			break;
+		}
+	}
+
+	// 詰め作業
+	if (gapIndex != -1)
 	{
 		delayFrameOffsets += 2;
+
+		// 1人分詰め切ったら、論理 index も 1ステップだけ確定
 		if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
 		{
-			// オフセットリセット
 			delayFrameOffsets = 0;
 
-			// 味方の列インデックスを詰める
-			for (auto* ally : allies)
+			// gapIndex より後ろの formed だけ 1つ前へ
+			for (auto* ally : formedAllies)
 			{
-				if (ally->GetCurrentState() == PlayerAlly::State::kFormed)
+				const int32_t idx = ally->formationCurrentIndex;
+				if (idx > gapIndex)
 				{
-					if (ally->formationCurrentIndex > deadIndexList.front())
-					{
-						ally->formationCurrentIndex--;
-					}
+					ally->formationCurrentIndex--;
 				}
 			}
-
-			// deadIndexList更新
-			for (size_t i = 0; i < deadIndexList.size(); ++i)
-			{
-				if (deadIndexList[i] > deadIndexList.front())
-				{
-					deadIndexList[i]--;
-				}
-			}
-
-			// 次の味方へ
-			deadIndexList.pop_front();
 		}
+	}
+	else
+	{
+		// 隙間がないなら詰めオフセットは不要
+		delayFrameOffsets = 0;
 	}
 }
 
@@ -428,11 +451,18 @@ Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 
 	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
 	delayFrames += inGameConfig->playerToAllyDelayFrames;
+
 	int32_t offset = 0;
+
 	// 前に空きがあれば
-	if (!deadIndexList.empty() && deadIndexList.front() < allyIndex)
+	for (int32_t i = 0; i < index; ++i)
 	{
-		offset = delayFrameOffsets;
+		if (i < 0 || i >= GameConstants::kMaxAllies) break;
+		if (!exist[i])
+		{
+			offset = delayFrameOffsets;
+			break;
+		}
 	}
 	return GetPosHistory(delayFrames - offset);
 }
@@ -452,12 +482,6 @@ int32_t Player::TryReserveFormationIndex()
 int32_t Player::GetSeparateAllyCount() const
 {
 	return -1;
-}
-
-void Player::NotifyAllyDeath(int32_t formationIndex)
-{
-	if (formationIndex < 0 || formationIndex >= GameConstants::kMaxAllies) return;
-	deadIndexList.push_back(formationIndex);
 }
 
 float Player::GetSpeed() const

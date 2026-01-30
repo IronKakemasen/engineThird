@@ -65,7 +65,7 @@ private:
 	// 要約:自分より前の味方が死んだ時後ろの味方すべてが詰める。そのオフセット管理用
 	int32_t delayFrameOffsets = 0;
 	// 死亡して詰め待ちのリスト(先入れ先出し)
-	std::deque<int32_t> deadIndexList = {};
+	//std::deque<int32_t> deadIndexList = {};
 
 
 public:
@@ -87,10 +87,6 @@ public:
 	/// </summary>
 	/// <returns> 分離がないなら-1 </returns>
 	int32_t GetSeparateAllyCount() const;
-
-
-	// 死亡届
-	void NotifyAllyDeath(int32_t formationIndex);
 
 	// 動いているかどうか
 	bool IsMoving() const { return isMoving; }
