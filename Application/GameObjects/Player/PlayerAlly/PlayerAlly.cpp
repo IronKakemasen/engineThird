@@ -84,8 +84,48 @@ void PlayerAlly::Update()
 	//モデルの更新処理
 	model->Update();
 
-	// 移動処理
-	Move();
+	if (nextState != PlayerAlly::State::kNone)
+	{
+		currentState = nextState;
+
+		switch (nextState)
+		{
+		case PlayerAlly::State::kUnformed:
+			break;
+		case PlayerAlly::State::kFormed:
+			break;
+		case PlayerAlly::State::kLocked:
+			break;
+		case PlayerAlly::State::kDead:
+			break;
+		case PlayerAlly::State::kNone:
+			break;
+		default:
+			break;
+		}
+	}
+	nextState = PlayerAlly::State::kNone;
+
+	// 更新
+	switch (currentState)
+	{
+	case PlayerAlly::State::kUnformed:
+		MoveToPlayer();
+		break;
+	case PlayerAlly::State::kFormed:
+		FollowPlayer();
+		break;
+	case PlayerAlly::State::kLocked:
+		LockPosition();
+		break;
+	case PlayerAlly::State::kDead:
+		Death();
+		break;
+	case PlayerAlly::State::kNone:
+		break;
+	default:
+		break;
+	}
 }
 
 void PlayerAlly::Draw(Matrix4* vpMat_)
@@ -97,59 +137,78 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 void PlayerAlly::DebugDraw()
 {}
 
-void PlayerAlly::Move()
+
+void PlayerAlly::MoveToPlayer()
 {
-	// ※１
-	// もし formationCurrentIndexが-1(列に加わっていない)なら最後尾に向かう
-	// ↳補完なし最短経路　プレイヤーと同じ速度
-
-	// ※２
-	// もし formationCurrentIndexが!-1(列に加わっている)なら理想の位置に移動
-	// ↳プレイヤーの移動履歴を完璧に追従
-
-	// ※３
-	// もし 列に加わってる かつ 自分の前に味方がいないなら 詰める
-	// ↳プレイヤーの移動履歴を完璧に追従 つまりプレイヤーが止まらなければ隙間が埋まることはない
-
-	// 自身の目標インデックスに対応する目標座標を取得
+	/// 自身の目標インデックスに対応する目標座標を取得(列の最後尾)
 	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
 
-	// 列に加わっていない場合 ※１
-	if (formationCurrentIndex == -1)
+	/// 現在地から最後尾ベクトル
+	Vector3 direction = targetPos - trans.pos;
+
+	/// 移動ベクトルを取得
+	Vector3 moveVector = direction.GetNormalized() * (targetPlayer->GetSpeed() * inGameConfig->playerAllySpeed);
+
+	// 移動量より目的地までの距離が短い場合目的地に直接移動
+	if (moveVector.GetMagnitutde() > direction.GetMagnitutde())
 	{
-		// 原罪地から最後尾
-		Vector3 direction = targetPos - trans.pos;
+		trans.pos = targetPos;
 
-		if (direction.GetMagnitutde() > 0.0001f)
-		{
-			trans.lookDir = Easing::SLerp(trans.lookDir, direction, trans.interpolationCoe);
-			trans.pos = trans.pos + (trans.lookDir.GetNormalized() * (targetPlayer->GetSpeed() *  inGameConfig->playerAllySpeed));
-		}
+		// 最後尾予約
+		int32_t tryFormationIndex = targetPlayer->TryReserveFormationIndex();
 
-		// 目的地に到達した かつ
-		if (Vector3(targetPos - trans.pos).GetMagnitutde() < 0.1f)
+		// 成功すれば列に加入
+		if (tryFormationIndex != -1)
 		{
-			int32_t tryFormationIndex = targetPlayer->TryReserveFormationIndex();
-			if (tryFormationIndex != -1)
-			{
-				// 自身のインデックス更新
-				formationCurrentIndex = tryFormationIndex;
-			}
+			// 自身のインデックス更新
+			formationCurrentIndex = tryFormationIndex;
+
+			// 状態遷移
+			nextState = State::kFormed;
 		}
+	}
+	/// 通常の移動処理
+	else
+	{
+		trans.pos = trans.pos + (direction.GetNormalized() * (targetPlayer->GetSpeed() * inGameConfig->playerAllySpeed));
+	}
+}
+
+void PlayerAlly::FollowPlayer()
+{
+	/// そのフレームのAlly分離数を取得
+	int32_t allySeparationCount = targetPlayer->GetSeparateAllyCount();
+
+	/// 分離がある かつ 自身のインデックスが分離数以内なら
+	if (allySeparationCount != -1 && formationCurrentIndex < allySeparationCount)
+	{
+		// 列から分離
+		formationCurrentIndex = -1;
+		// 状態遷移
+		nextState = State::kLocked;
+		// プレイヤーに報告(死んではないが実質死んでる)
+		targetPlayer->NotifyAllyDeath(formationCurrentIndex);
 
 		return;
 	}
-	// 列に加わっている場合 ※２ ※３
-	else
-	{
-		trans.pos = targetPos;
-	}
+
+	// 自身の目標インデックスに対応する目標座標を取得
+	Vector3 targetPos = targetPlayer->GetAllyTargetPos(formationCurrentIndex);
+	// 目的地に直接移動
+	trans.pos = targetPos;
+}
+
+void PlayerAlly::LockPosition()
+{
+
 }
 
 void PlayerAlly::Spawn(Vector3 pos)
 {
 	// 有効化
 	SetStatus(Status::kActive);
+	// ステータスを設定
+	currentState = State::kUnformed;
 	// 初期座標設定
 	trans.pos = pos;
 	// 自分は列の何番目か
@@ -171,16 +230,26 @@ void PlayerAlly::Death()
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()
 {
-	// 本来はここで自身の死亡判定を行うべきだが、
-	// statusが非アクティブになるとコリジョンが無効化されてしまい、
-	// エネミー側で衝突判定が行えなくなるため、エネミー側で処理を行う(1024敗)
+	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
+	{
+		me->nextState = PlayerAlly::State::kDead;
+	}
 }
 
 // プレイヤー弾との衝突
 void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 {
-	if (me->formationCurrentIndex != -1)
+	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
-		me->Death();
+		me->nextState = PlayerAlly::State::kDead;
+	}
+}
+
+// プレイヤーとの衝突
+void PlayerAlly::CollisionBackToPlayer::operator()()
+{
+	if (me->currentState == PlayerAlly::State::kLocked)
+	{
+		me->nextState = PlayerAlly::State::kUnformed;
 	}
 }

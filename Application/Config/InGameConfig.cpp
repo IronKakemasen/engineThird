@@ -173,8 +173,8 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("AutoSpawn"))
 	{
-		ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 20.0f);
-		ImGui::DragFloat("Ally		spawnInterval", &playerAllySpawnInterval, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 2.0f);
+		ImGui::DragFloat("Ally		spawnInterval", &playerAllySpawnInterval, 0.1f, 0.0f, 2.0f);
 		ImGui::DragInt("Ally		maxAllyCount", &maxAllyCount, 1, 1, 100);
 
 		ImGui::TreePop();

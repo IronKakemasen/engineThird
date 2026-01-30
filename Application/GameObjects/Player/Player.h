@@ -30,6 +30,8 @@ private:
 	std::array<Vector3, GameConstants::kMaxAllies* GameConstants::kAllyFollowDelayFramesMax> posHistory = {};
 	size_t headIndex = 0;	// リングバッファの先頭インデックス
 
+	////// 分離数設定処理  //////
+	void UpdateAllySeparate();
 
 	////// 視線変更処理  //////
 	void UpdateLookDir();
@@ -79,6 +81,13 @@ public:
 	/// </summary>
 	/// <returns> 失敗したら-1 </returns>
 	int32_t TryReserveFormationIndex();
+
+	/// <summary>
+	/// そのフレームで分離する味方の数を取得
+	/// </summary>
+	/// <returns> 分離がないなら-1 </returns>
+	int32_t GetSeparateAllyCount() const;
+
 
 	// 死亡届
 	void NotifyAllyDeath(int32_t formationIndex);

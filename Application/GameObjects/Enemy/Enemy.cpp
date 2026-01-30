@@ -323,15 +323,12 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 {
 	auto* playerAlly = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 
-	if (playerAlly->formationCurrentIndex != -1)
+	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || playerAlly->GetCurrentState() == PlayerAlly::State::kFormed)
 	{
 		// ノックバック方向計算
 		Vector3 dir = playerAlly->trans.pos - me->trans.pos;
 
 		// ノックバック付与
 		me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToAlly);
-
-		// 味方を殺す(本来味方側で行うべき処理だが、inActiveにすると衝突処理が走らなくなるためここで行う)
-		playerAlly->Death();
 	}
 }

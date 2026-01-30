@@ -339,9 +339,9 @@ void InGameScene::Debug()
 	}
 	ImGui::End();
 
-	//ImGui::Begin("InGameConfig");
-	//inGameConfig->DebugDraw();
-	//ImGui::End();
+	ImGui::Begin("InGameConfig");
+	inGameConfig->DebugDraw();
+	ImGui::End();
 
 
 

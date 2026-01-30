@@ -320,6 +320,9 @@ Vector3 Player::GetPosHistory(int32_t n)
 	return posHistory[index];
 }
 
+void Player::UpdateAllySeparate()
+{}
+
 // 視線変更処理
 void Player::UpdateLookDir()
 {
@@ -368,7 +371,7 @@ void Player::UpdateAllyData()
 		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 		{
 			// 列に並んでいるなら
-			if (allies[i]->formationCurrentIndex >= 0)
+			if (allies[i]->GetCurrentState() == PlayerAlly::State::kFormed)
 			{
 				exist[allies[i]->formationCurrentIndex] = true;
 				formedAllyCount++;
@@ -383,43 +386,26 @@ void Player::UpdateAllyData()
 	// 詰めオフセット更新
 	if (!deadIndexList.empty())
 	{
-		if (!isMoving)
+		delayFrameOffsets += 2;
+		if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
 		{
-			delayFrameOffsets++;
-			if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
+			// オフセットリセット
+			delayFrameOffsets = 0;
+
+			// 次の味方へ
+			deadIndexList.pop_front();
+
+			// 味方の列インデックスを詰める
+			for (auto* ally : allies)
 			{
-				// オフセットリセット
-				delayFrameOffsets = 0;
-				// 詰め終わったので存在フラグを更新
-				for (size_t i = deadIndexList.front(); i < exist.size() - 1; ++i)
-				{
-					exist[i] = exist[i + 1];
-				}
-				exist[exist.size() - 1] = false;
-				// 味方の列インデックスを詰める
-				for (auto* ally : allies)
+				if (ally->GetCurrentState() == PlayerAlly::State::kFormed)
 				{
 					if (ally->formationCurrentIndex > deadIndexList.front())
 					{
 						ally->formationCurrentIndex--;
 					}
 				}
-				// deadIndexList更新
-				for (size_t i = 0; i < deadIndexList.size(); ++i)
-				{
-					if (deadIndexList[i] > deadIndexList.front())
-					{
-						deadIndexList[i]--;
-					}
-				}
-				// 次の味方へ
-				deadIndexList.pop_front();
 			}
-		}
-		else
-		{
-			// 動いている場合はオフセットリセット
-			delayFrameOffsets = 0;
 		}
 	}
 }
@@ -428,15 +414,15 @@ void Player::UpdateAllyData()
 Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
 	int32_t index = allyIndex;
-	if (index < 0)
-	{
-		index = formedAllyCount;
-	}
+	int32_t front = allyIndex - 1;
+	if (index < 0) index = formedAllyCount;
+	if (front < 0) front = 0;
 
 	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
 	delayFrames += inGameConfig->playerToAllyDelayFrames;
 	int32_t offset = 0;
-	if (!deadIndexList.empty() && index >= deadIndexList.front())
+	// 前に空きがあれば
+	if (!deadIndexList.empty() && deadIndexList.front() < allyIndex)
 	{
 		offset = delayFrameOffsets;
 	}
@@ -453,6 +439,11 @@ int32_t Player::TryReserveFormationIndex()
 	{
 		return -1;
 	}
+}
+
+int32_t Player::GetSeparateAllyCount() const
+{
+	return -1;
 }
 
 void Player::NotifyAllyDeath(int32_t formationIndex)
