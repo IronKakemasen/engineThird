@@ -14,9 +14,6 @@ void WinApp::OffScreenBegin()
 	ImGui::NewFrame();
 #endif
 
-	//ライトの更新処理
-	lightManager.Update();
-
 	//postEffect
 	offScreenManager.Update();
 
@@ -77,6 +74,9 @@ void WinApp::OffScreenBegin()
 
 void WinApp::OffScreenEnd()
 {
+	//ライトの更新処理
+	lightManager.Update();
+
 	auto* originalScreen = offScreenManager.GetOriginalScreen();
 
 	D3D12_RESOURCE_BARRIER barrier = BarrierControl::Create(

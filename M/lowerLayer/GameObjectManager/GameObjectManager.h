@@ -8,7 +8,7 @@ class GameObjectManager
 {
 	std::vector< GameObject* > objContainer;
 	int createNum = 0;
-	float tileLength = 1.0f;
+	float tileLength = 5.0f;
 
 	//ゲームオブジェクトすべての当たり判定をとる
 	void ChackAllCollision(GameObject* thisObj_);
