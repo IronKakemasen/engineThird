@@ -8,8 +8,8 @@
     },
     "CollisonSize": {
         "ally": 0.6000000238418579,
-        "bullet": 1.0,
-        "enemy": 0.6000000238418579,
+        "bullet": 0.75,
+        "enemy": 0.75,
         "enemyFactory": 2.0,
         "enemyTower": 3.0,
         "player": 0.6000000238418579,
@@ -31,12 +31,12 @@
         }
     },
     "MaxHP": {
-        "enemy": 10.0,
-        "enemyFactory": 50.0,
-        "enemyTower": 300.0,
+        "enemy": 5.0,
+        "enemyFactory": 30.0,
+        "enemyTower": 100.0,
         "player": 3.0,
         "playerBullet": 1.2000000476837158,
-        "playerTower": 100.0
+        "playerTower": 30.0
     },
     "Power": {
         "enemy": {
@@ -52,9 +52,9 @@
         }
     },
     "SpawnInterval": {
-        "enemy": 5.0,
-        "maxAllyCount": 10,
-        "playerAlly": 3.0
+        "enemy": 4.0,
+        "maxAllyCount": 5,
+        "playerAlly": 5.0
     },
     "Speed": {
         "enemy": 0.019999999552965164,
