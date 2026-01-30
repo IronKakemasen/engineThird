@@ -15,7 +15,6 @@ void InGameScene::Instantiate()
 	uiDisplayer = std::make_unique<UIDisplayer>();
 
 	inGameController.reset(new InGameController);
-
 	inGameConfig = std::make_unique<InGameConfig>();
 	inGameConfig->Load();
 
@@ -67,6 +66,12 @@ void InGameScene::Instantiate()
 		enemyFactories[i]->SetID(static_cast<int32_t>(i));
 		enemyFactories[i]->SetInGameConfig(inGameConfig.get());
 	}
+	for (int i = 0; i < 9; ++i)
+	{
+		pointLights[i] = M::GetInstance()->ImportPointLight();
+	}
+
+
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
 	gameObjManager->RegisterForContainer(player.get(), 
@@ -108,6 +113,10 @@ void InGameScene::Init()
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
 		inGameController.get(), player.get());
 
+	auto* rPara = pointLights[0]->Getter_Para();
+	rPara->isActive = 1;
+	rPara->intensity = 60;
+	rPara->color = { 100,100,200 };
 
 	////矩形の初期化
 	//quad.Initialize(1.0f, 1.0f, {}, M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2));

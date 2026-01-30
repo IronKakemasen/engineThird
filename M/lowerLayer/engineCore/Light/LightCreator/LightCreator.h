@@ -14,7 +14,7 @@ public:
 	enum Max
 	{
 		kPLightMax = 10,
-		kRLightmax = 10
+		kRLightmax = 20
 	};
 
 private:

@@ -42,19 +42,10 @@ class InGameScene final : public Scene
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 
 	std::unique_ptr<UIDisplayer> uiDisplayer;
-
-	MQuad quad;
-	Sprite sprite;
-	Sprite atlasNumber;
+	PointLight* pointLights[9];
 
 	PostEffectType curEffectType = PostEffectType::kSimpleNeonLike;
-	void AdaptToPostEffect();
-	void Load();
 
-public:
-
-	static inline float metalicCommon = 0.5139999985694885f;
-	static inline float roughnessCommon = 0.703000009059906f;
 
 	float dirLightIntensityNormal = 0.0f;
 	float dirLightIntensityNeon = 0.0f;
@@ -63,6 +54,15 @@ public:
 	float roughnessCommonNormal = 0.4f;
 	float metalicCommonNeon = 0.72f;
 	float roughnessCommonNeon = 0.4f;
+	float intensityCommon = 123.0f;
+
+	void AdaptToPostEffect();
+	void Load();
+
+public:
+
+	static inline float metalicCommon = 0.5139999985694885f;
+	static inline float roughnessCommon = 0.703000009059906f;
 
 	InGameScene();
 

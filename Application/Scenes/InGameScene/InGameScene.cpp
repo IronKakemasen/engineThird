@@ -24,6 +24,24 @@ void InGameScene::Update()
 	mainCamera.Update();
 
 	AdaptToPostEffect();
+
+	auto* rPara = pointLights[0]->Getter_Para();
+	//rPara->pos = player->Getter_Trans()->GetWorldPos();
+	//rPara->pos.y += 1.5f; rPara->intensity = intensityCommon;
+
+	ImGui::Begin("Dian");
+	ImGui::DragFloat("intensityCommon", &intensityCommon);
+	ImGui::DragFloat("radius", &rPara->invSqrRadius);
+	ImGui::DragFloat3("pos", reinterpret_cast<float*>(&rPara->pos),0.1f);
+	ImGui::End();
+
+	rPara->intensity = intensityCommon;
+
+	//現在使用しているカメラのビュープロジェクション
+	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
+
+	M::GetInstance()->DrawEllipseWireFrame(rPara->pos, 0.5f,
+		{ 90,0,0 }, { 255,255,255,255 }, vpMat);
 }
 
 void InGameScene::AdaptToPostEffect()
