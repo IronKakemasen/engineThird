@@ -12,6 +12,9 @@ public:
 
 	void DebugDraw();
 
+	/////////////// controller ///////////////
+	float deadZone = 0.3f;				// コントローラーのデッドゾーン
+
 	/////////////// collisonSize  ///////////////
 	float playerCollisonSize = 1.0f;			// プレイヤー
 	float playerTowerCollisonSize = 1.0f;		// プレイヤータワー
@@ -38,9 +41,7 @@ public:
 	
 
 	//////////////////  Power  //////////////////
-	float playerAttack1Power = 5.0f;	// プレイヤーアタック1段目の攻撃力
-	float playerAttack2Power = 20.0f;	// プレイヤーアタック2段目の攻撃力
-	float playerAttack3Power = 30.0f;	// プレイヤーアタック3段目の攻撃力
+	float playerPower = 5.0f;			// プレイヤーの基本攻撃力
 	float playerAllyPowerBonus = 2.0f;	// 味方を経由するごとに増える攻撃力補正値
 	float playerAllySizeBonus = 0.1f;	// 味方を経由するごとに増えるサイズ補正値
 	float enemyAttackPower = 5.0f;		// 敵の攻撃力
@@ -52,9 +53,8 @@ public:
 
 	/////////////  KnockBack  ////////////////
 	float enemyKnockBackPowerToAlly = 2.0f;		// [敵 - 味方]衝突で 敵が受けるノックバック力
-	float enemyKnockBackPowerToBullet1 = 0.1f;	// [敵 - プレイヤー弾1段目]衝突で 敵が受けるノックバック力
-	float enemyKnockBackPowerToBullet2 = 1.0f;	// [敵 - プレイヤー弾2段目]衝突で 敵が受けるノックバック力
-	float enemyKnockBackPowerToBullet3 = 1.5f;	// [敵 - プレイヤー弾3段目]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToPlayer = 0.0f;	// [敵 - プレイヤー]衝突で 敵が受けるノックバック力
+	float enemyKnockBackPowerToBullet = 0.1f;	// [敵 - プレイヤー弾]衝突で 敵が受けるノックバック力
 	float enemyKnockBackPowerToPlayerTower = 0.5f;// [敵 - プレイヤータワー]衝突で 敵が受けるノックバック力
 
 	//////////////  Distance  ////////////////
@@ -62,8 +62,7 @@ public:
 	int32_t playerToAllyDelayFrames = 30;	// player - ally 間の遅延フレーム数
 
 	/////////////  AttackGauge  ///////////////
-	float playerAttackGaugeRecoverSpeed = 0.02f;	// プレイヤー攻撃ゲージ回復速度
-	float playerAttackGaugeRecoverInterval = 0.5f;	// プレイヤー攻撃ゲージ回復インターバル
+	float playerAttackInterval = 0.5f;	// プレイヤー攻撃ゲージ回復インターバル
 
 private:
 	std::string path = "./resource/application/json/config/inGameConfig.json";

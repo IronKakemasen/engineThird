@@ -22,21 +22,15 @@ private:
 
 	// 攻撃力
 	float attackPower = 0.0f;
-	float allyPowerBonus = 0.0f;
-	float allySizeBonus = 0.0f;
 	float currentSizeBonus = 0.0f;
-
-	// 何段目の攻撃か
-	int32_t attackStage = 0;
 
 
 public:
 
-	// 発射  (pos : 発射位置, dir : 発射方向, stage : 何段目の攻撃か)
-	void Fire(Vector3 pos, Vector3 dir, int32_t stage);
+	// 発射  (pos : 発射位置, dir : 発射方向)
+	void Fire(Vector3 pos, Vector3 dir);
 
 	float GetAttackPower() const { return attackPower; }
-	int32_t GetAttackStage() const { return attackStage; }
 
 #pragma	endregion
 

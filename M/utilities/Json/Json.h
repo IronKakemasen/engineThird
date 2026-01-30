@@ -20,7 +20,8 @@ public:
 		if (fixedKey[0] != '/')fixedKey = "/" + fixedKey;
 
 		auto& root = dataMap[path];
-		root[nlohmann::json::json_pointer(fixedKey)] = value;
+		nlohmann::json::json_pointer jp(fixedKey);
+		root[jp] = value;
 	}
 
 	/// <summary>
