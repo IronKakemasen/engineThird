@@ -4,7 +4,7 @@
 
 class PlayerBulletModel :public ModelBehavior
 {
-	float const rotateSpeed = 8.0f;
+	float const rotateSpeed = 12.0f;
 
 public:
 	PlayerBulletModel();

@@ -59,7 +59,7 @@ void PlayerAllyModel::MoveAnim(int animPattern_)
 {
 	auto* appearance = model->GetAppearance(0);
 	float const kizyunY = 0.125f;
-	float const maxY = 2.5f;
+	float const maxY = 2.25f;
 
 	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
 	{
