@@ -7,7 +7,16 @@ void UIDisplayer::Update()
 {}
 
 void UIDisplayer::Init()
-{}
+{
+	for (size_t i = 0; i < drawOrder.size(); i++)
+	{
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
+		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
+		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
+	}
+
+}
 
 void UIDisplayer::Reset()
 {}
@@ -82,9 +91,9 @@ void UIDisplayer::SuperDraw(Matrix4 * ortho_)
 
 void UIDisplayer::DebugDraw()
 {
-	//ImGui::Begin("UI Debug");
+	ImGui::Begin("UI Debug");
 
-	//if (ImGui::Button("Save UI Data")) SaveData();
+	if (ImGui::Button("Save UI Data")) SaveData();
 
 	std::array<bool, size_t(uiType::MAX)> isDraw = {};
 	isDraw.fill(false);
@@ -93,17 +102,17 @@ void UIDisplayer::DebugDraw()
 	{
 		isDraw[size_t(drawOrder[i])] = true;
 
-		//ImGui::Text("%s", toString(drawOrder[i]).c_str());
-		//ImGui::SameLine();
-		//if (ImGui::Button(("Remove##" + std::to_string(i)).c_str()))
-		//{
-		//	drawOrder.erase(drawOrder.begin() + i);
-		//	LoadData();
-		//}
-		//ImGui::DragFloat2(("pos" + std::to_string(i)).c_str(),
-		//	&uiElements[drawOrder[i]].position.x, 1.0f);
-		//ImGui::DragFloat2(("scale" + std::to_string(i)).c_str(),
-		//	&uiElements[drawOrder[i]].scale.x, 0.1f);
+		ImGui::Text("%s", toString(drawOrder[i]).c_str());
+		ImGui::SameLine();
+		if (ImGui::Button(("Remove##" + std::to_string(i)).c_str()))
+		{
+			drawOrder.erase(drawOrder.begin() + i);
+			LoadData();
+		}
+		ImGui::DragFloat2(("pos" + std::to_string(i)).c_str(),
+			&uiElements[drawOrder[i]].position.x, 1.0f);
+		ImGui::DragFloat2(("scale" + std::to_string(i)).c_str(),
+			&uiElements[drawOrder[i]].scale.x, 0.1f);
 
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
 		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
@@ -115,14 +124,14 @@ void UIDisplayer::DebugDraw()
 	{
 		if (isDraw[i]) continue;
 
-		//if (ImGui::Button(("Add : " + toString(uiType(i))).c_str()))
-		//{
-		//	drawOrder.push_back(uiType(i));
-		//	LoadData();
-		//}
+		if (ImGui::Button(("Add : " + toString(uiType(i))).c_str()))
+		{
+			drawOrder.push_back(uiType(i));
+			LoadData();
+		}
 	}
 
-	//ImGui::End();
+	ImGui::End();
 }
 
 UIDisplayer::UIDisplayer()

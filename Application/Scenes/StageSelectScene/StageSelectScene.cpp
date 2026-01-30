@@ -51,24 +51,22 @@ void StageSelectScene::UpdateStageSelectRotation()
 	bool right = false;
 	bool left = false;
 
-	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
-	{
-		Vector2 dir = M::GetInstance()->getPadState.GetLeftStick(0);
-		if (dir.x > 0.3f) right = true;
-		else if (dir.x < -0.3f) left = true;
+	Vector2 dir = M::GetInstance()->getPadState.GetLeftStick(0);
+	if (dir.x > inGameConfig->deadZone) right = true;
+	else if (dir.x < -inGameConfig->deadZone) left = true;
 
-		if (M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT)) right = true;
-		else if (M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT)) left = true;
-	}
-	else
-	{
-		if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) left = true;
-		else if (M::GetInstance()->IsKeyPressed(KeyType::LEFT)) right = true;
-	}
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_RIGHT)) right = true;
+	else if (M::GetInstance()->getPadState.IsHeld(0, PAD_LEFT)) left = true;
+
+#ifdef _DEBUG
+	if (M::GetInstance()->IsKeyPressed(KeyType::RIGHT)) left = true;
+	else if (M::GetInstance()->IsKeyPressed(KeyType::LEFT)) right = true;
+#endif // _DEBUG
+
 
 	if (selectCounter.count >= 1.0f)
 	{
-		if (right)
+		if (left)
 		{
 			inGameController->curStage++;
 			if (inGameController->curStage >= GameConstants::kMaxStages)
@@ -79,7 +77,7 @@ void StageSelectScene::UpdateStageSelectRotation()
 			targetRotateY = baseCenterRotateY + stagePerYRotate;
 			selectCounter.Initialize(1.0f);
 		}
-		else if (left)
+		else if (right)
 		{
 			inGameController->curStage--;
 			if (inGameController->curStage < 0)
@@ -119,7 +117,7 @@ void StageSelectScene::DecideStage()
 		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
 		{
 			selected = true;
-			afterDecideCounter.Initialize(3.0f);
+			afterDecideCounter.Initialize(2.0f);
 		}
 	}
 	else
@@ -127,7 +125,7 @@ void StageSelectScene::DecideStage()
 		if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
 		{
 			selected = true;
-			afterDecideCounter.Initialize(3.0f);
+			afterDecideCounter.Initialize(2.0f);
 		}
 	}
 }
@@ -140,11 +138,11 @@ void StageSelectScene::UpdateAfterDecideStage()
 		{
 			if (stageIndex != static_cast<size_t>(inGameController->curStage))
 			{
-				centerObject[stageIndex][0]->trans.pos.y -= 0.5f;
+				centerObject[stageIndex][0]->trans.pos.y -= 1.0f;
 			}
 			else
 			{
-				float siko = (afterDecideCounter.count * 2.5f);
+				float siko = (afterDecideCounter.count * 2.2f);
 				if (siko > 1.0f) siko = 1.0f;
 				centerObject[stageIndex][0]->trans.pos.y =
 					std::sinf(siko * 3.14f) * 10;

@@ -24,7 +24,7 @@ private:
 	void MoveKnockBack();
 
 	// ノックバック関数(float power:ノックバックの強さ)
-	void KnockBack(float power);
+	void KnockBack(Vector3 dir, float power);
 
 	// ノックバック速度
 	Vector3 knockBackVelocity{};

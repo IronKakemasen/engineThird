@@ -185,187 +185,177 @@ void InGameScene::Debug()
 {
 #ifdef USE_IMGUI
 
-	//ImGui::Begin("InGameController");
-	//ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
-	//ImGui::Text("Count : %.1f", *inGameController->GetCnt());
-	//ImGui::End();
+	ImGui::Begin("InGameController");
+	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
+	ImGui::Text("Count : %.1f", *inGameController->GetCnt());
+	ImGui::End();
 
-	//ImGui::Begin("Object Debug");
+	ImGui::Begin("Object Debug");
 
-	//if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
-	//{
-	//	if (ImGui::BeginTabItem("EnemyFactory"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& factory : enemyFactories)
-	//		{
-	//			if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = enemyFactories[0]->path;
-
-	//			Json::SaveParam(path, key, Sum);
-
-	//			for (auto& factory : enemyFactories)
-	//			{
-	//				factory->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& factory : enemyFactories)
-	//		{
-	//			factory->DebugDraw();
-	//		}
-
-	//		ImGui::EndTabItem();
-	//	}
-	//	if (ImGui::BeginTabItem("PlayerTower"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& tower : playerTowers)
-	//		{
-	//			if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			playerTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				playerTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = playerTowers[0]->path;
-
-	//			Json::SaveParam(path, key, Sum);
-
-	//			for (auto& tower : playerTowers)
-	//			{
-	//				tower->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& tower : playerTowers)
-	//		{
-	//			tower->DebugDraw();
-	//		}
-	//		ImGui::EndTabItem();
-	//	}
-	//	if (ImGui::BeginTabItem("EnemyTower"))
-	//	{
-	//		int32_t Sum = 0;
-	//		for (auto& tower : enemyTowers)
-	//		{
-	//			if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
-	//			{
-	//				Sum++;
-	//			}
-	//		}
-	//		if (ImGui::Button("Add"))
-	//		{
-	//			enemyTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Remove"))
-	//		{
-	//			if (Sum > 0)
-	//			{
-	//				enemyTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
-	//			}
-	//		}
-	//		ImGui::SameLine();
-	//		if (ImGui::Button("Save"))
-	//		{
-	//			std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
-	//			std::string path = enemyTowers[0]->path;
-	//			Json::SaveParam(path, key, Sum);
-	//			for (auto& tower : enemyTowers)
-	//			{
-	//				tower->SaveData();
-	//			}
-	//		}
-	//		ImGui::Text("-----------------------------------");
-	//		for (auto& tower : enemyTowers)
-	//		{
-	//			tower->DebugDraw();
-	//		}
-	//		ImGui::EndTabItem();
-	//	}
-
-	//	ImGui::EndTabBar();
-	//}
-
-	//ImGui::End();
-
-	//ImGui::Begin("Object ");
-
-	//if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
-	//{
-	//	ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
-	//	for (int32_t i = 0; i < playerTowers.size(); ++i)
-	//	{
-	//		if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
-	//		}
-	//	}
-	//	for (int32_t i = 0; i < enemyTowers.size(); ++i)
-	//	{
-	//		if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
-	//		}
-	//	}
-	//	for (int32_t i = 0; i < enemyFactories.size(); ++i)
-	//	{
-	//		if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-	//		{
-	//			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
-	//		}
-	//	}
-
-	//	ImGui::EndTabBar();
-	//}
-	//ImGui::End();
-
-ImGui::Begin("playerAttackGauge");
-	//if (ImGui::BeginTabBar("Player"))
+	if (ImGui::BeginTabBar("Object Map", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
 	{
-		player->DebugDraw();
-		//ImGui::EndTabBar();
+		if (ImGui::BeginTabItem("EnemyFactory"))
+		{
+			int32_t Sum = 0;
+			for (auto& factory : enemyFactories)
+			{
+				if (factory->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+
+			if (ImGui::Button("Add"))
+			{
+				enemyFactories[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyFactories[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = enemyFactories[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& factory : enemyFactories)
+				{
+					factory->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& factory : enemyFactories)
+			{
+				factory->DebugDraw();
+			}
+
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PlayerTower"))
+		{
+			int32_t Sum = 0;
+			for (auto& tower : playerTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				playerTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					playerTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = playerTowers[0]->path;
+
+				Json::SaveParam(path, key, Sum);
+
+				for (auto& tower : playerTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : playerTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("EnemyTower"))
+		{
+			int32_t Sum = 0;
+			for (auto& tower : enemyTowers)
+			{
+				if (tower->GetStatus() == GameObjectBehavior::Status::kActive)
+				{
+					Sum++;
+				}
+			}
+			if (ImGui::Button("Add"))
+			{
+				enemyTowers[Sum]->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove"))
+			{
+				if (Sum > 0)
+				{
+					enemyTowers[Sum - 1]->SetStatus(GameObjectBehavior::Status::kInActive);
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Save"))
+			{
+				std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount";
+				std::string path = enemyTowers[0]->path;
+				Json::SaveParam(path, key, Sum);
+				for (auto& tower : enemyTowers)
+				{
+					tower->SaveData();
+				}
+			}
+			ImGui::Text("-----------------------------------");
+			for (auto& tower : enemyTowers)
+			{
+				tower->DebugDraw();
+			}
+			ImGui::EndTabItem();
+		}
+
+		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
 
+	ImGui::Begin("Object ");
+
+	if (ImGui::BeginTabBar("Object HP", ImGuiTabBarFlags_::ImGuiTabBarFlags_Reorderable))
+	{
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Player         HP : %f", player->GetHP());
+		for (int32_t i = 0; i < playerTowers.size(); ++i)
+		{
+			if (playerTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "PlayerTower    HP : %f", playerTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyTowers.size(); ++i)
+		{
+			if (enemyTowers[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyTower     HP : %f", enemyTowers[i]->GetHP());
+			}
+		}
+		for (int32_t i = 0; i < enemyFactories.size(); ++i)
+		{
+			if (enemyFactories[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+			{
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "EnemyFactory   HP : %f", enemyFactories[i]->GetHP());
+			}
+		}
+
+		ImGui::EndTabBar();
+	}
+	ImGui::End();
 
 	//ImGui::Begin("InGameConfig");
 	//inGameConfig->DebugDraw();

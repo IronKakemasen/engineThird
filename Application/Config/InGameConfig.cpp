@@ -34,18 +34,15 @@ void InGameConfig::Load()
 	Json::LoadParam(path, speed + "playerAlly", playerAllySpeed);
 
 	std::string power = "/Power/";
-	Json::LoadParam(path, power + "player/attak1Power", playerAttack1Power);
-	Json::LoadParam(path, power + "player/attak2Power", playerAttack2Power);
-	Json::LoadParam(path, power + "player/attak3Power", playerAttack3Power);
+	Json::LoadParam(path, power + "player/defaultAttackPower", playerPower);
 	Json::LoadParam(path, power + "player/allyPowerBonus", playerAllyPowerBonus);
 	Json::LoadParam(path, power + "player/allySizeBonus", playerAllySizeBonus);
 	Json::LoadParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
 	Json::LoadParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
-	Json::LoadParam(path, knockBack + "enemy/ToBullet1", enemyKnockBackPowerToBullet1);
-	Json::LoadParam(path, knockBack + "enemy/ToBullet2", enemyKnockBackPowerToBullet2);
-	Json::LoadParam(path, knockBack + "enemy/ToBullet3", enemyKnockBackPowerToBullet3);
+	Json::LoadParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
+	Json::LoadParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::LoadParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
 
 	std::string interval = "/SpawnInterval/";
@@ -58,8 +55,7 @@ void InGameConfig::Load()
 	Json::LoadParam(path, distance + "playerToAlly", playerToAllyDelayFrames);
 
 	std::string attackGauge = "/AttackGauge/";
-	Json::LoadParam(path, attackGauge + "player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
-	Json::LoadParam(path, attackGauge + "player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
+	Json::LoadParam(path, attackGauge + "player/playerAttackInterval", playerAttackInterval);
 }
 
 void InGameConfig::Save()
@@ -88,18 +84,15 @@ void InGameConfig::Save()
 	Json::SaveParam(path, speed + "playerAlly", playerAllySpeed);
 
 	std::string power = "/Power/";
-	Json::SaveParam(path, power + "player/attak1Power", playerAttack1Power);
-	Json::SaveParam(path, power + "player/attak2Power", playerAttack2Power);
-	Json::SaveParam(path, power + "player/attak3Power", playerAttack3Power);
+	Json::SaveParam(path, power + "player/defaultAttackPower", playerPower);
 	Json::SaveParam(path, power + "player/allyPowerBonus", playerAllyPowerBonus);
 	Json::SaveParam(path, power + "player/allySizeBonus", playerAllySizeBonus);
 	Json::SaveParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
 	Json::SaveParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
-	Json::SaveParam(path, knockBack + "enemy/ToBullet1", enemyKnockBackPowerToBullet1);
-	Json::SaveParam(path, knockBack + "enemy/ToBullet2", enemyKnockBackPowerToBullet2);
-	Json::SaveParam(path, knockBack + "enemy/ToBullet3", enemyKnockBackPowerToBullet3);
+	Json::SaveParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
+	Json::SaveParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::SaveParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
 
 	std::string interval = "/SpawnInterval/";
@@ -112,8 +105,7 @@ void InGameConfig::Save()
 	Json::SaveParam(path, distance + "playerToAlly", playerToAllyDelayFrames);
 
 	std::string attackGauge = "/AttackGauge/";
-	Json::SaveParam(path, attackGauge + "player/attackGaugeRecoverSpeed", playerAttackGaugeRecoverSpeed);
-	Json::SaveParam(path, attackGauge + "player/attackGaugeRecoverInterval", playerAttackGaugeRecoverInterval);
+	Json::SaveParam(path, attackGauge + "player/playerAttackInterval", playerAttackInterval);
 
 	Json::Save(path);
 }
@@ -163,9 +155,7 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("Power"))
 	{
-		ImGui::DragFloat("Player	attack1Power", &playerAttack1Power, 0.1f, 0.0f, 50.0f);
-		ImGui::DragFloat("Player	attack2Power", &playerAttack2Power, 0.1f, 0.0f, 50.0f);
-		ImGui::DragFloat("Player	attack3Power", &playerAttack3Power, 0.1f, 0.0f, 50.0f);
+		ImGui::DragFloat("Player	Power", &playerPower, 0.1f, 0.0f, 50.0f);
 		ImGui::DragFloat("Player	allyPowerBonus", &playerAllyPowerBonus, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Player	allySizeBonus", &playerAllySizeBonus, 0.01f, 0.0f, 10.0f);
 		ImGui::DragFloat("Enemy		attackPower", &enemyAttackPower, 0.1f, 0.0f, 50.0f);
@@ -175,9 +165,8 @@ void InGameConfig::DebugDraw()
 	if (ImGui::TreeNode("KnockBackPower"))
 	{
 		ImGui::DragFloat("Enemy		toAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
-		ImGui::DragFloat("Enemy 	toBullet1", &enemyKnockBackPowerToBullet1, 0.1f, 0.0f, 20.0f);
-		ImGui::DragFloat("Enemy 	toBullet2", &enemyKnockBackPowerToBullet2, 0.1f, 0.0f, 20.0f);
-		ImGui::DragFloat("Enemy 	toBullet3", &enemyKnockBackPowerToBullet3, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toPTower", &enemyKnockBackPowerToPlayerTower, 0.1f, 0.0f, 20.0f);
 
 		ImGui::TreePop();
@@ -199,8 +188,7 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("AttackGauge"))
 	{
-		ImGui::DragFloat("Player	attackGaugeRecoverSpeed", &playerAttackGaugeRecoverSpeed, 0.01f, 0.0f, 1.0f);
-		ImGui::DragFloat("Player	attackGaugeRecoverInterval", &playerAttackGaugeRecoverInterval, 0.01f, 0.0f, 5.0f);
+		ImGui::DragFloat("Player	attackGaugeRecoverInterval", &playerAttackInterval, 0.01f, 0.0f, 10.0f);
 		ImGui::TreePop();
 
 	}
