@@ -1,12 +1,15 @@
 #include "Player.h"
 #include "imgui.h"
 #include "../Json/Json.h"
+#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
 #include "../GameObjectManager/GameObjectManager.h"
-#include "../../Config/GameConstants.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Config/InGameConfig.h"
-#include "../../../M/lowerLayer/engineCore/Light/RectLight/RectLight.h"
+#include "../../Config/GameConstants.h"
+
+#include <algorithm>
+#include <numeric>
 
 Player::Player()
 {
@@ -25,11 +28,6 @@ void Player::Reset()
 
 	// existの初期化
 	exist.fill(false);
-	// deadIndexListの初期化
-	while (!deadIndexList.empty())
-	{
-		deadIndexList.pop_back();
-	}
 	// formedAllyCountの初期化
 	formedAllyCount = 0;
 	// unformedAllyCountの初期化
@@ -96,7 +94,6 @@ void Player::SpawnAlly(Vector3 pos)
 // データ保存・読み込み
 void Player::LoadData()
 {
-
 	// config反映
 	hp = inGameConfig->playerMaxHP;
 }
@@ -312,6 +309,9 @@ Vector3 Player::GetPosHistory(int32_t n)
 	return posHistory[index];
 }
 
+void Player::UpdateAllySeparate()
+{}
+
 // 視線変更処理
 void Player::UpdateLookDir()
 {
@@ -355,14 +355,18 @@ void Player::UpdateAllyData()
 
 	exist.fill(false);
 
+	// formed の ally を集める
+	std::vector<PlayerAlly*> formedAllies;
+	formedAllies.reserve(allies.size());
+
 	for (int32_t i = 0; i < allies.size(); ++i)
 	{
 		if (allies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
 		{
 			// 列に並んでいるなら
-			if (allies[i]->formationCurrentIndex >= 0)
+			if (allies[i]->GetCurrentState() == PlayerAlly::State::kFormed)
 			{
-				exist[allies[i]->formationCurrentIndex] = true;
+				formedAllies.push_back(allies[i]);
 				formedAllyCount++;
 			}
 			else
@@ -372,47 +376,62 @@ void Player::UpdateAllyData()
 		}
 	}
 
-	// 詰めオフセット更新
-	if (!deadIndexList.empty())
-	{
-		if (!isMoving)
+	// formationCurrentIndex を昇順に並べる
+	std::sort(formedAllies.begin(), formedAllies.end(),
+		[](const PlayerAlly* a, const PlayerAlly* b)
 		{
-			delayFrameOffsets++;
-			if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
+			const int32_t ia = a ? a->formationCurrentIndex : GameConstants::kMaxAllies;
+			const int32_t ib = b ? b->formationCurrentIndex : GameConstants::kMaxAllies;
+			return ia < ib;
+		});
+
+	// 現在の exist を構築
+	for (auto* ally : formedAllies)
+	{
+		exist[ally->formationCurrentIndex] = true;
+		if (ally->formationCurrentIndex < 0)
+		{
+			// ありえない
+			DebugBreak();
+		}
+	}
+
+	// 列に隙間が存在するか？
+	int32_t gapIndex = -1;
+	for (int32_t i = 0; i < formedAllyCount; ++i)
+	{
+		if (!exist[i])
+		{
+			gapIndex = i;
+			break;
+		}
+	}
+
+	// 詰め作業
+	if (gapIndex != -1)
+	{
+		delayFrameOffsets += 2;
+
+		// 1人分詰め切ったら、論理 index も 1ステップだけ確定
+		if (delayFrameOffsets >= inGameConfig->allyToAllyDelayFrames)
+		{
+			delayFrameOffsets = 0;
+
+			// gapIndex より後ろの formed だけ 1つ前へ
+			for (auto* ally : formedAllies)
 			{
-				// オフセットリセット
-				delayFrameOffsets = 0;
-				// 詰め終わったので存在フラグを更新
-				for (size_t i = deadIndexList.front(); i < exist.size() - 1; ++i)
+				const int32_t idx = ally->formationCurrentIndex;
+				if (idx > gapIndex)
 				{
-					exist[i] = exist[i + 1];
+					ally->formationCurrentIndex--;
 				}
-				exist[exist.size() - 1] = false;
-				// 味方の列インデックスを詰める
-				for (auto* ally : allies)
-				{
-					if (ally->formationCurrentIndex > deadIndexList.front())
-					{
-						ally->formationCurrentIndex--;
-					}
-				}
-				// deadIndexList更新
-				for (size_t i = 0; i < deadIndexList.size(); ++i)
-				{
-					if (deadIndexList[i] > deadIndexList.front())
-					{
-						deadIndexList[i]--;
-					}
-				}
-				// 次の味方へ
-				deadIndexList.pop_front();
 			}
 		}
-		else
-		{
-			// 動いている場合はオフセットリセット
-			delayFrameOffsets = 0;
-		}
+	}
+	else
+	{
+		// 隙間がないなら詰めオフセットは不要
+		delayFrameOffsets = 0;
 	}
 }
 
@@ -420,17 +439,22 @@ void Player::UpdateAllyData()
 Vector3 Player::GetAllyTargetPos(int32_t allyIndex)
 {
 	int32_t index = allyIndex;
-	if (index < 0)
-	{
-		index = formedAllyCount;
-	}
+	if (index < 0) index = formedAllyCount;
 
 	int32_t delayFrames = (index + 1) * inGameConfig->allyToAllyDelayFrames;
 	delayFrames += inGameConfig->playerToAllyDelayFrames;
+
 	int32_t offset = 0;
-	if (!deadIndexList.empty() && index >= deadIndexList.front())
+
+	// 前に空きがあれば
+	for (int32_t i = 0; i < index; ++i)
 	{
-		offset = delayFrameOffsets;
+		if (i < 0 || i >= GameConstants::kMaxAllies) break;
+		if (!exist[i])
+		{
+			offset = delayFrameOffsets;
+			break;
+		}
 	}
 	return GetPosHistory(delayFrames - offset);
 }
@@ -447,9 +471,9 @@ int32_t Player::TryReserveFormationIndex()
 	}
 }
 
-void Player::NotifyAllyDeath(int32_t formationIndex)
+int32_t Player::GetSeparateAllyCount() const
 {
-	deadIndexList.push_back(formationIndex);
+	return -1;
 }
 
 float Player::GetSpeed() const

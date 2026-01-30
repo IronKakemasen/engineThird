@@ -394,12 +394,16 @@ void InGameScene::Debug()
 	}
 	ImGui::End();
 
-ImGui::Begin("playerAttackGauge");
-	if (ImGui::BeginTabBar("Player"))
-	{
-		player->DebugDraw();
-		ImGui::EndTabBar();
-	}
+	ImGui::Begin("InGameConfig");
+	inGameConfig->DebugDraw();
+	ImGui::End();
+  
+//ImGui::Begin("playerAttackGauge");
+//	if (ImGui::BeginTabBar("Player"))
+//	{
+//		player->DebugDraw();
+//		ImGui::EndTabBar();
+//	}
 
 	ImGui::End();
 

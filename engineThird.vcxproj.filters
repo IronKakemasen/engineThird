@@ -189,6 +189,7 @@
     <ClCompile Include="Application\Cameras\StageCamera\StageCamera.cpp" />
     <ClCompile Include="Application\GameObjects\UIDisplayer\UIDisplayer.cpp" />
     <ClCompile Include="Application\GameObjects\Tenkyuu\TenkyuuClass.cpp" />
+    <ClCompile Include="Application\Config\GameConstants.cpp" />
     <ClCompile Include="Application\Models\LightModel\LightModel.cpp" />
   </ItemGroup>
   <ItemGroup>

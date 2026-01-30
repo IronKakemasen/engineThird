@@ -30,6 +30,8 @@ private:
 	std::array<Vector3, GameConstants::kMaxAllies* GameConstants::kAllyFollowDelayFramesMax> posHistory = {};
 	size_t headIndex = 0;	// リングバッファの先頭インデックス
 
+	////// 分離数設定処理  //////
+	void UpdateAllySeparate();
 
 	////// 視線変更処理  //////
 	void UpdateLookDir();
@@ -63,7 +65,7 @@ private:
 	// 要約:自分より前の味方が死んだ時後ろの味方すべてが詰める。そのオフセット管理用
 	int32_t delayFrameOffsets = 0;
 	// 死亡して詰め待ちのリスト(先入れ先出し)
-	std::deque<int32_t> deadIndexList = {};
+	//std::deque<int32_t> deadIndexList = {};
 
 
 public:
@@ -80,8 +82,11 @@ public:
 	/// <returns> 失敗したら-1 </returns>
 	int32_t TryReserveFormationIndex();
 
-	// 死亡届
-	void NotifyAllyDeath(int32_t formationIndex);
+	/// <summary>
+	/// そのフレームで分離する味方の数を取得
+	/// </summary>
+	/// <returns> 分離がないなら-1 </returns>
+	int32_t GetSeparateAllyCount() const;
 
 	// 動いているかどうか
 	bool IsMoving() const { return isMoving; }

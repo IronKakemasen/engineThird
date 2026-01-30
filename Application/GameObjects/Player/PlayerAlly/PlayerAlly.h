@@ -9,14 +9,39 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 {
 #pragma region 独自部位
 
+	enum class State
+	{
+		// 列非加入
+		kUnformed,
+		// 列加入済み
+		kFormed,
+		// ロック状態
+		kLocked,
+		// 死亡状態
+		kDead,
+		// 初期状態
+		kNone
+	};
+
 private:
 	Player* targetPlayer = nullptr;
 
-	void Move();
+	// 列に向かって進む
+	void MoveToPlayer();
+	// 追従する
+	void FollowPlayer();
+	// その場で待機する
+	void LockPosition();
+
+
+	State currentState = State::kNone;
+	State nextState = State::kNone;
 
 public:
-	// 自分は列の何番目か(-1の時はまだたどり着いていない)
+	// 自分はプレイヤーから何フレーム遅れているか(-1なら列未加入)
 	int32_t formationCurrentIndex = -1;
+
+	State GetCurrentState() const { return currentState; }
 
 	void Spawn(Vector3 pos);
 
@@ -57,6 +82,15 @@ private:
 	};
 	// PlayerBulletと衝突したときのコリジョンバック
 	CollisionBackToPlayerBullet collisionBackToPlayerBullet;
+	//コリジョンバック用の関数オブジェクト
+	struct CollisionBackToPlayer
+	{
+		PlayerAlly* me = nullptr;
+		void operator()();
+		void Init(PlayerAlly* object) { me = object; }
+	};
+	// Enemyと衝突したときのコリジョンバック
+	CollisionBackToPlayer collisionBackToPlayer;
 
 public:
 	// 使用するモデル
