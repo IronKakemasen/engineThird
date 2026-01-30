@@ -78,8 +78,8 @@ void DebugCamera::SphericallyMove()
 	if (m->IsKeyPressed(KeyType::UP))sphericalCoordinates.z += speed;
 	if (m->IsKeyPressed(KeyType::DOWN))sphericalCoordinates.z -= speed;
 
-	if (m->IsKeyPressed(KeyType::Z))sphericalCoordinates.x -= speed * 0.025f;
-	if (m->IsKeyPressed(KeyType::X))sphericalCoordinates.x += speed * 0.025f;
+	if (m->IsKeyPressed(KeyType::Z))sphericalCoordinates.x -= speed * 0.1f;
+	if (m->IsKeyPressed(KeyType::X))sphericalCoordinates.x += speed * 0.1f;
 
 	sphericalCoordinates.z = std::clamp(sphericalCoordinates.z, -179.5f, -0.5f);
 

@@ -19,10 +19,11 @@ struct InGameController:public GameObject
 		kCount
 	};
 
+
 	Mode curMode = kEnter;
 	float curCnt = 0.0f;
-	static int curStage;
-
+	static inline int curStage = 0;
+	static int const kStageNum = 3;
 
 private:
 
