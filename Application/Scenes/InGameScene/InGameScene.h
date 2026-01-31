@@ -75,6 +75,7 @@ class InGameScene final : public Scene
 	void InputFieldLightData();
 	void EnterMode();
 	void PlayableMode();
+	void Lighthing();
 
 public:
 

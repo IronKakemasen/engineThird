@@ -221,6 +221,10 @@ void PlayerAlly::Spawn(Vector3 pos)
 	formationCurrentIndex = -1;
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(inGameConfig->playerAllyCollisonSize);
+
+	//見た目用
+	model->idleCnt.count = 0.95f;
+
 }
 
 void PlayerAlly::Death()

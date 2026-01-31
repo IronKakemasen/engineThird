@@ -9,7 +9,29 @@ EnemyTowerModel::EnemyTowerModel()
 
 void EnemyTowerModel::Update(int mode_, float count_)
 {
+	auto* a = model->GetAppearance(0);
 
+	//被ダメリアクションでないとき
+	if (mode_ != 1)
+	{
+		return;
+		a->trans.pos.x = 0.0f;
+		shakeDeltaTheta = 0.0f;
+	}
+
+	float dstAmp = 0.0f;
+	float exclusive = 1.0f - count_;
+
+	if (exclusive != 0.0f)
+	{
+		dstAmp = kMaxAmplitude * 1.0f / exclusive;
+	}
+
+	shakeDeltaTheta += kShakeSpeed;
+
+	float deltaX = sinf(shakeDeltaTheta) * dstAmp;
+
+	a->trans.pos.x = deltaX;
 }
 
 void EnemyTowerModel::Draw(Matrix4* vpMat_)

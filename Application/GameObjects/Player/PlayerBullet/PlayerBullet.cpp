@@ -88,6 +88,7 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir)
 	model->randomRotateAddNum = Vector3{ float(rand() % 200 - 100), 
 		float(rand() % 200 - 100),float(rand() % 200 - 100) }.GetNormalized();
 	model->rotateSpeed = 8.0f;
+
 }
 
 // データ保存・読み込み

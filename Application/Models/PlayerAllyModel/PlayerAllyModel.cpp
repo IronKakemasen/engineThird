@@ -42,7 +42,6 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 
 	moveAnimCnt.Initialize(1.0f);
 	idleCnt.Initialize(5.0f);
-	idleCnt.count = 0.95f;
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->trans.pos.y = 0.125f;
@@ -63,7 +62,7 @@ void PlayerAllyModel::MoveAnim(int animPattern_)
 {
 	auto* appearance = model->GetAppearance(0);
 	static float const kizyunY = 0.125f;
-	static float const maxY = 2.25f;
+	static float const maxY = 3.0f;
 
 	//待機中であれば色を変えてアニメーションはしない
 	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
@@ -72,7 +71,7 @@ void PlayerAllyModel::MoveAnim(int animPattern_)
 		return;
 	}
 
-	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
+	appearance->color = { 60,60,255.0f,255.0f };
 
 	idleCnt.Add();
 	if (idleCnt.count<1.0f) return;

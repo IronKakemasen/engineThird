@@ -211,12 +211,6 @@ void InGameScene::Draw()
 		if (!para->isActive)continue;
 		lightModels[i].Draw(vpMat);
 
-//#ifdef _DEBUG
-//
-//		M::GetInstance()->DrawEllipseWireFrame(para->pos, 0.5f,
-//			{ 90,0,0 }, { 0,255,0,255 }, vpMat);
-//#endif // _DEBUG
-
 	}
 
 
@@ -443,20 +437,71 @@ void InGameScene::EnterMode()
 
 void InGameScene::PlayableMode()
 {
-	auto data = fieldLightData[inGameController->curStage];
+	Lighthing();
+}
 
+void InGameScene::Lighthing()
+{
+	int useNo = 0;
+
+	//Player
 	auto* playerLight = fieldpointLights[0]->Getter_Para();
 	playerLight->intensity = 20000;
 	playerLight->invSqrRadius = 800.0f;
-	playerLight->pos = 
-		Vector3{ 0,4.0f,0.75f}.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
+	playerLight->pos =
+		Vector3{ 0,4.0f,0.75f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
 	playerLight->color = { 20,20,255 };
+
+	useNo++;
+
+
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
-	M::GetInstance()->DrawEllipseWireFrame(playerLight->pos, 0.25f, {}, { 255,255,255,255 }, vpMat);
 
-	ImGui::Begin("cuo");
-	ImGui::DragFloat("playerLight->invSqrRadius", &playerLight->invSqrRadius);
-	ImGui::DragFloat("playerLight->intensity ", &playerLight->intensity);
+	std::vector<GameObject*> ets = gameObjManager->Find(GameObject::kEnemyTower);
+	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
+	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
+	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+	//EnemyTower
+	for (auto* enemyTower : ets)
+	{
+		if (enemyTower->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 400;
+		enemyTowerLight->pos =
+			Vector3{ 0,6.0f,1.0f }.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 255,20,20 };
 
-	ImGui::End();
+		useNo++;
+	}
+
+	//factories
+	for (auto* factory_ : factories)
+	{
+		if (factory_->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 400;
+		enemyTowerLight->pos =
+			Vector3{ 0,6.0f,1.0f }.GetMultiply(factory_->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 255,20,20 };
+
+		useNo++;
+	}
+
+
+	//PlayerTower
+	for (auto* pt_ : pts)
+	{
+		if (pt_->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 400;
+		enemyTowerLight->pos =
+			Vector3{ 0,6.0f,1.0f }.GetMultiply(pt_->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 20,20,255 };
+
+		useNo++;
+	}
+
 }
