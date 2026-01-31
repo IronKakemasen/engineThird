@@ -7,7 +7,7 @@ AxisModel::AxisModel()
 
 }
 
-void AxisModel::Update()
+void AxisModel::Update(int mode_ , float count_ )
 {
 
 }

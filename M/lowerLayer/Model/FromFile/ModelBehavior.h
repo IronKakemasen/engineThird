@@ -12,7 +12,7 @@ struct ModelBehavior
 
 	ModelBehavior();
 
-	virtual void Update() = 0;
+	virtual void Update(int mode_ = 0,float count_ = 0.0f) = 0;
 	virtual void Draw(Matrix4* vpMat_) = 0;
 	virtual void Init(Transform* gameObjectTrans_) = 0;
 	virtual void Reset() = 0;

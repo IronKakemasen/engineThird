@@ -1,6 +1,6 @@
 #include "SampleModel2.h"
 #include "../../../../../external/imgui/imgui.h"
-void SampleModel2::Update()
+void SampleModel2::Update(int mode_, float count_)
 {
 
 }

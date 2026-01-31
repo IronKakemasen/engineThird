@@ -7,7 +7,7 @@ PlayerAllyModel::PlayerAllyModel()
 
 }
 
-void PlayerAllyModel::Update()
+void PlayerAllyModel::Update(int mode_, float count_)
 {
 	auto* appearance = model->GetAppearance(0);
 	MoveAnim(0);
@@ -40,12 +40,13 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 
 	//↑↑↑↑↑必須↑↑↑↑↑
 
-	//必須でない
+	moveAnimCnt.Initialize(1.0f);
+	idleCnt.Initialize(5.0f);
+	idleCnt.count = 0.95f;
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->trans.pos.y = 0.125f;
 	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
-	moveAnimCnt.Initialize(1.0f);
 	appearance->trans.rotation.y = 180.0f;
 
 }
@@ -54,23 +55,34 @@ void PlayerAllyModel::Reset()
 {
 	moveAnimCnt.Initialize(1.0f);
 	pyonNum = 0;
+	idleCnt.count = 0.95f;
+
 }
 
 void PlayerAllyModel::MoveAnim(int animPattern_)
 {
 	auto* appearance = model->GetAppearance(0);
-	float const kizyunY = 0.125f;
-	float const maxY = 2.25f;
+	static float const kizyunY = 0.125f;
+	static float const maxY = 2.25f;
 
+	//待機中であれば色を変えてアニメーションはしない
 	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
 	{
+		appearance->color = { 200,255,50,255 };
 		return;
 	}
+
+	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
+
+	idleCnt.Add();
+	if (idleCnt.count<1.0f) return;
+
 
 	if (moveAnimCnt.IsEnd())
 	{
 		pyonNum++;
 		pyonPattern = pyonNum % 4;
+		idleCnt.count = 0.0f;
 	}
 
 	if (moveAnimCnt.count >= 0.0f && moveAnimCnt.count < 0.5f)

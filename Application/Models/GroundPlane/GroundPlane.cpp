@@ -6,7 +6,7 @@ GroundPlane::GroundPlane()
 	model = M::GetInstance()->CreateModel("./resource/application/Model/Ground02/Ground/Ground.gltf");
 }
 
-void GroundPlane::Update()
+void GroundPlane::Update(int mode_, float count_)
 {
 
 }

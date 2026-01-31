@@ -59,7 +59,7 @@ PlayerModel::PlayerModel()
 
 }
 
-void PlayerModel::Update()
+void PlayerModel::Update(int mode_, float count_)
 {
 
 }

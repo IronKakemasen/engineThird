@@ -7,7 +7,7 @@ ShikouteiModel::ShikouteiModel()
 
 }
 
-void ShikouteiModel::Update()
+void ShikouteiModel::Update(int mode_, float count_)
 {
 	
 }
