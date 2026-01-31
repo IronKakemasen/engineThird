@@ -6,7 +6,7 @@ LightModel::LightModel()
 	model = M::GetInstance()->CreateModel("./resource/application/Model/Diamond/Diamond.obj");
 }
 
-void LightModel::Update()
+void LightModel::Update(int mode_, float count_)
 {
 
 }

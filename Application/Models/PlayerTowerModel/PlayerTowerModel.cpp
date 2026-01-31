@@ -7,7 +7,7 @@ PlayerTowerModel::PlayerTowerModel()
 
 }
 
-void PlayerTowerModel::Update()
+void PlayerTowerModel::Update(int mode_, float count_)
 {
 
 }

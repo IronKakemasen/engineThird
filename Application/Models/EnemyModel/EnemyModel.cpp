@@ -11,7 +11,7 @@ EnemyModel::EnemyModel()
 
 }
 
-void EnemyModel::Update()
+void EnemyModel::Update(int mode_, float count_)
 {
 	for (auto* m : models)
 	{

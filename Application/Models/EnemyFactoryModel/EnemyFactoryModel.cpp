@@ -6,7 +6,7 @@ EnemyFactoryModel::EnemyFactoryModel()
 	model = M::GetInstance()->CreateModel("./resource/application/Model/Factory/Factory.gltf");
 }
 
-void EnemyFactoryModel::Update()
+void EnemyFactoryModel::Update(int mode_ , float count_ )
 {
 
 }
@@ -40,7 +40,7 @@ void EnemyFactoryModel::Init(Transform* gameObjectTrans_)
 	//必須でない
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 255,80,50,255 };
+	appearance->color = { 255,30,30,255 };
 }
 
 void EnemyFactoryModel::Reset()

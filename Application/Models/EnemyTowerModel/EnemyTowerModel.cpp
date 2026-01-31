@@ -7,7 +7,7 @@ EnemyTowerModel::EnemyTowerModel()
 
 }
 
-void EnemyTowerModel::Update()
+void EnemyTowerModel::Update(int mode_, float count_)
 {
 
 }
@@ -42,7 +42,7 @@ void EnemyTowerModel::Init(Transform* gameObjectTrans_)
 	appearance->trans.pos.y = 1.5f;
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->color = { 200,50,20,255 };
+	appearance->color = { 255,20,20,255 };
 }
 
 void EnemyTowerModel::Reset()

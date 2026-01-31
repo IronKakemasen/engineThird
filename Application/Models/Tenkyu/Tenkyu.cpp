@@ -6,7 +6,7 @@ Tenkyu::Tenkyu()
 	model = M::GetInstance()->CreateModel("./resource/application/Model/Tenkyu/Tenkyu.obj");
 }
 
-void Tenkyu::Update()
+void Tenkyu::Update(int mode_, float count_)
 {
 
 }

@@ -7,7 +7,7 @@ PlayerBulletModel::PlayerBulletModel()
 
 }
 
-void PlayerBulletModel::Update()
+void PlayerBulletModel::Update(int mode_, float count_)
 {
 	auto* appearance = model->GetAppearance(0);
 

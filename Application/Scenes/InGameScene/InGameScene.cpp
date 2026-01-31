@@ -64,7 +64,7 @@ void InGameScene::AdaptToPostEffect()
 	case PostEffectType::kNone:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -82,7 +82,7 @@ void InGameScene::AdaptToPostEffect()
 	case PostEffectType::kGreyScale:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
 
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
@@ -104,7 +104,7 @@ void InGameScene::AdaptToPostEffect()
 		auto* appe = ground->groundPlane->model->GetAppearance(0);
 		appe->color = { 255,255,255,255 };
 		appe->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 
 		dirPara->intensity = dirLightIntensityNeon;
 		dirPara->pos = {1.0f,5.7f,0.0f};
@@ -190,6 +190,11 @@ void InGameScene::AdaptToPostEffect()
 		appe->metalic = metalicCommon;
 		appe->roughness = roughnessCommon;
 	}
+
+	//Ground
+	ground->groundPlane->model->GetAppearance(0)->metalic = metalicCommon;
+	ground->groundPlane->model->GetAppearance(0)->roughness = roughnessCommon;
+
 }
 
 void InGameScene::Load()
