@@ -5,8 +5,8 @@
             "y": 5.7,
             "z": -0.1
         },
-        "dirLightIntensityNeon": 12.400000095367432,
-        "dirLightIntensityNormal": 0.0,
+        "dirLightIntensityNeon": 7.000000095367432,
+        "dirLightIntensityNormal": 0.1,
         "metalicCommonNeon": 0.5139999985694885,
         "metalicCommonNormal": 0.7260000109672546,
         "roughnessCommonNeon": 0.703000009059906,

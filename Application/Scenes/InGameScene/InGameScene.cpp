@@ -64,38 +64,25 @@ void InGameScene::AdaptToPostEffect()
 	case PostEffectType::kNone:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
 		roughnessCommon = roughnessCommonNormal;
 		lightradiusCommon = 300.0f;
-		for (int i = 0; i < kNumPLight; ++i)
-		{
-			fieldpointLights[i]->Getter_Para()->intensity = intensityCommon;
-			fieldpointLights[i]->Getter_Para()->color = { 200,255,200 };
-
-		}
 
 		break;
 	}
 	case PostEffectType::kGreyScale:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelSimple.VS", "ModelSimple.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
 
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
 		roughnessCommon = roughnessCommonNormal;
 
-		for (int i = 0; i < kNumPLight; ++i)
-		{
-			fieldpointLights[i]->Getter_Para()->intensity = intensityCommon;
-			fieldpointLights[i]->Getter_Para()->color = { 200,255,200 };
-
-		}
-		lightradiusCommon = 300.0f;
 
 		break;
 	}
@@ -113,12 +100,6 @@ void InGameScene::AdaptToPostEffect()
 
 		lightradiusCommon = 11.0f;
 
-		for (int i = 0; i < kNumPLight; ++i)
-		{
-			fieldpointLights[i]->Getter_Para()->intensity = 8000.0f;
-			fieldpointLights[i]->Getter_Para()->color = { 20,255,20 };
-
-		}
 
 
 		break;
@@ -463,44 +444,19 @@ void InGameScene::EnterMode()
 void InGameScene::PlayableMode()
 {
 	auto data = fieldLightData[inGameController->curStage];
-	static float const zyougeSpeed = 1.0f / 3.14f / 20.0f;
 
-	commonDeltaTheta += zyougeSpeed;
-	commonDeltaTheta2 += zyougeSpeed;
-	float deltaPosY1 = sinf(commonDeltaTheta)*1.25f ;
-	float deltaPosY2 = cosf(commonDeltaTheta2) * 1.25f;
+	auto* playerLight = fieldpointLights[0]->Getter_Para();
+	playerLight->intensity = 20000;
+	playerLight->invSqrRadius = 800.0f;
+	playerLight->pos = 
+		Vector3{ 0,4.0f,0.75f}.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
+	playerLight->color = { 20,20,255 };
+	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
+	M::GetInstance()->DrawEllipseWireFrame(playerLight->pos, 0.25f, {}, { 255,255,255,255 }, vpMat);
 
+	ImGui::Begin("cuo");
+	ImGui::DragFloat("playerLight->invSqrRadius", &playerLight->invSqrRadius);
+	ImGui::DragFloat("playerLight->intensity ", &playerLight->intensity);
 
-	auto* para = fieldpointLights[0]->Getter_Para();
-	para->invSqrRadius = lightradiusCommon;
-	para->isActive = true;
-	para->pos.y = lightHeight + deltaPosY1;
-	lightModels[0].model->GetAppearance(0)->trans.pos = para->pos;
-
-
-	for (int i = 1; i < kNumPLight; ++i)
-	{
-		para = fieldpointLights[i]->Getter_Para();
-
-		if (i >= data.useNum)
-		{
-			para->isActive = false;
-			continue;
-		}
-
-		para->isActive = true;
-		para->invSqrRadius = lightradiusCommon;
-		lightModels[i].model->GetAppearance(0)->trans.pos = para->pos;
-
-		if (i % 2 == 0)
-		{
-			para->pos.y = lightHeight + deltaPosY1;
-
-		}
-		else
-		{
-			para->pos.y = lightHeight + deltaPosY2;
-		}
-	}
-
+	ImGui::End();
 }
