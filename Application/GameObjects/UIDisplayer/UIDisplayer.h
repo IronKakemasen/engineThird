@@ -37,15 +37,15 @@ struct UIDisplayer :public GameObject
 
 	enum class uiType
 	{
-		Back900x250,
-		Decision900x250,
-		Move900x250,
-		Option900x250,
-		Pause900x250,
-		Shot900x250,
-		Zoom900x250,
-		Reticle900x250,
-		Numbers100x100,
+		Back200x60,
+		Decision200x60,
+		Move200x60,
+		Option200x60,
+		Pause200x60,
+		Shot200x60,
+		Zoom200x60,
+		Reticle200x60,
+		Numbers1000x100,
 		Stage1Name1000x100,
 		Stage2Name1000x100,
 		Stage3Name1000x100,
@@ -58,28 +58,28 @@ struct UIDisplayer :public GameObject
 	{
 		switch (ui)
 		{
-		case UIDisplayer::uiType::Back900x250:
+		case UIDisplayer::uiType::Back200x60:
 			return "Back";
 			break;
-		case UIDisplayer::uiType::Decision900x250:
+		case UIDisplayer::uiType::Decision200x60:
 			return "Decision";
 			break;
-		case UIDisplayer::uiType::Move900x250:
+		case UIDisplayer::uiType::Move200x60:
 			return "Move";
 			break;
-		case UIDisplayer::uiType::Option900x250:
+		case UIDisplayer::uiType::Option200x60:
 			return "Option";
 			break;
-		case UIDisplayer::uiType::Pause900x250:
+		case UIDisplayer::uiType::Pause200x60:
 			return "Pause";
 			break;
-		case UIDisplayer::uiType::Shot900x250:
+		case UIDisplayer::uiType::Shot200x60:
 			return "Shot";
 			break;
-		case UIDisplayer::uiType::Zoom900x250:
+		case UIDisplayer::uiType::Zoom200x60:
 			return "Zoom";
 			break;
-		case UIDisplayer::uiType::Numbers100x100:
+		case UIDisplayer::uiType::Numbers1000x100:
 			return "Numbers";
 			break;
 		case UIDisplayer::uiType::Stage1Name1000x100:
