@@ -32,6 +32,8 @@ private:
 
 	////// 分離数設定処理  //////
 	void UpdateAllySeparate();
+	int32_t tempSeparateAllyCount = -1; // 一時的に保存する分離数
+	int32_t separateAllyCount = -1; // そのフレームで分離する味方の数
 
 	////// 視線変更処理  //////
 	void UpdateLookDir();
@@ -90,9 +92,6 @@ public:
 
 	// 動いているかどうか
 	bool IsMoving() const { return isMoving; }
-
-
-	float GetSpeed() const;
 
 	// 味方の参照ポインタを追加
 	void SetAllies(PlayerAlly* allyPoint) { allies.push_back(allyPoint); }

@@ -147,7 +147,7 @@ void PlayerAlly::MoveToPlayer()
 	Vector3 direction = targetPos - trans.pos;
 
 	/// 移動ベクトルを取得
-	Vector3 moveVector = direction.GetNormalized() * (targetPlayer->GetSpeed() * inGameConfig->playerAllySpeed);
+	Vector3 moveVector = direction.GetNormalized() * (inGameConfig->playerSpeed * inGameConfig->playerAllySpeed);
 
 	// 移動量より目的地までの距離が短い場合目的地に直接移動
 	if (moveVector.GetMagnitutde() > direction.GetMagnitutde())
@@ -170,7 +170,7 @@ void PlayerAlly::MoveToPlayer()
 	/// 通常の移動処理
 	else
 	{
-		trans.pos = trans.pos + (direction.GetNormalized() * (targetPlayer->GetSpeed() * inGameConfig->playerAllySpeed));
+		trans.pos = trans.pos + (direction.GetNormalized() * (inGameConfig->playerSpeed * inGameConfig->playerAllySpeed));
 	}
 }
 

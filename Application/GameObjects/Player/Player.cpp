@@ -310,7 +310,30 @@ Vector3 Player::GetPosHistory(int32_t n)
 }
 
 void Player::UpdateAllySeparate()
-{}
+{
+	uint32_t LBHoldFrame
+		= M::GetInstance()->getPadState.HoldFrames(0, PAD_LB);
+
+	// 押されていなければ分離なし
+	if (LBHoldFrame == 0) 
+	{
+		separateAllyCount = -1;
+		return;
+	}
+
+	// 単押しで1人分分離
+	if (LBHoldFrame < 20 && M::GetInstance()->getPadState.IsJustReleased(0, PAD_LB))
+	{
+		// 1人分分離
+		separateAllyCount = 1;
+		return;
+	}
+
+	if (LBHoldFrame >= 20)
+	{
+
+	}
+}
 
 // 視線変更処理
 void Player::UpdateLookDir()
@@ -475,9 +498,3 @@ int32_t Player::GetSeparateAllyCount() const
 {
 	return -1;
 }
-
-float Player::GetSpeed() const
-{
-	return inGameConfig->playerSpeed;
-}
-

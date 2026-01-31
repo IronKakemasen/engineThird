@@ -17,7 +17,6 @@ private:
 	float defaultSpeed = 0.1f;
 
 	// 生命カウンター(0になると急激に小さくなり始める)
-	float defaultLifeTime = 2.0f;
 	Counter lifeCounter;
 
 	// 攻撃力
@@ -26,6 +25,9 @@ private:
 
 
 public:
+
+	// 味方を経由して強化済か
+	bool isMaximized = false;
 
 	// 発射  (pos : 発射位置, dir : 発射方向)
 	void Fire(Vector3 pos, Vector3 dir);
