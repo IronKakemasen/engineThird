@@ -308,7 +308,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->hp = me->hp - bullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 
