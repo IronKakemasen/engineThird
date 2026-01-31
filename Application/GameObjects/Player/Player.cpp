@@ -373,7 +373,7 @@ void Player::UpdateLookDir()
 // 味方自動補充処理
 void Player::AutoSpawnAlly()
 {
-	if (formedAllyCount > inGameConfig->maxAllyCount) return;
+	if (formedAllyCount >= inGameConfig->maxAllyCount) return;
 
 	autoSpawnAllyCounter.Add();
 

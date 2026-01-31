@@ -308,7 +308,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->hp = me->hp - bullet->GetAttackPower();
 
 	// 死亡した時
-	if (me->hp < 0.0f)
+	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
 
@@ -336,8 +336,7 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || playerAlly->GetCurrentState() == PlayerAlly::State::kFormed)
 	{
 		// ノックバック方向計算
-		//Vector3 dir = playerAlly->trans.pos - me->trans.pos;
-		Vector3 dir = me->trans.lookDir * -1;
+		Vector3 dir = playerAlly->trans.pos - me->trans.pos;
 
 		// ノックバック付与
 		me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToAlly);
