@@ -134,8 +134,8 @@ private:
 		{
 			bool curr = false;           // 今フレームの押下状態
 			bool prev = false;           // 前フレームの押下状態
-			uint32_t holdFrames = 0;     // 長押しフレーム数
-			uint32_t lastHoldOnRelease = 0; // 直近のリリース時に押されていたフレーム数
+			int32_t holdFrames = 0;     // 長押しフレーム数
+			int32_t lastHoldOnRelease = 0; // 直近のリリース時に押されていたフレーム数
 		};
 
 	public:
@@ -148,7 +148,7 @@ private:
 		bool IsJustPressed(int padIndex, BYTE button);
 		bool IsJustReleased(int padIndex, BYTE button);
 
-		uint32_t HoldFrames(int padIndex, BYTE button);	// 押されてからの経過フレーム数
+		int32_t HoldFrames(int padIndex, BYTE button);	// 押されてからの経過フレーム数
 		Vector2 GetLeftStick(int padIndex);	    // 左スティックの値取得 (-1.0f ～ 1.0f)
 		Vector2 GetRightStick(int padIndex);	// 右スティックの値取得 (-1.0f ～ 1.0f)
 

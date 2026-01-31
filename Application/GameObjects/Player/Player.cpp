@@ -125,6 +125,9 @@ void Player::Update()
 	// 味方自動補充処理
 	AutoSpawnAlly();
 
+	// 味方分離処理
+	UpdateAllySeparate();
+
 #ifdef _DEBUG
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(inGameConfig->playerCollisonSize);
@@ -309,29 +312,43 @@ Vector3 Player::GetPosHistory(int32_t n)
 	return posHistory[index];
 }
 
+// 分離数設定処理
 void Player::UpdateAllySeparate()
 {
-	uint32_t LBHoldFrame
-		= M::GetInstance()->getPadState.HoldFrames(0, PAD_LB);
+	// 分離指示初期化
+	isSeparateCommand = false;
 
-	// 押されていなければ分離なし
-	if (LBHoldFrame == 0) 
+	// LBボタン押しフレーム数取得
+	int32_t LBHoldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_LB);
+
+
+	// 押していない場合
+	if (LBHoldFrame <= 0)
 	{
 		separateAllyCount = -1;
-		return;
 	}
-
 	// 単押しで1人分分離
-	if (LBHoldFrame < 20 && M::GetInstance()->getPadState.IsJustReleased(0, PAD_LB))
+	else if (LBHoldFrame < inGameConfig->judgeSinglePressFrame)
 	{
 		// 1人分分離
 		separateAllyCount = 1;
-		return;
+	}
+	// 長押しで分離数を増やしていく(inGameConfig->separateCompleteFrameで全員選択完了)
+	else 	
+	{
+		// 分離数計算
+		float t = float(LBHoldFrame - inGameConfig->judgeSinglePressFrame) /
+			float(inGameConfig->separateCompleteFrame - inGameConfig->judgeSinglePressFrame);
+		t = std::clamp(t, 0.0f, 1.0f);
+		separateAllyCount = int32_t(std::ceil(t * float(formedAllyCount)));
 	}
 
-	if (LBHoldFrame >= 20)
-	{
 
+	// 離した瞬間の処理
+	if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_LB))
+	{
+		// 分離指示ON
+		isSeparateCommand = true;
 	}
 }
 
@@ -496,5 +513,5 @@ int32_t Player::TryReserveFormationIndex()
 
 int32_t Player::GetSeparateAllyCount() const
 {
-	return -1;
+	return separateAllyCount;
 }

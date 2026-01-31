@@ -64,6 +64,11 @@ public:
 	/////////////  AttackGauge  ///////////////
 	float playerAttackInterval = 0.5f;	// プレイヤー攻撃ゲージ回復インターバル
 
+	////////////// Separate   //////////////
+	int32_t judgeSinglePressFrame = 10;		// 単押し判定時間(フレーム数)
+	// 何フレームで選択しおわるか
+	int32_t separateCompleteFrame = 120;	// 選択完了までのフレーム数
+
 private:
 	std::string path = "./resource/application/json/config/inGameConfig.json";
 

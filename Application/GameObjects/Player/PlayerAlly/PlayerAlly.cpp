@@ -50,6 +50,7 @@ void PlayerAlly::Init()
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
 	collisionBackToPlayerBullet.Init(this);
+	collisionBackToPlayer.Init(this);
 
 	// 補完係数設定
 	trans.interpolationCoe = 0.9f;
@@ -61,6 +62,8 @@ void PlayerAlly::SetCollisionBackTable()
 	SetCollisionBack(Tag::kEnemy, collisionBackToEnemy);
 	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
 	SetCollisionBack(Tag::kPlayerBullet, collisionBackToPlayerBullet);
+	// タグ：Playerと衝突したときのコリジョンバックを登録
+	SetCollisionBack(Tag::kPlayer, collisionBackToPlayer);
 }
 
 // データ保存・読み込み
@@ -176,18 +179,23 @@ void PlayerAlly::MoveToPlayer()
 
 void PlayerAlly::FollowPlayer()
 {
-	/// そのフレームのAlly分離数を取得
-	int32_t allySeparationCount = targetPlayer->GetSeparateAllyCount();
+	/// そのフレームの分離指示
+	bool isSeparationCommand = targetPlayer->IsSeparateThisFrame();
 
-	/// 分離がある かつ 自身のインデックスが分離数以内なら
-	if (allySeparationCount != -1 && formationCurrentIndex < allySeparationCount)
+	if (isSeparationCommand)
 	{
-		// 列から分離
-		formationCurrentIndex = -1;
-		// 状態遷移
-		nextState = State::kLocked;
+		/// そのフレームのAlly分離数を取得
+		int32_t allySeparationCount = targetPlayer->GetSeparateAllyCount();
+		/// 自身のインデックスが分離数以内なら
+		if (allySeparationCount != -1 && formationCurrentIndex < allySeparationCount)
+		{
+			// 列から分離
+			formationCurrentIndex = -1;
+			// 状態遷移
+			currentState = State::kLocked;
 
-		return;
+			return;
+		}
 	}
 
 	// 自身の目標インデックスに対応する目標座標を取得
