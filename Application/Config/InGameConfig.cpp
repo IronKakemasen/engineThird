@@ -200,12 +200,12 @@ void InGameConfig::DebugDraw()
 		ImGui::TreePop();
 
 	}
-	if (ImGui::Button("Separate"))
+	if (ImGui::TreeNode("Separate"))
 	{
 		ImGui::DragInt("JudgeSinglePressFrame", &judgeSinglePressFrame, 1, 1, 60);
 		ImGui::DragInt("SeparateCompleteFrame", &separateCompleteFrame, 1, 30, 300);
+		ImGui::TreePop();
 	}
-	ImGui::PopItemWidth();
 
 #endif // _DEBUG
 }
