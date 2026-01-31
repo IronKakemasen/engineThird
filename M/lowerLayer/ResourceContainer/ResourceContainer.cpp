@@ -26,15 +26,15 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kEnemyThornN, pathToTex + "Enemy/" + "E_Thorn_normal.png");
 	LoadTextureFile(TextureTag::kAllyN, pathToTex + "Ally/" + "Ally_Body_normal.png");
 
-	LoadTextureFile(TextureTag::kButtonBack900x250, pathToUI + "ButtonBack900x250.png");
-	LoadTextureFile(TextureTag::kButtonDecision900x250, pathToUI + "ButtonDecision900x250.png");
-	LoadTextureFile(TextureTag::kButtonMove900x250, pathToUI + "ButtonMove900x250.png");
-	LoadTextureFile(TextureTag::kButtonOption900x250, pathToUI + "ButtonOption900x250.png");
-	LoadTextureFile(TextureTag::kButtonPause900x250, pathToUI + "ButtonPause900x250.png");
-	LoadTextureFile(TextureTag::kButtonShot900x250, pathToUI + "ButtonShot900x250.png");
-	LoadTextureFile(TextureTag::kButtonZoom900x250, pathToUI + "ButtonZoom900x250.png");
-	LoadTextureFile(TextureTag::kNumbers100x100, pathToUI + "Numbers100x100.png");
-	LoadTextureFile(TextureTag::kButtonReticle900x250, pathToUI + "ButtonReticle900x250.png");
+	LoadTextureFile(TextureTag::kButtonBack200x60, pathToUI + "Common/" + "ButtonBack200x60.png");
+	LoadTextureFile(TextureTag::kButtonDecision200x60, pathToUI + "Common/" + "ButtonDecision200x60.png");
+	LoadTextureFile(TextureTag::kButtonMove200x60, pathToUI + "Common/" + "ButtonMove200x60.png");
+	LoadTextureFile(TextureTag::kButtonOption200x60, pathToUI + "Common/" + "ButtonOption200x60.png");
+	LoadTextureFile(TextureTag::kButtonPause200x60, pathToUI + "Common/" + "ButtonPause200x60.png");
+	LoadTextureFile(TextureTag::kButtonShot200x60, pathToUI + "Common/" + "ButtonShot200x60.png");
+	LoadTextureFile(TextureTag::kButtonZoom200x60, pathToUI + "Common/" + "ButtonZoom200x60.png");
+	LoadTextureFile(TextureTag::kNumbers1000x100, pathToUI + "Common/" + "Numbers1000x100.png");
+	LoadTextureFile(TextureTag::kButtonReticle200x60, pathToUI + "Common/" + "ButtonReticle200x60.png");
 	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
 
 	LoadTextureFile(TextureTag::kPlayerHeadN, pathToPlayer + "P_Head_normal.png");
