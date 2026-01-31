@@ -137,15 +137,15 @@ void UIDisplayer::DebugDraw()
 UIDisplayer::UIDisplayer()
 {
 	std::map<uiType, Vector2> uiTexureSize;
-	uiTexureSize[uiType::Back200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Decision200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Move200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Option200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Pause200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Shot200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Zoom200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Reticle200x60] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Numbers1000x100] = Vector2{ 100.0f,100.0f };
+	uiTexureSize[uiType::Back200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Decision200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Move200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Option200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Pause200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Shot200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Zoom200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Reticle200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Numbers1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage1Name1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage2Name1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage3Name1000x100] = Vector2{ 1000.0f,100.0f };
