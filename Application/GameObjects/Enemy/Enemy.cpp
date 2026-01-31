@@ -233,12 +233,22 @@ void Enemy::MoveKnockBack()
 
 void Enemy::KnockBack(Vector3 dir, float power)
 {
-	Vector2 randomRotateVec = Vector2(dir.x, dir.z);
+	//Vector2 randomRotateVec = Vector2(dir.x, dir.z);
+	//float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
+	//float theta = deg * (3.1415f / 180.0f);
+	//randomRotateVec = Vector2(
+	//	dir.x * cosf(theta) - dir.z * sinf(theta),
+	//	dir.x * sinf(theta) + dir.z * cosf(theta)
+	//).GetNormalized();
+	//trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
+	// 
+	//knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
+	Vector2 randomRotateVec = Vector2(trans.lookDir.x, trans.lookDir.z);
 	float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
 	float theta = deg * (3.1415f / 180.0f);
 	randomRotateVec = Vector2(
-		dir.x * cosf(theta) - dir.z * sinf(theta),
-		dir.x * sinf(theta) + dir.z * cosf(theta)
+		trans.lookDir.x * cosf(theta) - trans.lookDir.z * sinf(theta),
+		trans.lookDir.x * sinf(theta) + trans.lookDir.z * cosf(theta)
 	).GetNormalized();
 	trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
 
