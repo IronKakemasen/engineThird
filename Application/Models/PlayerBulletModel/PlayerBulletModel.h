@@ -4,9 +4,11 @@
 
 class PlayerBulletModel :public ModelBehavior
 {
-	float const rotateSpeed = 8.0f;
 
 public:
+	Vector3 randomRotateAddNum;
+	float rotateSpeed = 12.0f;
+
 	PlayerBulletModel();
 	virtual void Update()override;
 	virtual void Draw(Matrix4* vpMat_)override;

@@ -109,6 +109,7 @@ void MeshAndDataCommon::CreatePSO(AllPipelineSet* allPipelineset_)
 	allPipelineset_->CreateNewPipeline(folderPath, "ModelGGX.VS", "ModelGGX.PS", inputLayOutFunc, modelSimpleRP);
 	//shaderToy
 	allPipelineset_->CreateNewPipeline(folderPathShaderToy, "tft3RH.VS", "tft3RH.PS", inputLayOutFunc, modelShaderToy);
+	allPipelineset_->CreateNewPipeline(folderPathShaderToy, "Mt2SzR.VS", "Mt2SzR.PS", inputLayOutFunc, modelShaderToy);
 
 		
 	onlyOnce = false;

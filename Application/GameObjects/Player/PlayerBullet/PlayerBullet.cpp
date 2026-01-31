@@ -84,6 +84,10 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir)
 	SetCircleCollision(inGameConfig->playerBulletCollisonSize);
 	// 現在サイズリセット
 	currentSizeBonus = 0.0f;
+	//見た目用パラメーター
+	model->randomRotateAddNum = Vector3{ float(rand() % 200 - 100), 
+		float(rand() % 200 - 100),float(rand() % 200 - 100) }.GetNormalized();
+	model->rotateSpeed = 8.0f;
 }
 
 // データ保存・読み込み
@@ -158,4 +162,6 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	me->attackPower += me->inGameConfig->playerAllyPowerBonus;
 	// マキシマイズマジック
 	me->isMaximized = true;
+	//見た目用
+	me->model->rotateSpeed *= 0.85f;
 }

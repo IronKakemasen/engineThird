@@ -11,7 +11,8 @@ void PlayerBulletModel::Update()
 {
 	auto* appearance = model->GetAppearance(0);
 
-	appearance->trans.rotation.z += rotateSpeed;
+	appearance->trans.rotation = appearance->trans.rotation +
+		randomRotateAddNum * rotateSpeed;
 }
 
 void PlayerBulletModel::Draw(Matrix4* vpMat_)

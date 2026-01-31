@@ -62,14 +62,14 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 	case UIDisplayer::UIMode::TiTle:
 		break;
 	case UIDisplayer::UIMode::StageSelect:
-		drawOrder.push_back(uiType::Decision900x250);
-		drawOrder.push_back(uiType::Option900x250);
-		drawOrder.push_back(uiType::Back900x250);
+		drawOrder.push_back(uiType::Decision200x60);
+		drawOrder.push_back(uiType::Option200x60);
+		drawOrder.push_back(uiType::Back200x60);
 		break;
 	case UIDisplayer::UIMode::InGame:
-		drawOrder.push_back(uiType::Move900x250);
-		drawOrder.push_back(uiType::Shot900x250);
-		drawOrder.push_back(uiType::Reticle900x250);
+		drawOrder.push_back(uiType::Move200x60);
+		drawOrder.push_back(uiType::Shot200x60);
+		drawOrder.push_back(uiType::Reticle200x60);
 		break;
 	case UIDisplayer::UIMode::None:
 		break;
@@ -137,15 +137,15 @@ void UIDisplayer::DebugDraw()
 UIDisplayer::UIDisplayer()
 {
 	std::map<uiType, Vector2> uiTexureSize;
-	uiTexureSize[uiType::Back900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Decision900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Move900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Option900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Pause900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Shot900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Zoom900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Reticle900x250] = Vector2{ 900.0f,250.0f };
-	uiTexureSize[uiType::Numbers100x100] = Vector2{ 100.0f,100.0f };
+	uiTexureSize[uiType::Back200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Decision200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Move200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Option200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Pause200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Shot200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Zoom200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Reticle200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Numbers1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage1Name1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage2Name1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::Stage3Name1000x100] = Vector2{ 1000.0f,100.0f };
@@ -153,15 +153,15 @@ UIDisplayer::UIDisplayer()
 	uiTexureSize[uiType::Stage5Name1000x100] = Vector2{ 1000.0f,100.0f };
 
 	std::map<uiType, TextureTag> uiTexure;
-	uiTexure[uiType::Back900x250] = TextureTag::kButtonBack900x250;
-	uiTexure[uiType::Decision900x250] = TextureTag::kButtonDecision900x250;
-	uiTexure[uiType::Move900x250] = TextureTag::kButtonMove900x250;
-	uiTexure[uiType::Option900x250] = TextureTag::kButtonOption900x250;
-	uiTexure[uiType::Pause900x250] = TextureTag::kButtonPause900x250;
-	uiTexure[uiType::Shot900x250] = TextureTag::kButtonShot900x250;
-	uiTexure[uiType::Zoom900x250] = TextureTag::kButtonZoom900x250;
-	uiTexure[uiType::Reticle900x250] = TextureTag::kButtonReticle900x250;
-	uiTexure[uiType::Numbers100x100] = TextureTag::kNumbers100x100;
+	uiTexure[uiType::Back200x60] = TextureTag::kButtonBack200x60;
+	uiTexure[uiType::Decision200x60] = TextureTag::kButtonDecision200x60;
+	uiTexure[uiType::Move200x60] = TextureTag::kButtonMove200x60;
+	uiTexure[uiType::Option200x60] = TextureTag::kButtonOption200x60;
+	uiTexure[uiType::Pause200x60] = TextureTag::kButtonPause200x60;
+	uiTexure[uiType::Shot200x60] = TextureTag::kButtonShot200x60;
+	uiTexure[uiType::Zoom200x60] = TextureTag::kButtonZoom200x60;
+	uiTexure[uiType::Reticle200x60] = TextureTag::kButtonReticle200x60;
+	uiTexure[uiType::Numbers1000x100] = TextureTag::kNumbers1000x100;
 	uiTexure[uiType::Stage1Name1000x100] = TextureTag::kStageName1000x100;
 	uiTexure[uiType::Stage2Name1000x100] = TextureTag::kStageName1000x100;
 	uiTexure[uiType::Stage3Name1000x100] = TextureTag::kStageName1000x100;

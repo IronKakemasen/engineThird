@@ -32,8 +32,8 @@ void OffScreenManager::Init(TextureDataManager* textureDataManager_,
 			it->WathchShaderSetIndex(), it->WatchAddessContainer());
 	}
 
-	ChangePostEffection(PostEffectType::kSimpleNeonLike);
-	curPostEffectType = PostEffectType::kSimpleNeonLike;
+	ChangePostEffection(PostEffectType::kNone);
+	curPostEffectType = PostEffectType::kNone;
 }
 
 void OffScreenManager::SetEffectSysytem(PostEffectType type_,
