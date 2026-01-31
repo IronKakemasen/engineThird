@@ -32,6 +32,8 @@ private:
 
 	////// 分離数設定処理  //////
 	void UpdateAllySeparate();
+	bool isSeparateCommand = false;	// 分離指示
+	int32_t separateAllyCount = -1; // 分離する味方の数
 
 	////// 視線変更処理  //////
 	void UpdateLookDir();
@@ -82,17 +84,14 @@ public:
 	/// <returns> 失敗したら-1 </returns>
 	int32_t TryReserveFormationIndex();
 
-	/// <summary>
 	/// そのフレームで分離する味方の数を取得
-	/// </summary>
-	/// <returns> 分離がないなら-1 </returns>
 	int32_t GetSeparateAllyCount() const;
+	/// このフレームで分離するか
+	bool IsSeparateThisFrame() const { return isSeparateCommand; }
+
 
 	// 動いているかどうか
 	bool IsMoving() const { return isMoving; }
-
-
-	float GetSpeed() const;
 
 	// 味方の参照ポインタを追加
 	void SetAllies(PlayerAlly* allyPoint) { allies.push_back(allyPoint); }

@@ -66,6 +66,8 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir)
 {
 	// リセット
 	trans.scale = Vector3(0.5f, 0.2f, 0.5f);
+	// マキシマイズマジック
+	isMaximized = false;
 	// 発射
 	SetStatus(GameObjectBehavior::Status::kActive);
 	// 移動方向設定
@@ -74,10 +76,8 @@ void PlayerBullet::Fire(Vector3 pos, Vector3 dir)
 	trans.pos = pos;
 	// 速度反映
 	defaultSpeed = inGameConfig->playerBulletSpeed;
-	// 生命時間反映
-	defaultLifeTime = inGameConfig->playerBulletLifeTime;
-	// カウンター設定
-	lifeCounter.Initialize(defaultLifeTime);
+	// 寿命カウンター初期化
+	lifeCounter.Initialize(inGameConfig->playerBulletLifeTime);
 	// 攻撃力リセット
 	attackPower = inGameConfig->playerPower;
 	// コリジョンサイズ反映
@@ -152,11 +152,16 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	auto* ally = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 	if (ally->formationCurrentIndex == -1) return;
 
+	// サイズアップ
 	me->trans.scale = me->trans.scale + Vector3{ me->inGameConfig->playerAllySizeBonus, 0.0f, me->inGameConfig->playerAllySizeBonus };
+	// 拡大量保存
 	me->currentSizeBonus += me->inGameConfig->playerAllySizeBonus;
+	// コリジョンサイズ更新
 	me->SetCircleCollision(me->inGameConfig->playerBulletCollisonSize + me->currentSizeBonus);
+	// 攻撃力アップ
 	me->attackPower += me->inGameConfig->playerAllyPowerBonus;
-
+	// マキシマイズマジック
+	me->isMaximized = true;
 	//見た目用
 	me->model->rotateSpeed *= 0.85f;
 }

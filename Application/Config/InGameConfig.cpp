@@ -56,6 +56,10 @@ void InGameConfig::Load()
 
 	std::string attackGauge = "/AttackGauge/";
 	Json::LoadParam(path, attackGauge + "player/playerAttackInterval", playerAttackInterval);
+
+	std::string Separate = "/Separate/";
+	Json::LoadParam(path, Separate + "judgeSinglePressFrame", judgeSinglePressFrame);
+	Json::LoadParam(path, Separate + "separateCompleteFrame", separateCompleteFrame);
 }
 
 void InGameConfig::Save()
@@ -106,6 +110,10 @@ void InGameConfig::Save()
 
 	std::string attackGauge = "/AttackGauge/";
 	Json::SaveParam(path, attackGauge + "player/playerAttackInterval", playerAttackInterval);
+
+	std::string Separate = "/Separate/";
+	Json::SaveParam(path, Separate + "judgeSinglePressFrame", judgeSinglePressFrame);
+	Json::SaveParam(path, Separate + "separateCompleteFrame", separateCompleteFrame);
 
 	Json::Save(path);
 }
@@ -192,6 +200,12 @@ void InGameConfig::DebugDraw()
 		ImGui::TreePop();
 
 	}
+	if (ImGui::Button("Separate"))
+	{
+		ImGui::DragInt("JudgeSinglePressFrame", &judgeSinglePressFrame, 1, 1, 60);
+		ImGui::DragInt("SeparateCompleteFrame", &separateCompleteFrame, 1, 30, 300);
+	}
+	ImGui::PopItemWidth();
 
 #endif // _DEBUG
 }

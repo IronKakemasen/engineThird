@@ -19,10 +19,10 @@ void GameObjectBehavior::SetIdentity(Tag tag_)
 		Identity{"Enemy" ,tag_,no,				0x0000000f,0x0ffff000},
 		Identity{"EnemyFactory" ,tag_,no,		0x000000f0,0x000f0000},
 		Identity{"EnemyTower" ,tag_,no,			0x00000f00,0x000f0000},
-		Identity{"Player" ,tag_,no,				0x0000f000,0x0000000f},
+		Identity{"Player" ,tag_,no,				0x0000f000,0x0f00000f},
 		Identity{"PlayerBullet" ,tag_,no,		0x000f0000,0x0f000fff},
 		Identity{"PlayerTower" ,tag_,no,		0x00f00000,0x0000000f},
-		Identity{"PlayerAlly" ,tag_,no,			0x0f000000,0x000f000f},
+		Identity{"PlayerAlly" ,tag_,no,			0x0f000000,0x000ff00f},
 		Identity{"InGameController" ,tag_,no,	0x00000000,0x00000000},
 
 	};

@@ -302,7 +302,7 @@ bool M::GetPadState::IsJustReleased(int padIndex, BYTE button)
     return (padStates[stateIndex][btn].prev && !padStates[stateIndex][btn].curr);
 }
 
-uint32_t M::GetPadState::HoldFrames(int padIndex, BYTE button)
+int32_t M::GetPadState::HoldFrames(int padIndex, BYTE button)
 {
     int stateIndex = std::clamp(padIndex, 0, 3);
     int btn = std::clamp(int(button), 0, PAD_BUTTON_MAX - 1);
