@@ -207,7 +207,6 @@ void InGameScene::Instantiate()
 
 void InGameScene::Init()
 {
-
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters(),
 		inGameController.get(), player.get());
 

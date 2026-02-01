@@ -14,6 +14,9 @@ public:
 	virtual void LoadData() = 0;
 	virtual void SaveData() = 0;
 
+	// マップ上に配置
+	virtual void ReplaceOnMap(const int32_t stage) = 0;
+
 	// IDのセット
 	virtual void SetID(int32_t id_) { ID = id_; }
 

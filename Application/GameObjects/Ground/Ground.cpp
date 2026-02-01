@@ -16,6 +16,9 @@ void Ground::SaveData()
 void Ground::DebugDraw()
 {}
 
+void Ground::ReplaceOnMap(const int32_t stage)
+{}
+
 void Ground::Update()
 {
 	//モデルの更新処理（中身を書いていれば）

@@ -6,6 +6,7 @@
 #include "../../../GameObjects/InGameController/InGameController.h"
 #include "imgui.h"
 
+// 
 EnemyTower::EnemyTower()
 {
 	//モデルのインスタンス化
@@ -15,13 +16,22 @@ EnemyTower::EnemyTower()
 	path = "./resource/application/json/enemy/enemyTowerData.json";
 }
 
+// リセット処理(ステージ切り替え毎に呼び出す)
 void EnemyTower::Reset()
 {
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
 
+	// 現在選択されているステージ
+	ReplaceOnMap(inGameController->curStage);
+}
+
+// マップに配置
+void EnemyTower::ReplaceOnMap(const int32_t stage)
+{
 	// 現在選択されているステージでのアクティブ数を取得
-	Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
+	Json::LoadParam(path, "/stage" + std::to_string(stage) + "/ActiveCount", stageActiveCounts);
+	tempStageNumber = stage;
 
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
@@ -42,6 +52,7 @@ void EnemyTower::Reset()
 	}
 }
 
+// 初期化処理
 void EnemyTower::Init()
 {
 	// モデルの初期化
@@ -62,6 +73,7 @@ void EnemyTower::Init()
 	collisionBackToPlayerBullet.Init(this);
 }
 
+// コリジョンバックテーブル設定
 void EnemyTower::SetCollisionBackTable()
 {
 	// タグ：PlayerBulletと衝突したときのコリジョンバックを登録
@@ -73,7 +85,7 @@ void EnemyTower::LoadData()
 {
 	if (status == Status::kInActive) return;
 
-	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
+	std::string key = "/stage" + std::to_string(tempStageNumber) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 
@@ -91,6 +103,7 @@ void EnemyTower::SaveData()
 	Json::Save(path);
 }
 
+// 更新処理
 void EnemyTower::Update()
 {
 	model->Update();
@@ -104,41 +117,12 @@ void EnemyTower::Update()
 #endif // _DEBUG
 }
 
-void EnemyTower::AddHitBullet(PlayerBullet* bullet)
-{
-	hitBullets.push_back(bullet);
-}
-
-bool EnemyTower::IsInHitBulletList(PlayerBullet* bullet)
-{
-	for (auto& hitBullet : hitBullets)
-	{
-		if (hitBullet == bullet)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-void EnemyTower::UpdateHitBullets()
-{
-	for (size_t i = 0; i < hitBullets.size(); ++i)
-	{
-		if (hitBullets[i]->GetStatus() == Status::kInActive)
-		{
-			hitBullets.erase(hitBullets.begin() + i);
-			--i;
-		}
-	}
-}
-
+// 描画処理
 void EnemyTower::Draw(Matrix4* vpMat_)
 {
 	//モデルの描画
 	model->Draw(vpMat_);
 }
-
 void EnemyTower::DebugDraw()
 {
 #ifdef USE_IMGUI
@@ -167,6 +151,36 @@ void EnemyTower::DebugDraw()
 	}
 
 #endif // USE_IMGUI
+}
+
+// 衝突した弾をリストに追加
+void EnemyTower::AddHitBullet(PlayerBullet* bullet)
+{
+	hitBullets.push_back(bullet);
+}
+// その弾が既に衝突リストにあるか
+bool EnemyTower::IsInHitBulletList(PlayerBullet* bullet)
+{
+	for (auto& hitBullet : hitBullets)
+	{
+		if (hitBullet == bullet)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+// 衝突弾リスト更新
+void EnemyTower::UpdateHitBullets()
+{
+	for (size_t i = 0; i < hitBullets.size(); ++i)
+	{
+		if (hitBullets[i]->GetStatus() == Status::kInActive)
+		{
+			hitBullets.erase(hitBullets.begin() + i);
+			--i;
+		}
+	}
 }
 
 // プレイヤー弾との衝突

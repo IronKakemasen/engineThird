@@ -31,8 +31,13 @@ public:
 	void LoadData() override;
 	void SaveData() override;
 
+	// マップに配置
+	void ReplaceOnMap(const int32_t stage) override;
+
 	// デバッグ描画
 	void DebugDraw() override;
+
+	int32_t tempStageNumber = -1;
 
 #pragma endregion
 

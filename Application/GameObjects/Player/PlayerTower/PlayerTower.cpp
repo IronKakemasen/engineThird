@@ -6,6 +6,7 @@
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../../../GameObjects/InGameController/InGameController.h"
 
+//
 PlayerTower::PlayerTower()
 {
 	// モデルのインスタンス化
@@ -15,13 +16,22 @@ PlayerTower::PlayerTower()
 	path = "./resource/application/json/player/playerTowerData.json";
 }
 
+// リセット処理(ステージ切り替え毎に呼び出す)
 void PlayerTower::Reset()
 {
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
 
+	// 現在選択されているステージ
+	ReplaceOnMap(inGameController->curStage);
+}
+
+// マップに配置
+void PlayerTower::ReplaceOnMap(const int32_t stage)
+{
 	// 現在選択されているステージでのアクティブ数を取得
-	Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
+	Json::LoadParam(path, "/stage" + std::to_string(stage) + "/ActiveCount", stageActiveCounts);
+	tempStageNumber = stage;
 
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
@@ -42,6 +52,7 @@ void PlayerTower::Reset()
 	}
 }
 
+// 初期化処理
 void PlayerTower::Init()
 {
 	// モデルの初期化
@@ -62,6 +73,7 @@ void PlayerTower::Init()
 	collisionBackToEnemy.Init(this);
 }
 
+// コリジョンバックテーブル設定
 void PlayerTower::SetCollisionBackTable()
 {
 	// タグ：Enemyと衝突したときのコリジョンバックを登録
@@ -73,7 +85,7 @@ void PlayerTower::LoadData()
 {
 	if (status == Status::kInActive) return;
 
-	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
+	std::string key = "/stage" + std::to_string(tempStageNumber) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 
@@ -91,6 +103,7 @@ void PlayerTower::SaveData()
 	Json::Save(path);
 }
 
+// 更新処理
 void PlayerTower::Update()
 {
 	//モデルの更新処理
@@ -102,12 +115,12 @@ void PlayerTower::Update()
 #endif // _DEBUG
 }
 
+// 描画処理
 void PlayerTower::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
 }
-
 void PlayerTower::DebugDraw()
 {
 #ifdef USE_IMGUI

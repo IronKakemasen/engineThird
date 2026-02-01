@@ -23,9 +23,38 @@ void EnemyFactory::Reset()
 {
 	// モデルのリセット（中身が書いてあれば）
 	model->Reset();
+
+	// 現在選択されているステージ
+	ReplaceOnMap(inGameController->curStage);
 	
+	//// 現在選択されているステージでのアクティブ数を取得
+	//Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
+	//
+	//// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
+	//if (stageActiveCounts > ID)
+	//{
+	//	// アクティブ化
+	//	status = Status::kActive;
+	//	// 衝突判定をするかどうか定める
+	//	SwitchCollisionActivation(true);
+	//	// データ読み込み
+	//	LoadData();
+	//}
+	//else
+	//{
+	//	// 非アクティブ化
+	//	status = Status::kInActive;
+	//	// 衝突判定をするかどうか定める
+	//	SwitchCollisionActivation(false);
+	//}
+}
+
+// マップに配置
+void EnemyFactory::ReplaceOnMap(const int32_t stage)
+{
 	// 現在選択されているステージでのアクティブ数を取得
-	Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
+	Json::LoadParam(path, "/stage" + std::to_string(stage) + "/ActiveCount", stageActiveCounts);
+	tempStageNumber = stage;
 
 	// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
 	if (stageActiveCounts > ID)
@@ -84,7 +113,7 @@ void EnemyFactory::LoadData()
 {
 	if (status == Status::kInActive) return;
 
-	std::string key = "/stage" + std::to_string(inGameController->curStage) + "/ID:" + std::to_string(ID);
+	std::string key = "/stage" + std::to_string(tempStageNumber) + "/ID:" + std::to_string(ID);
 
 	Json::LoadParam(path, key + "/position", trans.pos);
 
@@ -104,6 +133,7 @@ void EnemyFactory::SaveData()
 	Json::Save(path);
 }
 
+// 更新処理
 void EnemyFactory::Update()
 {
 	model->Update();
@@ -121,11 +151,12 @@ void EnemyFactory::Update()
 #endif // _DEBUG
 }
 
+// 衝突した弾をリストに追加
 void EnemyFactory::AddHitBullet(PlayerBullet* bullet)
 {
 	hitBullets.push_back(bullet);
 }
-
+// その弾が既に衝突リストにあるか
 bool EnemyFactory::IsInHitBulletList(PlayerBullet* bullet)
 {
 	for (auto& hitBullet : hitBullets)
@@ -137,7 +168,7 @@ bool EnemyFactory::IsInHitBulletList(PlayerBullet* bullet)
 	}
 	return false;
 }
-
+// 衝突弾リスト更新
 void EnemyFactory::UpdateHitBullets()
 {
 	for (size_t i = 0; i < hitBullets.size(); ++i)
@@ -149,6 +180,8 @@ void EnemyFactory::UpdateHitBullets()
 		}
 	}
 }
+
+// エネミー生産
 void EnemyFactory::SpawnEnemy()
 {
 	spawnCounter.Add();

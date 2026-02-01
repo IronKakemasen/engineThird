@@ -104,6 +104,20 @@ void Enemy::Spawn(Vector3 pos)
 	// 初期向きを最近のターゲット方向に設定
 	LookAtTarget();
 
+	// 後ろ方向きにノックバック
+	Vector3 knickBackDir = trans.lookDir * -1.0f;
+	Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
+	// inGameConfig->enemyKnockBackRandomAngleOfSpawnの範囲で左右にランダム回転
+	float maxAngle = inGameConfig->enemyKnockBackRandomAngleOfSpawn;
+	float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * (3.1415f / 180.0f);
+	//float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * 3.1415f;
+	knickBackDir2D = Vector2(
+		knickBackDir2D.x * cosf(theta) - knickBackDir2D.y * sinf(theta),
+		knickBackDir2D.x * sinf(theta) + knickBackDir2D.y * cosf(theta)
+	);
+	knickBackDir = Vector3(knickBackDir2D.x, 0.0f, knickBackDir2D.y);
+	KnockBack(knickBackDir, inGameConfig->enemyKnockBackPowerOfSpawn);
+
 	// コリジョンサイズ設定
 	SetCircleCollision(inGameConfig->enemyCollisonSize);
 }
@@ -233,6 +247,17 @@ void Enemy::MoveKnockBack()
 
 void Enemy::KnockBack(Vector3 dir, float power)
 {
+	// dir を 2D化して正規化
+	Vector2 dir2D(dir.x, dir.z);
+	if (dir2D.GetMagnitutde() <= 0.0001f) return;
+	dir2D = dir2D.GetNormalized();
+
+	// 見た目の向きもノックバック方向に合わせる
+	trans.lookDir = Vector3(dir2D.x, 0.0f, dir2D.y);
+
+	// ノックバック
+	knockBackVelocity = Vector3(dir2D.x, 0.0f, dir2D.y) * power;
+
 	//Vector2 randomRotateVec = Vector2(dir.x, dir.z);
 	//float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
 	//float theta = deg * (3.1415f / 180.0f);
@@ -243,16 +268,17 @@ void Enemy::KnockBack(Vector3 dir, float power)
 	//trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
 	// 
 	//knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
-	Vector2 randomRotateVec = Vector2(trans.lookDir.x, trans.lookDir.z);
-	float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
-	float theta = deg * (3.1415f / 180.0f);
-	randomRotateVec = Vector2(
-		trans.lookDir.x * cosf(theta) - trans.lookDir.z * sinf(theta),
-		trans.lookDir.x * sinf(theta) + trans.lookDir.z * cosf(theta)
-	).GetNormalized();
-	trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
 
-	knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
+	//Vector2 randomRotateVec = Vector2(trans.lookDir.x, trans.lookDir.z);
+	//float deg = (rand() / float(RAND_MAX)) * 20.0f - 10.0f; // -2° ～ +2°
+	//float theta = deg * (3.1415f / 180.0f);
+	//randomRotateVec = Vector2(
+	//	trans.lookDir.x * cosf(theta) - trans.lookDir.z * sinf(theta),
+	//	trans.lookDir.x * sinf(theta) + trans.lookDir.z * cosf(theta)
+	//).GetNormalized();
+	//trans.lookDir = Vector3(randomRotateVec.x, 0.0f, randomRotateVec.y);
+	//
+	//knockBackVelocity = (trans.lookDir * -1) * power * 1.0f;
 }
 
 void Enemy::UpdateHitBullets()
@@ -279,12 +305,22 @@ void Enemy::DebugDraw(){}
 // プレイヤーとの衝突
 void Enemy::CollisionBackToPlayer::operator()()
 {
-	auto* player = reinterpret_cast<Player*>(me->Getter_ColObj());
-	// ノックバック方向計算
-	Vector3 dir = player->trans.pos - me->trans.pos;
-
-	// ノックバック付与
-	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToPlayer);
+	//auto* player = reinterpret_cast<Player*>(me->Getter_ColObj());
+	//
+	//// 後ろ方向きにノックバック
+	//Vector3 knickBackDir = me->trans.lookDir * -1.0f;
+	//Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
+	//// inGameConfig->enemyKnockBackRandomAngleOfSpawnの範囲で左右にランダム回転
+	//float maxAngle = 30.0f;
+	//float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * (3.1415f / 180.0f);
+	//knickBackDir2D = Vector2(
+	//	knickBackDir2D.x * cosf(theta) - knickBackDir2D.y * sinf(theta),
+	//	knickBackDir2D.x * sinf(theta) + knickBackDir2D.y * cosf(theta)
+	//);
+	//knickBackDir = Vector3(knickBackDir2D.x, 0.0f, knickBackDir2D.y);
+	//
+	//// ノックバック付与
+	//me->KnockBack(knickBackDir, me->inGameConfig->enemyKnockBackPowerToPlayer);
 }
 
 // プレイヤー弾との衝突
@@ -299,10 +335,19 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	me->AddHitBullet(bullet);
 
 	// ノックバック方向計算
-	Vector3 dir = bullet->trans.pos - me->trans.pos;
+	Vector3 knickBackDir = me->trans.lookDir * -1.0f;
+	Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
+	// inGameConfig->enemyKnockBackRandomAngleOfSpawnの範囲で左右にランダム回転
+	float maxAngle = 30.0f;
+	float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * (3.1415f / 180.0f);
+	knickBackDir2D = Vector2(
+		knickBackDir2D.x * cosf(theta) - knickBackDir2D.y * sinf(theta),
+		knickBackDir2D.x * sinf(theta) + knickBackDir2D.y * cosf(theta)
+	);
+	knickBackDir = Vector3(knickBackDir2D.x, 0.0f, knickBackDir2D.y);
 
 	// ノックバック付与
-	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToBullet);
+	me->KnockBack(knickBackDir, me->inGameConfig->enemyKnockBackPowerToBullet);
 
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
@@ -321,11 +366,21 @@ void Enemy::CollisionBackToPlayerTower::operator()()
 {
 	auto* playerTower = reinterpret_cast<PlayerTower*>(me->Getter_ColObj());
 
+
 	// ノックバック方向計算
-	Vector3 dir = playerTower->trans.pos - me->trans.pos;
+	Vector3 knickBackDir = me->trans.lookDir * -1.0f;
+	Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
+	// inGameConfig->enemyKnockBackRandomAngleOfSpawnの範囲で左右にランダム回転
+	float maxAngle = 30.0f;
+	float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * (3.1415f / 180.0f);
+	knickBackDir2D = Vector2(
+		knickBackDir2D.x * cosf(theta) - knickBackDir2D.y * sinf(theta),
+		knickBackDir2D.x * sinf(theta) + knickBackDir2D.y * cosf(theta)
+	);
+	knickBackDir = Vector3(knickBackDir2D.x, 0.0f, knickBackDir2D.y);
 
 	// ノックバック付与
-	me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToPlayerTower);
+	me->KnockBack(knickBackDir, me->inGameConfig->enemyKnockBackPowerToPlayerTower);
 }
 
 // プレイヤー味方との衝突
@@ -336,9 +391,19 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || playerAlly->GetCurrentState() == PlayerAlly::State::kFormed)
 	{
 		// ノックバック方向計算
-		Vector3 dir = playerAlly->trans.pos - me->trans.pos;
+	// ノックバック方向計算
+		Vector3 knickBackDir = me->trans.lookDir * -1.0f;
+		Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
+		// inGameConfig->enemyKnockBackRandomAngleOfSpawnの範囲で左右にランダム回転
+		float maxAngle = 30.0f;
+		float theta = ((rand() / float(RAND_MAX)) * maxAngle - (maxAngle / 2.0f)) * (3.1415f / 180.0f);
+		knickBackDir2D = Vector2(
+			knickBackDir2D.x * cosf(theta) - knickBackDir2D.y * sinf(theta),
+			knickBackDir2D.x * sinf(theta) + knickBackDir2D.y * cosf(theta)
+		);
+		knickBackDir = Vector3(knickBackDir2D.x, 0.0f, knickBackDir2D.y);
 
 		// ノックバック付与
-		me->KnockBack(dir.GetNormalized(), me->inGameConfig->enemyKnockBackPowerToAlly);
+		me->KnockBack(knickBackDir, me->inGameConfig->enemyKnockBackPowerToAlly);
 	}
 }

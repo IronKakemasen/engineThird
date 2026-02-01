@@ -2,13 +2,14 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerBulletModel/PlayerBulletModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
+#include "../../../GameObjects/ObjectParent/GameObjectEntity.h"
 
 struct Enemy;
 struct EnemyTower;
 struct EnemyFactory;
 struct PlayerAlly;
 
-struct PlayerBullet :public GameObject, public GameObjectBuilding
+struct PlayerBullet :public GameObject, public GameObjectEntity
 {
 #pragma region 独自部位
 

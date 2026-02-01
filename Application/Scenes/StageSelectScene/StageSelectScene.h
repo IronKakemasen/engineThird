@@ -56,6 +56,10 @@ class StageSelectScene final : public Scene
 	void UpdateAfterDecideStage();
 	Counter afterDecideCounter;
 
+	// ステージに合わせたマップ配置
+	void ReplaceObjects();
+	bool initialized = false;
+
 public:
 	StageSelectScene();
 

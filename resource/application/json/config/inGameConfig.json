@@ -15,12 +15,17 @@
         "player": 0.6000000238418579,
         "playerTower": 3.0
     },
+    "Controller": {
+        "deadZone": 0.30000001192092896
+    },
     "Distance": {
         "allyToAlly": 10,
         "playerToAlly": 5
     },
     "KnockBackPower": {
         "enemy": {
+            "OfSpawn": 1.0,
+            "RandomAngleOfSpawn": 180.0,
             "ToAlly": 3.0,
             "ToBullet": 0.05000000074505806,
             "ToBullet1": 0.10000000149011612,

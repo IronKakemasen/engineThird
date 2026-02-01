@@ -210,9 +210,10 @@ void Player::Move()
 	{
 		// 十字キーの入力がない場合はスティック入力を使う
 		// 左スティックの入力を取得
+		float deadZone = inGameConfig->deadZone;
 		Vector2 leftStick = M::GetInstance()->getPadState.GetLeftStick(0);
-		if (leftStick.x < 0.2f && leftStick.x > -0.2f) leftStick.x = 0.0f;
-		if (leftStick.y < 0.2f && leftStick.y > -0.2f) leftStick.y = 0.0f;
+		if (leftStick.x < deadZone && leftStick.x > -deadZone) leftStick.x = 0.0f;
+		if (leftStick.y < deadZone && leftStick.y > -deadZone) leftStick.y = 0.0f;
 		moveDir.x += leftStick.x;
 		moveDir.z += leftStick.y;
 	}
@@ -359,9 +360,10 @@ void Player::UpdateLookDir()
 	Vector3 target = Vector3(0.0f, 0.0f, 0.0f);
 
 	// 右スティックの入力を取得
+	float deadZone = inGameConfig->deadZone;
 	Vector2 rightStick = M::GetInstance()->getPadState.GetRightStick(0);
-	if (rightStick.x < 0.2f && rightStick.x > -0.2f) rightStick.x = 0.0f;
-	if (rightStick.y < 0.2f && rightStick.y > -0.2f) rightStick.y = 0.0f;
+	if (rightStick.x < deadZone && rightStick.x > -deadZone) rightStick.x = 0.0f;
+	if (rightStick.y < deadZone && rightStick.y > -deadZone) rightStick.y = 0.0f;
 	target.x = rightStick.x;
 	target.z = rightStick.y;
 	if (target.x == 0.0f && target.z == 0.0f) return;

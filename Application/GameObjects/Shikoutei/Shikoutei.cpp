@@ -14,6 +14,9 @@ void Shikoutei::SaveData()
 void Shikoutei::DebugDraw()
 {}
 
+void Shikoutei::ReplaceOnMap(const int32_t stage)
+{}
+
 void Shikoutei::Update()
 {
 	//モデルの更新処理（中身を書いていれば）

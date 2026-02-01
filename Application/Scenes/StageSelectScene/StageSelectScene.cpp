@@ -7,6 +7,9 @@ void StageSelectScene::Update()
 {
 	mainCamera.Update();
 
+	// initializedがfalseならオブジェクト配置
+	ReplaceObjects();
+
 	// ステージセレクトの回転処理
 	UpdateStageSelectRotation();
 
@@ -112,22 +115,19 @@ void StageSelectScene::DecideStage()
 
 	if (selectCounter.count < 1.0f) return;
 
-	if (M::GetInstance()->getPadState.GetConnectedPadNum() > 0)
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
 	{
-		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
-		{
-			selected = true;
-			afterDecideCounter.Initialize(2.0f);
-		}
+		selected = true;
+		afterDecideCounter.Initialize(2.0f);
 	}
-	else
+
+#ifdef _DEBUG
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
 	{
-		if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
-		{
-			selected = true;
-			afterDecideCounter.Initialize(2.0f);
-		}
+		selected = true;
+		afterDecideCounter.Initialize(2.0f);
 	}
+#endif // _DEBUG
 }
 
 void StageSelectScene::UpdateAfterDecideStage()
@@ -212,3 +212,38 @@ void StageSelectScene::Debug()
 
 }
 
+void StageSelectScene::ReplaceObjects()
+{
+	if (initialized) return;
+
+	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
+	{
+		// 回転中心オブジェクトのインスタンス化 & IDセット
+		for (size_t i = 0; i < centerObject[stageIndex].size(); ++i)
+		{
+			centerObject[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+		}
+		// テスト地面のインスタンス化 & IDセット
+		for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
+		{
+			grounds[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+		}
+		// プレイヤータワーのインスタンス化 & IDセット
+		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
+		{
+			playerTowers[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+		}
+		// エネミータワーのインスタンス化 & IDセット
+		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
+		{
+			enemyTowers[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+		}
+		// エネミーファクトリーのインスタンス化 & IDセット
+		for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
+		{
+			enemyFactories[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+		}
+	}
+
+	initialized = true;
+}

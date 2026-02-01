@@ -16,6 +16,7 @@ private:
 
 
 public:
+	void ReplaceOnMap(const int32_t stage) override;
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
 	// GameObject::StateがinActiveの場合は呼び出されない

@@ -10,6 +10,9 @@ InGameConfig::~InGameConfig()
 
 void InGameConfig::Load()
 {
+	std::string controller = "/Controller/";
+	Json::LoadParam(path, controller + "deadZone", deadZone);
+
 	std::string collisonSize = "/CollisonSize/";
 	Json::LoadParam(path, collisonSize + "player", playerCollisonSize);
 	Json::LoadParam(path, collisonSize + "playerTower", playerTowerCollisonSize);
@@ -44,6 +47,8 @@ void InGameConfig::Load()
 	Json::LoadParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::LoadParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::LoadParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
+	Json::LoadParam(path, knockBack + "enemy/OfSpawn", enemyKnockBackPowerOfSpawn);
+	Json::LoadParam(path, knockBack + "enemy/RandomAngleOfSpawn", enemyKnockBackRandomAngleOfSpawn);
 
 	std::string interval = "/SpawnInterval/";
 	Json::LoadParam(path, interval + "enemy", enemySpawnInterval);
@@ -64,6 +69,9 @@ void InGameConfig::Load()
 
 void InGameConfig::Save()
 {
+	std::string controller = "/Controller/";
+	Json::SaveParam(path, controller + "deadZone", deadZone);
+
 	std::string CollisonSize = "/CollisonSize/";
 	Json::SaveParam(path, CollisonSize + "player", playerCollisonSize);
 	Json::SaveParam(path, CollisonSize + "playerTower", playerTowerCollisonSize);
@@ -98,6 +106,9 @@ void InGameConfig::Save()
 	Json::SaveParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::SaveParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
 	Json::SaveParam(path, knockBack + "enemy/ToPTower", enemyKnockBackPowerToPlayerTower);
+	Json::SaveParam(path, knockBack + "enemy/OfSpawn", enemyKnockBackPowerOfSpawn);
+	Json::SaveParam(path, knockBack + "enemy/RandomAngleOfSpawn", enemyKnockBackRandomAngleOfSpawn);
+
 
 	std::string interval = "/SpawnInterval/";
 	Json::SaveParam(path, interval + "enemy", enemySpawnInterval);
@@ -129,6 +140,13 @@ void InGameConfig::DebugDraw()
 		Save();
 	}
 
+	ImGui::Separator();
+
+	if (ImGui::TreeNode("Controller"))
+	{
+		ImGui::DragFloat("DeadZone", &deadZone, 0.01f, 0.0f, 1.0f);
+		ImGui::TreePop();
+	}
 	if (ImGui::TreeNode("CollisonSize"))
 	{
 		ImGui::DragFloat("Player    CollisonSize", &playerCollisonSize, 0.1f, 0.0f, 10.0f);
@@ -176,6 +194,8 @@ void InGameConfig::DebugDraw()
 		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toPTower", &enemyKnockBackPowerToPlayerTower, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy 	ofSpawn", &enemyKnockBackPowerOfSpawn, 0.1f, 0.0f, 20.0f);
+		ImGui::DragFloat("Enemy 	randomAngleOfSpawn", &enemyKnockBackRandomAngleOfSpawn, 1.0f, 0.0f, 360.0f);
 
 		ImGui::TreePop();
 	}

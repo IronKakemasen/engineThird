@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdint>
 #include "../../M/utilities/benriTemplateFunc/benriTempFunc.h"
+#include "../../lowerLayer/math/vector/vector.h"
 
 class InGameConfig;
 struct InGameController;
@@ -24,10 +25,10 @@ public:
 	// Jsonパス
 	std::string path;
 
-	float GetHP() const { return hp; }
-
 	// inGameController参照ポインタ
 	InGameController* inGameController = nullptr;
+
+	float GetHP() const { return hp; }
 
 protected:
 
