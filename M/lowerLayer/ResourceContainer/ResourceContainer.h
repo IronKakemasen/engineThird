@@ -21,16 +21,35 @@ enum class TextureTag
 	kEnemyThornN,
 	kAllyN,
 
-	kButtonBack200x60,
-	kButtonDecision200x60,
-	kButtonMove200x60,
-	kButtonOption200x60,
-	kButtonPause200x60,
-	kButtonShot200x60,
-	kButtonZoom200x60,
-	kNumbers1000x100,
-	kButtonReticle200x60,
+	// 汎用
+	kNumbers1000x100,		// numbers
+	kCursor50x50,			// cursor
 
+	// 操作説明UI
+	kButtonBack200x60,		// モドル
+	kButtonDecision200x60,	// ケッテイ
+	kButtonMove200x60,		// イドウ
+	kButtonOption200x60,	// セッテイ
+	kButtonPause200x60,		// ポーズ
+	kButtonReticle200x60,	// ネラウ
+	kButtonSet200x60,		// ハイチ
+	kButtonShot200x60,		// ショット
+	kButtonZoom200x60,		// ズーム
+
+
+	// ポーズUI
+	Pause500x100, 			// ポーズタイトル
+	PauseButton01_350x50,	// プレイ
+	PauseButton02_350x50,	// リトライ
+	PauseButton03_350x50,	// オプション
+	PauseButton04_350x50,	// セレクト
+	PauseScreen_1280x720,	// ポーズ背景
+
+	// インゲームUI
+	kGameOver1000x200,		// ゲームオーバー
+	StageClear1000x200,		// ゲームクリア
+
+	// ステージセレクトUI
 	kStageName1000x100,
 
 	kGroundN,
