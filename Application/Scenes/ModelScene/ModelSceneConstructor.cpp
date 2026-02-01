@@ -30,7 +30,7 @@ void ModelScene::Init()
 
 	playerTowerModel.model->GetAppearance(0)->trans.pos = { -5.5,1.5f,1.0f };
 	enemyTowerModel.model->GetAppearance(0)->trans.pos = { 5.5,1.5f,1.0f };
-	enemyFactoryModel.model->GetAppearance(0)->trans.pos = { 5.5,0,5.0 };
+	//enemyFactoryModel.model->GetAppearance(0)->trans.pos = { 5.5,0,5.0 };
 
 	Load();
 }

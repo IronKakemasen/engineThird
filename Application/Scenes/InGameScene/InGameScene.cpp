@@ -38,9 +38,6 @@ void InGameScene::Update()
 
 	AdaptToPostEffect();
 
-	//現在使用しているカメラのビュープロジェクション
-	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
-
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -64,7 +61,7 @@ void InGameScene::AdaptToPostEffect()
 	case PostEffectType::kNone:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
 		metalicCommon = metalicCommonNormal;
@@ -76,7 +73,7 @@ void InGameScene::AdaptToPostEffect()
 	case PostEffectType::kGreyScale:
 	{
 		ground->groundPlane->model->GetAppearance(0)->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
 		dirPara->intensity = dirLightIntensityNormal;
 		dirPara->pos = dirLightDir;
@@ -91,17 +88,14 @@ void InGameScene::AdaptToPostEffect()
 		auto* appe = ground->groundPlane->model->GetAppearance(0);
 		appe->color = { 255,255,255,255 };
 		appe->shaderSetIndex =
-			M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+			M::GetInstance()->GetShaderSetIndexFromFileName("ModelBump.VS", "ModelBump.PS");
 
 		dirPara->intensity = dirLightIntensityNeon;
-		dirPara->pos = {1.0f,5.7f,0.0f};
+		dirPara->pos = {10.4f,9.7f,0.0f};
 		metalicCommon = metalicCommonNeon;
 		roughnessCommon = roughnessCommonNeon;
 
 		lightradiusCommon = 11.0f;
-
-
-
 		break;
 	}
 	}
@@ -139,9 +133,13 @@ void InGameScene::AdaptToPostEffect()
 	for (auto* fac : factories)
 	{
 		auto* fac_ = reinterpret_cast<EnemyFactory*>(fac);
-		auto* appe = fac_->model->model->GetAppearance(0);
-		appe->metalic = metalicCommon;
-		appe->roughness = roughnessCommon;
+		for (auto* m : fac_->model->models)
+		{
+			auto* appe = m->GetAppearance(0);
+			appe->metalic = metalicCommon;
+			appe->roughness = roughnessCommon;
+
+		}
 	}
 
 	//Enemy
@@ -212,9 +210,6 @@ void InGameScene::Draw()
 		lightModels[i].Draw(vpMat);
 
 	}
-
-
-
 }
 
 void InGameScene::Reset()
@@ -414,63 +409,33 @@ void InGameScene::Debug()
 void InGameScene::EnterMode()
 {
 	float cnt = inGameController->curCnt;
-	auto data = fieldLightData[inGameController->curStage];
 
-	for (int i = 0; i < kNumPLight; ++i)
-	{
-		if (i >= data.useNum)
-		{
-			fieldpointLights[i]->Getter_Para()->isActive = false;
-			continue;
-		}
-
-		Vector3 fstPos = data.dstPositions[i] + Vector3{ 0,-10,0 };
-		auto* para = fieldpointLights[i]->Getter_Para();
-		para->isActive = true;
-		para->invSqrRadius = lightradiusCommon;
-
-		para->pos = Easing::Lerp(fstPos, data.dstPositions[i], cnt);
-		lightModels[i].model->GetAppearance(0)->trans.pos = para->pos;
-
-	}
-}
-
-void InGameScene::PlayableMode()
-{
-	Lighthing();
-}
-
-void InGameScene::Lighthing()
-{
-	int useNo = 0;
+	int useNo{};
+	std::vector<Vector3> dstPositions;
 
 	//Player
 	auto* playerLight = fieldpointLights[0]->Getter_Para();
 	playerLight->intensity = 20000;
-	playerLight->invSqrRadius = 800.0f;
-	playerLight->pos =
-		Vector3{ 0,5.0f,0.75f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
+	playerLight->invSqrRadius = 60;
+	dstPositions.emplace_back(Vector3{ 0,6.0f,-0.5f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix()));
 	playerLight->color = { 20,20,255 };
 
 	useNo++;
-
-
-	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
 
 	std::vector<GameObject*> ets = gameObjManager->Find(GameObject::kEnemyTower);
 	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
 	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
 	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+
 	//EnemyTower
 	for (auto* enemyTower : ets)
 	{
 		if (enemyTower->GetStatus() == GameObject::Status::kInActive) continue;
 		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
 		enemyTowerLight->intensity = 20000;
-		enemyTowerLight->invSqrRadius = 400;
-		enemyTowerLight->pos =
-			Vector3{ 0,6.0f,1.0f }.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix());
-		enemyTowerLight->color = { 255,20,20 };
+		enemyTowerLight->invSqrRadius = 800;
+		dstPositions.emplace_back(Vector3{ 0.0f,6.0f,1.75f }.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix()));
+		enemyTowerLight->color = { 255,0,0 };
 
 		useNo++;
 	}
@@ -481,10 +446,9 @@ void InGameScene::Lighthing()
 		if (factory_->GetStatus() == GameObject::Status::kInActive) continue;
 		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
 		enemyTowerLight->intensity = 20000;
-		enemyTowerLight->invSqrRadius = 400;
-		enemyTowerLight->pos =
-			Vector3{ 0,6.0f,1.0f }.GetMultiply(factory_->Getter_Trans()->GetWorldMatrix());
-		enemyTowerLight->color = { 255,20,20 };
+		enemyTowerLight->invSqrRadius = 100;
+		dstPositions.emplace_back(Vector3{ 0.0f,10,0 }.GetMultiply(factory_->Getter_Trans()->GetWorldMatrix()));
+		enemyTowerLight->color = { 200,0,0 };
 
 		useNo++;
 	}
@@ -496,10 +460,89 @@ void InGameScene::Lighthing()
 		if (pt_->GetStatus() == GameObject::Status::kInActive) continue;
 		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
 		enemyTowerLight->intensity = 20000;
-		enemyTowerLight->invSqrRadius = 400;
+		enemyTowerLight->invSqrRadius = 100;
+		dstPositions.emplace_back(Vector3{ 0.0f,5.0f,-2.25f }.GetMultiply(pt_->Getter_Trans()->GetWorldMatrix()));
+		enemyTowerLight->color = { 20,50,255 };
+
+		useNo++;
+	}
+
+
+	for (int i = 0; i < (int)dstPositions.size(); ++i)
+	{
+		auto* para = fieldpointLights[i]->Getter_Para();
+		para->isActive = true;
+
+		Vector3 fstPos = dstPositions[i] + Vector3{0,-10,0};
+		para->pos = Easing::EaseInOutQuad(fstPos, dstPositions[i], cnt);
+	}
+}
+
+void InGameScene::PlayableMode()
+{
+	Lighthing();
+}
+
+void InGameScene::Lighthing()
+{
+	int useNo = 0;
+	static Vector3 c;
+
+	//Player
+	auto* playerLight = fieldpointLights[0]->Getter_Para();
+	playerLight->intensity = 20000;
+	playerLight->invSqrRadius = 60;
+	playerLight->pos =
+		Vector3{ 0,6.0f,-0.5f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
+	playerLight->color = { 20,20,255 };
+
+	useNo++;
+	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
+
+	std::vector<GameObject*> ets = gameObjManager->Find(GameObject::kEnemyTower);
+	std::vector<GameObject*> pts = gameObjManager->Find(GameObject::kPlayerTower);
+	std::vector<GameObject*> alliance = gameObjManager->Find(GameObject::kPlayerAlly);
+	std::vector<GameObject*> factories = gameObjManager->Find(GameObject::kEnemyFactory);
+	
+	//EnemyTower
+	for (auto* enemyTower : ets)
+	{
+		if (enemyTower->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 800;
 		enemyTowerLight->pos =
-			Vector3{ 0,6.0f,1.0f }.GetMultiply(pt_->Getter_Trans()->GetWorldMatrix());
-		enemyTowerLight->color = { 20,20,255 };
+			Vector3{ 0.0f,6.0f,1.75f}.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 255,0,0 };
+
+		useNo++;
+	}
+
+	//factories
+	for (auto* factory_ : factories)
+	{
+		if (factory_->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 100;
+		enemyTowerLight->pos =
+			Vector3{ 0.0f,10,0 }.GetMultiply(factory_->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 200,0,0 };
+
+		useNo++;
+	}
+
+
+	//PlayerTower
+	for (auto* pt_ : pts)
+	{
+		if (pt_->GetStatus() == GameObject::Status::kInActive) continue;
+		auto* enemyTowerLight = fieldpointLights[useNo]->Getter_Para();
+		enemyTowerLight->intensity = 20000;
+		enemyTowerLight->invSqrRadius = 100;
+		enemyTowerLight->pos =
+		Vector3{0.0f,5.0f,-2.25f}.GetMultiply(pt_->Getter_Trans()->GetWorldMatrix());
+		enemyTowerLight->color = { 20,50,255 };
 
 		useNo++;
 	}
