@@ -1,0 +1,69 @@
+#include "BuildingsManager.h"
+#include "../Enemy/EnemyFactory/EnemyFactory.h"
+#include "../Enemy/EnemyTower/EnemyTower.h"
+#include "../Player/PlayerTower/PlayerTower.h"
+
+//コリジョンバックテーブルを設定
+void BuildingsManager::SetCollisionBackTable()
+{}
+
+void BuildingsManager::LoadData()
+{}
+
+void BuildingsManager::SaveData()
+{}
+
+void BuildingsManager::DebugDraw()
+{}
+
+void BuildingsManager::SetEnemyFactory(EnemyFactory* factory)
+{
+	enemyFactories.push_back(factory);
+}
+
+void BuildingsManager::SetEnemyTower(EnemyTower * tower)
+{
+	enemyTowers.push_back(tower);
+}
+
+void BuildingsManager::SetPlayerTower(PlayerTower * tower)
+{
+	playerTowers.push_back(tower);
+}
+
+void BuildingsManager::ReplaceOnMap(const int32_t stage)
+{
+	for (auto& factory : enemyFactories)
+	{
+		factory->ReplaceOnMap(stage);
+	}
+	for (auto& tower : enemyTowers)
+	{
+		tower->ReplaceOnMap(stage);
+	}
+	for (auto& pTower : playerTowers)
+	{
+		pTower->ReplaceOnMap(stage);
+	}
+}
+
+void BuildingsManager::Update()
+{
+}
+
+void BuildingsManager::Init()
+{
+}
+
+void BuildingsManager::Reset()
+{
+}
+
+void BuildingsManager::Draw(Matrix4* vpMat_)
+{
+}
+
+
+BuildingsManager::BuildingsManager()
+{
+}

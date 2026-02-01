@@ -22,8 +22,12 @@ private:
 	// そのターンで衝突した弾のリスト（多重衝突防止用）
 	std::vector<PlayerBullet*> hitBullets{};
 
-public:
+	// 復活カウンター
+	Counter rebornCounter;
+	bool isDead = false;
 
+public:
+	 
 	// 衝突した弾をリストに追加
 	void AddHitBullet(PlayerBullet* bullet);
 	// その弾が既に衝突リストにあるか

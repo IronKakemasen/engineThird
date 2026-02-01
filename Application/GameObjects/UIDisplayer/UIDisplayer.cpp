@@ -78,6 +78,13 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 	}
 
 	LoadData();
+	for (size_t i = 0; i < drawOrder.size(); i++)
+	{
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
+		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
+		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
+	}
 }
 
 void UIDisplayer::SuperDraw(Matrix4 * ortho_)
@@ -91,6 +98,7 @@ void UIDisplayer::SuperDraw(Matrix4 * ortho_)
 
 void UIDisplayer::DebugDraw()
 {
+#ifdef USE_IMGUI
 	ImGui::Begin("UI Debug");
 
 	if (ImGui::Button("Save UI Data")) SaveData();
@@ -132,6 +140,7 @@ void UIDisplayer::DebugDraw()
 	}
 
 	ImGui::End();
+#endif // USE_IMGUI
 }
 
 UIDisplayer::UIDisplayer()
