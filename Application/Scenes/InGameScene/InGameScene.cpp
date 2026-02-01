@@ -449,7 +449,7 @@ void InGameScene::Lighthing()
 	playerLight->intensity = 20000;
 	playerLight->invSqrRadius = 800.0f;
 	playerLight->pos =
-		Vector3{ 0,4.0f,0.75f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
+		Vector3{ 0,5.0f,0.75f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
 	playerLight->color = { 20,20,255 };
 
 	useNo++;
