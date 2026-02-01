@@ -2,6 +2,7 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/EnemyTowerModel/EnemyTowerModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
+#include "../../BuildingsManager/BuildingsManager.h"
 
 struct PlayerBullet;
 
@@ -36,6 +37,13 @@ public:
 
 	// デバッグ描画
 	void DebugDraw() override;
+
+	// BuildingsManagerセット
+	void SetBuildingsManager(BuildingsManager* manager_) override
+	{
+		buildingsManager = manager_;
+		buildingsManager->SetEnemyTower(this);
+	}
 
 	int32_t tempStageNumber = -1;
 

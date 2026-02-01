@@ -24,29 +24,11 @@ void EnemyFactory::Reset()
 	// モデルのリセット（中身が書いてあれば）
 	model->Reset();
 
+	// 衝突判定をするかどうか定める
+	SwitchCollisionActivation(true);
+
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
-	
-	//// 現在選択されているステージでのアクティブ数を取得
-	//Json::LoadParam(path, "/stage" + std::to_string(inGameController->curStage) + "/ActiveCount", stageActiveCounts);
-	//
-	//// ステージ毎アクティブ数とIDを比較してアクティブ化・非アクティブ化を決定
-	//if (stageActiveCounts > ID)
-	//{
-	//	// アクティブ化
-	//	status = Status::kActive;
-	//	// 衝突判定をするかどうか定める
-	//	SwitchCollisionActivation(true);
-	//	// データ読み込み
-	//	LoadData();
-	//}
-	//else
-	//{
-	//	// 非アクティブ化
-	//	status = Status::kInActive;
-	//	// 衝突判定をするかどうか定める
-	//	SwitchCollisionActivation(false);
-	//}
 }
 
 // マップに配置
@@ -82,7 +64,6 @@ void EnemyFactory::Init()
 	model->Init(&trans);
 	
 	// identityTableにセットされている通りに、identityを定める
-	// タグ、名前、衝突判定マスキング
 	SetIdentity(Tag::kEnemyFactory);
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(inGameConfig->enemyFactoryCollisonSize);
@@ -252,6 +233,9 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 	if (me->hp <= 0.0f)
 	{
 		me->SetStatus(Status::kInActive);
+		me->SwitchCollisionActivation(false);
+		me->isDead = true;
+		me->buildingsManager->NotifyEnemyFactoryDead(me);
 	}
 }
 

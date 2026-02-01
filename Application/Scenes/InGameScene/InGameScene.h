@@ -14,6 +14,7 @@
 #include "../../GameObjects/Enemy/EnemyTower/EnemyTower.h"
 #include "../../GameObjects/Enemy/EnemyFactory/EnemyFactory.h"
 #include "../../GameObjects/InGameController/InGameController.h"
+#include "../../GameObjects/BuildingsManager/BuildingsManager.h"
 #include "../../GameObjects/UIDisplayer/UIDisplayer.h"
 #include "../../Cameras/MainCamera/MainCamera.h"
 #include "../../engineCore/Light/RectLight/RectLight.h"
@@ -39,6 +40,7 @@ class InGameScene final : public Scene
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
 	std::unique_ptr<Ground> ground;
+	std::unique_ptr<BuildingsManager> buildingsManager;
 	std::unique_ptr < TenkyuuClass> tenkyuuClass;
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
