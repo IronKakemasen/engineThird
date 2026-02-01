@@ -49,9 +49,9 @@ void ModelScene::AdaptToPostEffect()
 		enemyTowerMat->metalic = metalicCommonNormal;
 		enemyTowerMat->roughness = roughnessCommonNormal;
 
-		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
-		enemyFactoryMat->metalic = metalicCommonNormal;
-		enemyFactoryMat->roughness = roughnessCommonNormal;
+		//auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		//enemyFactoryMat->metalic = metalicCommonNormal;
+		//enemyFactoryMat->roughness = roughnessCommonNormal;
 
 		break;
 	}
@@ -85,9 +85,9 @@ void ModelScene::AdaptToPostEffect()
 		enemyTowerMat->metalic = metalicCommonNormal;
 		enemyTowerMat->roughness = roughnessCommonNormal;
 
-		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
-		enemyFactoryMat->metalic = metalicCommonNormal;
-		enemyFactoryMat->roughness = roughnessCommonNormal;
+		//auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		//enemyFactoryMat->metalic = metalicCommonNormal;
+		//enemyFactoryMat->roughness = roughnessCommonNormal;
 
 		break;
 	}
@@ -122,9 +122,9 @@ void ModelScene::AdaptToPostEffect()
 		enemyTowerMat->metalic = metalicCommonNeon;
 		enemyTowerMat->roughness = roughnessCommonNeon;
 
-		auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
-		enemyFactoryMat->metalic = metalicCommonNeon;
-		enemyFactoryMat->roughness = roughnessCommonNeon;
+		//auto* enemyFactoryMat = enemyFactoryModel.model->GetAppearance(0);
+		//enemyFactoryMat->metalic = metalicCommonNeon;
+		//enemyFactoryMat->roughness = roughnessCommonNeon;
 
 		break;
 	}

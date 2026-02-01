@@ -11,6 +11,7 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string pathToTower = "./resource/application/Texture/Tower/";
 	std::string pathToFactory = "./resource/application/Texture/Factory/";
 	std::string pathToBullet = "./resource/application/Texture/Bullet/";
+	std::string pathToGround = "./resource/application/Texture/Ground/";
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
@@ -47,6 +48,9 @@ void ResourceContainer::LoadAllTextureFile()
 
 	LoadTextureFile(TextureTag::kBulletN, pathToBullet + "PlayerBullet_normal.png");
 
+	LoadTextureFile(TextureTag::kGroundN, pathToGround + "Ground_normal.png");
+
+	LoadTextureFile(TextureTag::kScrewN, pathToFactory + "screw_normal.png");
 
 	
 }
