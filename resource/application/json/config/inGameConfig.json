@@ -51,8 +51,12 @@
             "defaultAttackPower": 1.0
         }
     },
+    "Separate": {
+        "judgeSinglePressFrame": 10,
+        "separateCompleteFrame": 120
+    },
     "SpawnInterval": {
-        "enemy": 4.0,
+        "enemy": 5.0,
         "maxAllyCount": 3,
         "playerAlly": 3.0
     },
