@@ -11,6 +11,7 @@ struct UIDisplayer :public GameObject
 		TiTle,
 		StageSelect,
 		InGame,
+		Pause,
 		None,
 	};
 	std::string toString(UIMode uiMode)
@@ -25,6 +26,9 @@ struct UIDisplayer :public GameObject
 			break;
 		case UIDisplayer::UIMode::InGame:
 			return "InGame";
+			break;
+		case UIDisplayer::UIMode::Pause:
+			return "Pause";
 			break;
 		case UIDisplayer::UIMode::None:
 			return "None";
