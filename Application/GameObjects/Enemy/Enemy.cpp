@@ -357,7 +357,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	{
 		me->SetStatus(Status::kInActive);
 
-		if (bullet->isMaximized == true)me->targetPlayer->SpawnAlly(me->trans.pos);
+		if (bullet->isMaximized == false)me->targetPlayer->SpawnAlly(me->trans.pos);
 	}
 }
 

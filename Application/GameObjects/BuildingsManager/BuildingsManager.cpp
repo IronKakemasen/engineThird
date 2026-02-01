@@ -1,4 +1,7 @@
 #include "BuildingsManager.h"
+#include "../Enemy/EnemyFactory/EnemyFactory.h"
+#include "../Enemy/EnemyTower/EnemyTower.h"
+#include "../Player/PlayerTower/PlayerTower.h"
 
 //コリジョンバックテーブルを設定
 void BuildingsManager::SetCollisionBackTable()
@@ -29,7 +32,20 @@ void BuildingsManager::SetPlayerTower(PlayerTower * tower)
 }
 
 void BuildingsManager::ReplaceOnMap(const int32_t stage)
-{}
+{
+	for (auto& factory : enemyFactories)
+	{
+		factory->ReplaceOnMap(stage);
+	}
+	for (auto& tower : enemyTowers)
+	{
+		tower->ReplaceOnMap(stage);
+	}
+	for (auto& pTower : playerTowers)
+	{
+		pTower->ReplaceOnMap(stage);
+	}
+}
 
 void BuildingsManager::Update()
 {
