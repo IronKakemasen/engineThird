@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "../GameObject/GameObjectBehavior.h"
 #include "../Collision/CollisionDetection/CollisionDetection.h"
+#include "../../../Application/GameObjects/InGameController/InGameController.h"
 #include "../../M.h"
 
 #ifdef USE_IMGUI
@@ -179,12 +180,35 @@ void GameObjectManager::Reset()
 
 void GameObjectManager::Update()
 {
+	// InGameController取得
+	std::vector<GameObject*> inGameControllerList = Find(GameObject::Tag::kInGameController);
+	InGameController* inGameController = reinterpret_cast<InGameController*>(inGameControllerList[0]);
+
+	// ポーズ中は更新しない
+	bool isPause = false;
+	if (inGameController->curMode == InGameController::kUnPlayable)
+	{
+		isPause = true;
+	}
+
+	// 登録されたオブジェクトの更新
 	for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
 	{
 		if ((*itr) == nullptr) continue;
+		// 非アクティブならスキップ
 		else if ((*itr)->GetStatus() != GameObjectBehavior::Status::kActive)
 		{
 			continue;
+		}
+
+		// ポーズ中はInGameControllerとUIManager以外更新しない
+		if (isPause)
+		{
+			if ((*itr)->Getter_Identity()->tag != GameObjectBehavior::Tag::kUIManager &&
+				(*itr)->Getter_Identity()->tag != GameObjectBehavior::Tag::kInGameController)
+			{
+				continue;
+			}
 		}
 
 		(*itr)->Update();

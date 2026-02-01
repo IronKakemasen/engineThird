@@ -4,7 +4,8 @@
 #include <array>
 
 void UIDisplayer::Update()
-{}
+{
+}
 
 void UIDisplayer::Init()
 {
@@ -15,7 +16,7 @@ void UIDisplayer::Init()
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
 		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
 	}
-
+	SetIdentity(Tag::kUIManager);
 }
 
 void UIDisplayer::Reset()

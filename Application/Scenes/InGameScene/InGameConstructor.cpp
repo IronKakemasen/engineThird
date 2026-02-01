@@ -191,6 +191,7 @@ void InGameScene::Instantiate()
 	for (auto& enemyFactory : enemyFactories)
 		gameObjManager->RegisterForContainer(enemyFactory.get());
 	gameObjManager->RegisterForContainer(buildingsManager.get());
+	gameObjManager->RegisterForContainer(uiDisplayer.get());
 
 
 	// ポインタを渡す

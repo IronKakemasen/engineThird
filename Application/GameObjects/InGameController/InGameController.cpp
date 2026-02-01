@@ -23,7 +23,7 @@ void InGameController::SetModeData()
 
 	modeData[Mode::kEnter].Set(3.0f);
 	modeData[Mode::kPlayable].Set(1.0f);
-	modeData[Mode::kUnPlayable].Set(1.0f);
+	modeData[Mode::kUnPlayable].Set(5.0f);
 	modeData[Mode::kResult].Set(1.0f);
 	modeData[Mode::kGameOver].Set(1.0f);
 
@@ -44,6 +44,13 @@ void InGameController::SetCollisionBackTable()
 
 void InGameController::Update()
 {
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
+	{
+		if (curMode == Mode::kPlayable) curMode = Mode::kUnPlayable;
+		else if (curMode == Mode::kUnPlayable) curMode = Mode::kPlayable;
+	}
+
+
 	(*actors[curMode].get())();
 }
 
