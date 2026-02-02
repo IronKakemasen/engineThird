@@ -129,11 +129,26 @@ struct UIDisplayer :public GameObject
 
 private:
 
+	// UIモード
 	UIMode mode = UIMode::None;
-
+	// 設定ファイルパス
 	std::string path = "./resource/application/json/config/ui.json";
+	// インゲームコントローラー
+	InGameController* inGameController = nullptr;
 
-	Counter pauseCounter;
+	// 全UIデータ
+	std::map<uiType, uiData> uiElements;
+	// 描画UIリスト
+	std::vector<uiType> drawOrder;
+
+	/////// ポーズ用 ///////
+	Counter pauseCounter;				// ポーズイン・アウト用カウンター
+	float pauseScreenOffset = 0.0f;		// ポーズスクリーンのオフセット
+	float preOffset = 0.0f;				// ポーズイン・アウト前のオフセット
+	int32_t currentSelectedButton = 0;	// 現在選択中のボタン
+	Counter buttonSelectCounter;    // ボタン選択用カウンター
+	float preButtonOffset = 0.0f; // ボタン選択前のオフセット
+	void UpdatePauseUI();
 
 public:
 
@@ -148,15 +163,6 @@ public:
 
 	void LoadData();
 	void SaveData();
-
-private:
-	InGameController* inGameController = nullptr;
-
-	std::vector<uiType> drawOrder;
-	std::map<uiType, uiData> uiElements;
-
-	float pauseScreenOffset = 0.0f;
-	float preOffset = 0.0f;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

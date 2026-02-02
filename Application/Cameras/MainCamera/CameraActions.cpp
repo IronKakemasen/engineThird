@@ -16,6 +16,8 @@ void CameraActions::FollowPlayer::operator()()
 
 	auto X = M::GetInstance()->getPadState.GetRightStick(0).x;
 	auto Y = M::GetInstance()->getPadState.GetRightStick(0).y;
+	if (std::abs(X) < 0.3f)X = 0.0f;
+	if (std::abs(Y) < 0.3f)Y = 0.0f;
 
 	Vector3 tmp = Vector3{ X,0,Y }.GetNormalized();
 
