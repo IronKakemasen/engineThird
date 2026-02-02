@@ -210,6 +210,7 @@ void InGameScene::Draw()
 		lightModels[i].Draw(vpMat);
 
 	}
+
 }
 
 void InGameScene::Reset()

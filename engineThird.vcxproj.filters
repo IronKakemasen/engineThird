@@ -192,6 +192,7 @@
     <ClCompile Include="Application\Config\GameConstants.cpp" />
     <ClCompile Include="Application\Models\LightModel\LightModel.cpp" />
     <ClCompile Include="Application\GameObjects\BuildingsManager\BuildingsManager.cpp" />
+    <ClCompile Include="Application\Models\CircleModel\CircleModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -384,6 +385,7 @@
     <ClInclude Include="Application\GameObjects\Tenkyuu\TenkyuuClass.h" />
     <ClInclude Include="Application\Models\LightModel\LightModel.h" />
     <ClInclude Include="Application\GameObjects\BuildingsManager\BuildingsManager.h" />
+    <ClInclude Include="Application\Models\CircleModel\CircleModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

@@ -3,8 +3,19 @@
 
 void PlayerModel::Update(int mode_, float count_)
 {
-	//Run();
-	Idle();
+	mode_ = 1;
+	if (mode_ == 0)
+	{
+		IdleInGame();
+	}
+	else if (mode_ == 1)
+	{
+		Run();
+	}
+	else
+	{
+		Idle();
+	}
 }
 
 void PlayerModel::Idle()
@@ -53,7 +64,7 @@ void PlayerModel::Idle()
 		float t = Counter::GetNormalizedCount(0.1f, 0.5f, headRotateCnt.count);
 		h->trans.rotation.x = Easing::EaseOutExpo(0.0f, -720.0f, t);
 
-		float const maxHeight = 2.5f;
+		float const maxHeight = 3.0f;
 		float headDefaultY = 0.5199999809265137;
 		if (headRotateCnt.count >= 0.1f && headRotateCnt.count < 0.4f)
 		{
@@ -61,24 +72,98 @@ void PlayerModel::Idle()
 			h->trans.pos.y = Easing::EaseOutCubic(headDefaultY, headDefaultY + maxHeight, tt);
 
 		}
-		else if (headRotateCnt.count >= 0.4f && headRotateCnt.count < 0.5f)
+		else if (headRotateCnt.count >= 0.4f && headRotateCnt.count < 0.45f)
 		{
-			float tt = Counter::GetNormalizedCount(0.4f, 0.5f, headRotateCnt.count);
+			float tt = Counter::GetNormalizedCount(0.4f, 0.45f, headRotateCnt.count);
 			h->trans.pos.y = Easing::EaseOutExpo(headDefaultY + maxHeight, headDefaultY , tt);
 
 		}
 	}
 
+	if (headRotateCnt.count >= 0.4f && headRotateCnt.count < 0.5f)
+	{
+		float const bodyDefaultY = 0.5f;
+		float const legDefaultY = -0.4f;
+
+		float numTizimi = 0.2f;
+
+		float t = Counter::GetNormalizedCount(0.4f, 0.5f, headRotateCnt.count);
+
+		//縮んで
+		if (t < 0.5f)
+		{
+			float tt = Counter::GetNormalizedCount(0.0f, 0.5f, t);
+
+			b->trans.pos.y = Easing::EaseOutCubic(bodyDefaultY, bodyDefaultY - numTizimi, t);
+			legr->trans.pos.y = Easing::EaseOutCubic(legDefaultY, legDefaultY + numTizimi, t);
+			legl->trans.pos.y = Easing::EaseOutCubic(legDefaultY, legDefaultY + numTizimi, t);
+		}
+		//伸びる
+		else
+		{
+			float tt = Counter::GetNormalizedCount(0.5f, 1.0f, t);
+
+			b->trans.pos.y = Easing::EaseInExpo(bodyDefaultY - numTizimi, bodyDefaultY, t);
+			legr->trans.pos.y = Easing::EaseInExpo(legDefaultY + numTizimi, legDefaultY, t);
+			legl->trans.pos.y = Easing::EaseInExpo(legDefaultY + numTizimi, legDefaultY, t);
+		}
+
+	}
+
+	if (headRotateCnt.count >= 0.6f && headRotateCnt.count < 0.9f)
+	{
+		float t = Counter::GetNormalizedCount(0.6f, 0.9f, headRotateCnt.count);
+
+		float c = sinf(6.28f * t) * 45.0f;
+		float cc = sinf(3.14f * t) * -22.5f;
+		h->trans.rotation.y = c;
+		h->trans.rotation.x = cc;
+
+	}
+
+
 	headRotateCnt.Add();
 	headRotateCnt.IsEnd();
+}
+
+void PlayerModel::IdleInGame()
+{
+	auto* h = head->GetAppearance(0);
+	auto* b = body->GetAppearance(0);
+	auto* legr = leg_R->GetAppearance(0);
+	auto* legl = leg_L->GetAppearance(0);
+	auto* arml = hand_L->GetAppearance(0);
+	auto* armr = hand_R->GetAppearance(0);
+
+	float const bodyDefaultY = 0.5f;
+	float const legDefaultY = -0.4f;
+
+	h->trans.rotation.x = 0;
+
+	b->trans.pos.y = bodyDefaultY;
+	b->trans.rotation.x = 0;
+
+	legr->trans.rotation.x = 0;
+	legl->trans.rotation.x = 0;
+
+	arml->trans.rotation.x = 0;
+	armr->trans.rotation.x = 0;
+
+	legr->trans.pos.y = legDefaultY;
+	legl->trans.pos.y = legDefaultY;
+
+	h->trans.rotation.y = 0.0f;
+	h->trans.rotation.x = 0.0f;
+
+
 }
 
 void PlayerModel::Run()
 {
 	idleDelta = 0.0f;
 	headRotateCnt.count = 0.0f;
-	float const amp = 0.2f;
-	float const loopSpeed = 0.15f;
+	float const amp = 0.3f;
+	float const loopSpeed = 0.225f;
 
 	runDelta += loopSpeed;
 	float deltaBodyY = sinf(runDelta) * amp;
@@ -162,7 +247,7 @@ PlayerModel::PlayerModel()
 	models.emplace_back(leg_L.get());
 	models.emplace_back(leg_R.get());
 	models.emplace_back(cannon.get());	
-	headRotateCnt.Initialize(6.0f);
+	headRotateCnt.Initialize(8.0f);
 }
 
 
@@ -183,6 +268,7 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 	body->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
 	body->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap]=
 		m->GetTexIndex(TextureTag::kPlayerBodyN);
+	body->GetAppearance(0)->trans.lookDir = { 0,0,-1 };
 
 	hand_L->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
 	hand_L->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
