@@ -5,55 +5,91 @@
 #include "../InGameController/InGameController.h"
 #include <array>
 
+
+UIDisplayer::UIDisplayer()
+{
+	buttonSelectCoolTime.Initialize(0.1f);
+	easingCounter.Initialize(0.1f);
+
+	std::map<uiType, Vector2> uiTexureSize;
+	// 汎用
+	uiTexureSize[uiType::Numbers1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::Cursor50x50] = Vector2{ 50.0f,50.0f };
+	// 操作説明UI
+	uiTexureSize[uiType::Back200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Decision200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Move200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Option200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Pause200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Reticle200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Set200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Shot200x60] = Vector2{ 200.0f,60.0f };
+	uiTexureSize[uiType::Zoom200x60] = Vector2{ 200.0f,60.0f };
+	// ポーズUI
+	uiTexureSize[uiType::PauseTitle500x100] = Vector2{ 500.0f,100.0f };
+	uiTexureSize[uiType::PauseButton01_350x50] = Vector2{ 350.0f,50.0f };
+	uiTexureSize[uiType::PauseButton02_350x50] = Vector2{ 350.0f,50.0f };
+	uiTexureSize[uiType::PauseButton03_350x50] = Vector2{ 350.0f,50.0f };
+	uiTexureSize[uiType::PauseButton04_350x50] = Vector2{ 350.0f,50.0f };
+	uiTexureSize[uiType::PauseScreen_1280x720] = Vector2{ 1280.0f,720.0f };
+	// インゲームUI
+	uiTexureSize[uiType::GameOver1000x200] = Vector2{ 1000.0f,200.0f };
+	uiTexureSize[uiType::StageClear1000x200] = Vector2{ 1000.0f,200.0f };
+	// ステージセレクト
+	uiTexureSize[uiType::Stage1Name1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::Stage2Name1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::Stage3Name1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::Stage4Name1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::Stage5Name1000x100] = Vector2{ 1000.0f,100.0f };
+
+	std::map<uiType, TextureTag> uiTexure;
+	// 汎用
+	uiTexure[uiType::Numbers1000x100] = TextureTag::kNumbers1000x100;
+	uiTexure[uiType::Cursor50x50] = TextureTag::kCursor50x50;
+	// 操作説明UI
+	uiTexure[uiType::Back200x60] = TextureTag::kButtonBack200x60;
+	uiTexure[uiType::Decision200x60] = TextureTag::kButtonDecision200x60;
+	uiTexure[uiType::Move200x60] = TextureTag::kButtonMove200x60;
+	uiTexure[uiType::Option200x60] = TextureTag::kButtonOption200x60;
+	uiTexure[uiType::Pause200x60] = TextureTag::kButtonPause200x60;
+	uiTexure[uiType::Reticle200x60] = TextureTag::kButtonReticle200x60;
+	uiTexure[uiType::Set200x60] = TextureTag::kButtonSet200x60;
+	uiTexure[uiType::Shot200x60] = TextureTag::kButtonShot200x60;
+	uiTexure[uiType::Zoom200x60] = TextureTag::kButtonZoom200x60;
+	// ポーズUI
+	uiTexure[uiType::PauseTitle500x100] = TextureTag::Pause500x100;
+	uiTexure[uiType::PauseButton01_350x50] = TextureTag::PauseButton01_350x50;
+	uiTexure[uiType::PauseButton02_350x50] = TextureTag::PauseButton02_350x50;
+	uiTexure[uiType::PauseButton03_350x50] = TextureTag::PauseButton03_350x50;
+	uiTexure[uiType::PauseButton04_350x50] = TextureTag::PauseButton04_350x50;
+	uiTexure[uiType::PauseScreen_1280x720] = TextureTag::PauseScreen_1280x720;
+	// インゲームUI
+	uiTexure[uiType::GameOver1000x200] = TextureTag::kGameOver1000x200;
+	uiTexure[uiType::StageClear1000x200] = TextureTag::StageClear1000x200;
+	// ステージセレクト
+	uiTexure[uiType::Stage1Name1000x100] = TextureTag::kStageName1000x100;
+	uiTexure[uiType::Stage2Name1000x100] = TextureTag::kStageName1000x100;
+	uiTexure[uiType::Stage3Name1000x100] = TextureTag::kStageName1000x100;
+	uiTexure[uiType::Stage4Name1000x100] = TextureTag::kStageName1000x100;
+	uiTexure[uiType::Stage5Name1000x100] = TextureTag::kStageName1000x100;
+
+	for (size_t i = 0; i < uiTexureSize.size(); i++)
+	{
+		uiElements[uiType(i)].sprite = std::make_unique<Sprite>();
+		uiElements[uiType(i)].sprite->Initialize(
+			uiTexureSize[uiType(i)].x,
+			uiTexureSize[uiType(i)].y,
+			{ uiElements[uiType(i)].initPosition.x,
+				uiElements[uiType(i)].initPosition.y,0.0f },
+			M::GetInstance()->GetTexIndex(uiTexure[uiType(i)]),
+			{ 255,255,255,255 });
+	}
+}
+
 void UIDisplayer::Update()
 {
-	// 
-	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
-	{
-		gameObjectManager->TheWorld();
-		preOffset = pauseScreenOffset;
-		pauseCounter.Initialize(1.0f);
-	}
-
-#ifdef _DEBUG
-
-	if (M::GetInstance()->IsKeyTriggered(KeyType::ESCAPE))
-	{
-		gameObjectManager->TheWorld();
-		preOffset = pauseScreenOffset;
-		pauseCounter.Initialize(1.0f);
-	}
-
-#endif
-
-
-	if (gameObjectManager->isStop)
-	{
-		float t = pauseCounter.count;
-		if (t > 1.0f)t = 1.0f;
-		pauseScreenOffset = Easing::EaseOutCubic(preOffset, 1000.0f, t);
-		
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
-	}
-	else
-	{
-		float t = pauseCounter.count;
-		if (t > 1.0f)t = 1.0f;
-		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(preOffset, 0.0f, t);
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
-	}
-
-
+	// ポーズUI更新
+	UpdatePauseUI();
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
@@ -69,9 +105,6 @@ void UIDisplayer::Update()
 			uiElements[drawOrder[i]].initScale.y + uiElements[drawOrder[i]].scaleOffset.y,
 			1.0f };
 	}
-
-
-	pauseCounter.Add();
 }
 
 void UIDisplayer::Init()
@@ -113,6 +146,115 @@ void UIDisplayer::SaveData()
 		Json::SaveParam(path, key + "/scale", uiElements[type].initScale);
 	}
 	Json::Save(path);
+}
+
+void UIDisplayer::UpdatePauseUI()
+{
+	// もーど切り替え
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
+	{
+		gameObjectManager->TheWorld();
+		preOffset = pauseScreenOffset;
+		pauseCounter.Initialize(1.0f);
+	}
+
+#ifdef _DEBUG
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::ESCAPE))
+	{
+		gameObjectManager->TheWorld();
+		preOffset = pauseScreenOffset;
+		pauseCounter.Initialize(1.0f);
+	}
+
+#endif
+
+	// いーじんぐ
+	if (gameObjectManager->isStop)
+	{
+		float t = pauseCounter.count;
+		if (t > 1.0f)t = 1.0f;
+		pauseScreenOffset = Easing::EaseOutCubic(preOffset, 1000.0f, t);
+
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::Cursor50x50].posOffset.x = -pauseScreenOffset;
+	}
+	else
+	{
+		float t = pauseCounter.count;
+		if (t > 1.0f)t = 1.0f;
+		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(preOffset, 0.0f, t);
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::Cursor50x50].posOffset.x = -pauseScreenOffset;
+	}
+	pauseCounter.Add();
+
+	// カーソル更新
+	if (gameObjectManager->isStop)
+	{
+		if (buttonSelectCoolTime.count >= 1.0f)
+		{
+			if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
+			{
+				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_UP);
+				preButtonOffset = currentSelectedButton * 80.0f;
+				if (feldFrame > 30)
+				{
+					buttonSelectCoolTime.Initialize(0.1f);
+					easingCounter.Initialize(0.1f);
+				}
+				else
+				{
+					buttonSelectCoolTime.Initialize(0.5f);
+					easingCounter.Initialize(0.1f);
+				}
+				currentSelectedButton--;
+				if (currentSelectedButton < 0) currentSelectedButton = 2;
+			}
+			else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
+			{
+				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN);
+				preButtonOffset = currentSelectedButton * 80.0f;
+				if (feldFrame > 30)
+				{
+					buttonSelectCoolTime.Initialize(0.1f);
+					easingCounter.Initialize(0.1f);
+				}
+				else
+				{
+					buttonSelectCoolTime.Initialize(0.5f);
+					easingCounter.Initialize(0.1f);
+				}
+				currentSelectedButton++;
+				if (currentSelectedButton > 2) currentSelectedButton = 0;
+			}
+		}
+		else
+		{
+			if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
+				M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
+			{
+				buttonSelectCoolTime.Initialize(0.01f);
+			}
+		}
+
+		uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
+			preButtonOffset,
+			currentSelectedButton * 80.0f,
+			easingCounter.count);
+		buttonSelectCoolTime.Add();
+		easingCounter.Add();
+	}
 }
 
 void UIDisplayer::SetUIMode(UIMode mode_)
@@ -196,83 +338,6 @@ void UIDisplayer::DebugDraw()
 
 	ImGui::End();
 #endif // USE_IMGUI
-}
-
-UIDisplayer::UIDisplayer()
-{
-	std::map<uiType, Vector2> uiTexureSize;
-	// 汎用
-	uiTexureSize[uiType::Numbers1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Cursor50x50] = Vector2{ 50.0f,50.0f };
-	// 操作説明UI
-	uiTexureSize[uiType::Back200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Decision200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Move200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Option200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Pause200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Reticle200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Set200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Shot200x60] = Vector2{ 200.0f,60.0f };
-	uiTexureSize[uiType::Zoom200x60] = Vector2{ 200.0f,60.0f };
-	// ポーズUI
-	uiTexureSize[uiType::PauseTitle500x100] = Vector2{ 500.0f,100.0f };
-	uiTexureSize[uiType::PauseButton01_350x50] = Vector2{ 350.0f,50.0f };
-	uiTexureSize[uiType::PauseButton02_350x50] = Vector2{ 350.0f,50.0f };
-	uiTexureSize[uiType::PauseButton03_350x50] = Vector2{ 350.0f,50.0f };
-	uiTexureSize[uiType::PauseButton04_350x50] = Vector2{ 350.0f,50.0f };
-	uiTexureSize[uiType::PauseScreen_1280x720] = Vector2{ 1280.0f,720.0f };
-	// インゲームUI
-	uiTexureSize[uiType::GameOver1000x200] = Vector2{ 1000.0f,200.0f };
-	uiTexureSize[uiType::StageClear1000x200] = Vector2{ 1000.0f,200.0f };
-	// ステージセレクト
-	uiTexureSize[uiType::Stage1Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage2Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage3Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage4Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage5Name1000x100] = Vector2{ 1000.0f,100.0f };
-
-	std::map<uiType, TextureTag> uiTexure;
-	// 汎用
-	uiTexure[uiType::Numbers1000x100] = TextureTag::kNumbers1000x100;
-	uiTexure[uiType::Cursor50x50] = TextureTag::kCursor50x50;
-	// 操作説明UI
-	uiTexure[uiType::Back200x60] = TextureTag::kButtonBack200x60;
-	uiTexure[uiType::Decision200x60] = TextureTag::kButtonDecision200x60;
-	uiTexure[uiType::Move200x60] = TextureTag::kButtonMove200x60;
-	uiTexure[uiType::Option200x60] = TextureTag::kButtonOption200x60;
-	uiTexure[uiType::Pause200x60] = TextureTag::kButtonPause200x60;
-	uiTexure[uiType::Reticle200x60] = TextureTag::kButtonReticle200x60;
-	uiTexure[uiType::Set200x60] = TextureTag::kButtonSet200x60;
-	uiTexure[uiType::Shot200x60] = TextureTag::kButtonShot200x60;
-	uiTexure[uiType::Zoom200x60] = TextureTag::kButtonZoom200x60;
-	// ポーズUI
-	uiTexure[uiType::PauseTitle500x100] = TextureTag::Pause500x100;
-	uiTexure[uiType::PauseButton01_350x50] = TextureTag::PauseButton01_350x50;
-	uiTexure[uiType::PauseButton02_350x50] = TextureTag::PauseButton02_350x50;
-	uiTexure[uiType::PauseButton03_350x50] = TextureTag::PauseButton03_350x50;
-	uiTexure[uiType::PauseButton04_350x50] = TextureTag::PauseButton04_350x50;
-	uiTexure[uiType::PauseScreen_1280x720] = TextureTag::PauseScreen_1280x720;
-	// インゲームUI
-	uiTexure[uiType::GameOver1000x200] = TextureTag::kGameOver1000x200;
-	uiTexure[uiType::StageClear1000x200] = TextureTag::StageClear1000x200;
-	// ステージセレクト
-	uiTexure[uiType::Stage1Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage2Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage3Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage4Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage5Name1000x100] = TextureTag::kStageName1000x100;
-
-	for (size_t i = 0; i < uiTexureSize.size(); i++)
-	{
-		uiElements[uiType(i)].sprite = std::make_unique<Sprite>();
-		uiElements[uiType(i)].sprite->Initialize(
-			uiTexureSize[uiType(i)].x,
-			uiTexureSize[uiType(i)].y,
-			{ uiElements[uiType(i)].initPosition.x,
-				uiElements[uiType(i)].initPosition.y,0.0f },
-			M::GetInstance()->GetTexIndex(uiTexure[uiType(i)]),
-			{ 255,255,255,255 });
-	}
 }
 
 void UIDisplayer::Draw(Matrix4* vpMat_)

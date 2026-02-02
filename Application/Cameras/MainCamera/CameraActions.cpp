@@ -14,20 +14,16 @@ void CameraActions::FollowPlayer::operator()()
 	Vector3 nextPos = camera->player->Getter_Trans()->GetWorldPos() + offsetFollow;
 	float const adjustMul = 5;
 
-
 	Vector3 tmp;
-	if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RS))
-	{
-		auto X = M::GetInstance()->getPadState.GetRightStick(0).x;
-		auto Y = M::GetInstance()->getPadState.GetRightStick(0).y;
 
-		Benri::Adjust(X, -0.3f, 0.3f,0.0f);
-		Benri::Adjust(Y, -0.3f, 0.3f, 0.0f);
+	auto X = M::GetInstance()->getPadState.GetRightStick(0).x;
+	auto Y = M::GetInstance()->getPadState.GetRightStick(0).y;
 
-		tmp = Vector3{ X,0,Y }.GetNormalized();
-	}
+	Benri::Adjust(X, -0.3f, 0.3f,0.0f);
+	Benri::Adjust(Y, -0.3f, 0.3f, 0.0f);
 
-
+	tmp = Vector3{ X,0,Y }.GetNormalized();
+  
 	camera->cameraPara->trans.pos =
 		Easing::EaseOutCubic(camera->cameraPara->trans.pos, nextPos + tmp * adjustMul,
 			kDefaultFollowCoe)+ offsetDebug ;

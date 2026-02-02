@@ -8,7 +8,7 @@
     },
     "CollisonSize": {
         "ally": 0.6000000238418579,
-        "bullet": 0.75,
+        "bullet": 0.800000011920929,
         "enemy": 0.75,
         "enemyFactory": 2.0,
         "enemyTower": 3.0,
@@ -19,8 +19,8 @@
         "deadZone": 0.30000001192092896
     },
     "Distance": {
-        "allyToAlly": 10,
-        "playerToAlly": 5
+        "allyToAlly": 15,
+        "playerToAlly": 1
     },
     "KnockBackPower": {
         "enemy": {
@@ -32,14 +32,14 @@
             "ToBullet1": 0.10000000149011612,
             "ToBullet2": 0.10000000149011612,
             "ToBullet3": 0.10000000149011612,
-            "ToPTower": 0.20000000298023224,
+            "ToPTower": 0.15000000596046448,
             "ToPlayer": 0.0
         }
     },
     "MaxHP": {
         "enemy": 10.0,
-        "enemyFactory": 40.0,
-        "enemyTower": 150.0,
+        "enemyFactory": 30.0,
+        "enemyTower": 100.0,
         "player": 3.0,
         "playerBullet": 1.2000000476837158,
         "playerTower": 50.0
@@ -49,7 +49,7 @@
             "defaultAttackPower": 1.0
         },
         "player": {
-            "allyPowerBonus": 3.0,
+            "allyPowerBonus": 1.0,
             "allySizeBonus": 0.25,
             "attak1Power": 1.0,
             "attak2Power": 3.0,
@@ -64,11 +64,11 @@
     "SpawnInterval": {
         "enemy": 8.0,
         "enemyFactoryRespawnInterval": 20.0,
-        "maxAllyCount": 5,
-        "playerAlly": 3.0
+        "maxAllyCount": 2,
+        "playerAlly": 2.0
     },
     "Speed": {
-        "enemy": 0.017500000074505806,
+        "enemy": 0.019999999552965164,
         "player": 0.15000000596046448,
         "playerAlly": 1.75,
         "playerBullet": 0.25
