@@ -43,6 +43,7 @@ private:
 public:
 	void Update();
 	void Draw();
+	void DrawNonPostEffect();
 	SceneController(SceneType firstScene_);
 	static void ChangeScene(SceneType nextSceneType_);
 

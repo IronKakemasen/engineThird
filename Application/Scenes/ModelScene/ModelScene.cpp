@@ -20,8 +20,8 @@ void ModelScene::AdaptToPostEffect()
 	{
 	case PostEffectType::kNone:
 	{
-		dirPara->intensity = dirLightIntensityNormal;
-		dirPara->pos = dirLightDir;
+		//dirPara->intensity = dirLightIntensityNormal;
+		//dirPara->pos = dirLightDir;
 
 		for (auto* m : p.model->models)
 		{
@@ -57,8 +57,8 @@ void ModelScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kGreyScale:
 	{
-		dirPara->intensity = dirLightIntensityNormal;
-		dirPara->pos = dirLightDir;
+		//dirPara->intensity = dirLightIntensityNormal;
+		//dirPara->pos = dirLightDir;
 
 		for (auto* m : p.model->models)
 		{
@@ -93,8 +93,8 @@ void ModelScene::AdaptToPostEffect()
 	}
 	case PostEffectType::kSimpleNeonLike:
 	{
-		dirPara->intensity = dirLightIntensityNeon;
-		dirPara->pos = dirLightDir;
+		//dirPara->intensity = dirLightIntensityNeon;
+		//dirPara->pos = dirLightDir;
 
 		for (auto* m : p.model->models)
 		{

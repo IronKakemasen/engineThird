@@ -61,7 +61,9 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kPlayerHandN, pathToPlayer + "P_Hand_normal.png");
 	LoadTextureFile(TextureTag::kPlayerBodyN, pathToPlayer + "P_Body_normal.png");
 	LoadTextureFile(TextureTag::kPlayerLegN, pathToPlayer +  "P_Leg_normal.png");
+	LoadTextureFile(TextureTag::kCannonN, pathToPlayer + "Cannon_normal.png");
 
+	
 	LoadTextureFile(TextureTag::kTowerN, pathToTower + "Tower_normal.png");
 	LoadTextureFile(TextureTag::kFactoryN, pathToFactory + "Factory_normal.png");
 

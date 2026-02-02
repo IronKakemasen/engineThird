@@ -84,10 +84,10 @@ void PostEffects::SimpleNeonLike::Init(ID3D12Device* device_)
 PostEffects::SimpleNeonLike::SimpleNeonLike(TextureDataManager* textureDataManager_, int numRequired_) :
 	OffScreen(textureDataManager_, numRequired_) 
 {
-	para.backgroundDim = 0.0f;
+	para.backgroundDim = 0.01f;
 	para.edgeWidth = 1.0f;
-	para.texelSize = { 1.0f / CommonV::kWindow_W,1.0f / CommonV::kWindow_H };
-	//para.texelSize = { 0.002f,0.002f };
+	//para.texelSize = { 1.0f / CommonV::kWindow_W,1.0f / CommonV::kWindow_H };
+	para.texelSize = { 0.002f,0.002f };
 
 
 }
