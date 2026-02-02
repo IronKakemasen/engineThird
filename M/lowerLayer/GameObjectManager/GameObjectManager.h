@@ -10,6 +10,7 @@ class GameObjectManager
 	std::vector< GameObject* > objContainer;
 	int createNum = 0;
 	float tileLength = 5.0f;
+	bool isStop = false;
 
 	//ゲームオブジェクトすべての当たり判定をとる
 	void ChackAllCollision(GameObject* thisObj_);
@@ -35,6 +36,7 @@ public:
 	void Render(Matrix4* vpMat_);
 	void Reset();
 	void Debug();
+	void TheWorld();
 
 	std::vector<GameObject*> Find(GameObject::Tag tag_);
 

@@ -57,9 +57,7 @@ PlayerModel::PlayerModel()
 	models.emplace_back(head.get());
 	models.emplace_back(leg_L.get());
 	models.emplace_back(leg_R.get());
-	models.emplace_back(cannon.get());
-
-	
+	models.emplace_back(cannon.get());	
 }
 
 void PlayerModel::Update(int mode_, float count_)

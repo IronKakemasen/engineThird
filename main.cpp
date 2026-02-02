@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Json::LoadAll("./resource/application/json/");
 
 	std::unique_ptr<SceneController> sceneController =
-		std::make_unique<SceneController>(kStageSelect);
+		std::make_unique<SceneController>(kModelView);
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)

@@ -75,6 +75,11 @@ std::vector<GameObject*> GameObjectManager::Find(GameObject::Tag tag_)
 	return data;
 }
 
+void GameObjectManager::TheWorld()
+{
+	isStop = !isStop;
+}
+
 void GameObjectManager::Debug()
 {
 #ifdef USE_IMGUI
@@ -184,12 +189,6 @@ void GameObjectManager::Reset()
 
 void GameObjectManager::Update()
 {
-	// ポーズ中は更新しない
-	bool isPause = false;
-	if (inGameController->curMode == InGameController::kUnPlayable)
-	{
-		isPause = true;
-	}
 
 	// 登録されたオブジェクトの更新
 	for (auto itr = objContainer.begin(); itr != objContainer.end(); ++itr)
@@ -202,7 +201,7 @@ void GameObjectManager::Update()
 		}
 
 		// ポーズ中はInGameControllerとUIManager以外更新しない
-		if (isPause)
+		if (isStop)
 		{
 			if ((*itr)->Getter_Identity()->tag != GameObjectBehavior::Tag::kUIManager &&
 				(*itr)->Getter_Identity()->tag != GameObjectBehavior::Tag::kInGameController)
