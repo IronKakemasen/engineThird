@@ -13,6 +13,12 @@ struct Enemy :public GameObject , public GameObjectEntity
 {
 #pragma region 独自部位
 
+	enum class EnemyAnimationState
+	{
+		kMove,
+		kDead,
+	};
+
 private:
 	// ターゲット方向に移動
 	void MoveToTarget();

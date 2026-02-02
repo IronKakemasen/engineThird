@@ -44,21 +44,6 @@ void InGameController::SetCollisionBackTable()
 
 void InGameController::Update()
 {
-	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
-	{
-		if (curMode == Mode::kPlayable)
-		{
-			curMode = Mode::kUnPlayable;
-			(*actors[curMode].get()).Reset();
-		}
-		else if (curMode == Mode::kUnPlayable)
-		{
-			curMode = Mode::kPlayable;
-			(*actors[curMode].get()).Reset();
-		}
-	}
-
-
 	(*actors[curMode].get())();
 }
 

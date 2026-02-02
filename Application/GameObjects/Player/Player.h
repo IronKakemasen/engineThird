@@ -13,6 +13,13 @@ struct Player :public GameObject, public GameObjectEntity
 {
 #pragma region 独自部位
 
+	enum class PlayerAnimationState
+	{
+		kIdle,
+		kMove,
+		kExtra,
+	};
+
 private:
 	//////  移動処理  //////
 	void Move();			// 移動
