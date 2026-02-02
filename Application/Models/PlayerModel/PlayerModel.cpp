@@ -48,7 +48,8 @@ PlayerModel::PlayerModel()
 	hand_R = M::GetInstance()->CreateModel("./resource/application/Model/Player/P_Hand_R/P_Hand_R.gltf");
 	head = M::GetInstance()->CreateModel(  "./resource/application/Model/Player/P_Head/P_Head.gltf");
 	leg_L = M::GetInstance()->CreateModel( "./resource/application/Model/Player/P_Leg_L/P_Leg_L.gltf");
-	leg_R = M::GetInstance()->CreateModel( "./resource/application/Model/Player/P_Leg_R/P_Leg_R.gltf");
+	leg_R = M::GetInstance()->CreateModel( "./resource/application/Model/Player/P_Leg_R/P_Leg_R.gltf"); 
+	cannon = M::GetInstance()->CreateModel("./resource/application/Model/Cannon/Common.gltf");
 
 	models.emplace_back(body.get());
 	models.emplace_back(hand_L.get());
@@ -56,7 +57,9 @@ PlayerModel::PlayerModel()
 	models.emplace_back(head.get());
 	models.emplace_back(leg_L.get());
 	models.emplace_back(leg_R.get());
+	models.emplace_back(cannon.get());
 
+	
 }
 
 void PlayerModel::Update(int mode_, float count_)
@@ -102,6 +105,13 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 	leg_R->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =
 		m->GetTexIndex(TextureTag::kPlayerLegN);
 
+	auto* cannonAppe = cannon->GetAppearance(0);
+	cannonAppe->trans.BeChildren(&hand_R->GetAppearance(0)->trans);
+	cannonAppe->texHandlesContainer[Appearance::kNormalmap] = m->GetTexIndex(TextureTag::kCannonN);
+	cannonAppe->trans.pos.z = 1.0f;
+	cannonAppe->color = { 255,45,0,255 };
+	cannonAppe->metalic = 0.52f;
+	cannonAppe->roughness = 0.59f;
 	for (auto* m : models)
 	{
 		auto* appe = m->GetAppearance(0);

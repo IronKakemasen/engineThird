@@ -226,8 +226,7 @@ void InGameScene::Debug()
 	ImGui::Begin("InGameController");
 	ImGui::Text(("Mode  : " + inGameController->WathchInString()).c_str());
 	ImGui::Text("Count : %.1f", *inGameController->GetCnt());
-	ImGui::DragFloat("lightradiusCommon", &lightradiusCommon);
-	ImGui::DragFloat("intensityCommon", &intensityCommon);
+	ImGui::DragFloat4("ccc", reinterpret_cast<float*>(&player->model->cannon->GetAppearance(0)->color));
 	ImGui::End();
 
 	ImGui::Begin("Object Debug");
@@ -486,15 +485,14 @@ void InGameScene::PlayableMode()
 void InGameScene::Lighthing()
 {
 	int useNo = 0;
-	static Vector3 c;
 
 	//Player
 	auto* playerLight = fieldpointLights[0]->Getter_Para();
-	playerLight->intensity = 20000;
-	playerLight->invSqrRadius = 60;
+	playerLight->intensity = 10000;
+	playerLight->invSqrRadius = 600;
 	playerLight->pos =
 		Vector3{ 0,6.0f,-0.5f }.GetMultiply(player->Getter_Trans()->GetWorldMatrix());
-	playerLight->color = { 20,20,255 };
+	playerLight->color = { 50,50,255 };
 
 	useNo++;
 	Matrix4* vpMat = &cameraController->GetUsingCamera()->vpMat;
@@ -512,11 +510,13 @@ void InGameScene::Lighthing()
 		enemyTowerLight->intensity = 20000;
 		enemyTowerLight->invSqrRadius = 800;
 		enemyTowerLight->pos =
-			Vector3{ 0.0f,6.0f,1.75f}.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix());
+			Vector3{ 0.0f,10,0 }.GetMultiply(enemyTower->Getter_Trans()->GetWorldMatrix());
 		enemyTowerLight->color = { 255,0,0 };
 
 		useNo++;
 	}
+
+
 
 	//factories
 	for (auto* factory_ : factories)

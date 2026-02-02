@@ -40,6 +40,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			winApp.OffScreenEnd();
 
+			sceneController->DrawNonPostEffect();
+
+			winApp.EndFrame();
+
 		}
 	}
 
