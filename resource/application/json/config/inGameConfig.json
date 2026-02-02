@@ -49,7 +49,7 @@
             "defaultAttackPower": 1.0
         },
         "player": {
-            "allyPowerBonus": 1.0,
+            "allyPowerBonus": 3.0,
             "allySizeBonus": 0.25,
             "attak1Power": 1.0,
             "attak2Power": 3.0,
@@ -64,7 +64,7 @@
     "SpawnInterval": {
         "enemy": 8.0,
         "enemyFactoryRespawnInterval": 20.0,
-        "maxAllyCount": 5,
+        "maxAllyCount": 2,
         "playerAlly": 2.0
     },
     "Speed": {
