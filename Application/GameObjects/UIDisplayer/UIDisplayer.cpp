@@ -13,33 +13,39 @@ void UIDisplayer::Update()
 		if (t > 1.0f)t = 1.0f;
 		pauseScreenOffset = Easing::EaseOutCubic(0.0f, 1000.0f, t);
 
-		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].curPos.x = uiElements[uiType::PauseButton02_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].curPos.x = uiElements[uiType::PauseButton03_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].curPos.x = uiElements[uiType::PauseButton04_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].curPos.x = uiElements[uiType::PauseTitle500x100].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = pauseScreenOffset;
 	}
 	else if (inGameController->curMode == InGameController::Mode::kPlayable)
 	{
 		float t = inGameController->curCnt * 2.0f;
 		if (t > 1.0f)t = 1.0f;
 		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(1000.0f, 0.0f, t);
-		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].curPos.x = uiElements[uiType::PauseButton02_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].curPos.x = uiElements[uiType::PauseButton03_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].curPos.x = uiElements[uiType::PauseButton04_350x50].initPosition.x - pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].curPos.x = uiElements[uiType::PauseTitle500x100].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = pauseScreenOffset;
 	}
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
-		{ uiElements[drawOrder[i]].curPos.x, uiElements[drawOrder[i]].curPos.y,0.0f };
+		{ 
+			uiElements[drawOrder[i]].initPosition.x + uiElements[drawOrder[i]].posOffset.x, 
+			uiElements[drawOrder[i]].initPosition.y + uiElements[drawOrder[i]].posOffset.y,
+			0.0f };
 
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
-		{ uiElements[drawOrder[i]].curScale.x,uiElements[drawOrder[i]].curScale.y,1.0f };
+		{
+			uiElements[drawOrder[i]].initScale.x + uiElements[drawOrder[i]].scaleOffset.x,
+			uiElements[drawOrder[i]].initScale.y + uiElements[drawOrder[i]].scaleOffset.y,
+			1.0f };
 	}
 }
 
@@ -78,8 +84,8 @@ void UIDisplayer::SaveData()
 		std::string tex = toString(type);
 		std::string key = "/" + mode + "/" + tex;
 
-		Json::SaveParam(path, key + "/pos", uiElements[type].curPos);
-		Json::SaveParam(path, key + "/scale", uiElements[type].curScale);
+		Json::SaveParam(path, key + "/pos", uiElements[type].initPosition);
+		Json::SaveParam(path, key + "/scale", uiElements[type].initScale);
 	}
 	Json::Save(path);
 }
@@ -129,8 +135,8 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 	// 初期位置と初期スケールにリセット
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
-		uiElements[drawOrder[i]].curPos = uiElements[drawOrder[i]].initPosition;
-		uiElements[drawOrder[i]].curScale = uiElements[drawOrder[i]].initScale;
+		uiElements[drawOrder[i]].posOffset = Vector2(0.0f, 0.0f);
+		uiElements[drawOrder[i]].scaleOffset = Vector2(0.0f, 0.0f);
 	}
 }
 
@@ -159,9 +165,9 @@ void UIDisplayer::DebugDraw()
 
 		ImGui::Text("%s", toString(drawOrder[i]).c_str());
 		ImGui::DragFloat2(("pos" + std::to_string(i)).c_str(),
-			&uiElements[drawOrder[i]].curPos.x, 1.0f);
+			&uiElements[drawOrder[i]].initPosition.x, 1.0f);
 		ImGui::DragFloat2(("scale" + std::to_string(i)).c_str(),
-			&uiElements[drawOrder[i]].curScale.x, 0.1f);
+			&uiElements[drawOrder[i]].initScale.x, 0.1f);
 	}
 
 	ImGui::End();
@@ -238,8 +244,8 @@ UIDisplayer::UIDisplayer()
 		uiElements[uiType(i)].sprite->Initialize(
 			uiTexureSize[uiType(i)].x,
 			uiTexureSize[uiType(i)].y,
-			{ uiElements[uiType(i)].curPos.x,
-				uiElements[uiType(i)].curPos.y,0.0f },
+			{ uiElements[uiType(i)].initPosition.x,
+				uiElements[uiType(i)].initPosition.y,0.0f },
 			M::GetInstance()->GetTexIndex(uiTexure[uiType(i)]),
 			{ 255,255,255,255 });
 	}

@@ -122,9 +122,9 @@ struct UIDisplayer :public GameObject
 	{
 		std::unique_ptr<Sprite> sprite;
 		Vector2 initPosition = Vector2(100.0f, 100.0f);
-		Vector2 curPos = Vector2(100.0f, 100.0f);
+		Vector2 posOffset = Vector2(0.0f, 0.0f);
 		Vector2 initScale = Vector2(1.0f, 1.0f);
-		Vector2 curScale = Vector2(1.0f, 1.0f);
+		Vector2 scaleOffset = Vector2(0.0f, 0.0f);
 	};
 
 private:
