@@ -160,6 +160,15 @@ private:
 	PauseRequest pauseRequest = PauseRequest::kNone;	// ポーズリクエスト内容
 	void UpdatePauseUI();
 
+	void HandlePauseToggleInput();
+	void UpdatePauseEasing();
+	void UpdatePauseCursor();
+	void UpdatePauseCursorInput();
+	void HandlePauseDecisionInput();
+	void UpdatePauseCursorEasing();
+	void FinalizePauseSelectionIfReady();
+
+	void ApplyPauseXOffset(float xOffset);
 public:
 
 	// UIモード設定

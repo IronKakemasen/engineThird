@@ -158,155 +158,201 @@ void UIDisplayer::SaveData()
 
 void UIDisplayer::UpdatePauseUI()
 {
-	// もーど切り替え
+	// モード切り替え				(ポーズ⇔プレイ)
+	HandlePauseToggleInput();
+	// イージングとオフセット更新	(ポーズ画面のスライドイン・アウト)
+	UpdatePauseEasing();
+
+	// ポーズ中なら
+	if (gameObjectManager->isStop)
+	{
+		// カーソル更新				(上下移動 & 決定処理)
+		UpdatePauseCursor();
+	}
+
+	// 決定処理が完了していたらモード切り替え要求を確定させる
+	FinalizePauseSelectionIfReady();
+}
+
+// モード切り替え入力処理
+void UIDisplayer::HandlePauseToggleInput()
+{
+	// START でポーズトグル
 	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
 	{
 		gameObjectManager->TheWorld();
 		preOffset = pauseScreenOffset;
 		pauseCounter.Initialize(1.0f);
-		if (!gameObjectManager->isStop)currentSelectedButton = 0;
+
+		// ポーズスクリーン登場側ならカーソル位置リセット
+		if (!gameObjectManager->isStop)
+		{
+			currentSelectedButton = 0;
+		}
 	}
 
 #ifdef _DEBUG
-
 	if (M::GetInstance()->IsKeyTriggered(KeyType::ESCAPE))
 	{
 		gameObjectManager->TheWorld();
 		preOffset = pauseScreenOffset;
 		pauseCounter.Initialize(1.0f);
 	}
-
 #endif
+}
 
-	// いーじんぐ
+// ポーズ画面イージング更新
+void UIDisplayer::UpdatePauseEasing()
+{
+	float t = pauseCounter.count;
+	if (t > 1.0f) t = 1.0f;
+
 	if (gameObjectManager->isStop)
 	{
-		float t = pauseCounter.count;
-		if (t > 1.0f)t = 1.0f;
 		pauseScreenOffset = Easing::EaseOutCubic(preOffset, 1000.0f, t);
-
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::Cursor50x50].posOffset.x = -pauseScreenOffset;
 	}
 	else
 	{
-		float t = pauseCounter.count;
-		if (t > 1.0f)t = 1.0f;
-		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(preOffset, 0.0f, t);
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
-		uiElements[uiType::Cursor50x50].posOffset.x = -pauseScreenOffset;
+		if (pauseScreenOffset > 0.0f)
+		{
+			pauseScreenOffset = Easing::EaseOutCubic(preOffset, 0.0f, t);
+		}
 	}
+
+	ApplyPauseXOffset(-pauseScreenOffset);
 	pauseCounter.Add();
+}
+void UIDisplayer::ApplyPauseXOffset(float xOffset)
+{
+// イージング一括適用関数
+	uiElements[uiType::PauseScreen_1280x720].posOffset.x = xOffset;
+	uiElements[uiType::PauseButton01_350x50].posOffset.x = xOffset;
+	uiElements[uiType::PauseButton02_350x50].posOffset.x = xOffset;
+	uiElements[uiType::PauseButton03_350x50].posOffset.x = xOffset;
+	uiElements[uiType::PauseButton04_350x50].posOffset.x = xOffset;
+	uiElements[uiType::PauseTitle500x100].posOffset.x = xOffset;
+	uiElements[uiType::Cursor50x50].posOffset.x = xOffset;
+}
 
-	// カーソル更新
-	if (gameObjectManager->isStop && !selected)
+// ポーズカーソル更新
+void UIDisplayer::UpdatePauseCursor()
+{
+	if (selected) return;
+
+	// 入力処理
+	UpdatePauseCursorInput();
+	// 決定処理
+	HandlePauseDecisionInput();
+	// イージング更新
+	UpdatePauseCursorEasing();
+
+	buttonSelectCoolTime.Add();
+	easingCounter.Add();
+}
+void UIDisplayer::UpdatePauseCursorInput()
+{
+	// クールタイム中は入力受付しない
+	if (buttonSelectCoolTime.count < 1.0f)
 	{
-		if (buttonSelectCoolTime.count >= 1.0f)
+		// 連打された時にクールタイムを無視できるように0.01で初期化
+		if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
+			M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
 		{
-			if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
-			{
-				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_UP);
-				preButtonOffset = currentSelectedButton * 80.0f;
-				if (feldFrame > 30)
-				{
-					buttonSelectCoolTime.Initialize(0.1f);
-					easingCounter.Initialize(0.1f);
-				}
-				else
-				{
-					buttonSelectCoolTime.Initialize(0.5f);
-					easingCounter.Initialize(0.1f);
-				}
-				currentSelectedButton--;
-				if (currentSelectedButton < 0) currentSelectedButton = 2;
-			}
-			else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
-			{
-				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN);
-				preButtonOffset = currentSelectedButton * 80.0f;
-				if (feldFrame > 30)
-				{
-					buttonSelectCoolTime.Initialize(0.1f);
-					easingCounter.Initialize(0.1f);
-				}
-				else
-				{
-					buttonSelectCoolTime.Initialize(0.5f);
-					easingCounter.Initialize(0.1f);
-				}
-				currentSelectedButton++;
-				if (currentSelectedButton > 2) currentSelectedButton = 0;
-			}
+			buttonSelectCoolTime.Initialize(0.01f);
 		}
-		else
-		{
-			if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
-				M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
-			{
-				buttonSelectCoolTime.Initialize(0.01f);
-			}
-		}
-
-		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
-		{
-			switch (currentSelectedButton)
-			{
-			case 0:	// プレイ
-				gameObjectManager->TheWorld();
-				preOffset = pauseScreenOffset;
-				pauseCounter.Initialize(1.0f);
-				selected = true;
-				break;
-			case 1:	// リトライ
-				gameObjectManager->TheWorld();
-				preOffset = pauseScreenOffset;
-				pauseCounter.Initialize(1.0f);
-				selected = true;
-				break;
-			case 2:	// セレクト
-				selected = true;
-				break;
-			default:
-				break;
-			}
-		}
-
-		uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
-			preButtonOffset,
-			currentSelectedButton * 80.0f,
-			easingCounter.count);
-		buttonSelectCoolTime.Add();
-		easingCounter.Add();
+		return;
 	}
 
-	if (selected && pauseCounter.IsEnd())
+	// 選択切り替え(イージング前座標保存・上下選択クールタイム設定・イージングカウンター初期化)
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
 	{
-		switch (currentSelectedButton)
-		{
-		case 0:	// プレイ
-			break;
-		case 1:	// リトライ
-			pauseRequest = PauseRequest::kRetry;
-			break;
-		case 2:	// セレクト
-			pauseRequest = PauseRequest::kBackToStageSelect;
-			break;
-		default:
-			break;
-		}
-		selected = false;
+		preButtonOffset = currentSelectedButton * 80.0f;
+		bool isFastRepeat = false;
+		if (M::GetInstance()->getPadState.HoldFrames(0, PAD_UP) > 30) isFastRepeat = true;
+		buttonSelectCoolTime.Initialize(isFastRepeat ? 0.1f : 0.5f);
+		easingCounter.Initialize(0.1f);
+
+		currentSelectedButton--;
+		if (currentSelectedButton < 0) currentSelectedButton = 2;
+	}
+	else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
+	{
+		preButtonOffset = currentSelectedButton * 80.0f;
+		bool isFastRepeat = false;
+		if (M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN) > 30) isFastRepeat = true;
+		buttonSelectCoolTime.Initialize(isFastRepeat ? 0.1f : 0.5f);
+		easingCounter.Initialize(0.1f);
+
+		currentSelectedButton++;
+		if (currentSelectedButton > 2) currentSelectedButton = 0;
 	}
 }
+void UIDisplayer::HandlePauseDecisionInput()
+{
+	// 決定ボタンが押されていなければ抜ける
+	if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_A)) return;
+
+	// ここに来ているということはポーズ中で決定ボタンが押されたということ
+	switch (currentSelectedButton)
+	{
+	case 0:	// プレイ
+	case 1:	// リトライ
+		// そして世界は再び動き出す
+		gameObjectManager->TheWorld();
+		// イージング初期化
+		preOffset = pauseScreenOffset;
+		// スライドアウト開始
+		pauseCounter.Initialize(1.0f);
+		// 決定フラグ立て
+		selected = true;
+		break;
+
+	case 2:	// セレクト
+		// そして世界は再び動き出す
+		gameObjectManager->TheWorld();
+		// 決定フラグ立て
+		selected = true;
+		break;
+
+	default:
+		break;
+	}
+}
+void UIDisplayer::UpdatePauseCursorEasing()
+{
+	uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
+		preButtonOffset,
+		currentSelectedButton * 80.0f,
+		easingCounter.count);
+}
+
+// 決定処理完了確認＆確定
+void UIDisplayer::FinalizePauseSelectionIfReady()
+{
+	// 決定処理が完了していなければ抜ける
+	if (!selected) return;
+	// イージングが完了していなければ抜ける
+	if (!(pauseCounter.count >= 1.0f)) return;
+
+	switch (currentSelectedButton)
+	{
+	case 0:	// プレイ
+		pauseRequest = PauseRequest::kNone;
+		break;
+	case 1:	// リトライ
+		pauseRequest = PauseRequest::kRetry;
+		break;
+	case 2:	// セレクト
+		pauseRequest = PauseRequest::kBackToStageSelect;
+		break;
+	default:
+		break;
+	}
+
+	selected = false;
+}
+
+
 
 void UIDisplayer::SetUIMode(UIMode mode_)
 {
