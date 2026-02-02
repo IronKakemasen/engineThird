@@ -151,7 +151,10 @@ void PlayerBullet::CollisionBackToEnemyFactory::operator()()
 void PlayerBullet::CollisionBackToAlly::operator()()
 {
 	auto* ally = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
-	if (ally->formationCurrentIndex == -1) return;
+	
+	// 列加入済み・ロック状態でなければ何もしない
+	if (ally->GetCurrentState() != PlayerAlly::State::kFormed &&
+		ally->GetCurrentState() != PlayerAlly::State::kLocked) return;
 
 	// サイズアップ
 	me->trans.scale = me->trans.scale + Vector3{ me->inGameConfig->playerAllySizeBonus, 0.0f, me->inGameConfig->playerAllySizeBonus };

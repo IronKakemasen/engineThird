@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerAllyModel/PlayerAllyModel.h"
+#include "../../../Models/SphereModel/SphereModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectEntity.h"
 
 struct Player;
@@ -101,6 +102,7 @@ private:
 public:
 	// 使用するモデル
 	std::unique_ptr<PlayerAllyModel> model;
+	std::unique_ptr<SphereModel> boomModel;
 
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
