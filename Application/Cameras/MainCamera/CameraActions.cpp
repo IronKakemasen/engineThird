@@ -12,7 +12,7 @@ void CameraActions::ActionBehavior::Init(MainCamera* camera_)
 void CameraActions::FollowPlayer::operator()()
 {
 	Vector3 nextPos = camera->player->Getter_Trans()->GetWorldPos() + offsetFollow;
-	float const adjustMul = 35.0f;
+	float const adjustMul = 2.0f;
 
 	auto X = M::GetInstance()->getPadState.GetRightStick(0).x;
 	auto Y = M::GetInstance()->getPadState.GetRightStick(0).y;
