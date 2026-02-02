@@ -178,6 +178,9 @@ void StageSelectScene::Reset()
 	mainCamera.Reset();
 
 	uiDisplayer->SetUIMode(UIDisplayer::UIMode::StageSelect);
+
+	initialized = false;
+	selected = false;
 }
 
 void StageSelectScene::Debug()
@@ -218,16 +221,6 @@ void StageSelectScene::ReplaceObjects()
 
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
 	{
-		// 回転中心オブジェクトのインスタンス化 & IDセット
-		for (size_t i = 0; i < centerObject[stageIndex].size(); ++i)
-		{
-			centerObject[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
-		}
-		// テスト地面のインスタンス化 & IDセット
-		for (size_t i = 0; i < grounds[stageIndex].size(); ++i)
-		{
-			grounds[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
-		}
 		// プレイヤータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
 		{

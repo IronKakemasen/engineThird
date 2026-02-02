@@ -8,6 +8,13 @@ struct InGameController;
 
 struct UIDisplayer :public GameObject
 {
+	enum class PauseRequest
+	{
+		kNone,
+		kRetry,
+		kBackToStageSelect,
+	};
+
 	enum class UIMode
 	{
 		TiTle,
@@ -149,8 +156,19 @@ private:
 	Counter buttonSelectCoolTime;		// カーソル切り替えクールタイム
 	Counter easingCounter;				// イージング用カウンター
 	float preButtonOffset = 0.0f;		// ボタン選択前のオフセット
+	bool selected = false;				// 決定したかどうか
+	PauseRequest pauseRequest = PauseRequest::kNone;	// ポーズリクエスト内容
 	void UpdatePauseUI();
 
+	void HandlePauseToggleInput();
+	void UpdatePauseEasing();
+	void UpdatePauseCursor();
+	void UpdatePauseCursorInput();
+	void HandlePauseDecisionInput();
+	void UpdatePauseCursorEasing();
+	void FinalizePauseSelectionIfReady();
+
+	void ApplyPauseXOffset(float xOffset);
 public:
 
 	// UIモード設定
@@ -158,6 +176,8 @@ public:
 
 	// スーパードロー
 	void SuperDraw(Matrix4* ortho_);
+
+	PauseRequest GetPauseRequest();
 
 	// デバッグ描画
 	void DebugDraw();
