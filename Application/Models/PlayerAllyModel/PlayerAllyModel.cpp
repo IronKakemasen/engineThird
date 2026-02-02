@@ -44,7 +44,7 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	idleCnt.Initialize(5.0f);
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
-	appearance->trans.pos.y = 0.125f;
+	appearance->trans.pos.y = 0.35f;
 	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
 	appearance->trans.rotation.y = 180.0f;
 

@@ -13,7 +13,6 @@ void SceneController::Draw()
 	Matrix4* vpMat = &cur_Scene->cameraController->GetUsingCamera()->vpMat;
 	Matrix4 orthoMat = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
-	cur_Scene->Draw();
 	cur_Scene->gameObjManager->Render(vpMat);
 
 #ifdef _DEBUG
@@ -127,6 +126,13 @@ void SceneController::Debug()
 
 #endif // USE_IMGUI
 
+}
+
+void SceneController::DrawNonPostEffect()
+{
+	SceneBehavior* cur_Scene = allScene[runningScene];
+
+	cur_Scene->Draw();
 }
 
 void SceneController::Update()

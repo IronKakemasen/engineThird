@@ -39,6 +39,7 @@ enum class TextureTag
 	kPlayerHandN,
 	kPlayerLegN,
 	kPlayerBodyN,
+	kCannonN,
 
 	kTowerN,
 	kFactoryN,

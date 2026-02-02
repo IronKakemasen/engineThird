@@ -16,6 +16,7 @@ public:
 	std::unique_ptr<ModelSimple> hand_R;
 	std::unique_ptr<ModelSimple> leg_L;
 	std::unique_ptr<ModelSimple> leg_R;
+	std::unique_ptr<ModelSimple> cannon;
 
 	std::vector<ModelSimple*> models;
 

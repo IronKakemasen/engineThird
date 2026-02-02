@@ -93,7 +93,6 @@ void WinApp::OffScreenEnd()
 
 	exclusiveDraw.DrawOnPalette(offScreenManager.GetPalette());
 
-	EndFrame();
 
 }
 
