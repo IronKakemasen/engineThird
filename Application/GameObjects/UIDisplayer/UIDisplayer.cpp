@@ -207,7 +207,7 @@ void UIDisplayer::UpdatePauseUI()
 			if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
 			{
 				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_UP);
-				preButtonOffset = currentSelectedButton * 70.0f;
+				preButtonOffset = currentSelectedButton * 80.0f;
 				if (feldFrame > 30)
 				{
 					buttonSelectCoolTime.Initialize(0.1f);
@@ -224,7 +224,7 @@ void UIDisplayer::UpdatePauseUI()
 			else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
 			{
 				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN);
-				preButtonOffset = currentSelectedButton * 70.0f;
+				preButtonOffset = currentSelectedButton * 80.0f;
 				if (feldFrame > 30)
 				{
 					buttonSelectCoolTime.Initialize(0.1f);
@@ -250,7 +250,7 @@ void UIDisplayer::UpdatePauseUI()
 
 		uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
 			preButtonOffset,
-			currentSelectedButton * 70.0f,
+			currentSelectedButton * 80.0f,
 			easingCounter.count);
 		buttonSelectCoolTime.Add();
 		easingCounter.Add();
