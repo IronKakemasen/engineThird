@@ -121,6 +121,9 @@ void PlayerAlly::Update()
 	case PlayerAlly::State::kLocked:
 		LockPosition();
 		break;
+	case PlayerAlly::State::kDeathBoom:
+		DeathBoom();
+		break;
 	case PlayerAlly::State::kDead:
 		Death();
 		break;
@@ -209,6 +212,19 @@ void PlayerAlly::LockPosition()
 
 }
 
+void PlayerAlly::DeathBoom()
+{
+	if (deathCounter.IsEnd())
+	{
+		nextState = State::kDead;
+		return;
+	}
+
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerAllyCollisonSize + (deathCounter.count * 1.0f));
+	deathCounter.Add();
+}
+
 void PlayerAlly::Spawn(Vector3 pos)
 {
 	// 有効化
@@ -229,14 +245,8 @@ void PlayerAlly::Spawn(Vector3 pos)
 
 void PlayerAlly::Death()
 {
-	deathCounter.Initialize(1.0f);
-
-	if (deathCounter.IsEnd())
-	{
-		SetStatus(Status::kInActive);
-	}
+	SetStatus(Status::kInActive);
 }
-
 
 
 // エネミーとの衝突
@@ -244,7 +254,8 @@ void PlayerAlly::CollisionBackToEnemy::operator()()
 {
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
-		me->nextState = PlayerAlly::State::kDead;
+		me->nextState = PlayerAlly::State::kDeathBoom;
+		me->deathCounter.Initialize(0.2f);
 	}
 }
 
@@ -253,7 +264,8 @@ void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 {
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
-		me->nextState = PlayerAlly::State::kDead;
+		me->nextState = PlayerAlly::State::kDeathBoom;
+		me->deathCounter.Initialize(0.2f);
 	}
 }
 

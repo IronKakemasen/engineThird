@@ -253,7 +253,7 @@ void Enemy::KnockBack(Vector3 dir, float power)
 	dir2D = dir2D.GetNormalized();
 
 	// 見た目の向きもノックバック方向に合わせる
-	trans.lookDir = Vector3(dir2D.x, 0.0f, dir2D.y);
+	//trans.lookDir = Vector3(dir2D.x, 0.0f, dir2D.y);
 
 	// ノックバック
 	knockBackVelocity = Vector3(dir2D.x, 0.0f, dir2D.y) * power;
@@ -388,7 +388,9 @@ void Enemy::CollisionBackToPlayerAlly::operator()()
 {
 	auto* playerAlly = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 
-	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || playerAlly->GetCurrentState() == PlayerAlly::State::kFormed)
+	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || 
+		playerAlly->GetCurrentState() == PlayerAlly::State::kFormed ||
+		playerAlly->GetCurrentState() == PlayerAlly::State::kDeathBoom)
 	{
 		// ノックバック方向計算
 	// ノックバック方向計算

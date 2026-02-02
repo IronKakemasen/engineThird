@@ -17,6 +17,8 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 		kFormed,
 		// ロック状態
 		kLocked,
+		// 死亡爆発
+		kDeathBoom,
 		// 死亡状態
 		kDead,
 		// 初期状態
@@ -32,7 +34,10 @@ private:
 	void FollowPlayer();
 	// その場で待機する
 	void LockPosition();
-
+	// 死亡爆発
+	void DeathBoom();
+	// 死亡処理
+	void Death();
 
 	// 死亡後判定を受けてからn秒後に消滅するカウンター
 	Counter deathCounter;
@@ -47,8 +52,6 @@ public:
 	State GetCurrentState() const { return currentState; }
 
 	void Spawn(Vector3 pos);
-
-	void Death();
 
 #pragma	endregion
 
