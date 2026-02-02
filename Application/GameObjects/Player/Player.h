@@ -3,6 +3,7 @@
 #include "../../Models/PlayerModel/PlayerModel.h"
 #include "../../GameObjects/ObjectParent/GameObjectEntity.h"
 #include "../../Config/GameConstants.h"
+#include "../../Models/CircleModel/CircleModel.h"
 #include <array>
 #include <queue>
 
@@ -126,6 +127,8 @@ public:
 
 private:
 
+	std::unique_ptr<CircleModel> circleModel;
+
 	//コリジョンバック用の関数オブジェクト
 	struct CollisionBackToEnemy
 	{
@@ -135,6 +138,7 @@ private:
 	};
 	// Enemyと衝突したときのコリジョンバック
 	CollisionBackToEnemy collisionBackToEnemy;
+
 
 
 public:

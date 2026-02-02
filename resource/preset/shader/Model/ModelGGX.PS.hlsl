@@ -34,11 +34,13 @@ struct VertexShaderOutput
 PixcelShaderOutput main(VertexShaderOutput input)
 {
     PixcelShaderOutput output;
-
+ 
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
     float4 baseColor = textureColor * gMaterial.albedoColor;
 
+    if (baseColor.a <= 0.2f) discard;
+    
     float3 normal = normalize(input.normal);
     float3 toCamera = normalize(cameraPara.cameraPos - input.worldPosition);
 

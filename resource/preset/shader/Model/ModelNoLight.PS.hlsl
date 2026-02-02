@@ -33,11 +33,14 @@ struct VertexShaderOutput
 PixcelShaderOutput main(VertexShaderOutput input)
 {
     PixcelShaderOutput output;
-
     float4 transformedUV = mul(float4(input.texcoord.x, input.texcoord.y, 1.0f, 1.0f), gMaterial.uvTransform);
     float4 textureColor = colorMap.Sample(baseColorSmp, transformedUV.xy);
+
+    if (textureColor.a <= 0.2f)
+        discard;
     
-    output.color = gMaterial.albedoColor * textureColor;
+    
+    output.color = float4(gMaterial.albedoColor.rgb * textureColor.rgb, textureColor.a);
     return output;
 
 }

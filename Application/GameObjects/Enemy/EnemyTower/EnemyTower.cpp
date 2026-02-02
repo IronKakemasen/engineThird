@@ -11,6 +11,11 @@ EnemyTower::EnemyTower()
 {
 	//モデルのインスタンス化
 	model.reset(new EnemyTowerModel);
+	circleModel.reset(new CircleModel);
+	circleModel->defaultScale = { 9.0f,1,9.0f };
+	auto* c = circleModel->model->GetAppearance(0);
+
+	c->color = { 255,200,200,255 };
 
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyTowerData.json";
@@ -57,6 +62,7 @@ void EnemyTower::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	circleModel->Init(&trans);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -107,6 +113,7 @@ void EnemyTower::SaveData()
 void EnemyTower::Update()
 {
 	model->Update();
+	circleModel->Update();
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
@@ -122,6 +129,8 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 {
 	//モデルの描画
 	model->Draw(vpMat_);
+	circleModel->Draw(vpMat_);
+
 }
 void EnemyTower::DebugDraw()
 {
