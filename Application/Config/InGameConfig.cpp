@@ -43,6 +43,7 @@ void InGameConfig::Load()
 	Json::LoadParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
+	Json::LoadParam(path, knockBack + "enemy/DamapingRate", enemyKnockBackDampingRate);
 	Json::LoadParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
 	Json::LoadParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::LoadParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
@@ -54,6 +55,7 @@ void InGameConfig::Load()
 	Json::LoadParam(path, interval + "enemy", enemySpawnInterval);
 	Json::LoadParam(path, interval + "playerAlly", playerAllySpawnInterval);
 	Json::LoadParam(path, interval + "maxAllyCount", maxAllyCount);
+	Json::LoadParam(path, interval + "enemyFactoryRespawnInterval", enemyFactoryRespawnInterval);
 
 	std::string distance = "/Distance/";
 	Json::LoadParam(path, distance + "allyToAlly", allyToAllyDelayFrames);
@@ -102,6 +104,7 @@ void InGameConfig::Save()
 	Json::SaveParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
+	Json::SaveParam(path, knockBack + "enemy/DamapingRate", enemyKnockBackDampingRate);
 	Json::SaveParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
 	Json::SaveParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::SaveParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
@@ -114,6 +117,7 @@ void InGameConfig::Save()
 	Json::SaveParam(path, interval + "enemy", enemySpawnInterval);
 	Json::SaveParam(path, interval + "playerAlly", playerAllySpawnInterval);
 	Json::SaveParam(path, interval + "maxAllyCount", maxAllyCount);
+	Json::SaveParam(path, interval + "enemyFactoryRespawnInterval", enemyFactoryRespawnInterval);
 
 	std::string distance = "/Distance/";
 	Json::SaveParam(path, distance + "allyToAlly", allyToAllyDelayFrames);
@@ -190,6 +194,7 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("KnockBackPower"))
 	{
+		ImGui::DragFloat("Enemy		DamapingRate", &enemyKnockBackDampingRate, 0.01f, 0.01f, 0.99f);
 		ImGui::DragFloat("Enemy		toAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);
@@ -204,6 +209,7 @@ void InGameConfig::DebugDraw()
 		ImGui::DragFloat("Enemy		spawnInterval", &enemySpawnInterval, 0.1f, 0.0f, 2.0f);
 		ImGui::DragFloat("Ally		spawnInterval", &playerAllySpawnInterval, 0.1f, 0.0f, 2.0f);
 		ImGui::DragInt("Ally		maxAllyCount", &maxAllyCount, 1, 1, 100);
+		ImGui::DragFloat("EFactory	respawnInterval", &enemyFactoryRespawnInterval, 1.0f, 0.0f, 60.0f);
 
 		ImGui::TreePop();
 	}

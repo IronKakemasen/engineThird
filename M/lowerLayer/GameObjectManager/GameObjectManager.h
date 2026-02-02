@@ -3,6 +3,7 @@
 #include <vector>
 
 struct Matrix4;
+struct InGameController;
 
 class GameObjectManager
 {
@@ -26,6 +27,7 @@ class GameObjectManager
 	ForDebug forDebug;
 #endif // DEBUG
 
+	InGameController* inGameController;
 
 public:
 	void Init();

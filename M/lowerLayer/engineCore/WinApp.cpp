@@ -124,7 +124,7 @@ bool WinApp::InitD3D()
 
 	//rtv、srv、dsvそれぞれのdescriptorHeapを作成する
 	rtvDescHeap.Init(deviceSetUp.Getter_Device(), 12);
-	srvDescHeap.Init(deviceSetUp.Getter_Device(), 64);
+	srvDescHeap.Init(deviceSetUp.Getter_Device(), 128);
 	dsvDescriptorHeap.Init(deviceSetUp.Getter_Device(), 1);
 
 	//swapChainの設定

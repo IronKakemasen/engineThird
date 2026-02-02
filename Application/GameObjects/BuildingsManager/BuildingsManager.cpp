@@ -2,6 +2,7 @@
 #include "../Enemy/EnemyFactory/EnemyFactory.h"
 #include "../Enemy/EnemyTower/EnemyTower.h"
 #include "../Player/PlayerTower/PlayerTower.h"
+#include "../../Config/InGameConfig.h"
 
 //コリジョンバックテーブルを設定
 void BuildingsManager::SetCollisionBackTable()
@@ -31,6 +32,11 @@ void BuildingsManager::SetPlayerTower(PlayerTower * tower)
 	playerTowers.push_back(tower);
 }
 
+void BuildingsManager::NotifyEnemyFactoryDead(EnemyFactory* factory)
+{
+	factory->rebornCounter.Initialize(inGameConfig->enemyFactoryRespawnInterval);
+}
+
 void BuildingsManager::ReplaceOnMap(const int32_t stage)
 {
 	for (auto& factory : enemyFactories)
@@ -49,6 +55,17 @@ void BuildingsManager::ReplaceOnMap(const int32_t stage)
 
 void BuildingsManager::Update()
 {
+	for (auto& factory : enemyFactories)
+	{
+		if (factory->IsDead())
+		{
+			factory->rebornCounter.Add();
+			if (factory->rebornCounter.IsEnd())
+			{
+				factory->Reset();
+			}
+		}
+	}
 }
 
 void BuildingsManager::Init()

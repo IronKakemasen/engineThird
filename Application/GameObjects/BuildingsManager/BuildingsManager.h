@@ -28,8 +28,10 @@ public:
 
 	// エネミーファクトリが死んだときこの関数を呼び出す
 	// 呼び出されてから一定時間後にエネミーファクトリを復活させる
-	//void 
+	void NotifyEnemyFactoryDead(EnemyFactory* factory);
 
+
+	// マップに配置
 	void ReplaceOnMap(const int32_t stage) override;
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
