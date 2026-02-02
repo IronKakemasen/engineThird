@@ -11,6 +11,14 @@ struct EnemyFactory :public GameObject, public GameObjectBuilding
 {
 #pragma region 独自部位
 
+	enum class EnemyFactoryAnimationState
+	{
+		kIdle,
+		kDamage,
+		kGenerate,
+		kDead,
+	};
+
 private:
 
 	// 参照ポインタ
@@ -24,6 +32,7 @@ private:
 	std::vector<PlayerBullet*> hitBullets{};
 
 	bool isDead = false;
+
 public:
 	Counter rebornCounter;
 	bool IsDead() const { return isDead; }

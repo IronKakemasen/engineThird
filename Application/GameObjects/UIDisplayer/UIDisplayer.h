@@ -133,6 +133,8 @@ private:
 
 	std::string path = "./resource/application/json/config/ui.json";
 
+	Counter pauseCounter;
+
 public:
 
 	// UIモード設定
@@ -154,6 +156,7 @@ private:
 	std::map<uiType, uiData> uiElements;
 
 	float pauseScreenOffset = 0.0f;
+	float preOffset = 0.0f;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

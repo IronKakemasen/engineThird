@@ -7,31 +7,53 @@
 
 void UIDisplayer::Update()
 {
-	if (inGameController->curMode == InGameController::Mode::kUnPlayable)
+	// 
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_START))
 	{
-		float t = inGameController->curCnt * 2.0f;
-		if (t > 1.0f)t = 1.0f;
-		pauseScreenOffset = Easing::EaseOutCubic(0.0f, 1000.0f, t);
+		gameObjectManager->TheWorld();
+		preOffset = pauseScreenOffset;
+		pauseCounter.Initialize(1.0f);
+	}
 
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = pauseScreenOffset;
-	}
-	else if (inGameController->curMode == InGameController::Mode::kPlayable)
+#ifdef _DEBUG
+
+	if (M::GetInstance()->IsKeyTriggered(KeyType::ESCAPE))
 	{
-		float t = inGameController->curCnt * 2.0f;
-		if (t > 1.0f)t = 1.0f;
-		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(1000.0f, 0.0f, t);
-		uiElements[uiType::PauseScreen_1280x720].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton01_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton02_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton03_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseButton04_350x50].posOffset.x = pauseScreenOffset;
-		uiElements[uiType::PauseTitle500x100].posOffset.x = pauseScreenOffset;
+		gameObjectManager->TheWorld();
+		preOffset = pauseScreenOffset;
+		pauseCounter.Initialize(1.0f);
 	}
+
+#endif
+
+
+	if (gameObjectManager->isStop)
+	{
+		float t = pauseCounter.count;
+		if (t > 1.0f)t = 1.0f;
+		pauseScreenOffset = Easing::EaseOutCubic(preOffset, 1000.0f, t);
+		
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
+	}
+	else
+	{
+		float t = pauseCounter.count;
+		if (t > 1.0f)t = 1.0f;
+		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(preOffset, 0.0f, t);
+		uiElements[uiType::PauseScreen_1280x720].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].posOffset.x = -pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].posOffset.x = -pauseScreenOffset;
+	}
+
+
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
@@ -47,6 +69,9 @@ void UIDisplayer::Update()
 			uiElements[drawOrder[i]].initScale.y + uiElements[drawOrder[i]].scaleOffset.y,
 			1.0f };
 	}
+
+
+	pauseCounter.Add();
 }
 
 void UIDisplayer::Init()
@@ -117,7 +142,6 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::PauseScreen_1280x720);	// ポーズ背景
 		drawOrder.push_back(uiType::PauseButton01_350x50);	// プレイ
 		drawOrder.push_back(uiType::PauseButton02_350x50);	// リトライ
-		drawOrder.push_back(uiType::PauseButton03_350x50);	// オプション
 		drawOrder.push_back(uiType::PauseButton04_350x50);	// セレクト
 		drawOrder.push_back(uiType::PauseTitle500x100); 	// ポーズタイトル
 
