@@ -48,15 +48,16 @@ class InGameScene final : public Scene
 	std::unique_ptr<UIDisplayer> uiDisplayer;
 	struct FieldLightData
 	{
-		int useNum = 0;
 		std::vector<Vector3> dstPositions;
 	};
 
 	FieldLightData fieldLightData[GameConstants::kMaxStages];
 	static int const kNumPLight = 9;
 	PointLight* fieldpointLights[kNumPLight];
+	
 	LightModel lightModels[kNumPLight];
 	float const lightHeight = 6.0f;
+	
 	PostEffectType curEffectType = PostEffectType::kNone;
 
 

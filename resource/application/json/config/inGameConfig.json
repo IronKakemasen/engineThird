@@ -37,8 +37,8 @@
     },
     "MaxHP": {
         "enemy": 10.0,
-        "enemyFactory": 30.0,
-        "enemyTower": 100.0,
+        "enemyFactory": 40.0,
+        "enemyTower": 150.0,
         "player": 3.0,
         "playerBullet": 1.2000000476837158,
         "playerTower": 50.0
@@ -61,12 +61,12 @@
         "separateCompleteFrame": 60
     },
     "SpawnInterval": {
-        "enemy": 12.5,
+        "enemy": 10.0,
         "maxAllyCount": 5,
         "playerAlly": 3.0
     },
     "Speed": {
-        "enemy": 0.014999999664723873,
+        "enemy": 0.017500000074505806,
         "player": 0.15000000596046448,
         "playerAlly": 1.75,
         "playerBullet": 0.25

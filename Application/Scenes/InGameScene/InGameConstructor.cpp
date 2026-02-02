@@ -2,106 +2,16 @@
 
 InGameScene::InGameScene()
 {
-
+	for (int i = 0; i < kNumPLight; ++i)
+	{
+		fieldpointLights[i] = M::GetInstance()->ImportPointLight();
+	}
 }
 
 void InGameScene::InputFieldLightData()
 {
-	for (int i = 0; i < kNumPLight; ++i)
-	{
-		fieldpointLights[i] = M::GetInstance()->ImportPointLight();
-		//fieldpointLights[i]->Getter_Para()->color = { 20,255,20};
-	}
 
-	//STAGE1
-	//int const stage1 = 5;
-	//fieldLightData[0].dstPositions.resize(stage1);
-	//fieldLightData[0].useNum = stage1;
-	//for (int i = 0; i < stage1; ++i)
-	//{
-	//	fieldLightData[0].dstPositions[i] = { 0.0f,5.0f  ,(float)i * 10.0f };
-	//}
-	int const stage1 = 9;
-	float const width1 = 10.0f;
-	fieldLightData[0].dstPositions.resize(stage1);
-	fieldLightData[0].useNum = stage1;
-	fieldLightData[0].dstPositions[0] = { 0,lightHeight,0 };
-	int k = 1;
-	for (int i = 1; i < stage1; i += 4, ++k)
-	{
-		float offset = width1 * k;
-
-		if (k == 1)
-		{
-			fieldLightData[0].dstPositions[i] =		{ 0.0f , lightHeight   ,offset * 1.25f };
-			fieldLightData[0].dstPositions[i + 1] = { offset*1.25f  ,lightHeight   ,0.0f};
-			fieldLightData[0].dstPositions[i + 2] = { 0.0f ,lightHeight   ,-offset * 1.25f };
-			fieldLightData[0].dstPositions[i + 3] = { -offset * 1.25f,lightHeight ,0.0f};
-		}
-		else
-		{
-			fieldLightData[0].dstPositions[i] = { -offset ,lightHeight   ,offset };
-			fieldLightData[0].dstPositions[i + 1] = { offset  ,lightHeight ,offset };
-			fieldLightData[0].dstPositions[i + 2] = { offset  ,lightHeight ,-offset };
-			fieldLightData[0].dstPositions[i + 3] = { -offset,lightHeight ,-offset };
-		}
-	}
-
-
-
-	//STAGE2
-	int const stage2 = 9;
-	float const width2 = 10.0f;
-	fieldLightData[1].dstPositions.resize(stage2);
-	fieldLightData[1].useNum = stage2;
-	fieldLightData[1].dstPositions[0] = { 0,lightHeight,0 };
-	k = 1;
-	for (int i = 1; i < stage2; i+=4,++k)
-	{
-		float offset = width2 * k;
-
-		if (k == 1)
-		{
-			fieldLightData[1].dstPositions[i] = { 0.0f , lightHeight   ,offset };
-			fieldLightData[1].dstPositions[i + 1] = { offset  ,lightHeight   ,0.0f };
-			fieldLightData[1].dstPositions[i + 2] = { 0.0f ,lightHeight  ,-offset };
-			fieldLightData[1].dstPositions[i + 3] = { -offset,lightHeight  ,0.0f };
-		}
-		else
-		{
-			fieldLightData[1].dstPositions[i] = { -offset , lightHeight  ,offset };
-			fieldLightData[1].dstPositions[i + 1] = { offset  ,lightHeight  ,offset };
-			fieldLightData[1].dstPositions[i + 2] = { offset  ,lightHeight  ,-offset };
-			fieldLightData[1].dstPositions[i + 3] = { -offset,lightHeight  ,-offset };
-		}
-	}
-
-	//STAGE3
-	int const stage3 = 9;
-	float const width3 = 10.0f;
-	fieldLightData[2].dstPositions.resize(stage3);
-	fieldLightData[2].useNum = stage3;
-	k = 1;
-	fieldLightData[2].dstPositions[0] = { 0,lightHeight,0 };
-	for (int i = 1; i < stage3; i += 4, ++k)
-	{
-		float offset = width3 * k;
-		if (k == 1)
-		{
-			fieldLightData[2].dstPositions[i] = { 0.0f , lightHeight  ,offset };
-			fieldLightData[2].dstPositions[i + 1] = { offset  ,lightHeight  ,0.0f };
-			fieldLightData[2].dstPositions[i + 2] = { 0.0f ,lightHeight ,-offset };
-			fieldLightData[2].dstPositions[i + 3] = { -offset,lightHeight ,0.0f };
-		}
-		else
-		{
-			fieldLightData[2].dstPositions[i] = { -offset ,lightHeight ,offset };
-			fieldLightData[2].dstPositions[i + 1] = { offset  ,lightHeight ,offset };
-			fieldLightData[2].dstPositions[i + 2] = { offset  ,lightHeight ,-offset };
-			fieldLightData[2].dstPositions[i + 3] = { -offset,lightHeight ,-offset };
-		}
-
-	}
+	
 }
 
 void InGameScene::Instantiate()

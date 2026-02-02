@@ -1,15 +1,15 @@
 {
     "ID": {
         "dirLightDir": {
-            "x": 1.0,
-            "y": 5.7,
-            "z": -0.1
+            "x": 0.0,
+            "y": 2.6,
+            "z": -3.8
         },
-        "dirLightIntensityNeon": 7.000000095367432,
+        "dirLightIntensityNeon": 4.400000095367432,
         "dirLightIntensityNormal": 0.1,
-        "metalicCommonNeon": 0.5139999985694885,
+        "metalicCommonNeon": 0.5239999985694885,
         "metalicCommonNormal": 0.7260000109672546,
-        "roughnessCommonNeon": 0.703000009059906,
+        "roughnessCommonNeon": 0.593000009059906,
         "roughnessCommonNormal": 0.22300000488758087
     }
 }

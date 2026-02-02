@@ -11,8 +11,7 @@ void PlayerBulletModel::Update(int mode_, float count_)
 {
 	auto* appearance = model->GetAppearance(0);
 
-	appearance->trans.rotation = appearance->trans.rotation +
-		randomRotateAddNum * rotateSpeed;
+	appearance->trans.rotation.z += rotateSpeed;
 }
 
 void PlayerBulletModel::Draw(Matrix4* vpMat_)
@@ -43,10 +42,10 @@ void PlayerBulletModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.7f;
-	appearance->roughness = 0.2f;
+	appearance->metalic = 0.0f;
+	appearance->roughness = 0.0f;
 	appearance->trans.pos.y = 3.0f;
-	appearance->color = { 40,80,220,255 };
+	appearance->color = { 200,200,0,255 };
 }
 
 void PlayerBulletModel::Reset()
