@@ -24,7 +24,7 @@ void GameObjectBehavior::SetIdentity(Tag tag_)
 		Identity{"PlayerTower" ,tag_,no,		0x00f00000,0x0000000f},
 		Identity{"PlayerAlly" ,tag_,no,			0x0f000000,0x000ff00f},
 		Identity{"InGameController" ,tag_,no,	0x00000000,0x00000000},
-
+		Identity{"UIManager" ,tag_,no,			0x00000000,0x00000000},
 	};
 
 	identitiesTable[(int)tag_].name = id + identitiesTable[(int)tag_].name;

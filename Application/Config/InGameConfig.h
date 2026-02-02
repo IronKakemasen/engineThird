@@ -49,6 +49,7 @@ public:
 	////////////////// AutSpawn  ////////////////
 	float enemySpawnInterval = 5.0f;	// 敵のスポーン間隔
 	float playerAllySpawnInterval = 1.0f;// 味方のスポーン間隔
+	float enemyFactoryRespawnInterval = 10.0f;	// エネミーファクトリーのリスポーン間隔
 	int32_t maxAllyCount = 10;      // 最大味方数
 
 	/////////////  KnockBack  ////////////////
@@ -58,6 +59,7 @@ public:
 	float enemyKnockBackPowerToPlayerTower = 0.5f;// [敵 - プレイヤータワー]衝突で 敵が受けるノックバック力
 	float enemyKnockBackPowerOfSpawn = 2.0f;	// スポーン時向いている方向*-1方向にノックバックさせる力
 	float enemyKnockBackRandomAngleOfSpawn = 10.0f;// スポーン時ノックバックのランダム角度
+	float enemyKnockBackDampingRate = 0.99f;	// エネミーノックバック減衰率
 
 	//////////////  Distance  ////////////////
 	int32_t allyToAllyDelayFrames = 30;		// ally - ally 間の遅延フレーム数

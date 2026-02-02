@@ -6,6 +6,7 @@
 
 class InGameConfig;
 struct InGameController;
+struct BuildingsManager;
 
 struct GameObjectBuilding
 {
@@ -23,18 +24,25 @@ public:
 	// デバッグ描画
 	virtual void DebugDraw() = 0;
 
+	// inGameConfigセット
 	virtual void SetInGameConfig(const InGameConfig* config_) { inGameConfig = config_; }
+	// buildingsManagerセット
+	virtual void SetBuildingsManager(BuildingsManager* manager_) { buildingsManager = manager_; }
 
 	// Jsonパス
 	std::string path;
-
-	// inGameController参照ポインタ
-	InGameController* inGameController = nullptr;
 
 
 	float GetHP() const { return hp; }
 
 protected:
+
+	// buildingsManager参照ポインタ
+	BuildingsManager* buildingsManager = nullptr;
+
+	// inGameController参照ポインタ
+	InGameController* inGameController = nullptr;
+
 	// ID
 	int32_t ID = -1;
 

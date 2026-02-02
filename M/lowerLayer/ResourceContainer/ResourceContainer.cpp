@@ -27,15 +27,34 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kEnemyThornN, pathToTex + "Enemy/" + "E_Thorn_normal.png");
 	LoadTextureFile(TextureTag::kAllyN, pathToTex + "Ally/" + "Ally_Body_normal.png");
 
+	// 汎用
+	LoadTextureFile(TextureTag::kNumbers1000x100, pathToUI + "Common/" + "Numbers1000x100.png");
+	LoadTextureFile(TextureTag::kCursor50x50, pathToUI + "Common/" + "Cursol50x50.png");
+
+	// 操作説明UI
 	LoadTextureFile(TextureTag::kButtonBack200x60, pathToUI + "Common/" + "ButtonBack200x60.png");
 	LoadTextureFile(TextureTag::kButtonDecision200x60, pathToUI + "Common/" + "ButtonDecision200x60.png");
 	LoadTextureFile(TextureTag::kButtonMove200x60, pathToUI + "Common/" + "ButtonMove200x60.png");
 	LoadTextureFile(TextureTag::kButtonOption200x60, pathToUI + "Common/" + "ButtonOption200x60.png");
 	LoadTextureFile(TextureTag::kButtonPause200x60, pathToUI + "Common/" + "ButtonPause200x60.png");
+	LoadTextureFile(TextureTag::kButtonReticle200x60, pathToUI + "Common/" + "ButtonReticle200x60.png");
+	LoadTextureFile(TextureTag::kButtonSet200x60, pathToUI + "Common/" + "ButtonSet200x60.png");
 	LoadTextureFile(TextureTag::kButtonShot200x60, pathToUI + "Common/" + "ButtonShot200x60.png");
 	LoadTextureFile(TextureTag::kButtonZoom200x60, pathToUI + "Common/" + "ButtonZoom200x60.png");
-	LoadTextureFile(TextureTag::kNumbers1000x100, pathToUI + "Common/" + "Numbers1000x100.png");
-	LoadTextureFile(TextureTag::kButtonReticle200x60, pathToUI + "Common/" + "ButtonReticle200x60.png");
+
+	// ポーズUI
+	LoadTextureFile(TextureTag::Pause500x100, pathToUI + "Pause/" + "Pause500x100.png");
+	LoadTextureFile(TextureTag::PauseButton01_350x50, pathToUI + "Pause/" + "PauseButton01_350x50.png");
+	LoadTextureFile(TextureTag::PauseButton02_350x50, pathToUI + "Pause/" + "PauseButton02_350x50.png");
+	LoadTextureFile(TextureTag::PauseButton03_350x50, pathToUI + "Pause/" + "PauseButton03_350x50.png");
+	LoadTextureFile(TextureTag::PauseButton04_350x50, pathToUI + "Pause/" + "PauseButton04_350x50.png");
+	LoadTextureFile(TextureTag::PauseScreen_1280x720, pathToUI + "Pause/" + "PauseScreen_1280x720.png");
+
+	// インゲームUI
+	LoadTextureFile(TextureTag::kGameOver1000x200, pathToUI + "InGame/" + "GameOver1000x200.png");
+	LoadTextureFile(TextureTag::StageClear1000x200, pathToUI + "InGame/" + "StageClear1000x200.png");
+
+
 	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
 
 	LoadTextureFile(TextureTag::kPlayerHeadN, pathToPlayer + "P_Head_normal.png");

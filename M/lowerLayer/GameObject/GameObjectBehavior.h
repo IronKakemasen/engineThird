@@ -36,6 +36,7 @@ struct GameObjectBehavior
 		kPlayerAlly,
 
 		kInGameController,
+		kUIManager,
 
 		kCount,
 		kNone,

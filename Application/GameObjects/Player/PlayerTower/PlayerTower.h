@@ -2,6 +2,7 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerTowerModel/PlayerTowerModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
+#include "../../BuildingsManager/BuildingsManager.h"
 
 struct PlayerTower :public GameObject, public GameObjectBuilding
 {
@@ -25,6 +26,13 @@ public:
 
 	// デバッグ描画
 	void DebugDraw() override;
+
+	// BuildingsManagerセット
+	void SetBuildingsManager(BuildingsManager* manager_) override
+	{
+		buildingsManager = manager_;
+		buildingsManager->SetPlayerTower(this);
+	}
 
 	int32_t tempStageNumber = -1;
 

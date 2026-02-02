@@ -12,7 +12,7 @@ void actor::Playable::operator()()
 {
 	ing->curCnt = cnt.count;
 
-
+	cnt.Add();
 }
 
 void actor::Playable::Reset()
@@ -66,12 +66,6 @@ void actor::GameOver::Reset()
 void actor::UnPlayable ::operator()()
 {
 	ing->curCnt = cnt.count;
-
-	if (cnt.IsEnd())
-	{
-		Reset();
-		return;
-	}
 
 	cnt.Add();
 

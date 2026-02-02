@@ -27,6 +27,9 @@ void InGameScene::Instantiate()
 
 	tenkyuuClass.reset(new TenkyuuClass);
 
+	// 建物オブジェクトマネージャーのインスタンス化
+	buildingsManager = std::make_unique<BuildingsManager>();
+	buildingsManager->SetInGameConfig(inGameConfig.get());
 	// プレイヤーのインスタンス化 & IDセット
 	player.reset(new Player);
 	player->SetID(0);
@@ -37,6 +40,7 @@ void InGameScene::Instantiate()
 		playerTowers[i].reset(new PlayerTower);
 		playerTowers[i]->SetID(static_cast<int32_t>(i));
 		playerTowers[i]->SetInGameConfig(inGameConfig.get());
+		playerTowers[i]->SetBuildingsManager(buildingsManager.get());
 	}
 	// プレイヤーアリーのインスタンス化 & IDセット
 	for (size_t i = 0; i < allies.size(); ++i)
@@ -65,6 +69,7 @@ void InGameScene::Instantiate()
 		enemyTowers[i].reset(new EnemyTower);
 		enemyTowers[i]->SetID(static_cast<int32_t>(i));
 		enemyTowers[i]->SetInGameConfig(inGameConfig.get());
+		enemyTowers[i]->SetBuildingsManager(buildingsManager.get());
 	}
 	// エネミーファクトリーのインスタンス化 & IDセット
 	for (size_t i = 0; i < enemyFactories.size(); ++i)
@@ -72,6 +77,7 @@ void InGameScene::Instantiate()
 		enemyFactories[i].reset(new EnemyFactory);
 		enemyFactories[i]->SetID(static_cast<int32_t>(i));
 		enemyFactories[i]->SetInGameConfig(inGameConfig.get());
+		enemyFactories[i]->SetBuildingsManager(buildingsManager.get());
 	}
 
 	//八神ライト
@@ -94,6 +100,8 @@ void InGameScene::Instantiate()
 		gameObjManager->RegisterForContainer(enemyTower.get());
 	for (auto& enemyFactory : enemyFactories)
 		gameObjManager->RegisterForContainer(enemyFactory.get());
+	gameObjManager->RegisterForContainer(buildingsManager.get());
+	gameObjManager->RegisterForContainer(uiDisplayer.get());
 
 
 	// ポインタを渡す
@@ -105,14 +113,10 @@ void InGameScene::Instantiate()
 	}
 
 	for (auto& ally : allies)
-	{
 		player->SetAllies(ally.get());
-	}
 
 	for (auto& bullet : playerBullets)
-	{
 		player->SetBullets(bullet.get());
-	}
 }
 
 void InGameScene::Init()

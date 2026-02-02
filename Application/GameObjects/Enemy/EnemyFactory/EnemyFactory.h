@@ -2,6 +2,7 @@
 #include "GameObjectBehavior.h"
 #include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
+#include "../../BuildingsManager/BuildingsManager.h"
 
 struct Enemy;
 struct PlayerBullet;
@@ -22,11 +23,10 @@ private:
 	// そのターンで衝突した弾のリスト（多重衝突防止用）
 	std::vector<PlayerBullet*> hitBullets{};
 
-	// 復活カウンター
-	Counter rebornCounter;
 	bool isDead = false;
-
 public:
+	Counter rebornCounter;
+	bool IsDead() const { return isDead; }
 	 
 	// 衝突した弾をリストに追加
 	void AddHitBullet(PlayerBullet* bullet);
@@ -50,6 +50,14 @@ public:
 
 	// デバッグ描画
 	void DebugDraw() override;
+
+	// BuildingsManagerセット
+	void SetBuildingsManager(BuildingsManager* manager_) override
+	{
+		buildingsManager = manager_;
+		buildingsManager->SetEnemyFactory(this);
+	}
+
 
 	int32_t tempStageNumber = -1;
 
