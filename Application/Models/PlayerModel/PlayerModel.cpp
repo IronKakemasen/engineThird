@@ -1,5 +1,109 @@
 #include "PlayerModel.h"
 
+
+void PlayerModel::Update(int mode_, float count_)
+{
+	//Run();
+	Idle();
+}
+
+void PlayerModel::Idle()
+{
+	float const loopSpeed = 0.15f;
+	idleDelta += loopSpeed;
+
+	auto* h = head->GetAppearance(0);
+	auto* b = body->GetAppearance(0);
+	auto* legr = leg_R->GetAppearance(0);
+	auto* legl = leg_L->GetAppearance(0);
+	auto* arml = hand_L->GetAppearance(0);
+	auto* armr = hand_R->GetAppearance(0);
+
+	if (headRotateCnt.count >= 0.0f && headRotateCnt.count < 0.2f)
+	{
+		float const bodyDefaultY = 0.5f;
+		float const legDefaultY = -0.4f;
+
+		float numTizimi = 0.2f;
+
+		//縮んで
+		if (headRotateCnt.count < 0.1f)
+		{
+			float t = Counter::GetNormalizedCount(0.0f, 0.1f, headRotateCnt.count);
+
+			b->trans.pos.y = Easing::EaseOutSine(bodyDefaultY, bodyDefaultY - numTizimi, t);
+			legr->trans.pos.y = Easing::EaseOutSine(legDefaultY, legDefaultY + numTizimi, t);
+			legl->trans.pos.y = Easing::EaseOutSine(legDefaultY, legDefaultY + numTizimi, t);
+		}
+		//伸びる
+		else
+		{
+			float t = Counter::GetNormalizedCount(0.1f, 0.2f, headRotateCnt.count);
+
+			b->trans.pos.y = Easing::EaseOutElastic(bodyDefaultY - numTizimi, bodyDefaultY , t);
+			legr->trans.pos.y = Easing::EaseOutElastic(legDefaultY + numTizimi, legDefaultY, t);
+			legl->trans.pos.y = Easing::EaseOutElastic(legDefaultY + numTizimi, legDefaultY, t);
+		}
+		
+	}
+
+	//頭回転
+	if (headRotateCnt.count >= 0.1f && headRotateCnt.count < 0.5f)
+	{
+		float t = Counter::GetNormalizedCount(0.1f, 0.5f, headRotateCnt.count);
+		h->trans.rotation.x = Easing::EaseOutExpo(0.0f, -720.0f, t);
+
+		float const maxHeight = 2.5f;
+		float headDefaultY = 0.5199999809265137;
+		if (headRotateCnt.count >= 0.1f && headRotateCnt.count < 0.4f)
+		{
+			float tt = Counter::GetNormalizedCount(0.1f, 0.4f, headRotateCnt.count);
+			h->trans.pos.y = Easing::EaseOutCubic(headDefaultY, headDefaultY + maxHeight, tt);
+
+		}
+		else if (headRotateCnt.count >= 0.4f && headRotateCnt.count < 0.5f)
+		{
+			float tt = Counter::GetNormalizedCount(0.4f, 0.5f, headRotateCnt.count);
+			h->trans.pos.y = Easing::EaseOutExpo(headDefaultY + maxHeight, headDefaultY , tt);
+
+		}
+	}
+
+	headRotateCnt.Add();
+	headRotateCnt.IsEnd();
+}
+
+void PlayerModel::Run()
+{
+	idleDelta = 0.0f;
+	headRotateCnt.count = 0.0f;
+	float const amp = 0.2f;
+	float const loopSpeed = 0.15f;
+
+	runDelta += loopSpeed;
+	float deltaBodyY = sinf(runDelta) * amp;
+	float deltaHuri = sinf(runDelta * 0.5f) * 45.0f;
+
+	auto* h = head->GetAppearance(0);
+	auto* b = body->GetAppearance(0);
+	auto* legr = leg_R->GetAppearance(0);
+	auto* legl = leg_L->GetAppearance(0);
+	auto* arml = hand_L->GetAppearance(0);
+	auto* armr = hand_R->GetAppearance(0);
+
+	h->trans.rotation.x = 7.5f;
+
+	b->trans.pos.y = 0.65f + deltaBodyY;
+	b->trans.rotation.x = -12.5f;
+
+	legr->trans.rotation.x = deltaHuri;
+	legl->trans.rotation.x = -deltaHuri;
+
+	arml->trans.rotation.x = deltaHuri;
+	armr->trans.rotation.x = -12.5f;
+
+}
+
 void PlayerModel::Save()
 {
 	std::string key = "/ID/";
@@ -58,12 +162,9 @@ PlayerModel::PlayerModel()
 	models.emplace_back(leg_L.get());
 	models.emplace_back(leg_R.get());
 	models.emplace_back(cannon.get());	
+	headRotateCnt.Initialize(6.0f);
 }
 
-void PlayerModel::Update(int mode_, float count_)
-{
-
-}
 
 void PlayerModel::Draw(Matrix4* vpMat_)
 {

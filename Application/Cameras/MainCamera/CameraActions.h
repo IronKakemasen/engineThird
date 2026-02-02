@@ -25,7 +25,7 @@ namespace CameraActions
 
 	class FollowPlayer : public Action
 	{
-		Vector3 offsetFollow = { 0,10,-1 };
+		Vector3 offsetFollow = { 0,10,-2.5f };
 		Vector3 offsetBeyond;
 		Vector3 offsetDebug;
 		float const kDefaultFollowCoe = 0.02f;

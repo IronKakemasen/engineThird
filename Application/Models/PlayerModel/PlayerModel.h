@@ -6,6 +6,12 @@ class PlayerModel :public ModelBehavior
 {
 
 	void Load();
+	void Idle();
+	void Run();
+
+	float idleDelta = 0.0f;
+	float runDelta = 0.0;
+	Counter headRotateCnt;
 public:
 
 	void Save();
