@@ -24,10 +24,11 @@
     },
     "KnockBackPower": {
         "enemy": {
+            "DamapingRate": 0.9399999976158142,
             "OfSpawn": 0.75,
-            "RandomAngleOfSpawn": 360.0,
-            "ToAlly": 3.0,
-            "ToBullet": 0.009999999776482582,
+            "RandomAngleOfSpawn": 180.0,
+            "ToAlly": 1.0,
+            "ToBullet": 0.30000001192092896,
             "ToBullet1": 0.10000000149011612,
             "ToBullet2": 0.10000000149011612,
             "ToBullet3": 0.10000000149011612,
@@ -61,7 +62,8 @@
         "separateCompleteFrame": 60
     },
     "SpawnInterval": {
-        "enemy": 10.0,
+        "enemy": 2.0,
+        "enemyFactoryRespawnInterval": 10.0,
         "maxAllyCount": 5,
         "playerAlly": 3.0
     },
