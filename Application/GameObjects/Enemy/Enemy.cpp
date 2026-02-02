@@ -242,7 +242,7 @@ void Enemy::LookAtTarget()
 
 void Enemy::MoveKnockBack()
 {
-	knockBackVelocity = knockBackVelocity * 0.99f;
+	knockBackVelocity = knockBackVelocity * inGameConfig->enemyKnockBackDampingRate;
 }
 
 void Enemy::KnockBack(Vector3 dir, float power)

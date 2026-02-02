@@ -9,7 +9,9 @@ void UIDisplayer::Update()
 {
 	if (inGameController->curMode == InGameController::Mode::kUnPlayable)
 	{
-		pauseScreenOffset = Easing::EaseOutCubic(0.0f, 1000.0f, inGameController->curCnt * 2.0f);
+		float t = inGameController->curCnt * 2.0f;
+		if (t > 1.0f)t = 1.0f;
+		pauseScreenOffset = Easing::EaseOutCubic(0.0f, 1000.0f, t);
 
 		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
 		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
@@ -20,8 +22,9 @@ void UIDisplayer::Update()
 	}
 	else if (inGameController->curMode == InGameController::Mode::kPlayable)
 	{
-		if (pauseScreenOffset <= 0.0f)return;
-		pauseScreenOffset = Easing::EaseOutCubic(1000.0f, 0.0f, inGameController->curCnt * 2.0f);
+		float t = inGameController->curCnt * 2.0f;
+		if (t > 1.0f)t = 1.0f;
+		if (pauseScreenOffset > 0.0f)pauseScreenOffset = Easing::EaseOutCubic(1000.0f, 0.0f, t);
 		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
 		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
 		uiElements[uiType::PauseButton02_350x50].curPos.x = uiElements[uiType::PauseButton02_350x50].initPosition.x - pauseScreenOffset;

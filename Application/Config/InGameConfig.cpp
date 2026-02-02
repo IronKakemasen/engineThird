@@ -43,6 +43,7 @@ void InGameConfig::Load()
 	Json::LoadParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
+	Json::LoadParam(path, knockBack + "enemy/DamapingRate", enemyKnockBackDampingRate);
 	Json::LoadParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
 	Json::LoadParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::LoadParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
@@ -103,6 +104,7 @@ void InGameConfig::Save()
 	Json::SaveParam(path, power + "enemy/defaultAttackPower", enemyAttackPower);
 
 	std::string knockBack = "/KnockBackPower/";
+	Json::SaveParam(path, knockBack + "enemy/DamapingRate", enemyKnockBackDampingRate);
 	Json::SaveParam(path, knockBack + "enemy/ToAlly", enemyKnockBackPowerToAlly);
 	Json::SaveParam(path, knockBack + "enemy/ToPlayer", enemyKnockBackPowerToPlayer);
 	Json::SaveParam(path, knockBack + "enemy/ToBullet", enemyKnockBackPowerToBullet);
@@ -192,8 +194,7 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("KnockBackPower"))
 	{
-		//ImGui::DragFloat("Enemy		DamapingRate", &enemyKnockBackDampingRate, 0.01)
-
+		ImGui::DragFloat("Enemy		DamapingRate", &enemyKnockBackDampingRate, 0.01f, 0.01f, 0.99f);
 		ImGui::DragFloat("Enemy		toAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);
