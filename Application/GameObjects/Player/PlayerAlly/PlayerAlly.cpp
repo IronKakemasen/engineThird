@@ -229,7 +229,12 @@ void PlayerAlly::Spawn(Vector3 pos)
 
 void PlayerAlly::Death()
 {
-	SetStatus(Status::kInActive);
+	deathCounter.Initialize(1.0f);
+
+	if (deathCounter.IsEnd())
+	{
+		SetStatus(Status::kInActive);
+	}
 }
 
 

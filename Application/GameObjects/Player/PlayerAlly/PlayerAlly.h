@@ -34,6 +34,9 @@ private:
 	void LockPosition();
 
 
+	// 死亡後判定を受けてからn秒後に消滅するカウンター
+	Counter deathCounter;
+
 	State currentState = State::kNone;
 	State nextState = State::kNone;
 
