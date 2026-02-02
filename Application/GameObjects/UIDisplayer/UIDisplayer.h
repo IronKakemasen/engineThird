@@ -146,8 +146,9 @@ private:
 	float pauseScreenOffset = 0.0f;		// ポーズスクリーンのオフセット
 	float preOffset = 0.0f;				// ポーズイン・アウト前のオフセット
 	int32_t currentSelectedButton = 0;	// 現在選択中のボタン
-	Counter buttonSelectCounter;    // ボタン選択用カウンター
-	float preButtonOffset = 0.0f; // ボタン選択前のオフセット
+	Counter buttonSelectCoolTime;		// カーソル切り替えクールタイム
+	Counter easingCounter;				// イージング用カウンター
+	float preButtonOffset = 0.0f;		// ボタン選択前のオフセット
 	void UpdatePauseUI();
 
 public:

@@ -8,7 +8,8 @@
 
 UIDisplayer::UIDisplayer()
 {
-	buttonSelectCounter.Initialize(0.1f);
+	buttonSelectCoolTime.Initialize(0.1f);
+	easingCounter.Initialize(0.1f);
 
 	std::map<uiType, Vector2> uiTexureSize;
 	// 汎用
@@ -201,32 +202,59 @@ void UIDisplayer::UpdatePauseUI()
 	// カーソル更新
 	if (gameObjectManager->isStop)
 	{
-		if (buttonSelectCounter.count >= 1.0f)
+		if (buttonSelectCoolTime.count >= 1.0f)
 		{
 			if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
 			{
+				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_UP);
 				preButtonOffset = currentSelectedButton * 70.0f;
-				buttonSelectCounter.Initialize(0.1f);
+				if (feldFrame > 30)
+				{
+					buttonSelectCoolTime.Initialize(0.1f);
+					easingCounter.Initialize(0.1f);
+				}
+				else
+				{
+					buttonSelectCoolTime.Initialize(0.5f);
+					easingCounter.Initialize(0.1f);
+				}
 				currentSelectedButton--;
 				if (currentSelectedButton < 0) currentSelectedButton = 2;
 			}
 			else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
 			{
+				int32_t feldFrame = M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN);
 				preButtonOffset = currentSelectedButton * 70.0f;
-				buttonSelectCounter.Initialize(0.1f);
+				if (feldFrame > 30)
+				{
+					buttonSelectCoolTime.Initialize(0.1f);
+					easingCounter.Initialize(0.1f);
+				}
+				else
+				{
+					buttonSelectCoolTime.Initialize(0.5f);
+					easingCounter.Initialize(0.1f);
+				}
 				currentSelectedButton++;
 				if (currentSelectedButton > 2) currentSelectedButton = 0;
 			}
 		}
-			uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
-				preButtonOffset,
-				currentSelectedButton * 70.0f,
-				buttonSelectCounter.count);
-			//buttonSelectCounter.count += buttonSelectCounter.inv_Time * buttonSelectCounter.deltaTime_ * buttonSelectCounter.speed;
-			buttonSelectCounter.Add();
+		else
+		{
+			if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
+				M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
+			{
+				buttonSelectCoolTime.Initialize(0.01f);
+			}
+		}
+
+		uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
+			preButtonOffset,
+			currentSelectedButton * 70.0f,
+			easingCounter.count);
+		buttonSelectCoolTime.Add();
+		easingCounter.Add();
 	}
-
-
 }
 
 void UIDisplayer::SetUIMode(UIMode mode_)
