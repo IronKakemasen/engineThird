@@ -12,15 +12,18 @@ void CameraActions::ActionBehavior::Init(MainCamera* camera_)
 void CameraActions::FollowPlayer::operator()()
 {
 	Vector3 nextPos = camera->player->Getter_Trans()->GetWorldPos() + offsetFollow;
-	float const adjustMul = 2.0f;
+	float const adjustMul = 5;
+
+	Vector3 tmp;
 
 	auto X = M::GetInstance()->getPadState.GetRightStick(0).x;
 	auto Y = M::GetInstance()->getPadState.GetRightStick(0).y;
-	if (std::abs(X) < 0.3f)X = 0.0f;
-	if (std::abs(Y) < 0.3f)Y = 0.0f;
 
-	Vector3 tmp = Vector3{ X,0,Y }.GetNormalized();
+	Benri::Adjust(X, -0.3f, 0.3f,0.0f);
+	Benri::Adjust(Y, -0.3f, 0.3f, 0.0f);
 
+	tmp = Vector3{ X,0,Y }.GetNormalized();
+  
 	camera->cameraPara->trans.pos =
 		Easing::EaseOutCubic(camera->cameraPara->trans.pos, nextPos + tmp * adjustMul,
 			kDefaultFollowCoe)+ offsetDebug ;
