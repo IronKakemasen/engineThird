@@ -48,5 +48,7 @@ Matrix4 GetTranslateMat(Vector3 pos_);
 Vector4 GetPerpendiculer(Vector4 point_);
 Vector3 ConvertToRectangularCoordinate(Vector3& sphereCoord_);
 Vector2 ConvertToScreen(Vector3 dst_, Matrix4& viewProjectionMat_);
+Vector2 ConvertToScreen(Vector3 world_);
+
 Matrix4 GetRotateAxisMat(Vector3 axis_, float radian_);
 Matrix4 GetRotateAxisMat(Vector3 v1_, Vector3 v2_ );

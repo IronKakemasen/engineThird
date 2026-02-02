@@ -268,7 +268,6 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 	body->GetAppearance(0)->trans.BeChildren(gameObjectTrans_);
 	body->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap]=
 		m->GetTexIndex(TextureTag::kPlayerBodyN);
-	body->GetAppearance(0)->trans.lookDir = { 0,0,-1 };
 
 	hand_L->GetAppearance(0)->trans.BeChildren(&body->GetAppearance(0)->trans);
 	hand_L->GetAppearance(0)->texHandlesContainer[Appearance::kNormalmap] =

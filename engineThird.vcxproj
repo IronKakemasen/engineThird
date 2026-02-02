@@ -163,6 +163,7 @@
     <ClCompile Include="Application\Models\LightModel\LightModel.cpp" />
     <ClCompile Include="Application\GameObjects\BuildingsManager\BuildingsManager.cpp" />
     <ClCompile Include="Application\Models\CircleModel\CircleModel.cpp" />
+    <ClCompile Include="Application\Systems\DamageDisplay\DamageDisplay.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -351,6 +352,7 @@
     <ClInclude Include="Application\Models\LightModel\LightModel.h" />
     <ClInclude Include="Application\GameObjects\BuildingsManager\BuildingsManager.h" />
     <ClInclude Include="Application\Models\CircleModel\CircleModel.h" />
+    <ClInclude Include="Application\Systems\DamageDisplay\DamageDisplay.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
