@@ -4,6 +4,8 @@
 #include <array>
 #include <map>
 
+struct InGameController;
+
 struct UIDisplayer :public GameObject
 {
 	enum class UIMode
@@ -119,8 +121,10 @@ struct UIDisplayer :public GameObject
 	struct uiData
 	{
 		std::unique_ptr<Sprite> sprite;
-		Vector2 position;
-		Vector2 scale = Vector2(1.0f, 1.0f);
+		Vector2 initPosition = Vector2(100.0f, 100.0f);
+		Vector2 curPos = Vector2(100.0f, 100.0f);
+		Vector2 initScale = Vector2(1.0f, 1.0f);
+		Vector2 curScale = Vector2(1.0f, 1.0f);
 	};
 
 private:
@@ -144,9 +148,12 @@ public:
 	void SaveData();
 
 private:
+	InGameController* inGameController = nullptr;
 
 	std::vector<uiType> drawOrder;
 	std::map<uiType, uiData> uiElements;
+
+	float pauseScreenOffset = 0.0f;
 
 public:
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

@@ -1,26 +1,55 @@
 #include "UIDisplayer.h"
 #include "imgui.h"
 #include ",,/../../Json/Json.h"
+#include "GameObjectManager.h"
+#include "../InGameController/InGameController.h"
 #include <array>
 
 void UIDisplayer::Update()
 {
+	if (inGameController->curMode == InGameController::Mode::kUnPlayable)
+	{
+		pauseScreenOffset = Easing::EaseOutCubic(0.0f, 1000.0f, inGameController->curCnt * 2.0f);
+
+		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].curPos.x = uiElements[uiType::PauseButton02_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].curPos.x = uiElements[uiType::PauseButton03_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].curPos.x = uiElements[uiType::PauseButton04_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].curPos.x = uiElements[uiType::PauseTitle500x100].initPosition.x - pauseScreenOffset;
+	}
+	else if (inGameController->curMode == InGameController::Mode::kPlayable)
+	{
+		if (pauseScreenOffset <= 0.0f)return;
+		pauseScreenOffset = Easing::EaseOutCubic(1000.0f, 0.0f, inGameController->curCnt * 2.0f);
+		uiElements[uiType::PauseScreen_1280x720].curPos.x = uiElements[uiType::PauseScreen_1280x720].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton01_350x50].curPos.x = uiElements[uiType::PauseButton01_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton02_350x50].curPos.x = uiElements[uiType::PauseButton02_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton03_350x50].curPos.x = uiElements[uiType::PauseButton03_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseButton04_350x50].curPos.x = uiElements[uiType::PauseButton04_350x50].initPosition.x - pauseScreenOffset;
+		uiElements[uiType::PauseTitle500x100].curPos.x = uiElements[uiType::PauseTitle500x100].initPosition.x - pauseScreenOffset;
+	}
+
+	for (size_t i = 0; i < drawOrder.size(); i++)
+	{
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
+		{ uiElements[drawOrder[i]].curPos.x, uiElements[drawOrder[i]].curPos.y,0.0f };
+
+		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
+		{ uiElements[drawOrder[i]].curScale.x,uiElements[drawOrder[i]].curScale.y,1.0f };
+	}
 }
 
 void UIDisplayer::Init()
 {
-	for (size_t i = 0; i < drawOrder.size(); i++)
-	{
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
-		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
-		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
-	}
 	SetIdentity(Tag::kUIManager);
 }
 
 void UIDisplayer::Reset()
-{}
+{
+	std::vector<GameObject*> inGameControllerList = gameObjectManager->Find(GameObject::Tag::kInGameController);
+	inGameController = reinterpret_cast<InGameController*>(inGameControllerList[0]);
+}
 
 void UIDisplayer::LoadData()
 {
@@ -32,8 +61,8 @@ void UIDisplayer::LoadData()
 		std::string tex = toString(type);
 		std::string key = "/" + mode + "/" + tex;
 
-		Json::LoadParam(path, key + "/pos", uiElements[type].position);
-		Json::LoadParam(path, key + "/scale", uiElements[type].scale);
+		Json::LoadParam(path, key + "/pos", uiElements[type].initPosition);
+		Json::LoadParam(path, key + "/scale", uiElements[type].initScale);
 	}
 }
 void UIDisplayer::SaveData()
@@ -46,14 +75,16 @@ void UIDisplayer::SaveData()
 		std::string tex = toString(type);
 		std::string key = "/" + mode + "/" + tex;
 
-		Json::SaveParam(path, key + "/pos", uiElements[type].position);
-		Json::SaveParam(path, key + "/scale", uiElements[type].scale);
+		Json::SaveParam(path, key + "/pos", uiElements[type].curPos);
+		Json::SaveParam(path, key + "/scale", uiElements[type].curScale);
 	}
 	Json::Save(path);
 }
 
 void UIDisplayer::SetUIMode(UIMode mode_)
 {
+	pauseScreenOffset = 0.0f;
+
 	mode = mode_;
 
 	drawOrder.clear();
@@ -66,7 +97,6 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Decision200x60);	// ケッテイ　アイコン
 		drawOrder.push_back(uiType::Option200x60);		// セッテイ　アイコン
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
-		drawOrder.push_back(uiType::Cursor50x50);	// カーソル
 		break;
 	case UIDisplayer::UIMode::InGame:
 		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
@@ -90,13 +120,14 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		break;
 	}
 
+	// このモードのUIの初期位置と初期スケールをロード
 	LoadData();
+
+	// 初期位置と初期スケールにリセット
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
-		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
-		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
+		uiElements[drawOrder[i]].curPos = uiElements[drawOrder[i]].initPosition;
+		uiElements[drawOrder[i]].curScale = uiElements[drawOrder[i]].initScale;
 	}
 }
 
@@ -124,27 +155,10 @@ void UIDisplayer::DebugDraw()
 		isDraw[size_t(drawOrder[i])] = true;
 
 		ImGui::Text("%s", toString(drawOrder[i]).c_str());
-		ImGui::SameLine();
 		ImGui::DragFloat2(("pos" + std::to_string(i)).c_str(),
-			&uiElements[drawOrder[i]].position.x, 1.0f);
+			&uiElements[drawOrder[i]].curPos.x, 1.0f);
 		ImGui::DragFloat2(("scale" + std::to_string(i)).c_str(),
-			&uiElements[drawOrder[i]].scale.x, 0.1f);
-
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
-		{ uiElements[drawOrder[i]].position.x, uiElements[drawOrder[i]].position.y,0.0f };
-		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale =
-		{ uiElements[drawOrder[i]].scale.x,uiElements[drawOrder[i]].scale.y,1.0f };
-	}
-
-	for (size_t i = 0; i < uiElements.size(); i++)
-	{
-		if (isDraw[i]) continue;
-
-		if (ImGui::Button(("Add : " + toString(uiType(i))).c_str()))
-		{
-			drawOrder.push_back(uiType(i));
-			LoadData();
-		}
+			&uiElements[drawOrder[i]].curScale.x, 0.1f);
 	}
 
 	ImGui::End();
@@ -221,16 +235,10 @@ UIDisplayer::UIDisplayer()
 		uiElements[uiType(i)].sprite->Initialize(
 			uiTexureSize[uiType(i)].x,
 			uiTexureSize[uiType(i)].y,
-			{ uiElements[uiType(i)].position.x,
-				uiElements[uiType(i)].position.y,0.0f },
+			{ uiElements[uiType(i)].curPos.x,
+				uiElements[uiType(i)].curPos.y,0.0f },
 			M::GetInstance()->GetTexIndex(uiTexure[uiType(i)]),
 			{ 255,255,255,255 });
-
-		// 初期位置とスケールをセット
-		uiElements[uiType(i)].sprite->GetAppearance()->trans.pos =
-		{ uiElements[uiType(i)].position.x, uiElements[uiType(i)].position.y,0.0f };
-		uiElements[uiType(i)].sprite->GetAppearance()->trans.scale =
-		{ uiElements[uiType(i)].scale.x,uiElements[uiType(i)].scale.y,1.0f };
 	}
 }
 

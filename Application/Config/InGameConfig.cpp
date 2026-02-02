@@ -192,6 +192,8 @@ void InGameConfig::DebugDraw()
 	}
 	if (ImGui::TreeNode("KnockBackPower"))
 	{
+		//ImGui::DragFloat("Enemy		DamapingRate", &enemyKnockBackDampingRate, 0.01)
+
 		ImGui::DragFloat("Enemy		toAlly", &enemyKnockBackPowerToAlly, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy		toPlayer", &enemyKnockBackPowerToPlayer, 0.1f, 0.0f, 20.0f);
 		ImGui::DragFloat("Enemy 	toBullet", &enemyKnockBackPowerToBullet, 0.1f, 0.0f, 20.0f);

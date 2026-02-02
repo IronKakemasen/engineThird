@@ -89,6 +89,7 @@ void StageSelectScene::Instantiate()
 		}
 	}
 	gameObjManager->RegisterForContainer(inGameController.get());
+	gameObjManager->RegisterForContainer(uiDisplayer.get());
 }
 
 void StageSelectScene::Init()

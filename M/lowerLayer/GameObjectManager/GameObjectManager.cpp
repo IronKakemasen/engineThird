@@ -176,14 +176,14 @@ void GameObjectManager::Reset()
 	{
 		(*itr)->Reset();
 	}
+
+	// InGameController取得
+	std::vector<GameObject*> inGameControllerList = Find(GameObject::Tag::kInGameController);
+	inGameController = reinterpret_cast<InGameController*>(inGameControllerList[0]);
 }
 
 void GameObjectManager::Update()
 {
-	// InGameController取得
-	std::vector<GameObject*> inGameControllerList = Find(GameObject::Tag::kInGameController);
-	InGameController* inGameController = reinterpret_cast<InGameController*>(inGameControllerList[0]);
-
 	// ポーズ中は更新しない
 	bool isPause = false;
 	if (inGameController->curMode == InGameController::kUnPlayable)

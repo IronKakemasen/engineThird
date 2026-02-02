@@ -59,6 +59,7 @@ public:
 	float enemyKnockBackPowerToPlayerTower = 0.5f;// [敵 - プレイヤータワー]衝突で 敵が受けるノックバック力
 	float enemyKnockBackPowerOfSpawn = 2.0f;	// スポーン時向いている方向*-1方向にノックバックさせる力
 	float enemyKnockBackRandomAngleOfSpawn = 10.0f;// スポーン時ノックバックのランダム角度
+	float enemyKnockBackDampingRate = 0.99f;	// エネミーノックバック減衰率
 
 	//////////////  Distance  ////////////////
 	int32_t allyToAllyDelayFrames = 30;		// ally - ally 間の遅延フレーム数
