@@ -116,6 +116,14 @@ void UIDisplayer::Reset()
 {
 	std::vector<GameObject*> inGameControllerList = gameObjectManager->Find(GameObject::Tag::kInGameController);
 	inGameController = reinterpret_cast<InGameController*>(inGameControllerList[0]);
+
+	// いーじんぐ初期化
+	preOffset = pauseScreenOffset;
+	pauseCounter.Initialize(1.0f);
+	currentSelectedButton = 0;
+	buttonSelectCoolTime.Initialize(0.1f);
+	easingCounter.Initialize(0.1f);
+	selected = false;
 }
 
 void UIDisplayer::LoadData()
@@ -156,6 +164,7 @@ void UIDisplayer::UpdatePauseUI()
 		gameObjectManager->TheWorld();
 		preOffset = pauseScreenOffset;
 		pauseCounter.Initialize(1.0f);
+		if (!gameObjectManager->isStop)currentSelectedButton = 0;
 	}
 
 #ifdef _DEBUG
@@ -200,7 +209,7 @@ void UIDisplayer::UpdatePauseUI()
 	pauseCounter.Add();
 
 	// カーソル更新
-	if (gameObjectManager->isStop)
+	if (gameObjectManager->isStop && !selected)
 	{
 		if (buttonSelectCoolTime.count >= 1.0f)
 		{
@@ -248,12 +257,54 @@ void UIDisplayer::UpdatePauseUI()
 			}
 		}
 
+		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
+		{
+			switch (currentSelectedButton)
+			{
+			case 0:	// プレイ
+				gameObjectManager->TheWorld();
+				preOffset = pauseScreenOffset;
+				pauseCounter.Initialize(1.0f);
+				selected = true;
+				break;
+			case 1:	// リトライ
+				gameObjectManager->TheWorld();
+				preOffset = pauseScreenOffset;
+				pauseCounter.Initialize(1.0f);
+				selected = true;
+				break;
+			case 2:	// セレクト
+				selected = true;
+				break;
+			default:
+				break;
+			}
+		}
+
 		uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
 			preButtonOffset,
 			currentSelectedButton * 80.0f,
 			easingCounter.count);
 		buttonSelectCoolTime.Add();
 		easingCounter.Add();
+	}
+
+	if (selected && pauseCounter.IsEnd())
+	{
+		switch (currentSelectedButton)
+		{
+		case 0:	// プレイ
+			break;
+		case 1:	// リトライ
+			pauseRequest = PauseRequest::kRetry;
+			break;
+		case 2:	// セレクト
+			pauseRequest = PauseRequest::kBackToStageSelect;
+			break;
+		default:
+			break;
+		}
+		selected = false;
 	}
 }
 
@@ -312,6 +363,14 @@ void UIDisplayer::SuperDraw(Matrix4 * ortho_)
 	{
 		uiElements[drawOrder[i]].sprite->Draw(ortho_);
 	}
+}
+
+UIDisplayer::PauseRequest UIDisplayer::GetPauseRequest()
+{
+	PauseRequest out = pauseRequest;
+	pauseRequest = PauseRequest::kNone;
+	return out;
+
 }
 
 

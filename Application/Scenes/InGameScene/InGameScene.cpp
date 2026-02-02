@@ -3,6 +3,24 @@
 
 void InGameScene::Update()
 {
+	if (uiDisplayer)
+	{
+		switch (uiDisplayer->GetPauseRequest())
+		{
+		case UIDisplayer::PauseRequest::kRetry:
+			SceneBehavior::doReset = true;
+			break;
+
+		case UIDisplayer::PauseRequest::kBackToStageSelect:
+			ChangeScene(SceneType::kStageSelect);
+			SceneBehavior::doReset = true;
+			break;
+
+		case UIDisplayer::PauseRequest::kNone:
+		default:
+			break;
+		}
+	}
 
 	switch (inGameController->curMode)
 	{
