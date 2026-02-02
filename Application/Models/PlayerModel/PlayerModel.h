@@ -8,6 +8,7 @@ class PlayerModel :public ModelBehavior
 	void Load();
 	void Idle();
 	void Run();
+	void IdleInGame();
 
 	float idleDelta = 0.0f;
 	float runDelta = 0.0;

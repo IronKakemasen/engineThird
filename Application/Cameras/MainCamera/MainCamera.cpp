@@ -1,5 +1,6 @@
 #include "MainCamera.h"
 #include "../../M/lowerLayer/Camera/CameraBehavior.h"
+#include "../../M/lowerLayer/GameObjectManager/GameObjectManager.h"
 
 void MainCamera::Init(CameraPara* cameraPara_, InGameController* ing_, Player* player_)
 {
@@ -31,6 +32,8 @@ void MainCamera::Init(CameraPara* cameraPara_, InGameController* ing_, Player* p
 
 void MainCamera::Update()
 {
+	if (GameObjectManager::isStop) return;
+
 	(*cameraActions[ing->curMode].get())();
 
 }

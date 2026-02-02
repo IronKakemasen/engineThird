@@ -425,6 +425,21 @@ Vector2 ConvertToScreen(Vector3 dst_, Matrix4& viewProjectionMat_)
 	return Vector2{ tmp.x ,tmp.y };
 }
 
+Vector2 ConvertToScreen(Vector3 world_)
+{
+	Vector4 tmp = { world_.x,world_.y,world_.z,1.0f };
+
+	tmp = tmp.GetMultiply(Get_ViewportTransformation3D());
+	float const inv_w = 1.0f / tmp.w;
+
+	//チェック
+	tmp = { tmp.x * inv_w ,tmp.y * inv_w  ,tmp.z * inv_w ,1.0f };
+
+	return Vector2{ tmp.x ,tmp.y };
+
+}
+
+
 Matrix4 GetRotateAxisMat(Vector3 axis_, float radian_)
 {
 	Vector3 n = axis_.GetNormalized();

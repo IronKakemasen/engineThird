@@ -36,7 +36,7 @@ public:
 	void Reset();
 	void Debug();
 	void TheWorld();
-	bool isStop = false;
+	static inline bool isStop = false;
 
 	std::vector<GameObject*> Find(GameObject::Tag tag_);
 

@@ -3,6 +3,7 @@
 #include "../../../Models/EnemyFactoryModel/EnemyFactoryModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectBuilding.h"
 #include "../../BuildingsManager/BuildingsManager.h"
+#include "../../../Models/CircleModel/CircleModel.h"
 
 struct Enemy;
 struct PlayerBullet;
@@ -75,6 +76,8 @@ public:
 #pragma region 基盤部位
 
 private:
+	std::unique_ptr<CircleModel> circleModel;
+
 
 	//コリジョンバック用の関数オブジェクト
 	struct CollisionBackToPlayerBullet

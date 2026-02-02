@@ -41,7 +41,7 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	moveAnimCnt.Initialize(1.0f);
-	idleCnt.Initialize(5.0f);
+	idleCnt.Initialize(3.0f);
 	appearance->metalic = 0.72f;
 	appearance->roughness = 0.4f;
 	appearance->trans.pos.y = 0.35f;

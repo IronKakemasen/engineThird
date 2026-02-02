@@ -13,6 +13,11 @@ EnemyFactory::EnemyFactory()
 {
 	//モデルのインスタンス化
 	model.reset(new EnemyFactoryModel);
+	circleModel.reset(new CircleModel);
+	circleModel->defaultScale = { 9.0f,1,9.0f };
+	auto* c = circleModel->model->GetAppearance(0);
+
+	c->color = { 255,200,200,255 };
 
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyFactoryData.json";
@@ -62,7 +67,8 @@ void EnemyFactory::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
-	
+	circleModel->Init(&trans);
+
 	// identityTableにセットされている通りに、identityを定める
 	SetIdentity(Tag::kEnemyFactory);
 	// 円形コリジョンをアタッチ
@@ -118,6 +124,8 @@ void EnemyFactory::SaveData()
 void EnemyFactory::Update()
 {
 	model->Update();
+
+	circleModel->Update();
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
@@ -184,6 +192,8 @@ void EnemyFactory::Draw(Matrix4 * vpMat_)
 {
 	//モデルの描画
 	model->Draw(vpMat_);
+	circleModel->Draw(vpMat_);
+
 }
 
 void EnemyFactory::DebugDraw()

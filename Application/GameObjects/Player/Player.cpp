@@ -16,6 +16,10 @@ Player::Player()
 
 	// モデルのインスタンス化
 	model.reset(new PlayerModel);	
+	circleModel.reset(new CircleModel);
+	circleModel->defaultScale = { 3.25f,1,3.25f };
+	auto* c = circleModel->model->GetAppearance(0);
+	c->color = { 50,50,255,255};
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerData.json";
@@ -54,6 +58,7 @@ void Player::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	circleModel->Init(&trans);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -65,7 +70,6 @@ void Player::Init()
 
 	// inGameControllerポインタ取得
 	//inGameController = reinterpret_cast<InGameController*>(gameObjectManager->Find(Tag::kInGameController)[0]);
-
 
 	// collisionBackの初期化
 	collisionBackToEnemy.Init(this);
@@ -106,6 +110,7 @@ void Player::Update()
 {
 	//モデルの更新処理
 	model->Update();
+	circleModel->Update();
 
 	// 移動処理
 	Move();
@@ -139,6 +144,7 @@ void Player::Draw(Matrix4 * vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
+	circleModel->Draw(vpMat_);
 }
 
 void Player::DebugDraw()

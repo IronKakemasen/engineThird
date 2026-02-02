@@ -11,6 +11,13 @@ PlayerTower::PlayerTower()
 {
 	// モデルのインスタンス化
 	model.reset(new PlayerTowerModel);
+	circleModel.reset(new CircleModel);
+	circleModel->defaultScale = { 9.0f,1,9.0f };
+	auto* c = circleModel->model->GetAppearance(0);
+	//c->shaderSetIndex =
+	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
+
+	c->color = { 150,150,255,255 };
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerTowerData.json";
@@ -57,6 +64,7 @@ void PlayerTower::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	circleModel->Init(&trans);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -108,6 +116,7 @@ void PlayerTower::Update()
 {
 	//モデルの更新処理
 	model->Update();
+	circleModel->Update();
 
 #ifdef _DEBUG
 	// 円形コリジョンをアタッチ
@@ -120,6 +129,8 @@ void PlayerTower::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
+	circleModel->Draw(vpMat_);
+
 }
 void PlayerTower::DebugDraw()
 {
