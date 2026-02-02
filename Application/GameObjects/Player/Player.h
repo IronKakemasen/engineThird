@@ -127,7 +127,6 @@ public:
 
 private:
 
-	std::unique_ptr<CircleModel> circleModel;
 
 	//コリジョンバック用の関数オブジェクト
 	struct CollisionBackToEnemy
@@ -146,6 +145,7 @@ public:
 	static inline Vector3 deltaPos;
 	// 使用するモデル
 	std::unique_ptr<PlayerModel> model;
+	std::unique_ptr<CircleModel> circleModel;
 
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。

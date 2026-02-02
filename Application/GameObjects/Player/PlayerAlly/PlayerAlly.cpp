@@ -99,6 +99,9 @@ void PlayerAlly::Update()
 			break;
 		case PlayerAlly::State::kLocked:
 			break;
+		case PlayerAlly::State::kDeathBoom:
+			deathCounter.Initialize(0.2f);
+			break;
 		case PlayerAlly::State::kDead:
 			break;
 		case PlayerAlly::State::kNone:
@@ -255,7 +258,6 @@ void PlayerAlly::CollisionBackToEnemy::operator()()
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kDeathBoom;
-		me->deathCounter.Initialize(0.2f);
 	}
 }
 
@@ -265,7 +267,6 @@ void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kDeathBoom;
-		me->deathCounter.Initialize(0.2f);
 	}
 }
 
