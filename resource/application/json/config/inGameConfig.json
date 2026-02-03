@@ -3,7 +3,7 @@
         "player": {
             "attackGaugeRecoverInterval": 0.75,
             "attackGaugeRecoverSpeed": 0.07999999821186066,
-            "playerAttackInterval": 0.5
+            "playerAttackInterval": 2.0
         }
     },
     "CollisonSize": {
@@ -28,7 +28,7 @@
             "OfSpawn": 0.4000000059604645,
             "RandomAngleOfSpawn": 180.0,
             "ToAlly": 1.5,
-            "ToBullet": 0.004999999888241291,
+            "ToBullet": 0.03999999910593033,
             "ToBullet1": 0.10000000149011612,
             "ToBullet2": 0.10000000149011612,
             "ToBullet3": 0.10000000149011612,
@@ -37,7 +37,7 @@
         }
     },
     "MaxHP": {
-        "enemy": 5.0,
+        "enemy": 10.0,
         "enemyFactory": 30.0,
         "enemyTower": 100.0,
         "player": 3.0,
@@ -64,12 +64,12 @@
     "SpawnInterval": {
         "enemy": 2.0,
         "enemyFactoryRespawnInterval": 20.0,
-        "maxAllyCount": 2,
+        "maxAllyCount": 5,
         "playerAlly": 2.0
     },
     "Speed": {
-        "enemy": 0.05000000074505806,
-        "player": 0.15000000596046448,
+        "enemy": 0.02500000037252903,
+        "player": 0.125,
         "playerAlly": 1.75,
         "playerBullet": 0.25
     }

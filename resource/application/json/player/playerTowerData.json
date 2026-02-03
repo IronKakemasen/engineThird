@@ -17,10 +17,10 @@
         }
     },
     "stage1": {
-        "ActiveCount": 1,
+        "ActiveCount": 2,
         "ID:0": {
             "position": {
-                "x": 0.0,
+                "x": -5.0,
                 "y": 0.0,
                 "z": 0.0
             }
