@@ -1,5 +1,7 @@
 #include "InGameScene.h"
 #include "../../Systems/DamageDisplay/DamageDisplay.h"
+#include "../../Systems/DeathParticle/DeathParticle.h"
+
 
 InGameScene::InGameScene()
 {
@@ -118,6 +120,9 @@ void InGameScene::Instantiate()
 
 	for (auto& bullet : playerBullets)
 		player->SetBullets(bullet.get());
+
+	DeathParticle::Get()->Init(gameObjManager.get());
+
 }
 
 void InGameScene::Init()

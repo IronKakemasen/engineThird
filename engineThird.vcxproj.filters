@@ -195,6 +195,7 @@
     <ClCompile Include="Application\Models\CircleModel\CircleModel.cpp" />
     <ClCompile Include="Application\Systems\DamageDisplay\DamageDisplay.cpp" />
     <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
+    <ClCompile Include="Application\Systems\DeathParticle\DeathParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -390,6 +391,7 @@
     <ClInclude Include="Application\Models\CircleModel\CircleModel.h" />
     <ClInclude Include="Application\Systems\DamageDisplay\DamageDisplay.h" />
     <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
+    <ClInclude Include="Application\Systems\DeathParticle\DeathParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />
