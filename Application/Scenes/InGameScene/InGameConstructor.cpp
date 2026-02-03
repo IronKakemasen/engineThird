@@ -82,6 +82,7 @@ void InGameScene::Instantiate()
 		enemyFactories[i]->SetInGameConfig(inGameConfig.get());
 		enemyFactories[i]->SetBuildingsManager(buildingsManager.get());
 	}
+	uiDisplayer->SetInGameConfig(inGameConfig.get());
 
 	//八神ライト
 	InputFieldLightData();

@@ -59,6 +59,7 @@ void StageSelectScene::Instantiate()
 			enemyFactories[stageIndex][i]->SetInGameConfig(inGameConfig.get());
 		}
 	}
+	uiDisplayer->SetInGameConfig(inGameConfig.get());
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
 	for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)

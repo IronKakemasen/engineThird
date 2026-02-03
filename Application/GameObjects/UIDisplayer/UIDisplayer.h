@@ -5,6 +5,7 @@
 #include <map>
 
 struct InGameController;
+class InGameConfig;
 
 struct UIDisplayer :public GameObject
 {
@@ -142,6 +143,8 @@ private:
 	std::string path = "./resource/application/json/config/ui.json";
 	// インゲームコントローラー
 	InGameController* inGameController = nullptr;
+	// インゲームコンフィグ
+	InGameConfig* inGameConfig = nullptr;
 
 	// 全UIデータ
 	std::map<uiType, uiData> uiElements;
@@ -169,7 +172,13 @@ private:
 	void FinalizePauseSelectionIfReady();
 
 	void ApplyPauseXOffset(float xOffset);
+
+	int32_t buttonHeldFrameCount = 0; // ボタンホールドフレーム数
+	bool preUp;
+	bool preDown;
 public:
+
+	void SetInGameConfig(InGameConfig* config_) { inGameConfig = config_; }
 
 	// UIモード設定
 	void SetUIMode(UIMode mode_);

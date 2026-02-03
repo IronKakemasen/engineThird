@@ -115,19 +115,19 @@ void StageSelectScene::DecideStage()
 
 	if (selectCounter.count < 1.0f) return;
 
-	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A))
+	bool decide = false;
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A)) decide = true;
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) decide = true;
+#ifdef _DEBUG
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))decide = true;
+#endif // _DEBUG
+
+	if (decide)
 	{
 		selected = true;
 		afterDecideCounter.Initialize(2.0f);
 	}
 
-#ifdef _DEBUG
-	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE))
-	{
-		selected = true;
-		afterDecideCounter.Initialize(2.0f);
-	}
-#endif // _DEBUG
 }
 
 void StageSelectScene::UpdateAfterDecideStage()
@@ -239,6 +239,7 @@ void StageSelectScene::ReplaceObjects()
 		// グラウンドのインスタンス化 & IDセット
 		grounds[stageIndex][0]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
 	}
+
 
 	initialized = true;
 }

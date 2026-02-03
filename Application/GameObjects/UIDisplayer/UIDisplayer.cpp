@@ -3,6 +3,7 @@
 #include ",,/../../Json/Json.h"
 #include "GameObjectManager.h"
 #include "../InGameController/InGameController.h"
+#include "../../Config/InGameConfig.h"
 #include <array>
 
 
@@ -251,40 +252,62 @@ void UIDisplayer::UpdatePauseCursor()
 }
 void UIDisplayer::UpdatePauseCursorInput()
 {
+	bool up = false;
+	bool down = false;
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP) ||
+		M::GetInstance()->getPadState.GetLeftStick(0).y > inGameConfig->deadZone)
+		up = true;
+	if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN) ||
+		M::GetInstance()->getPadState.GetLeftStick(0).y < -inGameConfig->deadZone)
+		down = true;
+
+	if (!up && !down)
+	{
+		buttonHeldFrameCount = 0;
+	}
+	else // 選択切り替え(イージング前座標保存・上下選択クールタイム設定・イージングカウンター初期化)
+	{
+		buttonHeldFrameCount++;
+	}
+
 	// クールタイム中は入力受付しない
 	if (buttonSelectCoolTime.count < 1.0f)
 	{
 		// 連打された時にクールタイムを無視できるように0.01で初期化
-		if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
-			M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
+		//if (M::GetInstance()->getPadState.IsJustReleased(0, PAD_UP) ||
+		//	M::GetInstance()->getPadState.IsJustReleased(0, PAD_DOWN))
+		if ((preDown && !down) || (preUp && !up))
 		{
 			buttonSelectCoolTime.Initialize(0.01f);
 		}
 		return;
 	}
 
-	// 選択切り替え(イージング前座標保存・上下選択クールタイム設定・イージングカウンター初期化)
-	if (M::GetInstance()->getPadState.IsHeld(0, PAD_UP))
+	preUp = up;
+	preDown = down;
+
+
+	if (up || down) // 選択切り替え(イージング前座標保存・上下選択クールタイム設定・イージングカウンター初期化)
 	{
 		preButtonOffset = currentSelectedButton * 80.0f;
 		bool isFastRepeat = false;
-		if (M::GetInstance()->getPadState.HoldFrames(0, PAD_UP) > 30) isFastRepeat = true;
+		if (buttonHeldFrameCount > 30)
+		{
+			isFastRepeat = true;
+		}
 		buttonSelectCoolTime.Initialize(isFastRepeat ? 0.1f : 0.5f);
 		easingCounter.Initialize(0.1f);
 
-		currentSelectedButton--;
-		if (currentSelectedButton < 0) currentSelectedButton = 2;
-	}
-	else if (M::GetInstance()->getPadState.IsHeld(0, PAD_DOWN))
-	{
-		preButtonOffset = currentSelectedButton * 80.0f;
-		bool isFastRepeat = false;
-		if (M::GetInstance()->getPadState.HoldFrames(0, PAD_DOWN) > 30) isFastRepeat = true;
-		buttonSelectCoolTime.Initialize(isFastRepeat ? 0.1f : 0.5f);
-		easingCounter.Initialize(0.1f);
-
-		currentSelectedButton++;
-		if (currentSelectedButton > 2) currentSelectedButton = 0;
+		if (up)
+		{
+			currentSelectedButton--;
+			if (currentSelectedButton < 0) currentSelectedButton = 2;
+		}
+		else if (down)
+		{
+			currentSelectedButton++;
+			if (currentSelectedButton > 2) currentSelectedButton = 0;
+		}
 	}
 }
 void UIDisplayer::HandlePauseDecisionInput()

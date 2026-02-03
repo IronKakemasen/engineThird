@@ -40,7 +40,7 @@ class InGameScene final : public Scene
 	std::unique_ptr<InGameConfig> inGameConfig;
 	std::unique_ptr<Ground> ground;
 	std::unique_ptr<BuildingsManager> buildingsManager;
-	std::unique_ptr < TenkyuuClass> tenkyuuClass;
+	std::unique_ptr<TenkyuuClass> tenkyuuClass;
 
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
