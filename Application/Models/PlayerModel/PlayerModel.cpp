@@ -3,7 +3,6 @@
 
 void PlayerModel::Update(int mode_, float count_)
 {
-	//mode_ = 1;
 	if (mode_ == 0)
 	{
 		IdleInGame();
@@ -179,7 +178,7 @@ void PlayerModel::Run()
 	h->trans.rotation.x = 7.5f;
 
 	b->trans.pos.y = 0.65f + deltaBodyY;
-	b->trans.rotation.x = -12.5f;
+	b->trans.rotation.x = 20.0f;
 
 	legr->trans.rotation.x = deltaHuri;
 	legl->trans.rotation.x = -deltaHuri;

@@ -257,7 +257,7 @@ void ExclusiveDraw::DrawSprite(Vertex& leftTop_, Vertex& rightTop_, Vertex& righ
 	std::memcpy(&quadMesh->vertexMap[usingVertex_index], vData, sizeof(Vertex) * quadMesh->vertexCnt);
 
 	//[ 行列 ]
-	Matrix4 wMat = trans_.GetWorldMatrix();
+ 	Matrix4 wMat = trans_.GetWorldMatrix();
 	Matrix4 wvp = wMat.Multiply(vpMat_);
 	*quadMesh->wvpMatrixBuffer[i].matrix.buffMap = wvp;
 
