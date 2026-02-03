@@ -3,7 +3,7 @@
 
 void PlayerModel::Update(int mode_, float count_)
 {
-	mode_ = 1;
+	//mode_ = 1;
 	if (mode_ == 0)
 	{
 		IdleInGame();

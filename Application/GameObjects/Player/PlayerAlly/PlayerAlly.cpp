@@ -1,6 +1,7 @@
 #include "PlayerAlly.h"
 #include "imgui.h"
 #include "../../../GameObjects/Player/Player.h"
+#include "../../../GameObjects/Enemy/Enemy.h"
 #include "../../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
 #include "../../../Config/InGameConfig.h"
@@ -88,8 +89,11 @@ void PlayerAlly::SaveData()
 void PlayerAlly::Update()
 {
 	//モデルの更新処理
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
 	boomModel->Update();
+
+	// アニメーション更新
+	UpdateAnimationState();
 
 	if (nextState != PlayerAlly::State::kNone)
 	{
@@ -151,6 +155,27 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 void PlayerAlly::DebugDraw()
 {}
 
+void PlayerAlly::UpdateAnimationState()
+{
+	if (currentAnimationState != nextAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case PlayerAllyAnimationState::kIdle:
+			animationCounter.Initialize(0.1f);
+			break;
+		case PlayerAllyAnimationState::kLock:
+			animationCounter.Initialize(0.05f);
+			break;
+		default:
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	animationCounter.Add();
+}
+
 
 void PlayerAlly::MoveToPlayer()
 {
@@ -204,6 +229,8 @@ void PlayerAlly::FollowPlayer()
 			formationCurrentIndex = -1;
 			// 状態遷移
 			currentState = State::kLocked;
+			// あにめーしょん状態遷移
+			nextState = State::kLocked;
 
 			return;
 		}
@@ -260,6 +287,9 @@ void PlayerAlly::Death()
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()
 {
+	auto enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
+	if (enemy->currentAnimationState != Enemy::EnemyAnimationState::kMove) return;
+
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kDeathBoom;
@@ -281,5 +311,6 @@ void PlayerAlly::CollisionBackToPlayer::operator()()
 	if (me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kUnformed;
+		me->nextAnimationState = PlayerAlly::PlayerAllyAnimationState::kIdle;
 	}
 }

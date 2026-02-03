@@ -19,7 +19,13 @@ struct Enemy :public GameObject , public GameObjectEntity
 		kDead,
 	};
 
+	EnemyAnimationState currentAnimationState = EnemyAnimationState::kMove;
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	EnemyAnimationState nextAnimationState = EnemyAnimationState::kMove;
+	Counter animationCounter;
+
 	// ターゲット方向に移動
 	void MoveToTarget();
 
