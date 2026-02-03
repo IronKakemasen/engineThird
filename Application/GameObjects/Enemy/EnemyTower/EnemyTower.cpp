@@ -30,6 +30,8 @@ void EnemyTower::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
+
+	nextAnimationState = EnemyTowerAnimationState::kIdle;
 }
 
 // マップに配置
@@ -247,12 +249,16 @@ void EnemyTower::CollisionBackToPlayerBullet::operator()()
 	// 既に衝突リストにあるなら何もしない
 	if (me->IsInHitBulletList(playerBullet)) return;
 
+	// 既に死んでいるなら何もしない
+	if (me->hp <= 0.0f) return;
+
 	// 状態をダメージに変更
 	me->nextAnimationState = EnemyTowerAnimationState::kDamage;
 
 	// 衝突リストに追加
 	me->AddHitBullet(playerBullet);
 
+	// ダメージ表示
 	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
 		1.0f, { 255,255,0 });
 

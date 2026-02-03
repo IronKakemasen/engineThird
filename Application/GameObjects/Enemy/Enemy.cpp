@@ -183,7 +183,7 @@ void Enemy::UpdateAnimationState()
 			animationCounter.Initialize(5.0f);
 			break;
 		case Enemy::EnemyAnimationState::kDead:
-			animationCounter.Initialize(0.1f);
+			animationCounter.Initialize(1.0f);
 			break;
 		default:
 			break;

@@ -7,6 +7,7 @@
 #include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Enemy/Enemy.h"
 #include "../../InGameController/InGameController.h"
+#include "../../../Systems/DamageDisplay/DamageDisplay.h"
 
 // 
 EnemyFactory::EnemyFactory()
@@ -34,6 +35,8 @@ void EnemyFactory::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
+
+	nextAnimationState = EnemyFactoryAnimationState::kIdle;
 }
 
 // マップに配置
@@ -295,6 +298,10 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 
 	// 状態をダメージに変更
 	me->nextAnimationState = EnemyFactory::EnemyFactoryAnimationState::kDamage;
+
+	// ダメージ表示
+	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
 
 	// ダメージ処理
 	me->hp = me->hp - playerBullet->GetAttackPower();
