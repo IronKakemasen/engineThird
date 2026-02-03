@@ -1,4 +1,5 @@
 #include "InGameScene.h"
+#include "../../Systems/DamageDisplay/DamageDisplay.h"
 
 InGameScene::InGameScene()
 {
@@ -128,5 +129,7 @@ void InGameScene::Init()
 	{
 		lightModels[i].Init(nullptr);
 	}
+
+	DamageDisplay::Get()->Init(&cameraController->GetMainCamera()->vpMat);
 }
 

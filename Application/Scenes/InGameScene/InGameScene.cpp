@@ -1,5 +1,6 @@
 #include "InGameScene.h"
 #include "../../utilities/Json/Json.h"
+#include "../../Systems/DamageDisplay/DamageDisplay.h"
 
 void InGameScene::Update()
 {
@@ -208,9 +209,9 @@ void InGameScene::Draw()
 
 		if (!para->isActive)continue;
 		lightModels[i].Draw(vpMat);
-
 	}
 
+	DamageDisplay::Get()->Draw(&ortho);
 }
 
 void InGameScene::Reset()
@@ -481,6 +482,15 @@ void InGameScene::EnterMode()
 void InGameScene::PlayableMode()
 {
 	Lighthing();
+	DamageDisplay::Get()->Update();
+	static bool o = 1;
+
+	if (o)
+	{
+		DamageDisplay::Get()->Activate(54, player->Getter_Trans()->GetWorldPos(),
+			1.0f, {255,255,0});
+		o = 0;
+	}
 }
 
 void InGameScene::Lighthing()
