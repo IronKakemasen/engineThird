@@ -19,7 +19,7 @@ struct PrimitiveMeshCommon
 {
 	enum class MaxDraw
 	{
-		kTriangle = 128,
+		kTriangle = 1024,
 		kQuad = 128,
 	};
 

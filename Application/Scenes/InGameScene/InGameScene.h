@@ -22,7 +22,6 @@
 #include "../../GameObjects/Ground/Ground.h"
 #include "../../GameObjects/Tenkyuu/TenkyuuClass.h"
 #include "../../Models/LightModel/LightModel.h"
-#include "../../Config/GameConstants.h"
 
 class InGameScene final : public Scene
 {
@@ -42,6 +41,7 @@ class InGameScene final : public Scene
 	std::unique_ptr<Ground> ground;
 	std::unique_ptr<BuildingsManager> buildingsManager;
 	std::unique_ptr < TenkyuuClass> tenkyuuClass;
+
 
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 

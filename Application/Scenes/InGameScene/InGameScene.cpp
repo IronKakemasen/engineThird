@@ -1,6 +1,7 @@
 #include "InGameScene.h"
 #include "../../utilities/Json/Json.h"
 #include "../../Systems/DamageDisplay/DamageDisplay.h"
+#include "../../Systems/DeathParticle/DeathParticle.h"
 
 void InGameScene::Update()
 {
@@ -57,6 +58,7 @@ void InGameScene::Update()
 
 	AdaptToPostEffect();
 
+	DeathParticle::Get()->Update();
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -230,6 +232,8 @@ void InGameScene::Draw()
 	}
 
 	DamageDisplay::Get()->Draw(&ortho);
+	DeathParticle::Get()->Draw(vpMat);
+
 }
 
 void InGameScene::Reset()
@@ -506,6 +510,15 @@ void InGameScene::PlayableMode()
 {
 	Lighthing();
 	DamageDisplay::Get()->Update();
+	static bool b = 1;
+	if (b)
+	{
+		b = false;
+		DeathParticle::Get()->Activate({ 0,5,5 }, 10, 1.0f, 1.0f, { 255,255,255 });
+	}
+
+
+
 }
 
 void InGameScene::Lighthing()
