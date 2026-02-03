@@ -268,8 +268,12 @@ void Player::Attack()
 				// カウンター初期化
 				attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
 
+				// プレイヤーの少し前方から発射
+				Vector3 firePos = trans.pos;
+				firePos = firePos + trans.lookDir * 1.5f;
+
 				// 発射
-				bullet->Fire(trans.pos, trans.lookDir);
+				bullet->Fire(firePos, trans.lookDir);
 
 				break;
 			}

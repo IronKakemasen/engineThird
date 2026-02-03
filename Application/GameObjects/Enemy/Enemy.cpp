@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "imgui.h"
+#include <array>
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
 #include "../../M/utilities/Json/Json.h"
@@ -8,7 +9,7 @@
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../Config/InGameConfig.h"
-#include <array>
+#include "../../Systems/DamageDisplay/DamageDisplay.h"
 #include "../../Scenes/InGameScene/InGameScene.h"
 
 Enemy::Enemy()
@@ -402,9 +403,12 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	// ノックバック付与
 	me->KnockBack(knickBackDir, me->inGameConfig->enemyKnockBackPowerToBullet);
 
+	// ダメージ表示
+	DamageDisplay::Get()->Activate(bullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
+
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
-
 	// 死亡した時
 	if (me->hp <= 0.0f)
 	{
