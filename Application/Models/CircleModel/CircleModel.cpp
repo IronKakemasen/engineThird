@@ -9,8 +9,8 @@ CircleModel::CircleModel()
 void CircleModel::Update(int mode_, float count_)
 {
 	auto* appearance = model->GetAppearance(0);
-	deltaTheta += 0.035f;
-	float t = sinf(deltaTheta) * 0.35f;
+	deltaTheta += 0.05f;
+	float t = sinf(deltaTheta) * 0.5f;
 
 	appearance->trans.scale.x = defaultScale.x + t;
 	appearance->trans.scale.z = defaultScale.z + t;

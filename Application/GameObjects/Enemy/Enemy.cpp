@@ -20,10 +20,18 @@ Enemy::Enemy()
 
 	// HPバーのスプライト初期化
 	HPBarBackSprite = std::make_unique<Sprite>();
-	HPBarBackSprite->Initialize(50.0f, 10.0f,
-			{ },
+	HPBarBackSprite->Initialize(50.0f, 7.0f, { },
 			M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
 			{ 100,100,255,255 });
+
+	HPBarSprite = std::make_unique<Sprite>();
+	HPBarSprite->Initialize(48.0f, 5.0f, { },
+		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+		{ 255,0,0,255 });
+
+	HPBarSprite->rightTop = HPBarSprite->leftTop;
+	HPBarSprite->rightBottom = HPBarSprite->leftBottom;
+
 
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyData.json";
@@ -361,11 +369,24 @@ void Enemy::Draw(Matrix4* vpMat_)
 
 void Enemy::DrawHpBar(Matrix4* vpMat_)
 {
+	if (hp >= inGameConfig->enemyMaxHP - 0.1f) return;
+
 	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 	Vector2 pos = ConvertToScreen(trans.GetWorldPos(), *vpMat_);
 
-	HPBarBackSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 50.0f, 0.0f);
+	HPBarBackSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
 	HPBarBackSprite->Draw(&orth);
+	HPBarSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+	float const len = 50.0f;
+	float hpRate = hp / inGameConfig->enemyMaxHP;
+
+	HPBarSprite->rightTop.position.x = HPBarSprite->leftTop.position.x + hpRate * len;
+	HPBarSprite->rightBottom.position.x = HPBarSprite->leftBottom.position.x + hpRate * len;;
+
+
+	//HPBarSprite->rightBottom.position.x -= 10.0f;
+	//HPBarSprite->rightTop.position.x -= 10.0f;
+	HPBarSprite->Draw(&orth);
 }
 
 void Enemy::DebugDraw(){}
