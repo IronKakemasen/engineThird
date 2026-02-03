@@ -22,6 +22,12 @@ struct Player :public GameObject, public GameObjectEntity
 	};
 
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	PlayerAnimationState currentAnimationState = PlayerAnimationState::kIdle;
+	PlayerAnimationState nextAnimationState = PlayerAnimationState::kIdle;
+	Counter animationCounter;
+
 	//////  移動処理  //////
 	void Move();			// 移動
 	bool isMoving = false;	// 移動中フラグ

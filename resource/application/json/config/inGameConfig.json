@@ -26,7 +26,7 @@
         "enemy": {
             "DamapingRate": 0.9399999976158142,
             "OfSpawn": 0.4000000059604645,
-            "RandomAngleOfSpawn": 360.0,
+            "RandomAngleOfSpawn": 180.0,
             "ToAlly": 1.5,
             "ToBullet": 0.004999999888241291,
             "ToBullet1": 0.10000000149011612,
@@ -37,7 +37,7 @@
         }
     },
     "MaxHP": {
-        "enemy": 10.0,
+        "enemy": 5.0,
         "enemyFactory": 30.0,
         "enemyTower": 100.0,
         "player": 3.0,
@@ -62,13 +62,13 @@
         "separateCompleteFrame": 60
     },
     "SpawnInterval": {
-        "enemy": 8.0,
+        "enemy": 2.0,
         "enemyFactoryRespawnInterval": 20.0,
         "maxAllyCount": 2,
         "playerAlly": 2.0
     },
     "Speed": {
-        "enemy": 0.019999999552965164,
+        "enemy": 0.05000000074505806,
         "player": 0.15000000596046448,
         "playerAlly": 1.75,
         "playerBullet": 0.25

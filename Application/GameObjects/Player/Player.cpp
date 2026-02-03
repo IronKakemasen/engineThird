@@ -13,7 +13,6 @@
 
 Player::Player()
 {
-
 	// モデルのインスタンス化
 	model.reset(new PlayerModel);	
 	circleModel.reset(new CircleModel);
@@ -109,8 +108,11 @@ void Player::SaveData()
 void Player::Update()
 {
 	//モデルの更新処理
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
 	circleModel->Update();
+
+	// アニメーション更新処理
+	UpdateAnimationState();
 
 	// 移動処理
 	Move();
@@ -151,54 +153,39 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
-	//ImGui::Text("---------------------------------------------\n");
-	//
-	//for (size_t i = 0; i < 10; i++)
-	//{
-	//	if (exist[i])
-	//	{
-	//		ImGui::Text("%d:#\n", i);
-	//	}
-	//	else
-	//	{
-	//		ImGui::Text("%d: \n", i);
-	//	}
-	//}
-	//ImGui::Text("formedAllyCount:%d\n", formedAllyCount);
-	//
-	//for (size_t i = 0; i < deadIndexList.size(); i++)
-	//{
-	//	ImGui::Text("deadIndexList[%d]:%d\n", i, deadIndexList.front());
-	//}
-	//ImGui::Text("delayFrameOffsets:%d\n", delayFrameOffsets);
-	//
-	//for (size_t i = 0; i < 10; i++)
-	//{
-	//	if (ImGui::Button(("remove##" + std::to_string(i)).c_str()))
-	//	{
-	//		for (auto& ally : allies)
-	//		{
-	//			if (ally->GetStatus() == GameObjectBehavior::Status::kActive && ally->formationCurrentIndex == i)
-	//			{
-	//				ally->Death();
-	//				break;
-	//			}
-	//		}
-	//	}
-	//}
 
 #endif // USE_IMGUI
 }
 
 
 // Enemyとの衝突処理
-void Player::CollisionBackToEnemy::operator()()
-{
-	// 自身の取得
-	auto* player = me;
-	me->trans.rotation.y += 1.0f;
-}
+void Player::CollisionBackToEnemy::operator()(){}
 
+
+void Player::UpdateAnimationState()
+{
+	// 状態が変化したらカウンター初期化
+	if (nextAnimationState != currentAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case Player::PlayerAnimationState::kIdle:
+			animationCounter.Initialize(5.0f);
+			break;
+		case Player::PlayerAnimationState::kMove:
+			animationCounter.Initialize(5.0f);
+			break;
+		case Player::PlayerAnimationState::kExtra:
+			animationCounter.Initialize(5.0f);
+			break;
+		default:
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	animationCounter.Add();
+}
 
 // 移動処理
 void Player::Move()
@@ -244,7 +231,15 @@ void Player::Move()
 	moveDir = moveDir.GetNormalized();
 
 	// 移動判定
-	if (moveDir.x != 0.0f || moveDir.z != 0.0f)isMoving = true;
+	if (moveDir.x != 0.0f || moveDir.z != 0.0f)
+	{
+		isMoving = true;
+		nextAnimationState = PlayerAnimationState::kMove;
+	}
+	else
+	{
+		nextAnimationState = PlayerAnimationState::kIdle;
+	}
 
 	// 移動処理
 	trans.pos = trans.pos + moveDir * inGameConfig->playerSpeed;

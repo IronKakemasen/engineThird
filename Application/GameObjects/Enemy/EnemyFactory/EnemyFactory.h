@@ -21,6 +21,11 @@ struct EnemyFactory :public GameObject, public GameObjectBuilding
 	};
 
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	EnemyFactoryAnimationState currentAnimationState = EnemyFactoryAnimationState::kIdle;
+	EnemyFactoryAnimationState nextAnimationState = EnemyFactoryAnimationState::kIdle;
+	Counter animationCounter;
 
 	// 参照ポインタ
 	std::vector<Enemy*> enemies{};
