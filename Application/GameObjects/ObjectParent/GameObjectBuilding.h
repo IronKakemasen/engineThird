@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Sprite.h"
 #include <cstdint>
 #include <array>
 #include "../../Config/GameConstants.h"
@@ -51,6 +52,8 @@ protected:
 
 	// HP
 	float hp = 100.0f;
+	std::unique_ptr<Sprite> HPBarBackSprite;
+	std::unique_ptr<Sprite> HPBarSprite;
 
 	const InGameConfig* inGameConfig = nullptr;
 };

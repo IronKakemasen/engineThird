@@ -11,11 +11,19 @@
 #include "../../Config/InGameConfig.h"
 #include "../../Systems/DamageDisplay/DamageDisplay.h"
 #include "../../Scenes/InGameScene/InGameScene.h"
+#include "../../M/utilities/vectorAndMatrix/vectorAndMatrix.h"
 
 Enemy::Enemy()
 {
 	// モデルのインスタンス化
 	model.reset(new EnemyModel);
+
+	// HPバーのスプライト初期化
+	HPBarBackSprite = std::make_unique<Sprite>();
+	HPBarBackSprite->Initialize(50.0f, 10.0f,
+			{ },
+			M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+			{ 100,100,255,255 });
 
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyData.json";
@@ -349,6 +357,15 @@ void Enemy::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
+}
+
+void Enemy::DrawHpBar(Matrix4* vpMat_)
+{
+	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+	Vector2 pos = ConvertToScreen(trans.GetWorldPos(), *vpMat_);
+
+	HPBarBackSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 50.0f, 0.0f);
+	HPBarBackSprite->Draw(&orth);
 }
 
 void Enemy::DebugDraw(){}

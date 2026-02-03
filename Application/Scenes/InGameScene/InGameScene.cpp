@@ -234,6 +234,13 @@ void InGameScene::Draw()
 	DamageDisplay::Get()->Draw(&ortho);
 	DeathParticle::Get()->Draw(vpMat);
 
+	for (size_t i = 0; i < enemies.size(); ++i)
+	{
+		if (enemies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
+		{
+			enemies[i]->DrawHpBar(vpMat);
+		}
+	}
 }
 
 void InGameScene::Reset()

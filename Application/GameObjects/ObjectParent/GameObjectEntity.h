@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <cstdint>
+#include "Sprite.h"
 #include "../../M/utilities/benriTemplateFunc/benriTempFunc.h"
 #include "../../lowerLayer/math/vector/vector.h"
 #include "../../Config/InGameConfig.h"
@@ -38,6 +39,8 @@ protected:
 
 	// HP
 	float hp = 100.0f;
+	std::unique_ptr<Sprite> HPBarBackSprite;
+	std::unique_ptr<Sprite> HPBarSprite;
 
 	const InGameConfig* inGameConfig = nullptr;
 };
