@@ -192,6 +192,20 @@ void UIDisplayer::HandlePauseToggleInput()
 		}
 	}
 
+
+	if (gameObjectManager->isStop)
+	{
+		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_B) || 
+			M::GetInstance()->getPadState.IsJustPressed(0, PAD_LB))
+		{
+			// ポーズ解除
+			gameObjectManager->TheWorld();
+			preOffset = pauseScreenOffset;
+			pauseCounter.Initialize(1.0f);
+		}
+	}
+
+
 #ifdef _DEBUG
 	if (M::GetInstance()->IsKeyTriggered(KeyType::ESCAPE))
 	{
@@ -313,7 +327,8 @@ void UIDisplayer::UpdatePauseCursorInput()
 void UIDisplayer::HandlePauseDecisionInput()
 {
 	// 決定ボタンが押されていなければ抜ける
-	if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_A)) return;
+	if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_A) &&
+		!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
 
 	// ここに来ているということはポーズ中で決定ボタンが押されたということ
 	switch (currentSelectedButton)
