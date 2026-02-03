@@ -1,6 +1,7 @@
 #include "PlayerAlly.h"
 #include "imgui.h"
 #include "../../../GameObjects/Player/Player.h"
+#include "../../../GameObjects/Enemy/Enemy.h"
 #include "../../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
 #include "../../../Config/InGameConfig.h"
@@ -88,10 +89,13 @@ void PlayerAlly::SaveData()
 void PlayerAlly::Update()
 {
 	//モデルの更新処理
-	model->Update();
-	boomModel->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
+	boomModel->Update(int(currentAnimationState), animationCounter.count);
 
-	if (nextState != PlayerAlly::State::kNone)
+	// アニメーション更新
+	UpdateAnimationState();
+
+	if (nextState != State::kNone)
 	{
 		currentState = nextState;
 
@@ -114,27 +118,27 @@ void PlayerAlly::Update()
 			break;
 		}
 	}
-	nextState = PlayerAlly::State::kNone;
+	nextState = State::kNone;
 
 	// 更新
 	switch (currentState)
 	{
-	case PlayerAlly::State::kUnformed:
+	case State::kUnformed:
 		MoveToPlayer();
 		break;
-	case PlayerAlly::State::kFormed:
+	case State::kFormed:
 		FollowPlayer();
 		break;
-	case PlayerAlly::State::kLocked:
+	case State::kLocked:
 		LockPosition();
 		break;
-	case PlayerAlly::State::kDeathBoom:
+	case State::kDeathBoom:
 		DeathBoom();
 		break;
-	case PlayerAlly::State::kDead:
+	case State::kDead:
 		Death();
 		break;
-	case PlayerAlly::State::kNone:
+	case State::kNone:
 		break;
 	default:
 		break;
@@ -145,11 +149,32 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
-	boomModel->Draw(vpMat_);
+	if (currentState == State::kDeathBoom)boomModel->Draw(vpMat_);
 }
 
 void PlayerAlly::DebugDraw()
 {}
+
+void PlayerAlly::UpdateAnimationState()
+{
+	if (currentAnimationState != nextAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case PlayerAllyAnimationState::kIdle:
+			animationCounter.Initialize(0.1f);
+			break;
+		case PlayerAllyAnimationState::kLock:
+			animationCounter.Initialize(0.05f);
+			break;
+		default:
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	animationCounter.Add();
+}
 
 
 void PlayerAlly::MoveToPlayer()
@@ -204,6 +229,8 @@ void PlayerAlly::FollowPlayer()
 			formationCurrentIndex = -1;
 			// 状態遷移
 			currentState = State::kLocked;
+			// あにめーしょん状態遷移
+			nextState = State::kLocked;
 
 			return;
 		}
@@ -229,7 +256,10 @@ void PlayerAlly::DeathBoom()
 	}
 
 	// 円形コリジョンをアタッチ
-	SetCircleCollision(inGameConfig->playerAllyCollisonSize + (deathCounter.count * 1.0f));
+	float targetSize = inGameConfig->playerAllyCollisonSize + (deathCounter.count * 2.0f);
+	SetCircleCollision(targetSize);
+	boomModel->defaultScale = Vector3{ inGameConfig->playerAllyCollisonSize ,inGameConfig->playerAllyCollisonSize ,inGameConfig->playerAllyCollisonSize };
+	boomModel->SetCurrentSize(targetSize);
 	deathCounter.Add();
 }
 
@@ -260,6 +290,9 @@ void PlayerAlly::Death()
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()
 {
+	auto enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
+	if (enemy->currentAnimationState != Enemy::EnemyAnimationState::kMove) return;
+
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kDeathBoom;
@@ -281,5 +314,6 @@ void PlayerAlly::CollisionBackToPlayer::operator()()
 	if (me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kUnformed;
+		me->nextAnimationState = PlayerAlly::PlayerAllyAnimationState::kIdle;
 	}
 }

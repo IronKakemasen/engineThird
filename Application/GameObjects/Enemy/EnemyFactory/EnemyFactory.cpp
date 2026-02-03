@@ -7,6 +7,7 @@
 #include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../Enemy/Enemy.h"
 #include "../../InGameController/InGameController.h"
+#include "../../../Systems/DamageDisplay/DamageDisplay.h"
 
 // 
 EnemyFactory::EnemyFactory()
@@ -34,6 +35,8 @@ void EnemyFactory::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
+
+	nextAnimationState = EnemyFactoryAnimationState::kIdle;
 }
 
 // マップに配置
@@ -123,9 +126,12 @@ void EnemyFactory::SaveData()
 // 更新処理
 void EnemyFactory::Update()
 {
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
 
 	circleModel->Update();
+
+	// アニメーション更新
+	UpdateAnimationState();
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
@@ -139,6 +145,57 @@ void EnemyFactory::Update()
 	SetCircleCollision(inGameConfig->enemyFactoryCollisonSize);
 #endif // _DEBUG
 }
+
+// アニメーション更新
+void EnemyFactory::UpdateAnimationState()
+{
+	// 状態が変化したらカウンター初期化
+	if (nextAnimationState != currentAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case EnemyFactoryAnimationState::kIdle:
+			animationCounter.Initialize(1.0f);
+			break;
+		case EnemyFactoryAnimationState::kDamage:
+			animationCounter.Initialize(0.2f);
+			break;
+		case EnemyFactoryAnimationState::kGenerate:
+			animationCounter.Initialize(1.0f);
+			break;
+		case EnemyFactoryAnimationState::kDead:
+			animationCounter.Initialize(1.0f);
+			break;
+		default:
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	animationCounter.Add();
+
+	if (animationCounter.count >= 1.0f)
+	{
+		switch (currentAnimationState)
+		{
+		case EnemyFactory::EnemyFactoryAnimationState::kIdle:
+			nextAnimationState = EnemyFactoryAnimationState::kIdle;
+			break;
+		case EnemyFactory::EnemyFactoryAnimationState::kDamage:
+			nextAnimationState = EnemyFactoryAnimationState::kIdle;	
+			break;
+		case EnemyFactory::EnemyFactoryAnimationState::kGenerate:
+			nextAnimationState = EnemyFactoryAnimationState::kIdle;
+			break;
+		case EnemyFactory::EnemyFactoryAnimationState::kDead:
+			SetStatus(Status::kInActive);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 
 // 衝突した弾をリストに追加
 void EnemyFactory::AddHitBullet(PlayerBullet* bullet)
@@ -181,6 +238,7 @@ void EnemyFactory::SpawnEnemy()
 			if (enemy->GetStatus() == Status::kInActive)
 			{
 				enemy->Spawn(trans.pos);
+				nextAnimationState = EnemyFactoryAnimationState::kGenerate;
 				spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
 				break;
 			}
@@ -238,12 +296,19 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 	// 衝突リストに追加
 	me->AddHitBullet(playerBullet);
 
+	// 状態をダメージに変更
+	me->nextAnimationState = EnemyFactory::EnemyFactoryAnimationState::kDamage;
+
+	// ダメージ表示
+	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
+
 	// ダメージ処理
 	me->hp = me->hp - playerBullet->GetAttackPower();
 	if (me->hp <= 0.0f)
 	{
-		me->SetStatus(Status::kInActive);
 		me->SwitchCollisionActivation(false);
+		me->nextAnimationState = EnemyFactory::EnemyFactoryAnimationState::kDead;
 		me->isDead = true;
 		me->buildingsManager->NotifyEnemyFactoryDead(me);
 	}

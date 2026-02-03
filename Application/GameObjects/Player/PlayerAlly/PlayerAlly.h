@@ -10,6 +10,12 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 {
 #pragma region 独自部位
 
+	enum class PlayerAllyAnimationState
+	{
+		kIdle,
+		kLock,
+	};
+
 	enum class State
 	{
 		// 列非加入
@@ -27,6 +33,13 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 	};
 
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	PlayerAllyAnimationState currentAnimationState = PlayerAllyAnimationState::kIdle;
+	PlayerAllyAnimationState nextAnimationState = PlayerAllyAnimationState::kIdle;
+	Counter animationCounter;
+
+
 	Player* targetPlayer = nullptr;
 
 	// 列に向かって進む

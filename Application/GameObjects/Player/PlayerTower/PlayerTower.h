@@ -7,11 +7,24 @@
 
 struct PlayerTower :public GameObject, public GameObjectBuilding
 {
+	enum class EnemyTowerAnimationState
+	{
+		kIdle,
+		kDamage,
+		kDead,
+	};
+
 #pragma region 独自部位
 
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	EnemyTowerAnimationState currentAnimationState = EnemyTowerAnimationState::kIdle;
+	EnemyTowerAnimationState nextAnimationState = EnemyTowerAnimationState::kIdle;
+	Counter animationCounter;
 
 public:
+
 
 #pragma endregion
 

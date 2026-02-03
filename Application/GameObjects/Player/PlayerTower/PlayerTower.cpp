@@ -5,6 +5,7 @@
 #include "../../../GameObjects/Enemy/Enemy.h"
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../../../GameObjects/InGameController/InGameController.h"
+#include "../../../Systems/DamageDisplay/DamageDisplay.h"
 
 //
 PlayerTower::PlayerTower()
@@ -115,13 +116,56 @@ void PlayerTower::SaveData()
 void PlayerTower::Update()
 {
 	//モデルの更新処理
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
 	circleModel->Update();
 
 #ifdef _DEBUG
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(inGameConfig->playerTowerCollisonSize);
 #endif // _DEBUG
+}
+
+// アニメーション更新
+void PlayerTower::UpdateAnimationState()
+{
+	// 状態が変化したらカウンター初期化
+	if (nextAnimationState != currentAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case EnemyTowerAnimationState::kIdle:
+			animationCounter.Initialize(5.0f);
+			break;
+		case EnemyTowerAnimationState::kDamage:
+			animationCounter.Initialize(0.3f);
+			break;
+		case EnemyTowerAnimationState::kDead:
+			animationCounter.Initialize(0.1f);
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	// カウンター更新
+	animationCounter.Add();
+
+	if (animationCounter.count >= 1.0f)
+	{
+		switch (currentAnimationState)
+		{
+		case EnemyTowerAnimationState::kIdle:
+			nextAnimationState = EnemyTowerAnimationState::kIdle;
+			break;
+		case EnemyTowerAnimationState::kDamage:
+			nextAnimationState = EnemyTowerAnimationState::kIdle;
+			break;
+		case EnemyTowerAnimationState::kDead:
+			SetStatus(Status::kInActive);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 // 描画処理
@@ -167,10 +211,20 @@ void PlayerTower::CollisionBackToEnemy::operator()()
 {
 	auto* enemy = reinterpret_cast<Enemy*>(me->Getter_ColObj());
 
-	me->hp = me->hp - enemy->GetAttackPower();
+	// 既に死んでいるなら何もしない
+	if (me->hp <= 0.0f) return;
 
+	// 状態をダメージに変更
+	me->nextAnimationState = PlayerTower::EnemyTowerAnimationState::kDamage;
+
+	// ダメージ表示
+	DamageDisplay::Get()->Activate(enemy->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
+
+	me->hp = me->hp - enemy->GetAttackPower();
 	if (me->hp <= 0.0f)
 	{
-		me->SetStatus(Status::kInActive);
+		// 状態をデッドに変更
+		me->nextAnimationState = PlayerTower::EnemyTowerAnimationState::kDead;
 	}
 }

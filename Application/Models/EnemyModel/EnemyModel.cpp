@@ -17,7 +17,6 @@ void EnemyModel::Update(int mode_, float count_)
 	{
 		auto* appe = m->GetAppearance(0);
 		appe->trans.rotation.y += 2.0f;
-
 	}
 }
 

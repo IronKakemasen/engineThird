@@ -123,6 +123,7 @@ void InGameScene::Instantiate()
 
 	DeathParticle::Get()->Init(gameObjManager.get());
 
+	player->SetGround(ground.get());
 }
 
 void InGameScene::Init()

@@ -383,6 +383,11 @@ void InGameScene::Debug()
 			}
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Ground"))
+		{
+			ground->DebugDraw();
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}

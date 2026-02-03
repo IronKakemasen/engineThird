@@ -4,6 +4,7 @@
 #include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../../../GameObjects/InGameController/InGameController.h"
+#include "../../../Systems/DamageDisplay/DamageDisplay.h"
 #include "imgui.h"
 
 // 
@@ -29,6 +30,8 @@ void EnemyTower::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
+
+	nextAnimationState = EnemyTowerAnimationState::kIdle;
 }
 
 // マップに配置
@@ -112,8 +115,11 @@ void EnemyTower::SaveData()
 // 更新処理
 void EnemyTower::Update()
 {
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
 	circleModel->Update();
+
+	// アニメーション更新
+	UpdateAnimationState();
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
@@ -162,6 +168,49 @@ void EnemyTower::DebugDraw()
 #endif // USE_IMGUI
 }
 
+// アニメーション更新
+void EnemyTower::UpdateAnimationState()
+{
+	// 状態が変化したらカウンター初期化
+	if (nextAnimationState != currentAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case EnemyTowerAnimationState::kIdle:
+			animationCounter.Initialize(5.0f);
+			break;
+		case EnemyTowerAnimationState::kDamage:
+			animationCounter.Initialize(0.3f);
+			break;
+		case EnemyTowerAnimationState::kDead:
+			animationCounter.Initialize(0.1f);
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	// カウンター更新
+	animationCounter.Add();
+
+	if (animationCounter.count >= 1.0f)
+	{
+		switch (currentAnimationState)
+		{
+		case EnemyTower::EnemyTowerAnimationState::kIdle:
+			nextAnimationState = EnemyTowerAnimationState::kIdle;
+			break;
+		case EnemyTower::EnemyTowerAnimationState::kDamage:
+			nextAnimationState = EnemyTowerAnimationState::kIdle;
+			break;
+		case EnemyTower::EnemyTowerAnimationState::kDead:
+			SetStatus(Status::kInActive);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 // 衝突した弾をリストに追加
 void EnemyTower::AddHitBullet(PlayerBullet* bullet)
 {
@@ -200,13 +249,24 @@ void EnemyTower::CollisionBackToPlayerBullet::operator()()
 	// 既に衝突リストにあるなら何もしない
 	if (me->IsInHitBulletList(playerBullet)) return;
 
+	// 既に死んでいるなら何もしない
+	if (me->hp <= 0.0f) return;
+
+	// 状態をダメージに変更
+	me->nextAnimationState = EnemyTowerAnimationState::kDamage;
+
 	// 衝突リストに追加
 	me->AddHitBullet(playerBullet);
+
+	// ダメージ表示
+	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
 
 	me->hp = me->hp - playerBullet->GetAttackPower();
 	if (me->hp <= 0.0f)
 	{
-		me->SetStatus(Status::kInActive);
+		// 状態をデッドに変更
+		me->nextAnimationState = EnemyTowerAnimationState::kDead;
 	}
 }
 

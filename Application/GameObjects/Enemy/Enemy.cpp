@@ -104,6 +104,9 @@ void Enemy::Spawn(Vector3 pos)
 	// 初期向きを最近のターゲット方向に設定
 	LookAtTarget();
 
+	// アニメーション状態初期化
+	nextAnimationState = EnemyAnimationState::kMove;
+
 	// 後ろ方向きにノックバック
 	Vector3 knickBackDir = trans.lookDir * -1.0f;
 	Vector2 knickBackDir2D = Vector2(knickBackDir.x, knickBackDir.z).GetNormalized();
@@ -151,7 +154,10 @@ void Enemy::SaveData()
 void Enemy::Update()
 {
 	//モデルの更新処理
-	model->Update();
+	model->Update(int(currentAnimationState), animationCounter.count);
+
+	// アニメーション更新
+	UpdateAnimationState();
 
 	// 移動処理
 	MoveToTarget();
@@ -166,8 +172,50 @@ void Enemy::Update()
 	trans.pos = trans.pos + finalVelocity;
 }
 
+void Enemy::UpdateAnimationState()
+{
+	// 状態が変化したらカウンター初期化
+	if (nextAnimationState != currentAnimationState)
+	{
+		switch (nextAnimationState)
+		{
+		case Enemy::EnemyAnimationState::kMove:
+			animationCounter.Initialize(5.0f);
+			break;
+		case Enemy::EnemyAnimationState::kDead:
+			animationCounter.Initialize(1.0f);
+			break;
+		default:
+			break;
+		}
+		currentAnimationState = nextAnimationState;
+	}
+
+	animationCounter.Add();
+
+	if (animationCounter.count >= 1.0f)
+	{
+		switch (currentAnimationState)
+		{
+		case Enemy::EnemyAnimationState::kMove:
+			break;
+		case Enemy::EnemyAnimationState::kDead:
+			SetStatus(Status::kInActive);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void Enemy::MoveToTarget()
 {
+	if (currentAnimationState != EnemyAnimationState::kMove)
+	{
+		moveVelocity = Vector3(0.0f, 0.0f, 0.0f);
+		return;
+	}
+
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
 	for (size_t i = 0; i < playerTowers.size(); ++i)
@@ -207,6 +255,8 @@ void Enemy::MoveToTarget()
 
 void Enemy::LookAtTarget()
 {
+	if (currentAnimationState != EnemyAnimationState::kMove) return;
+
 	// ターゲットまでの方向ベクトルを計算
 	std::array<Vector3, GameConstants::kMaxPlayerTowers> dirToTowers{};
 	for (size_t i = 0; i < GameConstants::kMaxPlayerTowers; ++i)
@@ -331,6 +381,9 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	// 既に衝突済みなら何もしない
 	if (me->IsInHitBulletList(bullet)) return;
 
+	// 既に死んでいるなら何もしない
+	if (me->hp <= 0.0f) return;
+
 	// 衝突リストに追加
 	me->AddHitBullet(bullet);
 
@@ -355,9 +408,11 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	// 死亡した時
 	if (me->hp <= 0.0f)
 	{
-		me->SetStatus(Status::kInActive);
+		//me->SetStatus(Status::kInActive);
+		me->nextAnimationState = Enemy::EnemyAnimationState::kDead;
 
-		if (bullet->isMaximized == false)me->targetPlayer->SpawnAlly(me->trans.pos);
+		//if (bullet->isMaximized == true)
+			me->targetPlayer->SpawnAlly(me->trans.pos);
 	}
 }
 
@@ -386,6 +441,8 @@ void Enemy::CollisionBackToPlayerTower::operator()()
 // プレイヤー味方との衝突
 void Enemy::CollisionBackToPlayerAlly::operator()()
 {
+	if (me->currentAnimationState != EnemyAnimationState::kMove) return;
+
 	auto* playerAlly = reinterpret_cast<PlayerAlly*>(me->Getter_ColObj());
 
 	if (playerAlly->GetCurrentState() == PlayerAlly::State::kLocked || 

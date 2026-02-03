@@ -9,9 +9,24 @@ struct PlayerBullet;
 
 struct EnemyTower :public GameObject, public GameObjectBuilding
 {
+
+	enum class EnemyTowerAnimationState
+	{
+		kIdle,
+		kDamage,
+		kDead,
+	};
+
 #pragma region 独自部位
 
 private:
+	////// アニメーション処理  //////
+	void UpdateAnimationState();
+	EnemyTowerAnimationState currentAnimationState = EnemyTowerAnimationState::kIdle;
+	EnemyTowerAnimationState nextAnimationState = EnemyTowerAnimationState::kIdle;
+	Counter animationCounter;
+
+
 	// 衝突弾リスト更新
 	void UpdateHitBullets();
 	// そのターンで衝突した弾のリスト（多重衝突防止用）
