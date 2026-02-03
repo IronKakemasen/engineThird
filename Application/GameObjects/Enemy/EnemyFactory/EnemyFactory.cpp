@@ -152,13 +152,13 @@ void EnemyFactory::UpdateAnimationState()
 		switch (nextAnimationState)
 		{
 		case EnemyFactoryAnimationState::kIdle:
-			animationCounter.Initialize(5.0f);
+			animationCounter.Initialize(1.0f);
 			break;
 		case EnemyFactoryAnimationState::kDamage:
 			animationCounter.Initialize(0.2f);
 			break;
 		case EnemyFactoryAnimationState::kGenerate:
-			animationCounter.Initialize(5.0f);
+			animationCounter.Initialize(1.0f);
 			break;
 		case EnemyFactoryAnimationState::kDead:
 			animationCounter.Initialize(1.0f);

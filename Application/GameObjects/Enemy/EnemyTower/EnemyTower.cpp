@@ -4,6 +4,7 @@
 #include "../../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
 #include "../../GameObjectManager/GameObjectManager.h"
 #include "../../../GameObjects/InGameController/InGameController.h"
+#include "../../../Systems/DamageDisplay/DamageDisplay.h"
 #include "imgui.h"
 
 // 
@@ -177,10 +178,10 @@ void EnemyTower::UpdateAnimationState()
 			animationCounter.Initialize(5.0f);
 			break;
 		case EnemyTowerAnimationState::kDamage:
-			animationCounter.Initialize(5.0f);
+			animationCounter.Initialize(0.3f);
 			break;
 		case EnemyTowerAnimationState::kDead:
-			animationCounter.Initialize(5.0f);
+			animationCounter.Initialize(0.1f);
 			break;
 		}
 		currentAnimationState = nextAnimationState;
@@ -252,13 +253,14 @@ void EnemyTower::CollisionBackToPlayerBullet::operator()()
 	// 衝突リストに追加
 	me->AddHitBullet(playerBullet);
 
+	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
+		1.0f, { 255,255,0 });
+
 	me->hp = me->hp - playerBullet->GetAttackPower();
 	if (me->hp <= 0.0f)
 	{
 		// 状態をデッドに変更
 		me->nextAnimationState = EnemyTowerAnimationState::kDead;
-
-		//me->SetStatus(Status::kInActive);
 	}
 }
 

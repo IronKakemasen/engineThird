@@ -14,13 +14,13 @@ void EnemyTowerModel::Update(int mode_, float count_)
 	//被ダメリアクションでないとき
 	if (mode_ != 1)
 	{
-		return;
 		a->trans.pos.x = 0.0f;
 		shakeDeltaTheta = 0.0f;
+		return;
 	}
 
 	float dstAmp = 0.0f;
-	float exclusive = 1.0f - count_;
+	float exclusive = count_ - 1.0f;
 
 	if (exclusive != 0.0f)
 	{
