@@ -9,6 +9,7 @@ PlayerAlly::PlayerAlly()
 {
 	// モデルのインスタンス化
 	model.reset(new PlayerAllyModel);
+	boomModel.reset(new SphereModel);
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerAllyData.json";
@@ -18,6 +19,7 @@ void PlayerAlly::Reset()
 {
 	//モデルのリセット（中身が書いてあれば）
 	model->Reset();
+	boomModel->Reset();
 
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
@@ -33,6 +35,7 @@ void PlayerAlly::Init()
 {
 	// モデルの初期化
 	model->Init(&trans);
+	boomModel->Init(&trans);
 
 	// identityTableにセットされている通りに、identityを定める
 	// タグ、名前、衝突判定マスキング
@@ -86,6 +89,7 @@ void PlayerAlly::Update()
 {
 	//モデルの更新処理
 	model->Update();
+	boomModel->Update();
 
 	if (nextState != PlayerAlly::State::kNone)
 	{
@@ -98,6 +102,9 @@ void PlayerAlly::Update()
 		case PlayerAlly::State::kFormed:
 			break;
 		case PlayerAlly::State::kLocked:
+			break;
+		case PlayerAlly::State::kDeathBoom:
+			deathCounter.Initialize(0.2f);
 			break;
 		case PlayerAlly::State::kDead:
 			break;
@@ -121,6 +128,9 @@ void PlayerAlly::Update()
 	case PlayerAlly::State::kLocked:
 		LockPosition();
 		break;
+	case PlayerAlly::State::kDeathBoom:
+		DeathBoom();
+		break;
 	case PlayerAlly::State::kDead:
 		Death();
 		break;
@@ -135,6 +145,7 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 {
 	// モデルの描画
 	model->Draw(vpMat_);
+	boomModel->Draw(vpMat_);
 }
 
 void PlayerAlly::DebugDraw()
@@ -209,6 +220,19 @@ void PlayerAlly::LockPosition()
 
 }
 
+void PlayerAlly::DeathBoom()
+{
+	if (deathCounter.IsEnd())
+	{
+		nextState = State::kDead;
+		return;
+	}
+
+	// 円形コリジョンをアタッチ
+	SetCircleCollision(inGameConfig->playerAllyCollisonSize + (deathCounter.count * 1.0f));
+	deathCounter.Add();
+}
+
 void PlayerAlly::Spawn(Vector3 pos)
 {
 	// 有効化
@@ -233,13 +257,12 @@ void PlayerAlly::Death()
 }
 
 
-
 // エネミーとの衝突
 void PlayerAlly::CollisionBackToEnemy::operator()()
 {
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
-		me->nextState = PlayerAlly::State::kDead;
+		me->nextState = PlayerAlly::State::kDeathBoom;
 	}
 }
 
@@ -248,7 +271,7 @@ void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 {
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
-		me->nextState = PlayerAlly::State::kDead;
+		me->nextState = PlayerAlly::State::kDeathBoom;
 	}
 }
 

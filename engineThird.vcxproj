@@ -332,6 +332,7 @@
     <ClCompile Include="Application\Models\Tenkyu\Tenkyu.cpp" />
     <ClCompile Include="Application\Cameras\StageCamera\StageCamera.cpp" />
     <ClCompile Include="Application\GameObjects\Tenkyuu\TenkyuuClass.cpp" />
+    <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -383,6 +384,7 @@
     <ClInclude Include="Application\Models\Tenkyu\Tenkyu.h" />
     <ClInclude Include="Application\Cameras\StageCamera\StageCamera.h" />
     <ClInclude Include="Application\GameObjects\Tenkyuu\TenkyuuClass.h" />
+    <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

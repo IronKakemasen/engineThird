@@ -194,6 +194,7 @@
     <ClCompile Include="Application\GameObjects\BuildingsManager\BuildingsManager.cpp" />
     <ClCompile Include="Application\Models\CircleModel\CircleModel.cpp" />
     <ClCompile Include="Application\Systems\DamageDisplay\DamageDisplay.cpp" />
+    <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -388,6 +389,7 @@
     <ClInclude Include="Application\GameObjects\BuildingsManager\BuildingsManager.h" />
     <ClInclude Include="Application\Models\CircleModel\CircleModel.h" />
     <ClInclude Include="Application\Systems\DamageDisplay\DamageDisplay.h" />
+    <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

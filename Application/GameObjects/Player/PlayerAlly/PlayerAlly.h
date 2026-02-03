@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObjectBehavior.h"
 #include "../../../Models/PlayerAllyModel/PlayerAllyModel.h"
+#include "../../../Models/SphereModel/SphereModel.h"
 #include "../../../GameObjects/ObjectParent/GameObjectEntity.h"
 
 struct Player;
@@ -17,6 +18,8 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 		kFormed,
 		// ロック状態
 		kLocked,
+		// 死亡爆発
+		kDeathBoom,
 		// 死亡状態
 		kDead,
 		// 初期状態
@@ -32,7 +35,13 @@ private:
 	void FollowPlayer();
 	// その場で待機する
 	void LockPosition();
+	// 死亡爆発
+	void DeathBoom();
+	// 死亡処理
+	void Death();
 
+	// 死亡後判定を受けてからn秒後に消滅するカウンター
+	Counter deathCounter;
 
 	State currentState = State::kNone;
 	State nextState = State::kNone;
@@ -44,8 +53,6 @@ public:
 	State GetCurrentState() const { return currentState; }
 
 	void Spawn(Vector3 pos);
-
-	void Death();
 
 #pragma	endregion
 
@@ -95,6 +102,7 @@ private:
 public:
 	// 使用するモデル
 	std::unique_ptr<PlayerAllyModel> model;
+	std::unique_ptr<SphereModel> boomModel;
 
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
