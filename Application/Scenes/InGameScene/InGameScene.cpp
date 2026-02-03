@@ -483,14 +483,6 @@ void InGameScene::PlayableMode()
 {
 	Lighthing();
 	DamageDisplay::Get()->Update();
-	static bool o = 1;
-
-	if (o)
-	{
-		DamageDisplay::Get()->Activate(54, player->Getter_Trans()->GetWorldPos(),
-			1.0f, {255,255,0});
-		o = 0;
-	}
 }
 
 void InGameScene::Lighthing()
