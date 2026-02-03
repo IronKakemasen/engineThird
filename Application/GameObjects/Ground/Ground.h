@@ -9,12 +9,33 @@ private:
 
 	void LoadData()override;
 	void SaveData()override;
-	void DebugDraw()override;
+	int32_t tempStageNumber = -1;
+
 
 public:
+	void DebugDraw()override;
+
 	//使用するモデル
 	std::unique_ptr<GroundPlane> groundPlane;
 	void ReplaceOnMap(const int32_t stage)override;
+
+
+	void ClampPosition(Vector3& worldPos_)
+	{
+		Vector3 clampMin = { -30.0f * trans.scale.x,0,-30.0f * trans.scale.z };
+		Vector3 clampMax = { 30.0f * trans.scale.x,0,30.0f * trans.scale.z };
+
+		float const adjust = 0.1f;
+		Benri::AdjustMin(worldPos_.x, clampMin.x, clampMin.x + adjust);
+		Benri::AdjustMax(worldPos_.x, clampMax.x, clampMax.x - adjust);
+
+		Benri::AdjustMin(worldPos_.z, clampMin.z, clampMin.z + adjust);
+		Benri::AdjustMax(worldPos_.z, clampMax.z, clampMax.z - adjust);
+	}
+
+	// inGameController参照ポインタ
+	InGameController* inGameController = nullptr;
+
 
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。

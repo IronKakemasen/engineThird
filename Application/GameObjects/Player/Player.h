@@ -9,6 +9,7 @@
 
 struct PlayerAlly;
 struct PlayerBullet;
+struct Ground;
 
 struct Player :public GameObject, public GameObjectEntity
 {
@@ -31,6 +32,7 @@ private:
 	//////  移動処理  //////
 	void Move();			// 移動
 	bool isMoving = false;	// 移動中フラグ
+	Ground* ground = nullptr;
 
 	//////  攻撃処理  //////
 	void Attack();		// 攻撃
@@ -111,6 +113,9 @@ public:
 	void SetAllies(PlayerAlly* allyPoint) { allies.push_back(allyPoint); }
 	// 弾の参照ポインタを追加
 	void SetBullets(PlayerBullet* bullet) { bullets.push_back(bullet); }
+	// 地面の参照ポインタを追加
+	void SetGround(Ground* groundPoint) { ground = groundPoint; }
+
 
 	// 味方を生み出す
 	void SpawnAlly(Vector3 pos);

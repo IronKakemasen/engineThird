@@ -236,6 +236,8 @@ void StageSelectScene::ReplaceObjects()
 		{
 			enemyFactories[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
 		}
+		// グラウンドのインスタンス化 & IDセット
+		grounds[stageIndex][0]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
 	}
 
 	initialized = true;

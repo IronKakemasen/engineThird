@@ -3,8 +3,8 @@
 #include <cstdint>
 #include "../../M/utilities/benriTemplateFunc/benriTempFunc.h"
 #include "../../lowerLayer/math/vector/vector.h"
+#include "../../Config/InGameConfig.h"
 
-class InGameConfig;
 struct InGameController;
 
 struct GameObjectEntity
@@ -32,19 +32,6 @@ protected:
 	// inGameController参照ポインタ
 	InGameController* inGameController = nullptr;
 
-	inline void ClampPosition(Vector3& worldPos_)
-	{
-		Vector3 clampMin = { -30,0,-30 };
-		Vector3 clampMax = { 30,0,30 };
-
-		float const adjust = 0.1f;
-		Benri::AdjustMin(worldPos_.x, clampMin.x, clampMin.x + adjust);
-		Benri::AdjustMax(worldPos_.x, clampMax.x, clampMax.x - adjust);
-
-		Benri::AdjustMin(worldPos_.z, clampMin.z, clampMin.z + adjust);
-		Benri::AdjustMax(worldPos_.z, clampMax.z, clampMax.z - adjust);
-
-	}
 
 	// ID
 	int32_t ID = -1;

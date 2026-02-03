@@ -5,6 +5,7 @@
 #include "../GameObjectManager/GameObjectManager.h"
 #include "../../GameObjects/Player/PlayerAlly/PlayerAlly.h"
 #include "../../GameObjects/Player/PlayerBullet/PlayerBullet.h"
+#include "../../GameObjects/Ground/Ground.h"
 #include "../../Config/InGameConfig.h"
 #include "../../Config/GameConstants.h"
 
@@ -245,7 +246,7 @@ void Player::Move()
 	trans.pos = trans.pos + moveDir * inGameConfig->playerSpeed;
 
 	// 画面外に出ないようにクランプ
-	ClampPosition(trans.pos);
+	ground->ClampPosition(trans.pos);
 
 	//まんてじゃみ追加事項
 	deltaPos = moveDir * inGameConfig->playerSpeed;

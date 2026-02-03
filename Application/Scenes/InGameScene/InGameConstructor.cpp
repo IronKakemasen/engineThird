@@ -118,6 +118,8 @@ void InGameScene::Instantiate()
 
 	for (auto& bullet : playerBullets)
 		player->SetBullets(bullet.get());
+
+	player->SetGround(ground.get());
 }
 
 void InGameScene::Init()
