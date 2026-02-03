@@ -42,7 +42,7 @@
         "enemyTower": 100.0,
         "player": 3.0,
         "playerBullet": 1.2000000476837158,
-        "playerTower": 50.0
+        "playerTower": 100.0
     },
     "Power": {
         "enemy": {
@@ -62,7 +62,7 @@
         "separateCompleteFrame": 60
     },
     "SpawnInterval": {
-        "enemy": 2.0,
+        "enemy": 3.0,
         "enemyFactoryRespawnInterval": 20.0,
         "maxAllyCount": 5,
         "playerAlly": 2.0
