@@ -115,6 +115,9 @@ void UIDisplayer::Update()
 			uiElements[drawOrder[i]].initScale.x + uiElements[drawOrder[i]].scaleOffset.x,
 			uiElements[drawOrder[i]].initScale.y + uiElements[drawOrder[i]].scaleOffset.y,
 			1.0f };
+
+		// Ensure sprite internal state (uvTrans, atlas) is updated before draw
+		uiElements[drawOrder[i]].sprite->Update();
 	}
 }
 
@@ -377,9 +380,6 @@ void UIDisplayer::HandlePauseDecisionInput()
 		break;
 
 	default:
-		break;
-	}
-}
 void UIDisplayer::UpdatePauseCursorEasing()
 {
 	uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
