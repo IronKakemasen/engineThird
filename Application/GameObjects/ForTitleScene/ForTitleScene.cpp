@@ -9,11 +9,11 @@ void ForTitleScene::Update()
 		alliance[i]->Update(i%2);
 	}
 
+	titleLogo->Update();
 }
 
 void ForTitleScene::Init()
 {
-	tenkyuu->Init(nullptr);
 	player->Init(nullptr);
 	player->models[0]->GetAppearance(0)->trans.pos = { 0,0,20 };
 
@@ -25,6 +25,9 @@ void ForTitleScene::Init()
 		a->model->GetAppearance(0)->trans.pos = { -i - 1.0f,0,20 };
 
 	}
+
+	titleLogo->Init(nullptr);
+	tenkyuu->Init(nullptr);
 
 }
 void ForTitleScene::Reset()
@@ -40,6 +43,9 @@ void ForTitleScene::Draw(Matrix4* vpMat_)
 	{
 		alliance[i]->Draw(vpMat_);
 	}
+
+	titleLogo->Draw(vpMat_);
+
 }
 void ForTitleScene::SetCollisionBackTable()
 {
@@ -55,4 +61,6 @@ ForTitleScene::ForTitleScene()
 	{
 		alliance.emplace_back(std::make_unique<PlayerAllyModel>());
 	}
+	
+	titleLogo.reset(new TitleLogo);
 }

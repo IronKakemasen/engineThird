@@ -26,8 +26,10 @@ void TitleScene::Init()
 	}
 
 	pLights[0]->Getter_Para()->pos = {0,8,16};
-	pLights[0]->Getter_Para()->color = { 0,200,100};
+	pLights[0]->Getter_Para()->color = { 100,151,233};
 	pLights[1]->Getter_Para()->pos = { 0,4,23 };
-	pLights[1]->Getter_Para()->color = { 200,125,20};
+	pLights[1]->Getter_Para()->color = { 50,50,135};
+	titleCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
+	c.Initialize(10.0f);
 }

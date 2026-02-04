@@ -67,6 +67,9 @@ enum class TextureTag
 
 	kScrewN,
 
+	kCirclen,
+	kCirclenN,
+
 	kCount
 };
 

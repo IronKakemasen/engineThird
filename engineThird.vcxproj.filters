@@ -197,6 +197,8 @@
     <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
     <ClCompile Include="Application\Systems\DeathParticle\DeathParticle.cpp" />
     <ClCompile Include="Application\GameObjects\ForTitleScene\ForTitleScene.cpp" />
+    <ClCompile Include="Application\Cameras\TitleCamera\TitleCamera.cpp" />
+    <ClCompile Include="Application\Models\TitleLogo\TitleLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -394,6 +396,8 @@
     <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
     <ClInclude Include="Application\Systems\DeathParticle\DeathParticle.h" />
     <ClInclude Include="Application\GameObjects\ForTitleScene\ForTitleScene.h" />
+    <ClInclude Include="Application\Cameras\TitleCamera\TitleCamera.h" />
+    <ClInclude Include="Application\Models\TitleLogo\TitleLogo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

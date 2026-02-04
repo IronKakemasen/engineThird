@@ -30,7 +30,7 @@ void SphereModel::Update(int mode_, float count_)
 
 void SphereModel::Draw(Matrix4 * vpMat_)
 {
-	M::GetInstance()->DrawModel(model.get(), vpMat_);
+	M::GetInstance()->DrawShaderToy(model.get(), vpMat_);
 }
 
 void SphereModel::Init(Transform * gameObjectTrans_)
@@ -42,15 +42,18 @@ void SphereModel::Init(Transform * gameObjectTrans_)
 	auto* appearance = model->GetAppearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
-		M::GetInstance()->GetShaderSetIndexFromFileName("ModelGGX.VS", "ModelGGX.PS");
+		M::GetInstance()->GetShaderSetIndexFromFileName("Mt2SzR.VS", "Mt2SzR.PS");
 
 	appearance->trans.pos.y = 0.2f;
+	appearance->cullMode = kCullModeNone;
+	//appearance->texHandlesContainer[Appearance::kNormalmap] =
+	//	M::GetInstance()->GetTexIndex(TextureTag::kCirclenN);
+	//appearance->texHandlesContainer[Appearance::kColormap] =
+	//	M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2);
 
-	appearance->use_texHandles[Appearance::kColormap] =
-		M::GetInstance()->GetTexIndex(TextureTag::kGridN);
-	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
-	appearance->SetUsingTextureFromContainer(1, 0, 0, 0);
-	appearance->color = { 200,200,255,255 };
+	////使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
+	//appearance->SetUsingTextureFromContainer(1, 0, 0, 0);
+	appearance->color = { 500,500,500,255 };
 
 	//ゲームオブジェクトと全モデルのペアレント化
 	MakeAllPartsBeChildren(gameObjectTrans_);

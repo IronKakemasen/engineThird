@@ -67,7 +67,7 @@ void PlayerAllyModel::MoveAnim(int animPattern_)
 	//待機中であれば色を変えてアニメーションはしない
 	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
 	{
-		appearance->color = { 200,255,50,255 };
+		appearance->color = { 255,200,20,255 };
 		return;
 	}
 

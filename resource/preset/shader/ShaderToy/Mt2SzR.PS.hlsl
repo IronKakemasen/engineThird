@@ -32,9 +32,9 @@ PixcelShaderOutput main(VertexShaderOutput input)
     
     float tp = gTime.passedTime;
 
-    float n = nestedNoise(input.texcoord * 6.0, tp);
+    float n = nestedNoise(input.texcoord * 6.0, tp * 10.0);
     
-    float3 finalColor = lerp(float3(0.2, 1.0, 0.2), float3(0.1, 0.15, 0.1), n);
+    float3 finalColor = lerp(float3(0.5, 0.5, 1.0), float3(0.1, 0.15, 0.1), n);
     
     output.color = float4(finalColor,1.0);
     

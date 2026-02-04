@@ -4,6 +4,7 @@
 #include "../../Models/PlayerAllyModel/PlayerAllyModel.h"
 #include "../../Models/PlayerModel/PlayerModel.h"
 #include "../../Models/GroundPlane/GroundPlane.h"
+#include "../../Models/TitleLogo/TitleLogo.h"
 
 struct ForTitleScene :public GameObject
 {
@@ -13,8 +14,8 @@ public:
 	std::unique_ptr<PlayerModel> player;
 	std::vector<std::unique_ptr<PlayerAllyModel>> alliance;
 	std::unique_ptr<GroundPlane> groundPlane;
+	std::unique_ptr<TitleLogo> titleLogo;
 
-	
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓
 	// 更新処理。
 	// GameObject::StateがinActiveの場合は呼び出されない

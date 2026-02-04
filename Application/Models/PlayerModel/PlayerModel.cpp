@@ -258,6 +258,7 @@ PlayerModel::PlayerModel()
 	models.emplace_back(cannon.get());	
 	headRotateCnt.Initialize(6.0f);
 	idleIdleCnt.Initialize(3.5f);
+	idleIdleCnt.count = 0.975f;
 }
 
 
