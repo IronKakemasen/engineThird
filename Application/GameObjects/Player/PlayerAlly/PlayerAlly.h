@@ -19,15 +19,15 @@ struct PlayerAlly :public GameObject, public GameObjectEntity
 	enum class State
 	{
 		// 列非加入
-		kUnformed,
+		kUnformed = 2,
 		// 列加入済み
-		kFormed,
+		kFormed = 0,
 		// ロック状態
-		kLocked,
+		kLocked = 1,
 		// 死亡爆発
-		kDeathBoom,
+		kDeathBoom = 3,
 		// 死亡状態
-		kDead,
+		kDead = 4,
 		// 初期状態
 		kNone
 	};

@@ -89,8 +89,8 @@ void PlayerAlly::SaveData()
 void PlayerAlly::Update()
 {
 	//モデルの更新処理
-	model->Update(int(currentAnimationState), animationCounter.count);
-	boomModel->Update(int(currentAnimationState), animationCounter.count);
+	model->Update(int(currentState), animationCounter.count);
+	boomModel->Update(int(currentState), animationCounter.count);
 
 	// アニメーション更新
 	UpdateAnimationState();
