@@ -38,7 +38,7 @@ void TitleCamera::Update()
 		cameraPara->trans.pos = Easing::EaseInExpo(secPos, thirdPos, t);
 	}
 
-	else if (c > 0.85f && c <= 0.95f)
+	else if (c > 0.85f && c <= 0.9f)
 	{
 		cameraPara->trans.interpolationCoe = 0.0075f;
 

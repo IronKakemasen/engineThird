@@ -108,7 +108,7 @@ void PlayerAlly::Update()
 		case PlayerAlly::State::kLocked:
 			break;
 		case PlayerAlly::State::kDeathBoom:
-			deathCounter.Initialize(1.0f);
+			deathCounter.Initialize(0.75f);
 			break;
 		case PlayerAlly::State::kDead:
 			break;
