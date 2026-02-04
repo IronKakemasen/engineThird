@@ -16,6 +16,7 @@ private:
 	Vector3 fstLookDir = { -0.591f,0.282f,0.756f };
 	Vector3 secLookDir = { 0.4f,-0.461f,-0.793f };
 	Vector3 secPos = { -1.9f,2.47f,22.4f };
+	Vector3 thirdPos = { 0,75,150 };
 
 public:
 

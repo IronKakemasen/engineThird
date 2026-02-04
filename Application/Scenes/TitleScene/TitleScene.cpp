@@ -2,13 +2,6 @@
 
 void TitleScene::Update()
 {
-	dirLight->Getter_Para()->pos = { 1,-1,1 };
-
-	ImGui::Begin("jjj");
-	ImGui::DragFloat3("c1", reinterpret_cast<float*>(&pLights[0]->Getter_Para()->color));
-	ImGui::DragFloat3("c2", reinterpret_cast<float*>(&pLights[1]->Getter_Para()->color));
-	ImGui::End();
-
 	titleCamera.Update();
 
 	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A) ||
@@ -20,6 +13,7 @@ void TitleScene::Update()
 	{
 		pushed = true;
 	}
+
 	if (c.count<=0.2f)
 	{
 		c.Add();

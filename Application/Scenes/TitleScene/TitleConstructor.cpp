@@ -31,5 +31,5 @@ void TitleScene::Init()
 	pLights[1]->Getter_Para()->color = { 50,50,135};
 	titleCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
-	c.Initialize(10.0f);
+	c.Initialize(12.0f);
 }

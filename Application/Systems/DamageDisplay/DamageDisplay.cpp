@@ -56,7 +56,7 @@ void DamageDisplay::DamageNum::Update()
 		float const adjust = 0.65f;
 		t.GetAppearance()->trans.pos = 
 			Vector3{ conv.x - defaultSize.x * scale * adjust   ,conv.y,0.0f } + moveOffset;
-		t.GetAppearance()->color.w = Easing::EaseOutSine(255.0f, 0.0f, cnt.count);
+		t.GetAppearance()->color.w = Easing::EaseInExpo(255.0f, 0.0f, cnt.count);
 		t.Update();
 	}
 
