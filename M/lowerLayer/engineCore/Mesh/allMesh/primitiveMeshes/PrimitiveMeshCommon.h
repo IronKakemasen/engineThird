@@ -19,8 +19,8 @@ struct PrimitiveMeshCommon
 {
 	enum class MaxDraw
 	{
-		kTriangle = 1024,
-		kQuad = 128,
+		kTriangle = 128,
+		kQuad = 4000,
 	};
 
 	// 頂点バッファマップ
