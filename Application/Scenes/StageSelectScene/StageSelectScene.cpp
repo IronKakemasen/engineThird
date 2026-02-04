@@ -1,10 +1,14 @@
 #include "StageSelectScene.h"
 #include "../../utilities/Json/Json.h"
 #include <numbers>
+#include "../../GameObjects/InGameController/InGameController.h"
 
 
 void StageSelectScene::Update()
 {
+	InGameController::curMode = InGameController::Mode::kEnter;
+	InGameController::curCnt = 0.0f;
+
 	dirLight->Getter_Para()->pos = { 6.1f,0.5f,-20.0f };
 
 	mainCamera.Update();
