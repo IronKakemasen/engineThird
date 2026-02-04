@@ -40,6 +40,7 @@ void TitleScene::Draw()
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
+	if(!pushed) pushA.Draw(&ortho);
 }
 
 void TitleScene::Reset()

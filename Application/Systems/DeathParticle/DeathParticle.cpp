@@ -39,6 +39,7 @@ void DeathParticleObject::Update()
 		if (Benri::Min(t->mTriangle.appearance.color.w, 0.0f))
 		{
 			t->isActive = false;
+			t->mTriangle.appearance.trans.scale = { 1,1,1 };
 		}
 	}
 
@@ -97,7 +98,7 @@ void DeathParticle::Activate(Vector3 world_, int num_, float power_,float scale_
 
 void DeathParticle::Init(GameObjectManager* gameObjectManager_)
 {
-	//gameObjectManager_->RegisterForContainer(&deathParticleObject);
+	gameObjectManager_->RegisterForContainer(&deathParticleObject);
 }
 
 void DeathParticle::Update()

@@ -6,6 +6,7 @@ TitleScene::TitleScene()
 	pLights[1] = M::GetInstance()->ImportPointLight();
 	dirLight->Getter_Para()->intensity = 4.0f;
 	dirLight->Getter_Para()->pos = {1,1,1};
+	pushA.Initialize(440, 50, { 640,600.0f,0.0f }, M::GetInstance()->GetTexIndex(TextureTag::kPushA));
 
 }
 
@@ -31,5 +32,5 @@ void TitleScene::Init()
 	pLights[1]->Getter_Para()->color = { 50,50,135};
 	titleCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
-	c.Initialize(12.0f);
+	c.Initialize(15.0f);
 }

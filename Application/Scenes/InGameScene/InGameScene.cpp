@@ -90,8 +90,6 @@ void InGameScene::Update()
 
 	AdaptToPostEffect();
 
-	DeathParticle::Get()->Update();
-
 	// クリア || 失敗
 	if (GameResult == true)
 	{
@@ -290,8 +288,6 @@ void InGameScene::Draw()
 
 	// ダメージ表示描画
 	DamageDisplay::Get()->Draw(&ortho);
-	// デスパーティクル描画
-	DeathParticle::Get()->Draw(vpMat);
 
 	//// //UI描画
 	uiDisplayer->SuperDraw(&ortho);
@@ -586,12 +582,6 @@ void InGameScene::PlayableMode()
 {
 	Lighthing();
 	DamageDisplay::Get()->Update();
-	static bool b = 1;
-	if (b)
-	{
-		b = false;
-		DeathParticle::Get()->Activate({ 0,5,5 }, 10, 1.0f, 1.0f, { 255,255,255 });
-	}
 }
 
 void InGameScene::Lighthing()

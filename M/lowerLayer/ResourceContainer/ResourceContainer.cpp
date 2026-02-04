@@ -13,6 +13,7 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string pathToBullet = "./resource/application/Texture/Bullet/";
 	std::string pathToGround = "./resource/application/Texture/Ground/";
 	std::string pathToCircle = "./resource/application/Texture/Circle/";
+	std::string pathToTitleUI = "./resource/application/Texture/UI/Title/";
 
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
@@ -86,6 +87,9 @@ void ResourceContainer::LoadAllTextureFile()
 
 	LoadTextureFile(TextureTag::kCirclen, pathToCircle + "uu.png");
 	LoadTextureFile(TextureTag::kCirclenN, pathToCircle + "uu_normal.png");
+
+	
+	LoadTextureFile(TextureTag::kPushA, pathToTitleUI + "TitleButton440x50.png");
 
 	
 	
