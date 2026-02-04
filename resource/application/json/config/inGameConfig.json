@@ -41,7 +41,7 @@
         "enemyFactory": 30.0,
         "enemyTower": 100.0,
         "player": 3.0,
-        "playerBullet": 1.2000000476837158,
+        "playerBullet": 1.100000023841858,
         "playerTower": 100.0
     },
     "Power": {
