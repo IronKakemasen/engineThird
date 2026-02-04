@@ -10,6 +10,7 @@
 struct PlayerAlly;
 struct PlayerBullet;
 struct Ground;
+struct InGameController;
 
 struct Player :public GameObject, public GameObjectEntity
 {
@@ -23,6 +24,9 @@ struct Player :public GameObject, public GameObjectEntity
 	};
 
 private:
+	////// マップに配置  //////
+	void ReplaceOnMap(const int32_t stage);
+
 	////// アニメーション処理  //////
 	void UpdateAnimationState();
 	PlayerAnimationState currentAnimationState = PlayerAnimationState::kIdle;
@@ -82,8 +86,6 @@ private:
 	//	    
 	// 要約:自分より前の味方が死んだ時後ろの味方すべてが詰める。そのオフセット管理用
 	int32_t delayFrameOffsets = 0;
-	// 死亡して詰め待ちのリスト(先入れ先出し)
-	//std::deque<int32_t> deadIndexList = {};
 
 
 public:

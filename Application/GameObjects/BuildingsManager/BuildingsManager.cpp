@@ -17,6 +17,34 @@ void BuildingsManager::SaveData()
 void BuildingsManager::DebugDraw()
 {}
 
+bool BuildingsManager::isClear() const
+{
+	bool allDestroyed = true;
+	for (auto& tower : enemyTowers)
+	{
+		if (!tower->IsDead())
+		{
+			allDestroyed = false;
+			break;
+		}
+	}
+	return allDestroyed;
+}
+
+bool BuildingsManager::isGameOver() const
+{
+	bool allDestroyed = true;
+	for (auto& pTower : playerTowers)
+	{
+		if (!pTower->IsDead())
+		{
+			allDestroyed = false;
+			break;
+		}
+	}
+	return allDestroyed;
+}
+
 void BuildingsManager::SetEnemyFactory(EnemyFactory* factory)
 {
 	enemyFactories.push_back(factory);
