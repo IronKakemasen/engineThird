@@ -234,6 +234,7 @@ void PlayerAlly::FollowPlayer()
 			currentState = State::kLocked;
 			// あにめーしょん状態遷移
 			nextState = State::kLocked;
+			nextAnimationState = PlayerAllyAnimationState::kLock;
 			// 設置音
 			AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllySet), false, 50);
 
