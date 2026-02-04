@@ -28,7 +28,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Json::LoadAll("./resource/application/json/");
 
 	std::unique_ptr<SceneController> sceneController =
-		std::make_unique<SceneController>(kTitle);
+		std::make_unique<SceneController>(kStageSelect);
 
 	AudioPlayer::GetInstance().PlayBGM(AudioHandle::Get(AudioID::bgm), true, 15);
 

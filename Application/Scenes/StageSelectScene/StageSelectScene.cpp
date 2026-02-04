@@ -232,11 +232,15 @@ void StageSelectScene::ReplaceObjects()
 		for (size_t i = 0; i < playerTowers[stageIndex].size(); ++i)
 		{
 			playerTowers[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+			playerTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.x += 5.5f;
+			playerTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.z -= 1.5f;
 		}
 		// エネミータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
 		{
 			enemyTowers[stageIndex][i]->ReplaceOnMap(static_cast<int32_t>(stageIndex));
+			enemyTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.x -= 5.5f;
+			enemyTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.z -= 1.5f;
 		}
 		// エネミーファクトリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
