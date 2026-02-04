@@ -97,7 +97,7 @@ void StageSelectScene::Init()
 {
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
-	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 30.0f, -130.0f);
+	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 15.0f, -120.0f);
 	mainCamera.cameraPara->trans.lookDir = Vector3(0.0f, -0.714f, 0.7f);
 
 	Reset();

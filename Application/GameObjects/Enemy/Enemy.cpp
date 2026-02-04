@@ -20,12 +20,12 @@ Enemy::Enemy()
 
 	// HPバーのスプライト初期化
 	HPBarBackSprite = std::make_unique<Sprite>();
-	HPBarBackSprite->Initialize(50.0f, 7.0f, { },
+	HPBarBackSprite->Initialize(50.0f, 7.0f, { -100.0f,-100.0f,-100.0f},
 			M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
 			{ 100,100,255,255 });
 
 	HPBarSprite = std::make_unique<Sprite>();
-	HPBarSprite->Initialize(48.0f, 5.0f, { },
+	HPBarSprite->Initialize(48.0f, 5.0f, { -100.0f, -100.0f, -100.0f },
 		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
 		{ 255,0,0,255 });
 

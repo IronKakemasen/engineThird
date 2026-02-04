@@ -94,6 +94,16 @@ void UIDisplayer::Update()
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
+		auto& e = uiElements[drawOrder[i]];
+
+		// 異常値検出（1フレ巨大化の犯人特定）
+		const float sx = e.initScale.x + e.scaleOffset.x;
+		const float sy = e.initScale.y + e.scaleOffset.y;
+		if (sx > 2.0f || sy > 2.0f || sx < 0.0f || sy < 0.0f)
+		{
+			__debugbreak();
+		}
+
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
 		{ 
 			uiElements[drawOrder[i]].initPosition.x + uiElements[drawOrder[i]].posOffset.x, 
@@ -275,6 +285,13 @@ void UIDisplayer::UpdatePauseCursorInput()
 		M::GetInstance()->getPadState.GetLeftStick(0).y < -inGameConfig->deadZone)
 		down = true;
 
+
+
+#ifdef _DEBUG
+	if (M::GetInstance()->IsKeyTriggered(KeyType::UP)) up = true;
+	if (M::GetInstance()->IsKeyTriggered(KeyType::DOWN)) down = true;
+#endif
+
 	if (!up && !down)
 	{
 		buttonHeldFrameCount = 0;
@@ -326,9 +343,16 @@ void UIDisplayer::UpdatePauseCursorInput()
 }
 void UIDisplayer::HandlePauseDecisionInput()
 {
+	bool decide = false;
+
 	// 決定ボタンが押されていなければ抜ける
-	if (!M::GetInstance()->getPadState.IsJustPressed(0, PAD_A) &&
-		!M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) return;
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_A)) decide = true;
+	if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB)) decide = true;
+#ifdef _DEBUG
+	if (M::GetInstance()->IsKeyTriggered(KeyType::SPACE)) decide = true;
+#endif
+
+	if (!decide) return;
 
 	// ここに来ているということはポーズ中で決定ボタンが押されたということ
 	switch (currentSelectedButton)
@@ -405,8 +429,8 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 	case UIDisplayer::UIMode::TiTle:
 		break;
 	case UIDisplayer::UIMode::StageSelect:
+		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
 		drawOrder.push_back(uiType::Decision200x60);	// ケッテイ　アイコン
-		drawOrder.push_back(uiType::Option200x60);		// セッテイ　アイコン
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
 		break;
 	case UIDisplayer::UIMode::InGame:
@@ -414,7 +438,7 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Shot200x60);		// ショット　アイコン
 		drawOrder.push_back(uiType::Reticle200x60);		// ネラウ　　アイコン
 		drawOrder.push_back(uiType::Pause200x60);		// ポーズ　　アイコン
-		drawOrder.push_back(uiType::Zoom200x60);		// ズーム　　アイコン
+		drawOrder.push_back(uiType::Set200x60);			// ハイチ　　アイコン
 
 		drawOrder.push_back(uiType::PauseScreen_1280x720);	// ポーズ背景
 		drawOrder.push_back(uiType::PauseButton01_350x50);	// プレイ
@@ -445,6 +469,10 @@ void UIDisplayer::SuperDraw(Matrix4 * ortho_)
 {
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
+		if (uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale.x > 1.0f)
+		{
+			__debugbreak();
+		}
 		uiElements[drawOrder[i]].sprite->Draw(ortho_);
 	}
 }

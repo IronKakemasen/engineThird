@@ -330,12 +330,30 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 	// 状態をダメージに変更
 	me->nextAnimationState = EnemyFactory::EnemyFactoryAnimationState::kDamage;
 
+	float power = playerBullet->GetAttackPower();
+
+	float scale = 1.0f;
+	int stage = int(power) % 10;
+	if (stage >= 5)
+	{
+		scale = 1.5f;
+	}
+	else if (stage >= 2)
+	{
+		scale = 1.2f;
+	}
+
+	// 
+	Vector3 pos = me->Getter_Trans()->GetWorldPos();
+	pos.x += (rand() % 1000 / 1000.0f - 0.5f) * 2.0f;
+	pos.y -= 10.0f;
+	pos.z += (rand() % 1000 / 1000.0f - 0.5f) * 2.0f;
+
 	// ダメージ表示
-	DamageDisplay::Get()->Activate(playerBullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
-		1.0f, { 255,255,0 });
+	DamageDisplay::Get()->Activate(power, pos, scale, { 255,255,0 });
 
 	// ダメージ処理
-	me->hp = me->hp - playerBullet->GetAttackPower();
+	me->hp = me->hp - power;
 	if (me->hp <= 0.0f)
 	{
 		me->SwitchCollisionActivation(false);
