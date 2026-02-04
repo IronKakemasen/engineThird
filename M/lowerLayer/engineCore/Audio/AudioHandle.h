@@ -2,32 +2,46 @@
 #include <array>
 #include <string>
 #include <memory>
+#include "AudioPlayer.h"
+#include "AudioHandle.h"
 
 // 音声ID
 enum class AudioID
 {
     // BGM
     bgm,
-    AllyChain,
-    AllyExplode,
-    AllySet,
-    AllySpawn,
-    BulletPowerup,
-    Cansel01,
-    CountDown,
-    DestroyEnemyObject,
-    EnemyDamage,
-    FactorySpawn,
-    GameClear01,
-    GameStart,
-    ObjectExplode,
-    OptionCansel,
-    PauseButton,
-    PauseCursol,
-    PlayerShot,
-    PlayerTowerDamage,
-    SelectNegative,
-    SelectPositive,
+    // void PlayerAlly::CollisionBackToPlayer::operator()()
+    AllyChain,          // 配置済味方回収した音
+    // void PlayerAlly::CollisionBackToEnemy::operator()()
+    AllyExplode,        // 味方爆発
+    // void PlayerAlly::FollowPlayer()
+    AllySet,            // 味方置いた瞬間
+
+    AllySpawn,          // 
+    // void PlayerBullet::CollisionBackToAlly::operator()()
+    BulletPowerup,      // 弾強化音
+    // 
+    Cansel01,           // 
+    CountDown,          // 
+    DestroyEnemyObject, // 
+    // void Enemy::CollisionBackToPlayerBullet::operator()()
+    EnemyDamage,        // 敵がダメージを受けた音
+    // void BuildingsManager::Update()
+    FactorySpawn,       // ファクトリーリスポーン音
+    GameClear01,        // 
+    GameStart,          // 
+    ObjectExplode,      // 
+    OptionCansel,       // 
+    // void UIDisplayer::HandlePauseToggleInput()
+    PauseButton,        // ポーズ画面出し入れした音
+    // void UIDisplayer::UpdatePauseCursorInput()
+    PauseCursol,        // ポーズカーソル動かした音
+    // void Player::Attack()
+    PlayerShot,         // プレイヤー攻撃音
+    // void PlayerTower::CollisionBackToEnemy::operator()()
+    PlayerTowerDamage,  // プレイヤータワー被ダメ音
+    SelectNegative,     // 
+    SelectPositive,     // 
 
     count
 };

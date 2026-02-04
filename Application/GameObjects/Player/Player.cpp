@@ -291,6 +291,9 @@ void Player::Attack()
 				Vector3 firePos = trans.pos;
 				firePos = firePos + trans.lookDir * 1.5f;
 
+				// 音
+				AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::PlayerShot), false, 50);
+
 				// 発射
 				bullet->Fire(firePos, trans.lookDir);
 

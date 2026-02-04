@@ -316,6 +316,14 @@ void EnemyTower::CollisionBackToPlayerBullet::operator()()
 	{
 		// 状態をデッドに変更
 		me->nextAnimationState = EnemyTowerAnimationState::kDead;
+
+		// 音
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::ObjectExplode), false, 20);
+	}
+	else
+	{
+		// 音
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::EnemyDamage), false, 20);
 	}
 }
 

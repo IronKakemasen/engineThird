@@ -259,6 +259,9 @@ void PlayerTower::CollisionBackToEnemy::operator()()
 		scale = 1.2f;
 	}
 
+	// 音
+	AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::PlayerTowerDamage), false, 5);
+
 	// 
 	Vector3 pos = me->Getter_Trans()->GetWorldPos();
 	pos.x += (rand() % 1000 / 1000.0f - 0.5f) * 2.0f;
