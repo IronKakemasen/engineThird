@@ -22,6 +22,7 @@
 #include "../../GameObjects/Ground/Ground.h"
 #include "../../GameObjects/Tenkyuu/TenkyuuClass.h"
 #include "../../Models/LightModel/LightModel.h"
+#include "../../GameObjects/UIObject/UIObject.h"
 
 class InGameScene final : public Scene
 {
@@ -42,10 +43,10 @@ class InGameScene final : public Scene
 	std::unique_ptr<BuildingsManager> buildingsManager;
 	std::unique_ptr<TenkyuuClass> tenkyuuClass;
 
-
 	std::string path = "./resource/application/json/ModelScene/ModelScene.json";
 
 	std::unique_ptr<UIDisplayer> uiDisplayer;
+
 	struct FieldLightData
 	{
 		std::vector<Vector3> dstPositions;
@@ -59,7 +60,7 @@ class InGameScene final : public Scene
 	float const lightHeight = 6.0f;
 	
 	PostEffectType curEffectType = PostEffectType::kNone;
-
+	UIObject uIObject;
 
 	float dirLightIntensityNormal = 0.3f;
 	float dirLightIntensityNeon = 0.0f;
@@ -72,12 +73,6 @@ class InGameScene final : public Scene
 	float lightradiusCommon = 11.0f;
 	float commonDeltaTheta = 0.0f;
 	float commonDeltaTheta2 = 0.0f;
-
-	Sprite sprite_move;
-	Sprite sprite_shot;
-	Sprite sprite_reticle;
-	Sprite sprite_pause;
-	Sprite sprite_set;
 
 	void AdaptToPostEffect();
 	void Load();

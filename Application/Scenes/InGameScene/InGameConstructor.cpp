@@ -11,11 +11,6 @@ InGameScene::InGameScene()
 	}
 	auto* m = M::GetInstance();
 
-	sprite_move.Initialize(200, 60, {1170,480,0}, m->GetTexIndex(TextureTag::kButtonMove200x60));
-	sprite_shot.Initialize(200, 60, { 1170,530,0 }, m->GetTexIndex(TextureTag::kButtonShot200x60));
-	sprite_reticle.Initialize(200, 60, { 1170,630,0 }, m->GetTexIndex(TextureTag::kButtonReticle200x60));
-	sprite_pause.Initialize(200, 60, { 1170,680,0 }, m->GetTexIndex(TextureTag::kButtonPause200x60));
-	sprite_set.Initialize(200, 60, { 1170,580,0 }, m->GetTexIndex(TextureTag::kButtonSet200x60));
 }
 
 void InGameScene::InputFieldLightData()
@@ -112,7 +107,7 @@ void InGameScene::Instantiate()
 	for (auto& enemyFactory : enemyFactories)
 		gameObjManager->RegisterForContainer(enemyFactory.get());
 	gameObjManager->RegisterForContainer(buildingsManager.get());
-	gameObjManager->RegisterForContainer(uiDisplayer.get());
+	gameObjManager->RegisterForContainer(uiDisplayer.get(), &uIObject);
 
 
 	// ポインタを渡す

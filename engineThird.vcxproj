@@ -338,6 +338,8 @@
     <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
     <ClCompile Include="Application\Cameras\TitleCamera\TitleCamera.cpp" />
     <ClCompile Include="Application\Models\TitleLogo\TitleLogo.cpp" />
+    <ClCompile Include="Application\Models\UIPlane\UIPlane.cpp" />
+    <ClCompile Include="Application\GameObjects\UIObject\UIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -397,6 +399,8 @@
     <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
     <ClInclude Include="Application\Cameras\TitleCamera\TitleCamera.h" />
     <ClInclude Include="Application\Models\TitleLogo\TitleLogo.h" />
+    <ClInclude Include="Application\Models\UIPlane\UIPlane.h" />
+    <ClInclude Include="Application\GameObjects\UIObject\UIObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

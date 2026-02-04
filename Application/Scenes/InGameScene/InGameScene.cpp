@@ -59,6 +59,10 @@ void InGameScene::Update()
 	AdaptToPostEffect();
 
 	DeathParticle::Get()->Update();
+
+	ImGui::Begin("cac");
+	ImGui::DragFloat3("uIObject", reinterpret_cast<float*> (&uIObject.trans.pos));
+	ImGui::End();
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -245,11 +249,6 @@ void InGameScene::Draw()
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
 
-	//sprite_move.Draw(&ortho);
-	//sprite_shot.Draw(&ortho);
-	//sprite_reticle.Draw(&ortho);
-	//sprite_pause.Draw(&ortho);
-	//sprite_set.Draw(&ortho);
 }
 
 void InGameScene::Reset()
