@@ -32,8 +32,9 @@ UIDisplayer::UIDisplayer()
 	uiTexureSize[uiType::PauseButton02_350x50] = Vector2{ 350.0f,50.0f };
 	uiTexureSize[uiType::PauseButton03_350x50] = Vector2{ 350.0f,50.0f };
 	uiTexureSize[uiType::PauseButton04_350x50] = Vector2{ 350.0f,50.0f };
-	uiTexureSize[uiType::PauseScreen_1280x720] = Vector2{ 1280.0f,720.0f };
+	uiTexureSize[uiType::PauseScreen_661x720] = Vector2{ 661.0f,720.0f };
 	// インゲームUI
+	uiTexureSize[uiType::IngameButton200x300] = Vector2{ 200.0f,300.0f };
 	uiTexureSize[uiType::GameOver1000x200] = Vector2{ 1000.0f,200.0f };
 	uiTexureSize[uiType::StageClear1000x200] = Vector2{ 1000.0f,200.0f };
 	// ステージセレクト
@@ -65,8 +66,9 @@ UIDisplayer::UIDisplayer()
 	uiTexure[uiType::PauseButton02_350x50] = TextureTag::PauseButton02_350x50;
 	uiTexure[uiType::PauseButton03_350x50] = TextureTag::PauseButton03_350x50;
 	uiTexure[uiType::PauseButton04_350x50] = TextureTag::PauseButton04_350x50;
-	uiTexure[uiType::PauseScreen_1280x720] = TextureTag::PauseScreen_1280x720;
+	uiTexure[uiType::PauseScreen_661x720] = TextureTag::PauseScreen_661x720;
 	// インゲームUI
+	uiTexure[uiType::IngameButton200x300] = TextureTag::IngameButton200x300;
 	uiTexure[uiType::GameOver1000x200] = TextureTag::kGameOver1000x200;
 	uiTexure[uiType::StageClear1000x200] = TextureTag::StageClear1000x200;
 	// ステージセレクト
@@ -93,20 +95,26 @@ UIDisplayer::UIDisplayer()
 
 void UIDisplayer::Update()
 {
-	// ポーズUI更新
-	UpdatePauseUI();
+	switch (mode)
+	{
+	case UIDisplayer::UIMode::TiTle:
+		break;
+	case UIDisplayer::UIMode::StageSelect:
+		break;
+	case UIDisplayer::UIMode::InGame:
+		UpdateInGame();
+		break;
+	case UIDisplayer::UIMode::Pause:
+		break;
+	case UIDisplayer::UIMode::None:
+		break;
+	default:
+		break;
+	}
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
 		auto& e = uiElements[drawOrder[i]];
-
-		// 異常値検出（1フレ巨大化の犯人特定）
-		const float sx = e.initScale.x + e.scaleOffset.x;
-		const float sy = e.initScale.y + e.scaleOffset.y;
-		if (sx > 2.0f || sy > 2.0f || sx < 0.0f || sy < 0.0f)
-		{
-			__debugbreak();
-		}
 
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
 		{
@@ -171,7 +179,8 @@ void UIDisplayer::SaveData()
 	Json::Save(path);
 }
 
-void UIDisplayer::UpdatePauseUI()
+// インゲームUI更新
+void UIDisplayer::UpdateInGame()
 {
 	// モード切り替え				(ポーズ⇔プレイ)
 	HandlePauseToggleInput();
@@ -254,7 +263,7 @@ void UIDisplayer::UpdatePauseEasing()
 void UIDisplayer::ApplyPauseXOffset(float xOffset)
 {
 	// イージング一括適用関数
-	uiElements[uiType::PauseScreen_1280x720].posOffset.x = xOffset;
+	uiElements[uiType::PauseScreen_661x720].posOffset.x = xOffset;
 	uiElements[uiType::PauseButton01_350x50].posOffset.x = xOffset;
 	uiElements[uiType::PauseButton02_350x50].posOffset.x = xOffset;
 	uiElements[uiType::PauseButton03_350x50].posOffset.x = xOffset;
@@ -436,28 +445,29 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
 		drawOrder.push_back(uiType::Decision200x60);	// ケッテイ　アイコン
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
-		drawOrder.push_back(uiType::StageName01_1000x100);	// ステージ名１
-		drawOrder.push_back(uiType::StageName02_1000x100);	// ステージ名２
-		drawOrder.push_back(uiType::StageName03_1000x100);	// ステージ名３
-		drawOrder.push_back(uiType::StageName04_1000x100);	// ステージ名４
-		drawOrder.push_back(uiType::StageName05_1000x100);	// ステージ名５
-		drawOrder.push_back(uiType::ArrowLeft100x200);	// 左矢印
-		drawOrder.push_back(uiType::ArrowRight100x200);	// 右矢印
+		//drawOrder.push_back(uiType::StageName01_1000x100);	// ステージ名１
+		//drawOrder.push_back(uiType::StageName02_1000x100);	// ステージ名２
+		//drawOrder.push_back(uiType::StageName03_1000x100);	// ステージ名３
+		//drawOrder.push_back(uiType::StageName04_1000x100);	// ステージ名４
+		//drawOrder.push_back(uiType::StageName05_1000x100);	// ステージ名５
+		//drawOrder.push_back(uiType::ArrowLeft100x200);	// 左矢印
+		//drawOrder.push_back(uiType::ArrowRight100x200);	// 右矢印
 
 		break;
 	case UIDisplayer::UIMode::InGame:
+
 		//drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
 		//drawOrder.push_back(uiType::Shot200x60);		// ショット　アイコン
 		//drawOrder.push_back(uiType::Reticle200x60);		// ネラウ　　アイコン
 		//drawOrder.push_back(uiType::Pause200x60);		// ポーズ　　アイコン
 		//drawOrder.push_back(uiType::Set200x60);			// ハイチ　　アイコン
 
-		drawOrder.push_back(uiType::PauseScreen_1280x720);	// ポーズ背景
+		//drawOrder.push_back(uiType::IngameButton200x300);
+		drawOrder.push_back(uiType::PauseScreen_661x720);	// ポーズ背景
 		drawOrder.push_back(uiType::PauseButton01_350x50);	// プレイ
 		drawOrder.push_back(uiType::PauseButton02_350x50);	// リトライ
 		drawOrder.push_back(uiType::PauseButton04_350x50);	// セレクト
 		drawOrder.push_back(uiType::PauseTitle500x100); 	// ポーズタイトル
-
 		drawOrder.push_back(uiType::Cursor50x50);	// カーソル
 		break;
 	case UIDisplayer::UIMode::None:
@@ -534,6 +544,4 @@ void UIDisplayer::Draw(Matrix4* vpMat_)
 {/**/
 }
 
-void UIDisplayer::SetCollisionBackTable()
-{/**/
-}
+void UIDisplayer::SetCollisionBackTable(){/**/}

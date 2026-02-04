@@ -72,9 +72,10 @@ struct UIDisplayer :public GameObject
 		PauseButton02_350x50,	// リトライ
 		PauseButton03_350x50,	// オプション
 		PauseButton04_350x50,	// セレクト
-		PauseScreen_1280x720,	// ポーズ背景
+		PauseScreen_661x720,	// ポーズ背景
 
 		// インゲームUI
+		IngameButton200x300,	// インゲーム
 		GameOver1000x200,		// ゲームオーバー
 		StageClear1000x200,		// ゲームクリア
 
@@ -111,7 +112,7 @@ struct UIDisplayer :public GameObject
 		case uiType::PauseButton02_350x50:return "PauseButton02";
 		case uiType::PauseButton03_350x50:return "PauseButton03";
 		case uiType::PauseButton04_350x50:return "PauseButton04";
-		case uiType::PauseScreen_1280x720:return "PauseScreen";
+		case uiType::PauseScreen_661x720:return "PauseScreen";
 
 		case uiType::GameOver1000x200:    return "GameOver";
 		case uiType::StageClear1000x200:  return "StageClear";
@@ -165,7 +166,9 @@ private:
 	float preButtonOffset = 0.0f;		// ボタン選択前のオフセット
 	bool selected = false;				// 決定したかどうか
 	PauseRequest pauseRequest = PauseRequest::kNone;	// ポーズリクエスト内容
-	void UpdatePauseUI();
+
+	void UpdateInGame();
+	void UpdateStageSelect();
 
 	void HandlePauseToggleInput();
 	void UpdatePauseEasing();
