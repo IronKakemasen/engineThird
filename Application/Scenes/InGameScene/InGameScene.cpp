@@ -241,10 +241,15 @@ void InGameScene::Draw()
 	// デスパーティクル描画
 	DeathParticle::Get()->Draw(vpMat);
 
-	// UI描画
+	//// //UI描画
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
 
+	sprite_move.Draw(&ortho);
+	sprite_shot.Draw(&ortho);
+	sprite_reticle.Draw(&ortho);
+	sprite_pause.Draw(&ortho);
+	sprite_set.Draw(&ortho);
 }
 
 void InGameScene::Reset()

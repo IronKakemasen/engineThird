@@ -42,6 +42,11 @@ void DamageDisplay::DamageNum::Update()
 {
 	if (!isActive) return;
 	float const kMoveHeight = -200.0f;
+	int s = 0;
+	if (o.GetAppearance()->trans.pos.x >= 800)
+	{
+		s = 0;
+	}
 
 	moveOffset.y = Easing::EaseOutCubic(0.0f, kMoveHeight, cnt.count);
 	Vector2 conv = ConvertToScreen(world, *vpMat);

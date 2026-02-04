@@ -434,11 +434,11 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
 		break;
 	case UIDisplayer::UIMode::InGame:
-		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
-		drawOrder.push_back(uiType::Shot200x60);		// ショット　アイコン
-		drawOrder.push_back(uiType::Reticle200x60);		// ネラウ　　アイコン
-		drawOrder.push_back(uiType::Pause200x60);		// ポーズ　　アイコン
-		drawOrder.push_back(uiType::Set200x60);			// ハイチ　　アイコン
+		//drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
+		//drawOrder.push_back(uiType::Shot200x60);		// ショット　アイコン
+		//drawOrder.push_back(uiType::Reticle200x60);		// ネラウ　　アイコン
+		//drawOrder.push_back(uiType::Pause200x60);		// ポーズ　　アイコン
+		//drawOrder.push_back(uiType::Set200x60);			// ハイチ　　アイコン
 
 		drawOrder.push_back(uiType::PauseScreen_1280x720);	// ポーズ背景
 		drawOrder.push_back(uiType::PauseButton01_350x50);	// プレイ
@@ -471,8 +471,15 @@ void UIDisplayer::SuperDraw(Matrix4 * ortho_)
 	{
 		if (uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale.x > 1.0f)
 		{
-			__debugbreak();
+			continue;
+			//__debugbreak();
 		}
+		if (uiElements[drawOrder[i]].sprite->GetAppearance()->trans.scale.y > 1.0f)
+		{
+			continue;
+			//__debugbreak();
+		}
+
 		uiElements[drawOrder[i]].sprite->Draw(ortho_);
 	}
 }

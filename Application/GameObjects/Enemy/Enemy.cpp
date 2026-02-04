@@ -379,6 +379,7 @@ void Enemy::DrawHpBar(Matrix4* vpMat_)
 	HPBarBackSprite->Draw(&orth);
 
 	HPBarSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+
 	float const len = 50.0f;
 	float hpRate = hp / inGameConfig->enemyMaxHP;
 

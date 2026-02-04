@@ -73,6 +73,12 @@ class InGameScene final : public Scene
 	float commonDeltaTheta = 0.0f;
 	float commonDeltaTheta2 = 0.0f;
 
+	Sprite sprite_move;
+	Sprite sprite_shot;
+	Sprite sprite_reticle;
+	Sprite sprite_pause;
+	Sprite sprite_set;
+
 	void AdaptToPostEffect();
 	void Load();
 	void InputFieldLightData();
