@@ -166,15 +166,12 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
-	ImGui::Begin("player");
-
 	if (ImGui::Button("Save"))
 	{
 		SaveData();
 	}
 	ImGui::DragFloat3("Initpos", &trans.pos.x);
 
-	ImGui::End();
 
 #endif // USE_IMGUI
 }
