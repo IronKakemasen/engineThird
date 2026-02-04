@@ -20,8 +20,8 @@ struct InGameController:public GameObject
 	};
 
 
-	Mode curMode = kEnter;
-	float curCnt = 0.0f;
+	static inline Mode curMode = kEnter;
+	static inline float curCnt = 0.0f;
 	static inline int curStage = 0;
 
 private:
