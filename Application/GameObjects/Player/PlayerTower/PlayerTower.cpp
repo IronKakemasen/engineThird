@@ -128,6 +128,8 @@ void PlayerTower::Update()
 	model->Update(int(currentAnimationState), animationCounter.count);
 	circleModel->Update();
 
+	UpdateAnimationState();
+
 #ifdef _DEBUG
 	// 円形コリジョンをアタッチ
 	SetCircleCollision(inGameConfig->playerTowerCollisonSize);
