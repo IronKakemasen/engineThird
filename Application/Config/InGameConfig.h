@@ -47,7 +47,8 @@ public:
 	float enemyAttackPower = 5.0f;		// 敵の攻撃力
 
 	////////////////// AutSpawn  ////////////////
-	float enemySpawnInterval = 5.0f;	// 敵のスポーン間隔
+	float enemySpawnIntervalMin = 5.0f;	// 敵のスポーン間隔最短
+	float enemySpawnIntervalMax = 10.0f;	// 敵のスポーン感覚最長
 	float playerAllySpawnInterval = 1.0f;// 味方のスポーン間隔
 	float enemyFactoryRespawnInterval = 10.0f;	// エネミーファクトリーのリスポーン間隔
 	int32_t maxAllyCount = 10;      // 最大味方数

@@ -99,6 +99,9 @@ void Ground::Draw(Matrix4* vpMat_)
 	groundPlane->Draw(vpMat_);
 }
 
+void Ground::DrawHpBar(Matrix4* vpMat_)
+{}
+
 
 Ground::Ground()
 {
