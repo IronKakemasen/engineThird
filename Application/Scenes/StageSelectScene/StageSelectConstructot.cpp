@@ -44,6 +44,8 @@ void StageSelectScene::Instantiate()
 			playerTowers[stageIndex][i].reset(new PlayerTower);
 			playerTowers[stageIndex][i]->SetID(static_cast<int32_t>(i));
 			playerTowers[stageIndex][i]->SetInGameConfig(inGameConfig.get());
+			playerTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.x += 5.5f;
+			playerTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.z -= 1.5f;
 		}
 		// エネミータワーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyTowers[stageIndex].size(); ++i)
@@ -51,6 +53,8 @@ void StageSelectScene::Instantiate()
 			enemyTowers[stageIndex][i].reset(new EnemyTower);
 			enemyTowers[stageIndex][i]->SetID(static_cast<int32_t>(i));
 			enemyTowers[stageIndex][i]->SetInGameConfig(inGameConfig.get());
+			enemyTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.x -= 5.5f;
+			enemyTowers[stageIndex][i]->model->model->GetAppearance(0)->trans.pos.z -= 1.5f;
 		}
 		// エネミーファクトリーのインスタンス化 & IDセット
 		for (size_t i = 0; i < enemyFactories[stageIndex].size(); ++i)
