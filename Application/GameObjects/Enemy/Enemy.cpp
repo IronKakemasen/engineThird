@@ -445,6 +445,10 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 	DamageDisplay::Get()->Activate(bullet->GetAttackPower(), me->Getter_Trans()->GetWorldPos(),
 		1.0f, { 255,255,0 });
 
+
+	// 音
+	AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::EnemyDamage), false, 20);
+
 	// ダメージ処理
 	me->hp = me->hp - bullet->GetAttackPower();
 	// 死亡した時

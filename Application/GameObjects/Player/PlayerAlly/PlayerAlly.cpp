@@ -5,8 +5,6 @@
 #include "../../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
 #include "../../../Config/InGameConfig.h"
-#include "AudioPlayer.h"
-#include "AudioHandle.h"
 
 PlayerAlly::PlayerAlly()
 {
@@ -206,7 +204,6 @@ void PlayerAlly::MoveToPlayer()
 		{
 			// 自身のインデックス更新
 			formationCurrentIndex = tryFormationIndex;
-			AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllyChain), false, 50);
 
 			// 状態遷移
 			nextState = State::kFormed;
@@ -237,6 +234,8 @@ void PlayerAlly::FollowPlayer()
 			currentState = State::kLocked;
 			// あにめーしょん状態遷移
 			nextState = State::kLocked;
+			// 設置音
+			AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllySet), false, 50);
 
 			return;
 		}
@@ -317,7 +316,7 @@ void PlayerAlly::CollisionBackToPlayerBullet::operator()()
 	if (me->currentState == PlayerAlly::State::kFormed || me->currentState == PlayerAlly::State::kLocked)
 	{
 		me->nextState = PlayerAlly::State::kDeathBoom;
-				AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllyExplode), false, 50);
+		//AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllyExplode), false, 50);
 	}
 }
 
@@ -328,6 +327,6 @@ void PlayerAlly::CollisionBackToPlayer::operator()()
 	{
 		me->nextState = PlayerAlly::State::kUnformed;
 		me->nextAnimationState = PlayerAlly::PlayerAllyAnimationState::kIdle;
-
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::AllyChain), false, 50);
 	}
 }

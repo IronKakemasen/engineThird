@@ -369,6 +369,14 @@ void EnemyFactory::CollisionBackToPlayerBullet::operator()()
 		me->nextAnimationState = EnemyFactory::EnemyFactoryAnimationState::kDead;
 		me->isDead = true;
 		me->buildingsManager->NotifyEnemyFactoryDead(me);
+		me->SetStatus(Status::kInActive);
+		// 音
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::ObjectExplode), false, 20);
+	}
+	else
+	{
+		// 音
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::EnemyDamage), false, 20);
 	}
 }
 

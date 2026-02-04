@@ -54,10 +54,10 @@ void ResourceContainer::LoadAllTextureFile()
 
 	// ステージセレクトUI
 	LoadTextureFile(TextureTag::kStageName01_1000x100, pathToUI + "StageSelect/" + "StageName01_800x80.png");
-	LoadTextureFile(TextureTag::kStageName02_1000x100, pathToUI + "StageSelect/" + "StageName02_800x80.png");
-	LoadTextureFile(TextureTag::kStageName03_1000x100, pathToUI + "StageSelect/" + "StageName03_800x80.png");
-	LoadTextureFile(TextureTag::kStageName04_1000x100, pathToUI + "StageSelect/" + "StageName04_800x80.png");
-	LoadTextureFile(TextureTag::kStageName05_1000x100, pathToUI + "StageSelect/" + "StageName05_800x80.png");
+	LoadTextureFile(TextureTag::kStageName02_1000x100, pathToUI + "StageSelect/" + "StageName05_800x80.png");
+	LoadTextureFile(TextureTag::kStageName03_1000x100, pathToUI + "StageSelect/" + "StageName04_800x80.png");
+	LoadTextureFile(TextureTag::kStageName04_1000x100, pathToUI + "StageSelect/" + "StageName03_800x80.png");
+	LoadTextureFile(TextureTag::kStageName05_1000x100, pathToUI + "StageSelect/" + "StageName02_800x80.png");
 	LoadTextureFile(TextureTag::kArrowLeft100x200, pathToUI + "StageSelect/" + "ArrowMarkLeft100x200.png");
 	LoadTextureFile(TextureTag::kArrowRight100x200, pathToUI + "StageSelect/" + "ArrowMarkRight100x200.png");
 

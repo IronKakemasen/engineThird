@@ -159,6 +159,8 @@ void PlayerBullet::CollisionBackToAlly::operator()()
 	if (ally->GetCurrentState() != PlayerAlly::State::kFormed &&
 		ally->GetCurrentState() != PlayerAlly::State::kLocked) return;
 
+	// 
+	AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::BulletPowerup), false, 50);
 	// サイズアップ
 	me->trans.scale = me->trans.scale + Vector3{ me->inGameConfig->playerAllySizeBonus, 0.0f, me->inGameConfig->playerAllySizeBonus };
 	// 拡大量保存

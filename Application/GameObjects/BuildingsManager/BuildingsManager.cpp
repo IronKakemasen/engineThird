@@ -2,6 +2,8 @@
 #include "../Enemy/EnemyFactory/EnemyFactory.h"
 #include "../Enemy/EnemyTower/EnemyTower.h"
 #include "../Player/PlayerTower/PlayerTower.h"
+#include "AudioPlayer.h"
+#include "AudioHandle.h"
 #include "../../Config/InGameConfig.h"
 
 //コリジョンバックテーブルを設定
@@ -91,6 +93,8 @@ void BuildingsManager::Update()
 			if (factory->rebornCounter.IsEnd())
 			{
 				factory->Reset();
+				// 音
+				AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::FactorySpawn), false, 20);
 			}
 		}
 	}

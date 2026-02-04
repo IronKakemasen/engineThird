@@ -4,6 +4,8 @@
 #include "GameObjectManager.h"
 #include "../InGameController/InGameController.h"
 #include "../../Config/InGameConfig.h"
+#include "AudioPlayer.h"
+#include "AudioHandle.h"
 #include <array>
 
 
@@ -207,6 +209,7 @@ void UIDisplayer::HandlePauseToggleInput()
 		gameObjectManager->TheWorld();
 		preOffset = pauseScreenOffset;
 		pauseCounter.Initialize(1.0f);
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::PauseButton), false, 50);
 
 		// ポーズスクリーン登場側ならカーソル位置リセット
 		if (!gameObjectManager->isStop)
@@ -352,6 +355,7 @@ void UIDisplayer::UpdatePauseCursorInput()
 			currentSelectedButton++;
 			if (currentSelectedButton > 2) currentSelectedButton = 0;
 		}
+		AudioPlayer::GetInstance().PlayAudio(AudioHandle::Get(AudioID::PauseCursol), false, 20);
 	}
 }
 void UIDisplayer::HandlePauseDecisionInput()

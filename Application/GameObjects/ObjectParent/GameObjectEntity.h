@@ -5,6 +5,8 @@
 #include "../../M/utilities/benriTemplateFunc/benriTempFunc.h"
 #include "../../lowerLayer/math/vector/vector.h"
 #include "../../Config/InGameConfig.h"
+#include "AudioPlayer.h"
+#include "AudioHandle.h"
 
 struct InGameController;
 
