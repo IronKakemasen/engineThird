@@ -8,6 +8,7 @@
 #include "../../GameObjects/Ground/Ground.h"
 #include "../../Config/InGameConfig.h"
 #include "../../Config/GameConstants.h"
+#include "../../GameObjects/InGameController/InGameController.h"
 
 #include <algorithm>
 #include <numeric>
@@ -46,12 +47,19 @@ void Player::Reset()
 	// 衝突判定をするかどうか定める
 	SwitchCollisionActivation(true);
 
-	// データ読み込み
-	LoadData();
+	// config反映
+	hp = inGameConfig->playerMaxHP;
+
+	// 現在選択されているステージ
+	ReplaceOnMap(InGameController::curStage);
 
 	// カウンター初期化
 	autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);
 	attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
+}
+
+void Player::ReplaceOnMap(const int32_t stage)
+{
 }
 
 void Player::Init()
@@ -98,11 +106,11 @@ void Player::SpawnAlly(Vector3 pos)
 // データ保存・読み込み
 void Player::LoadData()
 {
-	// config反映
-	hp = inGameConfig->playerMaxHP;
+	Json::LoadParam(path, "/stage" + std::to_string(InGameController::curStage) + "/InitPos", trans.pos);
 }
 void Player::SaveData()
 {
+	Json::SaveParam(path, "/stage" + std::to_string(InGameController::curStage) + "/InitPos", trans.pos);
 }
 
 // 更新処理

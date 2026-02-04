@@ -44,6 +44,9 @@ public:
 #pragma region 共通部位
 
 public:
+
+	bool IsDead() const { return hp <= 0.0f; }
+
 	// データの読み込み・保存
 	void LoadData() override;
 	void SaveData() override;

@@ -50,6 +50,7 @@ public:
 
 	int32_t tempStageNumber = -1;
 
+	bool IsDead() const { return hp <= 0.0f; }
 #pragma endregion
 
 #pragma region 基盤部位
