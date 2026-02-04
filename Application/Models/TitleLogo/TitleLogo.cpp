@@ -24,14 +24,7 @@ TitleLogo::TitleLogo()
 
 void TitleLogo::Update(int mode_, float count_)
 {
-	int i = 0;
-	ImGui::Begin("cdod");
-	for (auto* m : models)
-	{
-		ImGui::DragFloat3(std::to_string(i).c_str(), reinterpret_cast<float*>(&m->GetAppearance(0)->trans.pos), 5.0f);
-		++i;
-	}
-	ImGui::End();
+
 }
 
 void TitleLogo::Draw(Matrix4* vpMat_)

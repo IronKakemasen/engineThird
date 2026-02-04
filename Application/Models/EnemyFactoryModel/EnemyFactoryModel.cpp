@@ -46,7 +46,7 @@ void EnemyFactoryModel::Update(int mode_ , float count_ )
 		auto* a = m->GetAppearance(0);
 
 		float dstAmp = 0.0f;
-		float exclusive = 1.0f - count_;
+		float exclusive = count_;
 
 		if (exclusive != 0.0f)
 		{

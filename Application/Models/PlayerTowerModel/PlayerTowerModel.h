@@ -5,7 +5,7 @@
 class PlayerTowerModel :public ModelBehavior
 {
 
-	float const kMaxAmplitude = 0.35f;
+	float const kMaxAmplitude = 0.15f;
 	float shakeDeltaTheta = 0.0f;
 	float kShakeSpeed = 12.0f;
 
