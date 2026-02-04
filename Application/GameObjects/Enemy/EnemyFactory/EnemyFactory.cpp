@@ -180,7 +180,7 @@ void EnemyFactory::UpdateAnimationState()
 			animationCounter.Initialize(1.0f);
 			break;
 		case EnemyFactoryAnimationState::kDead:
-			animationCounter.Initialize(1.0f);
+			animationCounter.Initialize(2.0f);
 			break;
 		default:
 			break;

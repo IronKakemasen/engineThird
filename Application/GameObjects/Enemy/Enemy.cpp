@@ -12,6 +12,7 @@
 #include "../../Systems/DamageDisplay/DamageDisplay.h"
 #include "../../Scenes/InGameScene/InGameScene.h"
 #include "../../M/utilities/vectorAndMatrix/vectorAndMatrix.h"
+#include "../../Systems/DeathParticle/DeathParticle.h"
 
 Enemy::Enemy()
 {
@@ -459,6 +460,7 @@ void Enemy::CollisionBackToPlayerBullet::operator()()
 
 		//if (bullet->isMaximized == true)
 			me->targetPlayer->SpawnAlly(me->trans.pos);
+			//DeathParticle::Get()->Activate(me->trans.GetWorldPos(), 100, 3.0f, 1.0f, { 255,200,200 });
 	}
 }
 

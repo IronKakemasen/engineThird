@@ -32,7 +32,7 @@ void EnemyFactoryModel::Update(int mode_ , float count_ )
 	}
 
 	//被ダメリアクションでないとき
-	if (mode_ != 1)
+	if ((mode_ != 1) && (mode_ != 3))
 	{
 		return;
 		body->GetAppearance(0)->trans.pos.x = 0.0f;
@@ -41,24 +41,45 @@ void EnemyFactoryModel::Update(int mode_ , float count_ )
 		shakeDeltaTheta = 0.0f;
 	}
 
-	for (auto* m : models)
+	if (mode_ != 3)
 	{
-		auto* a = m->GetAppearance(0);
-
-		float dstAmp = 0.0f;
-		float exclusive = count_;
-
-		if (exclusive != 0.0f)
+		for (auto* m : models)
 		{
-			dstAmp = kMaxAmplitude * 1.0f / exclusive;
+			auto* a = m->GetAppearance(0);
+			a->color.w = 255.0f;
 		}
+	}
 
-		shakeDeltaTheta += kShakeSpeed;
+	if (mode_ == 1)
+	{
+		for (auto* m : models)
+		{
+			auto* a = m->GetAppearance(0);
 
-		float deltaX = sinf(shakeDeltaTheta) * dstAmp;
+			float dstAmp = 0.0f;
+			float exclusive = count_;
 
-		a->trans.pos.x = deltaX;
+			if (exclusive != 0.0f)
+			{
+				dstAmp = kMaxAmplitude * 1.0f / exclusive;
+			}
 
+			shakeDeltaTheta += kShakeSpeed;
+
+			float deltaX = sinf(shakeDeltaTheta) * dstAmp;
+
+			a->trans.pos.x = deltaX;
+
+		}
+	}
+	else if (mode_ == 3)
+	{
+		for (auto* m : models)
+		{
+			auto* a = m->GetAppearance(0);
+			a->color.w *= 0.985f;
+
+		}
 	}
 
 }

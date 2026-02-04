@@ -13,10 +13,23 @@ EnemyModel::EnemyModel()
 
 void EnemyModel::Update(int mode_, float count_)
 {
-	for (auto* m : models)
+	if (mode_ == 0)
 	{
-		auto* appe = m->GetAppearance(0);
-		appe->trans.rotation.y += 2.0f;
+		for (auto* m : models)
+		{
+			auto* appe = m->GetAppearance(0);
+			appe->trans.rotation.y += 2.0f;
+			appe->color.w = 255.0f;
+		}
+	}
+	else if (mode_ == 1)
+	{
+		for (auto* m : models)
+		{
+			auto* appe = m->GetAppearance(0);
+			appe->color.w *= 0.975f;
+		}
+
 	}
 }
 
@@ -52,7 +65,6 @@ void EnemyModel::Init(Transform* gameObjectTrans_)
 
 		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
-
 
 		//必須でない
 		appe->metalic = 0.72f;

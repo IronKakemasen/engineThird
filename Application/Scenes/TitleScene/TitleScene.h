@@ -9,6 +9,7 @@ class TitleScene final : public Scene
 	PointLight* pLights[2];
 	TitleCamera titleCamera;
 	bool pushed = false;
+	Sprite pushA;
 
 public:
 	static inline int mode = 0;

@@ -77,6 +77,8 @@ enum class TextureTag
 	kCirclen,
 	kCirclenN,
 
+	kPushA,
+
 	kCount
 };
 
