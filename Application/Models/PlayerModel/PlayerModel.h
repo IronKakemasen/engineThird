@@ -13,6 +13,7 @@ class PlayerModel :public ModelBehavior
 	float idleDelta = 0.0f;
 	float runDelta = 0.0;
 	Counter headRotateCnt;
+	Counter idleIdleCnt;
 public:
 
 	void Save();

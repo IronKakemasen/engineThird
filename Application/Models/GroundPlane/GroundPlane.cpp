@@ -38,8 +38,8 @@ void GroundPlane::Init(Transform* gameObjectTrans_)
 	//↑↑↑↑↑必須↑↑↑↑↑
 
 	//必須でない
-	appearance->metalic = 0.0f;
-	appearance->roughness = 0.5f;
+	appearance->metalic = 0.52f;
+	appearance->roughness = 0.59f;
 	appearance->trans.pos.y = -30;
 }
 

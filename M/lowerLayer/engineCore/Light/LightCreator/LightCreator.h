@@ -13,8 +13,8 @@ class LightCreator
 public:
 	enum Max
 	{
-		kPLightMax = 10,
-		kRLightmax = 20
+		kPLightMax = 15,
+		kRLightmax = 3
 	};
 
 private:

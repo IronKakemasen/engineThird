@@ -1,8 +1,11 @@
 #pragma once
 #include "SceneBehavior.h"
+#include "../../GameObjects/ForTitleScene/ForTitleScene.h"
 
 class TitleScene final : public Scene
 {
+	std::unique_ptr<ForTitleScene> forTitleScene;
+	PointLight* pLights[2];
 
 public:
 	TitleScene();

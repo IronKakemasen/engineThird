@@ -16,6 +16,7 @@ void LightManager::Update()
 		pointLights[i]->Update();
 	}
 
+	sum = (int)rectLights.size();
 	for (int i = 0; i < sum; ++i)
 	{
 		if (!rectLights[i]->IsActive())

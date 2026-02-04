@@ -3,6 +3,10 @@
 void TitleScene::Update()
 {
 
+	ImGui::Begin("jjj");
+	ImGui::DragFloat3("c1", reinterpret_cast<float*>(&pLights[0]->Getter_Para()->color));
+	ImGui::DragFloat3("c2", reinterpret_cast<float*>(&pLights[1]->Getter_Para()->color));
+	ImGui::End();
 }
 
 void TitleScene::Draw()
