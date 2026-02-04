@@ -3,6 +3,9 @@
 #include "M/lowerLayer/Scene/SceneController/SceneController.h"
 #include "./M/lowerLayer/engineCore/Essential/leakChecker/leakChecker.h"
 #include "../../utilities/Json/Json.h"
+#include "./M/lowerLayer/engineCore/Audio/AudioManager.h"
+#include "./M/lowerLayer/engineCore/Audio/AudioHandle.h"
+#include "./M/lowerLayer/engineCore/Audio/AudioPlayer.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -16,11 +19,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	WinApp winApp((UINT)CommonV::kWindow_W, (UINT)CommonV::kWindow_H, L"2308_loool");
 
+	// AudioManagerの初期化
+	AudioManager::GetInstance().Initialize();
+	// AudioHandleの初期化
+	AudioHandle::Initialize();
+
 	// resource/application/json 以下データをロード
 	Json::LoadAll("./resource/application/json/");
 
 	std::unique_ptr<SceneController> sceneController =
 		std::make_unique<SceneController>(kStageSelect);
+
+	AudioPlayer::GetInstance().PlayBGM(AudioHandle::Get(AudioID::bgm), true, 0);
+
 
 	MSG msg = {};
 	while (WM_QUIT != msg.message)

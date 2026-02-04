@@ -7,25 +7,27 @@
 enum class AudioID
 {
     // BGM
-    gameScene,
-
-    // SE
-    jump,
-    cardTouch,
-    goal,
-    field,
-    getKey,
-    movableMove,
-    cardChoose,
-    arrow,
-    anker,
-    pause,
-    gear,
-    disSelectCard,
-    usedCardSelect,
-    reset,
-    decision,
-    clear,
+    bgm,
+    AllyChain,
+    AllyExplode,
+    AllySet,
+    AllySpawn,
+    BulletPowerup,
+    Cansel01,
+    CountDown,
+    DestroyEnemyObject,
+    EnemyDamage,
+    FactorySpawn,
+    GameClear01,
+    GameStart,
+    ObjectExplode,
+    OptionCansel,
+    PauseButton,
+    PauseCursol,
+    PlayerShot,
+    PlayerTowerDamage,
+    SelectNegative,
+    SelectPositive,
 
     count
 };
@@ -47,25 +49,30 @@ private:
     static constexpr std::array<AudioDefinition, static_cast<size_t>(AudioID::count)> audioDefinitions_ =
     {
         {
-            { AudioID::gameScene, L"Resource/Audio/BGM/gameScene.mp3" },
+            { AudioID::bgm, L"resource/application/Sound/BGM/InGame/audiostock_199313.mp3" },
+            { AudioID::AllyChain, L"resource/application/Sound/SE/InGame/AllyChain.mp3" },
+            { AudioID::AllyExplode, L"resource/application/Sound/SE/InGame/AllyExplode.mp3" },
+            { AudioID::AllySet, L"resource/application/Sound/SE/InGame/AllySet.mp3" },
+            { AudioID::AllySpawn, L"resource/application/Sound/SE/InGame/AllySpawn.mp3" },
+            { AudioID::BulletPowerup, L"resource/application/Sound/SE/InGame/BulletPowerup.mp3" },
+            { AudioID::Cansel01, L"resource/application/Sound/SE/InGame/Cansel01.mp3" },
+            { AudioID::CountDown, L"resource/application/Sound/SE/InGame/CountDown.mp3" },
+            { AudioID::DestroyEnemyObject, L"resource/application/Sound/SE/InGame/DestroyEnemyObject.mp3" },
+            { AudioID::EnemyDamage, L"resource/application/Sound/SE/InGame/EnemyDamage.mp3" },
+            { AudioID::FactorySpawn, L"resource/application/Sound/SE/InGame/FactorySpawn.mp3" },
+            { AudioID::GameClear01, L"resource/application/Sound/SE/InGame/GameClear01.mp3" },
+            { AudioID::GameStart, L"resource/application/Sound/SE/InGame/GameStart.mp3" },
+            { AudioID::ObjectExplode, L"resource/application/Sound/SE/InGame/ObjectExplode.mp3" },
+            { AudioID::OptionCansel, L"resource/application/Sound/SE/InGame/OptionCansel.mp3" },
+            { AudioID::PauseButton, L"resource/application/Sound/SE/InGame/PauseButton.mp3" },
+            { AudioID::PauseCursol, L"resource/application/Sound/SE/InGame/PauseCursol.mp3" },
+            { AudioID::PlayerShot, L"resource/application/Sound/SE/InGame/PlayerShot.mp3" },
+            { AudioID::PlayerTowerDamage, L"resource/application/Sound/SE/InGame/PlayerTowerDamage.mp3" },
+            { AudioID::SelectNegative, L"resource/application/Sound/SE/InGame/SelectNegative.mp3" },
+            { AudioID::SelectPositive, L"resource/application/Sound/SE/InGame/SelectPositive.mp3" },
 
-            { AudioID::jump, L"Resource/Audio/SE/jump.mp3" },
-            { AudioID::cardTouch, L"Resource/Audio/SE/cardTouch.mp3" },
-            { AudioID::goal, L"Resource/Audio/SE/goal.mp3" },
-            { AudioID::field, L"Resource/Audio/SE/field.mp3" },
-            { AudioID::getKey, L"Resource/Audio/SE/getKey.mp3" },
-            { AudioID::movableMove, L"Resource/Audio/SE/movableMove.mp3" },
-            { AudioID::cardChoose, L"Resource/Audio/SE/cardChoose.mp3" },
-            { AudioID::arrow, L"Resource/Audio/SE/arrow.mp3" },
-            { AudioID::anker, L"Resource/Audio/SE/anker.mp3" },
-            { AudioID::pause, L"Resource/Audio/SE/gear_low.mp3" },
-            { AudioID::gear, L"Resource/Audio/SE/gear.mp3" },
-            { AudioID::disSelectCard, L"Resource/Audio/SE/disSelectCard.mp3" },
-            { AudioID::usedCardSelect, L"Resource/Audio/SE/usedCardSelect.mp3" },
-            { AudioID::reset, L"Resource/Audio/SE/reset.mp3" },
-            { AudioID::decision, L"Resource/Audio/SE/decision.mp3" },
-            { AudioID::clear, L"Resource/Audio/SE/clear.mp3" },
         }
+
     };
 
     static std::array<int, static_cast<size_t>(AudioID::count)> audioIndices_; // AudioPlayer内のID
