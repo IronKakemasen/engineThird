@@ -165,6 +165,7 @@
     <ClCompile Include="Application\Models\CircleModel\CircleModel.cpp" />
     <ClCompile Include="Application\Systems\DamageDisplay\DamageDisplay.cpp" />
     <ClCompile Include="Application\Systems\DeathParticle\DeathParticle.cpp" />
+    <ClCompile Include="Application\GameObjects\ForTitleScene\ForTitleScene.cpp" />
     <ClCompile Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyTower\EnemyTower.cpp" />
     <ClCompile Include="Application\GameObjects\Enemy\EnemyFactory\EnemyFactory.cpp" />
@@ -334,6 +335,8 @@
     <ClCompile Include="Application\Cameras\StageCamera\StageCamera.cpp" />
     <ClCompile Include="Application\GameObjects\Tenkyuu\TenkyuuClass.cpp" />
     <ClCompile Include="Application\Models\SphereModel\SphereModel.cpp" />
+    <ClCompile Include="Application\Cameras\TitleCamera\TitleCamera.cpp" />
+    <ClCompile Include="Application\Models\TitleLogo\TitleLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\ForModelView\PM.h" />
@@ -356,6 +359,7 @@
     <ClInclude Include="Application\Models\CircleModel\CircleModel.h" />
     <ClInclude Include="Application\Systems\DamageDisplay\DamageDisplay.h" />
     <ClInclude Include="Application\Systems\DeathParticle\DeathParticle.h" />
+    <ClInclude Include="Application\GameObjects\ForTitleScene\ForTitleScene.h" />
     <ClInclude Include="M\lowerLayer\engineCore\Render\Palette\PostEffectType.h" />
     <ClInclude Include="Application\Config\InGameConfig.h" />
     <ClInclude Include="M\lowerLayer\Scene\SceneController\AxisModel\AxisModel.h" />
@@ -387,6 +391,8 @@
     <ClInclude Include="Application\Cameras\StageCamera\StageCamera.h" />
     <ClInclude Include="Application\GameObjects\Tenkyuu\TenkyuuClass.h" />
     <ClInclude Include="Application\Models\SphereModel\SphereModel.h" />
+    <ClInclude Include="Application\Cameras\TitleCamera\TitleCamera.h" />
+    <ClInclude Include="Application\Models\TitleLogo\TitleLogo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameObjects\Enemy\Enemy.h" />

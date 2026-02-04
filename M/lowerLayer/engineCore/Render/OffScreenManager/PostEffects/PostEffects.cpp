@@ -2,7 +2,6 @@
 #include "../engineCore/textureDataManager/textureDataManager.h"
 #include "../../M.h"
 #include "../../../commonVariables.h"
-#include "imgui.h"
 
 PostEffects::Bloom::Bloom(TextureDataManager* textureDataManager_, int numRequired_) :
 	OffScreen(textureDataManager_, numRequired_) {
@@ -53,14 +52,6 @@ void PostEffects::GreyScale::Init(ID3D12Device* device_)
 
 void PostEffects::SimpleNeonLike::Update()
 {
-	ImGui::Begin("ci@subva@oau");
-	ImGui::DragFloat("edgeWidth", &para.edgeWidth, 0.01f);
-	ImGui::DragFloat("backgroundDim", &para.backgroundDim, 0.001f);
-	ImGui::DragFloat2("edgeWidth", reinterpret_cast<float*>(&para.texelSize), 0.01f);
-
-	ImGui::End();
-
-
 	cBuffer.buffer.buffMap->backgroundDim = para.backgroundDim;
 	cBuffer.buffer.buffMap->edgeWidth = para.edgeWidth;
 	cBuffer.buffer.buffMap->texelSize = para.texelSize;

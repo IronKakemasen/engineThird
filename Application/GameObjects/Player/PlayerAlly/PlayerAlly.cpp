@@ -108,7 +108,7 @@ void PlayerAlly::Update()
 		case PlayerAlly::State::kLocked:
 			break;
 		case PlayerAlly::State::kDeathBoom:
-			deathCounter.Initialize(0.2f);
+			deathCounter.Initialize(1.0f);
 			break;
 		case PlayerAlly::State::kDead:
 			break;
@@ -263,6 +263,10 @@ void PlayerAlly::DeathBoom()
 	SetCircleCollision(targetSize);
 	boomModel->defaultScale = Vector3{ inGameConfig->playerAllyCollisonSize ,inGameConfig->playerAllyCollisonSize ,inGameConfig->playerAllyCollisonSize };
 	boomModel->SetCurrentSize(targetSize);
+	float const s = sinf(3.14f * deathCounter.count);
+	boomModel->model->GetAppearance(0)->trans.scale =
+		boomModel->model->GetAppearance(0)->trans.scale * s *s * 1.25f;
+
 	deathCounter.Add();
 }
 

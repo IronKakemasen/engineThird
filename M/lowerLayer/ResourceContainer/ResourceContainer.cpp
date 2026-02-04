@@ -12,6 +12,8 @@ void ResourceContainer::LoadAllTextureFile()
 	std::string pathToFactory = "./resource/application/Texture/Factory/";
 	std::string pathToBullet = "./resource/application/Texture/Bullet/";
 	std::string pathToGround = "./resource/application/Texture/Ground/";
+	std::string pathToCircle = "./resource/application/Texture/Circle/";
+
 
 	LoadTextureFile(TextureTag::kWhite2x2, pathToPresetTex + "white2x2.png");
 	LoadTextureFile(TextureTag::kSouhei, pathToPresetTex + "nNani.png");
@@ -73,6 +75,10 @@ void ResourceContainer::LoadAllTextureFile()
 
 	LoadTextureFile(TextureTag::kScrewN, pathToFactory + "screw_normal.png");
 
+	LoadTextureFile(TextureTag::kCirclen, pathToCircle + "uu.png");
+	LoadTextureFile(TextureTag::kCirclenN, pathToCircle + "uu_normal.png");
+
+	
 	
 }
 

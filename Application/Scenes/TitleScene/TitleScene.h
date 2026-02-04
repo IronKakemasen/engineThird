@@ -1,10 +1,19 @@
 #pragma once
 #include "SceneBehavior.h"
+#include "../../GameObjects/ForTitleScene/ForTitleScene.h"
+#include "../../Cameras/TitleCamera/TitleCamera.h"
 
 class TitleScene final : public Scene
 {
+	std::unique_ptr<ForTitleScene> forTitleScene;
+	PointLight* pLights[2];
+	TitleCamera titleCamera;
+	bool pushed = false;
 
 public:
+	static inline int mode = 0;
+	static inline Counter c;
+
 	TitleScene();
 
 	//↓呼び出す必要なし。↓

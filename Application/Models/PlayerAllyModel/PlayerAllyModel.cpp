@@ -10,7 +10,7 @@ PlayerAllyModel::PlayerAllyModel()
 void PlayerAllyModel::Update(int mode_, float count_)
 {
 	auto* appearance = model->GetAppearance(0);
-	MoveAnim(0);
+	MoveAnim(mode_);
 }
 
 void PlayerAllyModel::Draw(Matrix4* vpMat_)
@@ -42,8 +42,8 @@ void PlayerAllyModel::Init(Transform* gameObjectTrans_)
 
 	moveAnimCnt.Initialize(1.0f);
 	idleCnt.Initialize(3.0f);
-	appearance->metalic = 0.72f;
-	appearance->roughness = 0.4f;
+	appearance->metalic = 0.52f;
+	appearance->roughness = 0.59f;
 	appearance->trans.pos.y = 0.35f;
 	appearance->color = { 50.0f,100.0f,255.0f,255.0f };
 	appearance->trans.rotation.y = 180.0f;
@@ -67,7 +67,7 @@ void PlayerAllyModel::MoveAnim(int animPattern_)
 	//待機中であれば色を変えてアニメーションはしない
 	if (animPattern_ == 1 && moveAnimCnt.count >= 1.0f)
 	{
-		appearance->color = { 200,255,50,255 };
+		appearance->color = { 255,200,20,255 };
 		return;
 	}
 

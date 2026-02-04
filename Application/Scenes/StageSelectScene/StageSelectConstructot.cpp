@@ -3,6 +3,7 @@
 StageSelectScene::StageSelectScene()
 {
 	selectCounter.Initialize(0.1f);
+	dirLight->Getter_Para()->intensity = 4.4f;
 }
 
 void StageSelectScene::Instantiate()

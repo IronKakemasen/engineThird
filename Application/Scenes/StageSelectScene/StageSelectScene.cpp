@@ -5,6 +5,8 @@
 
 void StageSelectScene::Update()
 {
+	dirLight->Getter_Para()->pos = { 6.1f,0.5f,-20.0f };
+
 	mainCamera.Update();
 
 	// initializedがfalseならオブジェクト配置

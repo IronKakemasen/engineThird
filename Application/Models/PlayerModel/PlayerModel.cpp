@@ -19,6 +19,13 @@ void PlayerModel::Update(int mode_, float count_)
 
 void PlayerModel::Idle()
 {
+
+	idleIdleCnt.Add();
+	if (idleIdleCnt.count < 1.0f)
+	{
+		return;
+	}
+
 	float const loopSpeed = 0.15f;
 	idleDelta += loopSpeed;
 
@@ -122,7 +129,10 @@ void PlayerModel::Idle()
 
 
 	headRotateCnt.Add();
-	headRotateCnt.IsEnd();
+	if (headRotateCnt.IsEnd())
+	{
+		idleIdleCnt.count = 0.0f;
+	}
 }
 
 void PlayerModel::IdleInGame()
@@ -246,7 +256,9 @@ PlayerModel::PlayerModel()
 	models.emplace_back(leg_L.get());
 	models.emplace_back(leg_R.get());
 	models.emplace_back(cannon.get());	
-	headRotateCnt.Initialize(8.0f);
+	headRotateCnt.Initialize(6.0f);
+	idleIdleCnt.Initialize(3.5f);
+	idleIdleCnt.count = 0.975f;
 }
 
 
@@ -304,6 +316,8 @@ void PlayerModel::Init(Transform* gameObjectTrans_)
 
 		//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 		appe->SetUsingTextureFromContainer(1, 1, 0, 0);
+		appe->metalic = 0.52f;
+		appe->roughness = 0.59f;
 
 	}
 
