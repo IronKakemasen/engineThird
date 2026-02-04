@@ -123,7 +123,6 @@ void EnemyFactory::LoadData()
 	hp = inGameConfig->enemyFactoryMaxHP;
 
 	// inGameConfig->enemySpawnIntervalMin ～ inGameConfig->enemySpawnIntervalMax の間でランダムにスポーン間隔を決定
-
 	float counter =
 		inGameConfig->enemySpawnIntervalMin +
 		static_cast<float>(rand()) / RAND_MAX *
