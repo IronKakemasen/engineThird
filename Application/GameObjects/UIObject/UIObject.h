@@ -7,7 +7,7 @@ struct UIObject :public GameObject
 {
 
 public:
-	Vector3 buff = { 2.25f,-2,0 };
+	Vector3 buff = { 2.0f,-1.5f,0 };
 
 	std::unique_ptr<UIPlane> model;
 	//↓ゲームオブジェクトマネージャーに登録すれば呼び出す必要なし↓

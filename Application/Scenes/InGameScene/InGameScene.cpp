@@ -68,10 +68,6 @@ void InGameScene::Update()
 	AdaptToPostEffect();
 
 	DeathParticle::Get()->Update();
-
-	ImGui::Begin("cac");
-	ImGui::DragFloat3("uIObject", reinterpret_cast<float*> (&uIObject.buff));
-	ImGui::End();
 }
 
 void InGameScene::AdaptToPostEffect()
