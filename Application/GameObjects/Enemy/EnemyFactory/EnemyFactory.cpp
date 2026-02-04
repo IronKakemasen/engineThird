@@ -122,7 +122,13 @@ void EnemyFactory::LoadData()
 	// HP設定
 	hp = inGameConfig->enemyFactoryMaxHP;
 
-	spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
+	// inGameConfig->enemySpawnIntervalMin ～ inGameConfig->enemySpawnIntervalMax の間でランダムにスポーン間隔を決定
+
+	float counter =
+		inGameConfig->enemySpawnIntervalMin +
+		static_cast<float>(rand()) / RAND_MAX *
+		(inGameConfig->enemySpawnIntervalMax - inGameConfig->enemySpawnIntervalMin);
+	spawnCounter.Initialize(counter);
 }
 void EnemyFactory::SaveData()
 {
@@ -250,7 +256,11 @@ void EnemyFactory::SpawnEnemy()
 			{
 				enemy->Spawn(trans.pos);
 				nextAnimationState = EnemyFactoryAnimationState::kGenerate;
-				spawnCounter.Initialize(inGameConfig->enemySpawnInterval);
+				float counter =
+					inGameConfig->enemySpawnIntervalMin +
+					static_cast<float>(rand()) / RAND_MAX *
+					(inGameConfig->enemySpawnIntervalMax - inGameConfig->enemySpawnIntervalMin);
+				spawnCounter.Initialize(counter);
 				break;
 			}
 		}

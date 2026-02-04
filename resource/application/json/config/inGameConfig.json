@@ -64,6 +64,8 @@
     "SpawnInterval": {
         "enemy": 3.0,
         "enemyFactoryRespawnInterval": 20.0,
+        "enemyMax": 5.0,
+        "enemyMin": 2.0,
         "maxAllyCount": 5,
         "playerAlly": 2.0
     },
