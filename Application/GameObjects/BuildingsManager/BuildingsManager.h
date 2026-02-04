@@ -16,16 +16,16 @@ private:
 	void SaveData() override;
 	void DebugDraw() override;
 
-	// クリア判定(全てのエネミータワーが破壊されているか)
-	bool isClear() const;
-	// 失敗判定(プレイヤータワーが全て破壊されているか)
-	bool isGameOver() const;
 
 	std::vector<EnemyFactory*> enemyFactories{};
 	std::vector<EnemyTower*> enemyTowers{};
 	std::vector<PlayerTower*> playerTowers{};
 
 public:
+	// クリア判定(全てのエネミータワーが破壊されているか)
+	bool IsClear() const;
+	// 失敗判定(プレイヤータワーが全て破壊されているか)
+	bool IsGameOver() const;
 
 	void SetEnemyFactory(EnemyFactory* factory);
 	void SetEnemyTower(EnemyTower* tower);

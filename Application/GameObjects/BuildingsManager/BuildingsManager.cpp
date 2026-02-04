@@ -19,29 +19,35 @@ void BuildingsManager::SaveData()
 void BuildingsManager::DebugDraw()
 {}
 
-bool BuildingsManager::isClear() const
+bool BuildingsManager::IsClear() const
 {
 	bool allDestroyed = true;
 	for (auto& tower : enemyTowers)
 	{
-		if (!tower->IsDead())
+		if (tower->GetStatus() == Status::kActive)
 		{
-			allDestroyed = false;
-			break;
+			if (!tower->IsDead())
+			{
+				allDestroyed = false;
+				break;
+			}
 		}
 	}
 	return allDestroyed;
 }
 
-bool BuildingsManager::isGameOver() const
+bool BuildingsManager::IsGameOver() const
 {
 	bool allDestroyed = true;
 	for (auto& pTower : playerTowers)
 	{
-		if (!pTower->IsDead())
+		if (pTower->GetStatus() == Status::kActive)
 		{
-			allDestroyed = false;
-			break;
+			if (!pTower->IsDead())
+			{
+				allDestroyed = false;
+				break;
+			}
 		}
 	}
 	return allDestroyed;

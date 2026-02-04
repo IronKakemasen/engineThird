@@ -64,7 +64,7 @@ void ResourceContainer::LoadAllTextureFile()
 	// インゲームUI
 	LoadTextureFile(TextureTag::IngameButton200x300, pathToUI + "Common/" + "IngameButton200x300.png");
 	LoadTextureFile(TextureTag::kGameOver1000x200, pathToUI + "InGame/" + "GameOver1000x200.png");
-	LoadTextureFile(TextureTag::StageClear1000x200, pathToUI + "InGame/" + "StageClear1000x200.png");
+	LoadTextureFile(TextureTag::kGameClear1000x200, pathToUI + "InGame/" + "StageClear1000x200.png");
 
 	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
 

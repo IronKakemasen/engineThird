@@ -48,7 +48,7 @@ enum class TextureTag
 	// インゲームUI
 	IngameButton200x300,	// 全部まとめたやつ
 	kGameOver1000x200,		// ゲームオーバー
-	StageClear1000x200,		// ゲームクリア
+	kGameClear1000x200,		// ゲームクリア
 
 	// ステージセレクトUI
 	kStageName01_1000x100,
@@ -58,6 +58,10 @@ enum class TextureTag
 	kStageName05_1000x100,
 	kArrowLeft100x200,
 	kArrowRight100x200,
+
+	// リザルトUI
+	GameOver1000x200,
+	GameClear1000x200,
 
 	kGroundN,
 

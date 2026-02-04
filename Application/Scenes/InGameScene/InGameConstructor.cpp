@@ -11,6 +11,7 @@ InGameScene::InGameScene()
 	}
 	auto* m = M::GetInstance();
 
+	resultUI = std::make_unique<Sprite>();
 }
 
 void InGameScene::InputFieldLightData()

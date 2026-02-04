@@ -26,6 +26,29 @@ void InGameScene::Update()
 		}
 	}
 
+	if (buildingsManager)
+	{
+		if (GameResult == false)
+		{
+			if (buildingsManager->IsClear())
+			{
+				gameObjManager->TheWorld();
+				resultUI->GetAppearance()->use_texHandles[0] = M::GetInstance()->GetTexIndex(TextureTag::kGameClear1000x200);
+				ss.Initialize(2.5f);
+				GameResult = true;
+				uiDisplayer->SetStatus(GameObjectBehavior::Status::kInActive);
+			}
+			else if (buildingsManager->IsGameOver())
+			{
+				gameObjManager->TheWorld();
+				resultUI->GetAppearance()->use_texHandles[0] = M::GetInstance()->GetTexIndex(TextureTag::kGameOver1000x200);
+				ss.Initialize(2.5f);
+				GameResult = true;
+				uiDisplayer->SetStatus(GameObjectBehavior::Status::kInActive);
+			}
+		}
+	}
+
 	switch (inGameController->curMode)
 	{
 	case InGameController::kEnter : 
@@ -68,6 +91,26 @@ void InGameScene::Update()
 	AdaptToPostEffect();
 
 	DeathParticle::Get()->Update();
+
+	// クリア || 失敗
+	if (GameResult == true)
+	{
+		resultUI->GetAppearance()->trans.scale.x = Easing::EaseOutBounce(0.0f, 1.0f, ss.count);
+		resultUI->GetAppearance()->trans.scale.y = Easing::EaseOutBounce(0.0f, 1.0f, ss.count);
+		resultUI->GetAppearance()->trans.scale.z = Easing::EaseOutBounce(0.0f, 1.0f, ss.count);
+		ss.Add();
+		if (ss.count >= 1.0f)
+		{
+			if (M::GetInstance()->getPadState.IsJustPressed(0,PAD_A) || M::GetInstance()->getPadState.IsJustPressed(0, PAD_RB))
+			{
+				gameObjManager->TheWorld();
+				ChangeScene(SceneType::kStageSelect);
+				SceneBehavior::doReset = true;
+				GameResult = false;
+				uiDisplayer->SetStatus(GameObjectBehavior::Status::kActive);
+			}
+		}
+	}
 }
 
 void InGameScene::AdaptToPostEffect()
@@ -254,6 +297,7 @@ void InGameScene::Draw()
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
 
+	resultUI->Draw(&ortho);
 }
 
 void InGameScene::Reset()
@@ -261,6 +305,13 @@ void InGameScene::Reset()
 	mainCamera.Reset();
 
 	uiDisplayer->SetUIMode(UIDisplayer::UIMode::InGame);
+
+	resultUI->Initialize(
+		1000, 200, Vector3{ 640.0f, 120.0f,0.0f },
+		M::GetInstance()->GetTexIndex(TextureTag::kGameClear1000x200),
+		{ 255,255,255,255 });
+	GameResult = false;
+	resultUI->GetAppearance()->trans.scale = { 0.0f,0.0f,0.0f };
 }
 
 void InGameScene::Debug()
