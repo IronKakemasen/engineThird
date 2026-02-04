@@ -199,6 +199,7 @@
     <ClCompile Include="Application\GameObjects\ForTitleScene\ForTitleScene.cpp" />
     <ClCompile Include="Application\Cameras\TitleCamera\TitleCamera.cpp" />
     <ClCompile Include="Application\Models\TitleLogo\TitleLogo.cpp" />
+    <ClCompile Include="external\xaudio_player_mf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Cameras\MainCamera\MainCamera.h" />
@@ -398,6 +399,9 @@
     <ClInclude Include="Application\GameObjects\ForTitleScene\ForTitleScene.h" />
     <ClInclude Include="Application\Cameras\TitleCamera\TitleCamera.h" />
     <ClInclude Include="Application\Models\TitleLogo\TitleLogo.h" />
+    <ClInclude Include="external\SoundCommon.h" />
+    <ClInclude Include="external\xaudio_player_core.h" />
+    <ClInclude Include="external\xaudio_player_mf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\imgui\imgui.vcxproj" />

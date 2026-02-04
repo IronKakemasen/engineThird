@@ -27,7 +27,7 @@ class DamageDisplay
 		void Init(Matrix4* vpMat_);
 	};
 
-	int const kMaxGenerate = 100;
+	int const kMaxGenerate = 600;
 	std::vector<DamageNum> damageNumSprites;
 
 public:
