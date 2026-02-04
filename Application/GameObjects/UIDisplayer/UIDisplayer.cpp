@@ -37,11 +37,13 @@ UIDisplayer::UIDisplayer()
 	uiTexureSize[uiType::GameOver1000x200] = Vector2{ 1000.0f,200.0f };
 	uiTexureSize[uiType::StageClear1000x200] = Vector2{ 1000.0f,200.0f };
 	// ステージセレクト
-	uiTexureSize[uiType::Stage1Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage2Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage3Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage4Name1000x100] = Vector2{ 1000.0f,100.0f };
-	uiTexureSize[uiType::Stage5Name1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::StageName01_1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::StageName02_1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::StageName03_1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::StageName04_1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::StageName05_1000x100] = Vector2{ 1000.0f,100.0f };
+	uiTexureSize[uiType::ArrowLeft100x200] = Vector2{ 100.0f,200.0f };
+	uiTexureSize[uiType::ArrowRight100x200] = Vector2{ 100.0f,200.0f };
 
 	std::map<uiType, TextureTag> uiTexure;
 	// 汎用
@@ -68,11 +70,13 @@ UIDisplayer::UIDisplayer()
 	uiTexure[uiType::GameOver1000x200] = TextureTag::kGameOver1000x200;
 	uiTexure[uiType::StageClear1000x200] = TextureTag::StageClear1000x200;
 	// ステージセレクト
-	uiTexure[uiType::Stage1Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage2Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage3Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage4Name1000x100] = TextureTag::kStageName1000x100;
-	uiTexure[uiType::Stage5Name1000x100] = TextureTag::kStageName1000x100;
+	uiTexure[uiType::StageName01_1000x100] = TextureTag::kStageName01_1000x100;
+	uiTexure[uiType::StageName02_1000x100] = TextureTag::kStageName02_1000x100;
+	uiTexure[uiType::StageName03_1000x100] = TextureTag::kStageName03_1000x100;
+	uiTexure[uiType::StageName04_1000x100] = TextureTag::kStageName04_1000x100;
+	uiTexure[uiType::StageName05_1000x100] = TextureTag::kStageName05_1000x100;
+	uiTexure[uiType::ArrowLeft100x200] = TextureTag::kArrowLeft100x200;
+	uiTexure[uiType::ArrowRight100x200] = TextureTag::kArrowRight100x200;
 
 	for (size_t i = 0; i < uiTexureSize.size(); i++)
 	{
@@ -432,6 +436,14 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
 		drawOrder.push_back(uiType::Decision200x60);	// ケッテイ　アイコン
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
+		drawOrder.push_back(uiType::StageName01_1000x100);	// ステージ名１
+		drawOrder.push_back(uiType::StageName02_1000x100);	// ステージ名２
+		drawOrder.push_back(uiType::StageName03_1000x100);	// ステージ名３
+		drawOrder.push_back(uiType::StageName04_1000x100);	// ステージ名４
+		drawOrder.push_back(uiType::StageName05_1000x100);	// ステージ名５
+		drawOrder.push_back(uiType::ArrowLeft100x200);	// 左矢印
+		drawOrder.push_back(uiType::ArrowRight100x200);	// 右矢印
+
 		break;
 	case UIDisplayer::UIMode::InGame:
 		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン

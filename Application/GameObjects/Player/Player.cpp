@@ -112,6 +112,7 @@ void Player::LoadData()
 void Player::SaveData()
 {
 	Json::SaveParam(path, "/stage" + std::to_string(InGameController::curStage) + "/InitPos", trans.pos);
+	Json::Save(path);
 }
 
 // 更新処理

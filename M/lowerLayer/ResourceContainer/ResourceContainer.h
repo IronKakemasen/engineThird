@@ -50,7 +50,13 @@ enum class TextureTag
 	StageClear1000x200,		// ゲームクリア
 
 	// ステージセレクトUI
-	kStageName1000x100,
+	kStageName01_1000x100,
+	kStageName02_1000x100,
+	kStageName03_1000x100,
+	kStageName04_1000x100,
+	kStageName05_1000x100,
+	kArrowLeft100x200,
+	kArrowRight100x200,
 
 	kGroundN,
 

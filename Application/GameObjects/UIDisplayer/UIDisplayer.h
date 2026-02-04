@@ -79,11 +79,13 @@ struct UIDisplayer :public GameObject
 		StageClear1000x200,		// ゲームクリア
 
 		// ステージセレクト
-		Stage1Name1000x100,
-		Stage2Name1000x100,
-		Stage3Name1000x100,
-		Stage4Name1000x100,
-		Stage5Name1000x100,
+		StageName01_1000x100,
+		StageName02_1000x100,
+		StageName03_1000x100,
+		StageName04_1000x100,
+		StageName05_1000x100,
+		ArrowLeft100x200,
+		ArrowRight100x200,
 
 		MAX,
 	};
@@ -114,11 +116,13 @@ struct UIDisplayer :public GameObject
 		case uiType::GameOver1000x200:    return "GameOver";
 		case uiType::StageClear1000x200:  return "StageClear";
 
-		case uiType::Stage1Name1000x100:  return "Stage1Name";
-		case uiType::Stage2Name1000x100:  return "Stage2Name";
-		case uiType::Stage3Name1000x100:  return "Stage3Name";
-		case uiType::Stage4Name1000x100:  return "Stage4Name";
-		case uiType::Stage5Name1000x100:  return "Stage5Name";
+		case uiType::StageName01_1000x100:  return "Stage1Name";
+		case uiType::StageName02_1000x100:  return "Stage2Name";
+		case uiType::StageName03_1000x100:  return "Stage3Name";
+		case uiType::StageName04_1000x100:  return "Stage4Name";
+		case uiType::StageName05_1000x100:  return "Stage5Name";
+		case uiType::ArrowLeft100x200:      return "ArrowLeft";
+		case uiType::ArrowRight100x200:     return "ArrowRight";
 
 		case uiType::MAX:                 return "MAX";
 		default:                          return "";
