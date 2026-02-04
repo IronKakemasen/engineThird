@@ -30,7 +30,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	std::unique_ptr<SceneController> sceneController =
 		std::make_unique<SceneController>(kTitle);
 
-	AudioPlayer::GetInstance().PlayBGM(AudioHandle::Get(AudioID::bgm), true, 0);
+	AudioPlayer::GetInstance().PlayBGM(AudioHandle::Get(AudioID::bgm), true, 15);
 
 
 	MSG msg = {};
