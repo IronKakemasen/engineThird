@@ -26,7 +26,7 @@ void UIPlane::Init(Transform* gameObjectTrans_)
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
-	appearance->trans.rotation.x = 60;
+	appearance->trans.rotation.x = 47.5f;
 
 
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
