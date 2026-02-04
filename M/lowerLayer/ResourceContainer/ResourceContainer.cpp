@@ -50,7 +50,7 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::PauseButton02_350x50, pathToUI + "Pause/" + "PauseButton02_350x50.png");
 	LoadTextureFile(TextureTag::PauseButton03_350x50, pathToUI + "Pause/" + "PauseButton03_350x50.png");
 	LoadTextureFile(TextureTag::PauseButton04_350x50, pathToUI + "Pause/" + "PauseButton04_350x50.png");
-	LoadTextureFile(TextureTag::PauseScreen_1280x720, pathToUI + "Pause/" + "PauseScreen_1280x720.png");
+	LoadTextureFile(TextureTag::PauseScreen_661x720, pathToUI + "Pause/" + "PauseScreen_661x720.png");
 
 	// ステージセレクトUI
 	LoadTextureFile(TextureTag::kStageName01_1000x100, pathToUI + "StageSelect/" + "StageName01_800x80.png");
@@ -62,9 +62,9 @@ void ResourceContainer::LoadAllTextureFile()
 	LoadTextureFile(TextureTag::kArrowRight100x200, pathToUI + "StageSelect/" + "ArrowMarkRight100x200.png");
 
 	// インゲームUI
+	LoadTextureFile(TextureTag::IngameButton200x300, pathToUI + "Common/" + "IngameButton200x300.png");
 	LoadTextureFile(TextureTag::kGameOver1000x200, pathToUI + "InGame/" + "GameOver1000x200.png");
 	LoadTextureFile(TextureTag::StageClear1000x200, pathToUI + "InGame/" + "StageClear1000x200.png");
-
 
 	LoadTextureFile(TextureTag::kGroundN, pathToTex + "Ground/"  + "Ground_normal.png");
 

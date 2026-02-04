@@ -43,9 +43,10 @@ enum class TextureTag
 	PauseButton02_350x50,	// リトライ
 	PauseButton03_350x50,	// オプション
 	PauseButton04_350x50,	// セレクト
-	PauseScreen_1280x720,	// ポーズ背景
+	PauseScreen_661x720,	// ポーズ背景
 
 	// インゲームUI
+	IngameButton200x300,	// 全部まとめたやつ
 	kGameOver1000x200,		// ゲームオーバー
 	StageClear1000x200,		// ゲームクリア
 
