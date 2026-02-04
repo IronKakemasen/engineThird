@@ -81,6 +81,13 @@ class InGameScene final : public Scene
 	void PlayableMode();
 	void Lighthing();
 
+
+	// 0 = なし　1 = クリア　2 = 失敗
+	bool GameResult = false;
+	Counter ss;
+	std::unique_ptr<Sprite> resultUI;
+
+
 public:
 
 	static inline float metalicCommon = 0.5139999985694885f;

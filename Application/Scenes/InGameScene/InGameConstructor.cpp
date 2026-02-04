@@ -11,6 +11,7 @@ InGameScene::InGameScene()
 	}
 	auto* m = M::GetInstance();
 
+	resultUI = std::make_unique<Sprite>();
 }
 
 void InGameScene::InputFieldLightData()
@@ -111,11 +112,12 @@ void InGameScene::Instantiate()
 
 
 	// ポインタを渡す
-	for (auto& enemyInstance : enemies)
+	for (auto& enemy : enemies)
 	{
-		enemyInstance->SetTargetPlayer(player.get());
+		enemy->SetTargetPlayer(player.get());
+		enemy->SetGround(ground.get());
 		for (auto& playerTower : playerTowers)
-			enemyInstance->SetTargetTower(playerTower.get());
+			enemy->SetTargetTower(playerTower.get());
 	}
 
 	for (auto& ally : allies)

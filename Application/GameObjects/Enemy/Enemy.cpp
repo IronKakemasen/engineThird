@@ -3,6 +3,7 @@
 #include <array>
 #include "../../GameObjects/Player/Player.h"
 #include "../../GameObjects/Player/PlayerTower/PlayerTower.h"
+#include "../../GameObjects/Ground/Ground.h"
 #include "../../M/utilities/Json/Json.h"
 #include "../GameObjectManager/GameObjectManager.h"
 #include "../../Config/GameConstants.h"
@@ -185,6 +186,9 @@ void Enemy::Update()
 
 	// 衝突弾リスト更新
 	UpdateHitBullets();
+
+	// 画面外に出ないようにクランプ
+	ground_->ClampPosition(trans.pos);
 
 	Vector3 finalVelocity = moveVelocity + knockBackVelocity;
 	trans.pos = trans.pos + finalVelocity;

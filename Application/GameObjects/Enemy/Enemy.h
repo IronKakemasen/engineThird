@@ -8,6 +8,7 @@
 struct Player;
 struct PlayerTower;
 struct PlayerBullet;
+struct Ground;
 
 struct Enemy :public GameObject , public GameObjectEntity
 {
@@ -25,6 +26,9 @@ private:
 	void UpdateAnimationState();
 	EnemyAnimationState nextAnimationState = EnemyAnimationState::kMove;
 	Counter animationCounter;
+
+	Ground* ground_ = nullptr;
+
 
 	// ターゲット方向に移動
 	void MoveToTarget();
@@ -55,9 +59,12 @@ private:
 	Player* targetPlayer = nullptr;
 
 public:
+
+
 	// ポインタのセット
 	void SetTargetTower(PlayerTower* tower) { playerTowers.push_back(tower); };
 	void SetTargetPlayer(Player* player_) { targetPlayer = player_; };
+	void SetGround(Ground* ground) { ground_ = ground; };
 
 	// 衝突した弾をリストに追加
 	void AddHitBullet(PlayerBullet* bullet);

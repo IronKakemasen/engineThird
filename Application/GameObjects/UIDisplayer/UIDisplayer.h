@@ -77,7 +77,7 @@ struct UIDisplayer :public GameObject
 		// インゲームUI
 		IngameButton200x300,	// インゲーム
 		GameOver1000x200,		// ゲームオーバー
-		StageClear1000x200,		// ゲームクリア
+		GameClear1000x200,		// ゲームクリア
 
 		// ステージセレクト
 		StageName01_1000x100,
@@ -115,7 +115,7 @@ struct UIDisplayer :public GameObject
 		case uiType::PauseScreen_661x720:return "PauseScreen";
 
 		case uiType::GameOver1000x200:    return "GameOver";
-		case uiType::StageClear1000x200:  return "StageClear";
+		case uiType::GameClear1000x200:  return "StageClear";
 
 		case uiType::StageName01_1000x100:  return "Stage1Name";
 		case uiType::StageName02_1000x100:  return "Stage2Name";

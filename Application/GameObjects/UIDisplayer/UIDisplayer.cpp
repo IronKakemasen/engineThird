@@ -38,7 +38,7 @@ UIDisplayer::UIDisplayer()
 	// インゲームUI
 	uiTexureSize[uiType::IngameButton200x300] = Vector2{ 200.0f,300.0f };
 	uiTexureSize[uiType::GameOver1000x200] = Vector2{ 1000.0f,200.0f };
-	uiTexureSize[uiType::StageClear1000x200] = Vector2{ 1000.0f,200.0f };
+	uiTexureSize[uiType::GameClear1000x200] = Vector2{ 1000.0f,200.0f };
 	// ステージセレクト
 	uiTexureSize[uiType::StageName01_1000x100] = Vector2{ 1000.0f,100.0f };
 	uiTexureSize[uiType::StageName02_1000x100] = Vector2{ 1000.0f,100.0f };
@@ -72,7 +72,7 @@ UIDisplayer::UIDisplayer()
 	// インゲームUI
 	uiTexure[uiType::IngameButton200x300] = TextureTag::IngameButton200x300;
 	uiTexure[uiType::GameOver1000x200] = TextureTag::kGameOver1000x200;
-	uiTexure[uiType::StageClear1000x200] = TextureTag::StageClear1000x200;
+	uiTexure[uiType::GameClear1000x200] = TextureTag::GameClear1000x200;
 	// ステージセレクト
 	uiTexure[uiType::StageName01_1000x100] = TextureTag::kStageName01_1000x100;
 	uiTexure[uiType::StageName02_1000x100] = TextureTag::kStageName02_1000x100;
