@@ -19,11 +19,15 @@ void UIPlane::Draw(Matrix4* vpMat_)
 
 void UIPlane::Init(Transform* gameObjectTrans_)
 {
+
+
 //複数モデルを考慮しているためインデックスで指定する
 	auto* appearance = model->GetAppearance(0);
 	//使用するシェーダーの選択
 	appearance->shaderSetIndex =
 		M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
+	appearance->trans.rotation.x = 60;
+
 
 	//使用するテクスチャ種類の選択(カラーマップ、ノーマルマップ、...)
 	appearance->SetUsingTextureFromContainer(1, 0, 0, 0);

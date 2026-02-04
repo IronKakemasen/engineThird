@@ -5,6 +5,8 @@
 
 void InGameScene::Update()
 {
+	uIObject.SetStatus(GameObject::Status::kInActive);
+
 	if (uiDisplayer)
 	{
 		switch (uiDisplayer->GetPauseRequest())
@@ -32,7 +34,14 @@ void InGameScene::Update()
 		break;
 
 	case InGameController::kPlayable:
+		uIObject.trans.pos =
+			cameraController->GetUsingCamera()->Getter_Parameters()->trans.GetWorldPos();
+		uIObject.trans.pos = uIObject.trans.pos  + uIObject.buff;
+
 		PlayableMode();
+
+		uIObject.SetStatus(GameObject::Status::kActive);
+
 		break;
 
 	case InGameController::kUnPlayable:
@@ -61,7 +70,7 @@ void InGameScene::Update()
 	DeathParticle::Get()->Update();
 
 	ImGui::Begin("cac");
-	ImGui::DragFloat3("uIObject", reinterpret_cast<float*> (&uIObject.trans.pos));
+	ImGui::DragFloat3("uIObject", reinterpret_cast<float*> (&uIObject.buff));
 	ImGui::End();
 }
 
