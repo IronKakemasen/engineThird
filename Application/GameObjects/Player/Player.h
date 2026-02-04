@@ -25,7 +25,7 @@ struct Player :public GameObject, public GameObjectEntity
 
 private:
 	////// マップに配置  //////
-	void ReplaceOnMap(const int32_t stage);
+	void ReplaceOnMap();
 
 	////// アニメーション処理  //////
 	void UpdateAnimationState();

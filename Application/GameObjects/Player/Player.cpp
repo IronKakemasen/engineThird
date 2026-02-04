@@ -51,15 +51,16 @@ void Player::Reset()
 	hp = inGameConfig->playerMaxHP;
 
 	// 現在選択されているステージ
-	ReplaceOnMap(InGameController::curStage);
+	ReplaceOnMap();
 
 	// カウンター初期化
 	autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);
 	attackIntervalCounter.Initialize(inGameConfig->playerAttackInterval);
 }
 
-void Player::ReplaceOnMap(const int32_t stage)
+void Player::ReplaceOnMap()
 {
+	LoadData();
 }
 
 void Player::Init()
@@ -165,6 +166,15 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
+	ImGui::Begin("player");
+
+	if (ImGui::Button("Save"))
+	{
+		SaveData();
+	}
+	ImGui::DragFloat3("Initpos", &trans.pos.x);
+
+	ImGui::End();
 
 #endif // USE_IMGUI
 }

@@ -399,6 +399,11 @@ void InGameScene::Debug()
 			ground->DebugDraw();
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Player"))
+		{
+			player->DebugDraw();
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}
