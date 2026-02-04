@@ -3,7 +3,7 @@
         "player": {
             "attackGaugeRecoverInterval": 0.75,
             "attackGaugeRecoverSpeed": 0.07999999821186066,
-            "playerAttackInterval": 2.0
+            "playerAttackInterval": 1.5
         }
     },
     "CollisonSize": {
@@ -64,7 +64,7 @@
     "SpawnInterval": {
         "enemy": 3.0,
         "enemyFactoryRespawnInterval": 20.0,
-        "enemyMax": 5.0,
+        "enemyMax": 4.0,
         "enemyMin": 2.0,
         "maxAllyCount": 5,
         "playerAlly": 2.0

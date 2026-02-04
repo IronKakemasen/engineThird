@@ -112,6 +112,7 @@ void Player::LoadData()
 void Player::SaveData()
 {
 	Json::SaveParam(path, "/stage" + std::to_string(InGameController::curStage) + "/InitPos", trans.pos);
+	Json::Save(path);
 }
 
 // 更新処理
@@ -166,15 +167,12 @@ void Player::DebugDraw()
 {
 #ifdef USE_IMGUI
 
-	ImGui::Begin("player");
-
 	if (ImGui::Button("Save"))
 	{
 		SaveData();
 	}
 	ImGui::DragFloat3("Initpos", &trans.pos.x);
 
-	ImGui::End();
 
 #endif // USE_IMGUI
 }
