@@ -59,7 +59,12 @@ void StageSelectScene::Instantiate()
 			enemyFactories[stageIndex][i]->SetID(static_cast<int32_t>(i));
 			enemyFactories[stageIndex][i]->SetInGameConfig(inGameConfig.get());
 		}
+		// ステージ名スプライトのインスタンス化
+		stageName[stageIndex] = std::make_unique<Sprite>();
 	}
+	arrowLeft = std::make_unique<Sprite>();
+	arrowRight = std::make_unique<Sprite>();
+
 	uiDisplayer->SetInGameConfig(inGameConfig.get());
 
 	//ゲームオブジェクトマネージャーに登録する。登録順が処理順となる
@@ -98,8 +103,8 @@ void StageSelectScene::Init()
 {
 	mainCamera.Init(cameraController->GetMainCamera()->Getter_Parameters());
 
-	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 15.0f, -120.0f);
-	mainCamera.cameraPara->trans.lookDir = Vector3(0.0f, -0.714f, 0.7f);
+	mainCamera.cameraPara->trans.pos = Vector3(0.0f, 23.0f, -123.5f);
+	mainCamera.cameraPara->trans.lookDir = Vector3(0.0f, -0.809f, 0.588f);
 
 	Reset();
 	gameObjManager->Reset();
@@ -132,4 +137,32 @@ void StageSelectScene::Init()
 			enemyFactories[stageIndex][i]->trans.parent = &centerObject[stageIndex][0]->trans;
 		}
 	}
+	stageName[0]->Initialize(800.0f, 80.0f,
+		Vector3(640.0f, 100.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kStageName01_1000x100),
+		{ 255,255,255,255 });
+	stageName[1]->Initialize(800.0f, 80.0f,
+		Vector3(640.0f, 100.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kStageName02_1000x100),
+		{ 255,255,255,255 });
+	stageName[2]->Initialize(800.0f, 80.0f,
+		Vector3(640.0f, 100.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kStageName03_1000x100),
+		{ 255,255,255,255 });
+	stageName[3]->Initialize(800.0f, 80.0f,
+		Vector3(640.0f, 100.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kStageName04_1000x100),
+		{ 255,255,255,255 });
+	stageName[4]->Initialize(800.0f, 80.0f,
+		Vector3(640.0f, 100.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kStageName05_1000x100),
+		{ 255,255,255,255 });
+	arrowLeft->Initialize(80.0f, 160.0f,
+		Vector3(100.0f, 360.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kArrowLeft100x200),
+		{ 255,255,255,255 });
+	arrowRight->Initialize(80.0f, 160.0f,
+		Vector3(1180.0f, 360.0f, 0.0f),
+		M::GetInstance()->GetTexIndex(TextureTag::kArrowRight100x200),
+		{ 255,255,255,255 });
 }

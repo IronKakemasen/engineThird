@@ -39,8 +39,6 @@ void Player::Reset()
 	unformedAllyCount = 0;
 	// delayFrameOffsetsの初期化
 	delayFrameOffsets = 0;
-	// posHistoryの初期化
-	posHistory.fill(trans.pos);
 	// headIndexの初期化
 	headIndex = 0;
 
@@ -52,6 +50,8 @@ void Player::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap();
+	// posHistoryの初期化
+	posHistory.fill(trans.pos);
 
 	// カウンター初期化
 	autoSpawnAllyCounter.Initialize(inGameConfig->playerAllySpawnInterval);

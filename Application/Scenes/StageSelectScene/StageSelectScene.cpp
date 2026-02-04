@@ -173,6 +173,35 @@ void StageSelectScene::Draw()
 
 	uiDisplayer->SuperDraw(&ortho);
 	uiDisplayer->DebugDraw();
+	DrawUI(vpMat);
+}
+
+void StageSelectScene::DrawUI(Matrix4* vpMat_)
+{
+	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+	// ステージ名表示
+	if (selected)
+	{
+		Vector3 displayPos = centerObject[inGameController->curStage][0]->Getter_Trans()->GetWorldPos();
+		displayPos.y += 17.0f;
+		Vector2 pos = ConvertToScreen(displayPos, *vpMat_);
+		stageName[inGameController->curStage]->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+		stageName[inGameController->curStage]->Draw(&orth);
+	}
+	else
+	{
+		for (size_t i = 0; i < GameConstants::kMaxStages; ++i)
+		{
+			Vector3 displayPos = centerObject[i][0]->Getter_Trans()->GetWorldPos();
+			displayPos.y += 17.0f;
+			Vector2 pos = ConvertToScreen(displayPos, *vpMat_);
+			stageName[i]->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+			stageName[i]->Draw(&orth);
+		}
+	}
+
+	arrowLeft->Draw(&orth);
+	arrowRight->Draw(&orth);
 }
 
 void StageSelectScene::Reset()
@@ -188,30 +217,6 @@ void StageSelectScene::Reset()
 void StageSelectScene::Debug()
 {
 #ifdef USE_IMGUI
-
-	//ImGui::Begin("StageSelectScene");
-	//auto* para = mainCamera.cameraPara;
-
-
-	//ImGui::Text("---------------------------");
-	//ImGui::DragFloat3("cameraPos", reinterpret_cast<float*> (&para->trans.pos),0.1f);
-	//ImGui::DragFloat3("CameralookDir", reinterpret_cast<float*> (&para->trans.lookDir), 0.01f);
-	//ImGui::DragFloat("kaitenHokan", &para->trans.interpolationCoe, 0.01f);
-	//ImGui::DragFloat("FOV", &para->fov, 0.01f);
-
-
-
-	//ImGui::SliderInt("curStage", &inGameController->curStage, 0, GameConstants::kMaxStages - 1);
-	//ImGui::DragFloat("baseCenterRotateY", &baseCenterRotateY);
-
-	//ImGui::Text("---------------------------");
-	//for (size_t stageIndex = 0; stageIndex < GameConstants::kMaxStages; ++stageIndex)
-	//{
-	//	std::string key = "stageIndex." + std::to_string(stageIndex) + "##CenterObject" + std::to_string(stageIndex);
-	//	ImGui::DragFloat3((key + "rot").c_str(), &centerObject[stageIndex][0]->trans.rotation.x, 0.1f);
-	//	ImGui::DragFloat3((key + "pos").c_str(), &centerObject[stageIndex][0]->trans.pos.x, 0.1f);
-	//}
-	//ImGui::End();
 
 #endif // USE_IMGUI
 

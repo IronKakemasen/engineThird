@@ -34,6 +34,9 @@ class StageSelectScene final : public Scene
 	std::unique_ptr<InGameController> inGameController;
 	std::unique_ptr<InGameConfig> inGameConfig;
 	std::unique_ptr<UIDisplayer> uiDisplayer;
+	std::array<std::unique_ptr<Sprite>, GameConstants::kMaxStages> stageName;
+	std::unique_ptr<Sprite> arrowLeft;
+	std::unique_ptr<Sprite> arrowRight;
 
 	float baseCenterRotateY = 0.0f;
 	const float stagePerYRotate = (360.0f / float(GameConstants::kMaxStages));
@@ -60,6 +63,7 @@ class StageSelectScene final : public Scene
 	void ReplaceObjects();
 	bool initialized = false;
 
+
 public:
 	StageSelectScene();
 
@@ -68,6 +72,7 @@ public:
 	virtual void Update() override;
 	//描画処理
 	virtual void Draw() override;
+	void DrawUI(Matrix4* ortho_);
 	//リセット処理。
 	virtual void Reset() override;
 	//デバッグ処理。各シーンのImGui表示はここで。

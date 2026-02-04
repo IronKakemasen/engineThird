@@ -93,20 +93,27 @@ UIDisplayer::UIDisplayer()
 
 void UIDisplayer::Update()
 {
-	// ポーズUI更新
-	UpdatePauseUI();
+	switch (mode)
+	{
+	case UIDisplayer::UIMode::TiTle:
+		break;
+	case UIDisplayer::UIMode::StageSelect:
+		break;
+	case UIDisplayer::UIMode::InGame:
+		// ポーズUI更新
+		UpdateInGame();
+		break;
+	case UIDisplayer::UIMode::Pause:
+		break;
+	case UIDisplayer::UIMode::None:
+		break;
+	default:
+		break;
+	}
 
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
 		auto& e = uiElements[drawOrder[i]];
-
-		// 異常値検出（1フレ巨大化の犯人特定）
-		const float sx = e.initScale.x + e.scaleOffset.x;
-		const float sy = e.initScale.y + e.scaleOffset.y;
-		if (sx > 2.0f || sy > 2.0f || sx < 0.0f || sy < 0.0f)
-		{
-			__debugbreak();
-		}
 
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
 		{
@@ -171,7 +178,8 @@ void UIDisplayer::SaveData()
 	Json::Save(path);
 }
 
-void UIDisplayer::UpdatePauseUI()
+// インゲームUI更新
+void UIDisplayer::UpdateInGame()
 {
 	// モード切り替え				(ポーズ⇔プレイ)
 	HandlePauseToggleInput();
@@ -436,13 +444,13 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 		drawOrder.push_back(uiType::Move200x60);		// イドウ　　アイコン
 		drawOrder.push_back(uiType::Decision200x60);	// ケッテイ　アイコン
 		drawOrder.push_back(uiType::Back200x60);		// モドル　　アイコン
-		drawOrder.push_back(uiType::StageName01_1000x100);	// ステージ名１
-		drawOrder.push_back(uiType::StageName02_1000x100);	// ステージ名２
-		drawOrder.push_back(uiType::StageName03_1000x100);	// ステージ名３
-		drawOrder.push_back(uiType::StageName04_1000x100);	// ステージ名４
-		drawOrder.push_back(uiType::StageName05_1000x100);	// ステージ名５
-		drawOrder.push_back(uiType::ArrowLeft100x200);	// 左矢印
-		drawOrder.push_back(uiType::ArrowRight100x200);	// 右矢印
+		//drawOrder.push_back(uiType::StageName01_1000x100);	// ステージ名１
+		//drawOrder.push_back(uiType::StageName02_1000x100);	// ステージ名２
+		//drawOrder.push_back(uiType::StageName03_1000x100);	// ステージ名３
+		//drawOrder.push_back(uiType::StageName04_1000x100);	// ステージ名４
+		//drawOrder.push_back(uiType::StageName05_1000x100);	// ステージ名５
+		//drawOrder.push_back(uiType::ArrowLeft100x200);	// 左矢印
+		//drawOrder.push_back(uiType::ArrowRight100x200);	// 右矢印
 
 		break;
 	case UIDisplayer::UIMode::InGame:

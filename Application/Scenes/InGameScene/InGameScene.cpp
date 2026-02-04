@@ -537,9 +537,6 @@ void InGameScene::PlayableMode()
 		b = false;
 		DeathParticle::Get()->Activate({ 0,5,5 }, 10, 1.0f, 1.0f, { 255,255,255 });
 	}
-
-
-
 }
 
 void InGameScene::Lighthing()

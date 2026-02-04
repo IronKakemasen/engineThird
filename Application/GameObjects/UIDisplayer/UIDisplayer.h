@@ -165,7 +165,9 @@ private:
 	float preButtonOffset = 0.0f;		// ボタン選択前のオフセット
 	bool selected = false;				// 決定したかどうか
 	PauseRequest pauseRequest = PauseRequest::kNone;	// ポーズリクエスト内容
-	void UpdatePauseUI();
+
+	void UpdateInGame();
+	void UpdateStageSelect();
 
 	void HandlePauseToggleInput();
 	void UpdatePauseEasing();
