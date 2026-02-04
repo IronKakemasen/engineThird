@@ -24,12 +24,12 @@ EnemyFactory::EnemyFactory()
 	HPBarBackSprite = std::make_unique<Sprite>();
 	HPBarBackSprite->Initialize(100.0f, 16.0f, { },
 		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
-		{ 100,100,255,255 });
+		{ 0,0,0,255 });
 
 	HPBarSprite = std::make_unique<Sprite>();
 	HPBarSprite->Initialize(94.0f, 14.0f, { },
 		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
-		{ 255,0,0,255 });
+		{ 230,0,18,255 });
 
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyFactoryData.json";
