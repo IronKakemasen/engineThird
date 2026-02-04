@@ -80,6 +80,22 @@ void BuildingsManager::Draw(Matrix4* vpMat_)
 {
 }
 
+void BuildingsManager::DrawHpBar(Matrix4* vpMat_)
+{
+	for (auto& factory : enemyFactories)
+	{
+		factory->DrawHpBar(vpMat_);
+	}
+	for (auto& tower : enemyTowers)
+	{
+		tower->DrawHpBar(vpMat_);
+	}
+	for (auto& pTower : playerTowers)
+	{
+		pTower->DrawHpBar(vpMat_);
+	}
+}
+
 
 BuildingsManager::BuildingsManager()
 {

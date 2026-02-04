@@ -132,6 +132,9 @@ void PlayerBullet::Draw(Matrix4* vpMat_)
 	model->Draw(vpMat_);
 }
 
+void PlayerBullet::DrawHpBar(Matrix4* vpMat_)
+{}
+
 void PlayerBullet::DebugDraw()
 {}
 

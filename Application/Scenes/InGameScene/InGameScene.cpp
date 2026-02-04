@@ -220,9 +220,14 @@ void InGameScene::Draw()
 	//平行投影用
 	Matrix4 ortho = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
 
-	uiDisplayer->SuperDraw(&ortho);
-	uiDisplayer->DebugDraw();
+	// HPバー描画
+	for (size_t i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i]->DrawHpBar(vpMat);
+	}
+	buildingsManager->DrawHpBar(vpMat);
 
+	// フィールドライト描画
 	for (int i = 0; i < kNumPLight; ++i)
 	{
 		auto* para = fieldpointLights[i]->Getter_Para();
@@ -231,16 +236,15 @@ void InGameScene::Draw()
 		lightModels[i].Draw(vpMat);
 	}
 
+	// ダメージ表示描画
 	DamageDisplay::Get()->Draw(&ortho);
+	// デスパーティクル描画
 	DeathParticle::Get()->Draw(vpMat);
 
-	for (size_t i = 0; i < enemies.size(); ++i)
-	{
-		if (enemies[i]->GetStatus() == GameObjectBehavior::Status::kActive)
-		{
-			enemies[i]->DrawHpBar(vpMat);
-		}
-	}
+	// UI描画
+	uiDisplayer->SuperDraw(&ortho);
+	uiDisplayer->DebugDraw();
+
 }
 
 void InGameScene::Reset()

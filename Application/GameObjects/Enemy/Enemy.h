@@ -139,7 +139,7 @@ public:
 	// 描画処理.StateがinActiveの場合は呼び出されない
 	virtual void Draw(Matrix4* vpMat_)override;
 	// HPバー表示
-	void DrawHpBar(Matrix4* vpMat_);
+	virtual void DrawHpBar(Matrix4* vpMat_) override;
 	// コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 
