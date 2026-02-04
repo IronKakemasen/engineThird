@@ -150,6 +150,9 @@ void Player::Draw(Matrix4 * vpMat_)
 	circleModel->Draw(vpMat_);
 }
 
+void Player::DrawHpBar(Matrix4* vpMat_)
+{}
+
 void Player::DebugDraw()
 {
 #ifdef USE_IMGUI

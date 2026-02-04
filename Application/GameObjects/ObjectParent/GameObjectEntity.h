@@ -21,7 +21,11 @@ public:
 	// デバッグ描画
 	virtual void DebugDraw() = 0;
 
+	// inGameConfigセット
 	virtual void SetInGameConfig(const InGameConfig* config_) { inGameConfig = config_; }
+
+	// HPバー表示
+	virtual void DrawHpBar(Matrix4* vpMat_) = 0;
 
 	// Jsonパス
 	std::string path;

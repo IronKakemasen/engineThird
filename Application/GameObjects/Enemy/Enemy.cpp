@@ -369,6 +369,7 @@ void Enemy::Draw(Matrix4* vpMat_)
 
 void Enemy::DrawHpBar(Matrix4* vpMat_)
 {
+	if (status == Status::kInActive) return;
 	if (hp >= inGameConfig->enemyMaxHP - 0.1f) return;
 
 	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
@@ -383,9 +384,6 @@ void Enemy::DrawHpBar(Matrix4* vpMat_)
 	HPBarSprite->rightTop.position.x = HPBarSprite->leftTop.position.x + hpRate * len;
 	HPBarSprite->rightBottom.position.x = HPBarSprite->leftBottom.position.x + hpRate * len;;
 
-
-	//HPBarSprite->rightBottom.position.x -= 10.0f;
-	//HPBarSprite->rightTop.position.x -= 10.0f;
 	HPBarSprite->Draw(&orth);
 }
 

@@ -46,6 +46,9 @@ void Shikoutei::Draw(Matrix4* vpMat_)
 	shikoModel->Draw(vpMat_);
 }
 
+void Shikoutei::DrawHpBar(Matrix4* vpMat_)
+{}
+
 
 Shikoutei::Shikoutei()
 {

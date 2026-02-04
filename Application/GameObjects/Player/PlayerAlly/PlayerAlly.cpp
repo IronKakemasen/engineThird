@@ -152,6 +152,9 @@ void PlayerAlly::Draw(Matrix4* vpMat_)
 	if (currentState == State::kDeathBoom)boomModel->Draw(vpMat_);
 }
 
+void PlayerAlly::DrawHpBar(Matrix4* vpMat_)
+{}
+
 void PlayerAlly::DebugDraw()
 {}
 

@@ -15,10 +15,19 @@ PlayerTower::PlayerTower()
 	circleModel.reset(new CircleModel);
 	circleModel->defaultScale = { 9.0f,1,9.0f };
 	auto* c = circleModel->model->GetAppearance(0);
-	//c->shaderSetIndex =
-	//	M::GetInstance()->GetShaderSetIndexFromFileName("ModelNoLight.VS", "ModelNoLight.PS");
 
 	c->color = { 150,150,255,255 };
+
+	// HPバーのスプライト初期化
+	HPBarBackSprite = std::make_unique<Sprite>();
+	HPBarBackSprite->Initialize(100.0f, 16.0f, { },
+		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+		{ 100,100,255,255 });
+
+	HPBarSprite = std::make_unique<Sprite>();
+	HPBarSprite->Initialize(94.0f, 14.0f, { },
+		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+		{ 255,0,0,255 });
 
 	// Jsonパスの設定
 	path = "./resource/application/json/player/playerTowerData.json";
@@ -176,6 +185,26 @@ void PlayerTower::Draw(Matrix4* vpMat_)
 	circleModel->Draw(vpMat_);
 
 }
+void PlayerTower::DrawHpBar(Matrix4* vpMat_)
+{
+	if (status == Status::kInActive) return;
+	if (hp >= inGameConfig->playerTowerMaxHP - 0.1f) return;
+
+	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+	Vector2 pos = ConvertToScreen(trans.GetWorldPos(), *vpMat_);
+
+	HPBarBackSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+	HPBarBackSprite->Draw(&orth);
+	HPBarSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+	float const len = 100.0f;
+	float hpRate = hp / inGameConfig->playerTowerMaxHP;
+
+	HPBarSprite->rightTop.position.x = HPBarSprite->leftTop.position.x + hpRate * len;
+	HPBarSprite->rightBottom.position.x = HPBarSprite->leftBottom.position.x + hpRate * len;;
+
+	HPBarSprite->Draw(&orth);
+}
+
 void PlayerTower::DebugDraw()
 {
 #ifdef USE_IMGUI

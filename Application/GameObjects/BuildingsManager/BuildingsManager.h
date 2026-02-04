@@ -43,6 +43,8 @@ public:
 	virtual void Reset() override;
 	//描画処理.StateがinActiveの場合は呼び出されない
 	virtual void Draw(Matrix4* vpMat_)override;
+	// HPバー表示
+	virtual void DrawHpBar(Matrix4* vpMat_) override;
 	//コリジョンをセットする関数
 	virtual void SetCollisionBackTable()override;
 

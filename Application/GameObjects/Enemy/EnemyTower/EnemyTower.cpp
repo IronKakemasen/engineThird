@@ -18,6 +18,17 @@ EnemyTower::EnemyTower()
 
 	c->color = { 255,200,200,255 };
 
+	// HPバーのスプライト初期化
+	HPBarBackSprite = std::make_unique<Sprite>();
+	HPBarBackSprite->Initialize(100.0f, 16.0f, { },
+		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+		{ 100,100,255,255 });
+
+	HPBarSprite = std::make_unique<Sprite>();
+	HPBarSprite->Initialize(94.0f, 14.0f, { },
+		M::GetInstance()->GetTexIndex(TextureTag::kWhite2x2),
+		{ 255,0,0,255 });
+
 	// Jsonパスの設定
 	path = "./resource/application/json/enemy/enemyTowerData.json";
 }
@@ -138,6 +149,26 @@ void EnemyTower::Draw(Matrix4* vpMat_)
 	circleModel->Draw(vpMat_);
 
 }
+void EnemyTower::DrawHpBar(Matrix4* vpMat_)
+{
+	if (status == Status::kInActive) return;
+	if (hp >= inGameConfig->enemyTowerMaxHP - 0.1f) return;
+
+	Matrix4 orth = Get_Orthographic3D(0.0f, CommonV::kWindow_W, 0.0f, CommonV::kWindow_H);
+	Vector2 pos = ConvertToScreen(trans.GetWorldPos(), *vpMat_);
+
+	HPBarBackSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+	HPBarBackSprite->Draw(&orth);
+	HPBarSprite->GetAppearance()->trans.pos = Vector3(pos.x, pos.y + 30.0f, 0.0f);
+	float const len = 100.0f;
+	float hpRate = hp / inGameConfig->enemyTowerMaxHP;
+
+	HPBarSprite->rightTop.position.x = HPBarSprite->leftTop.position.x + hpRate * len;
+	HPBarSprite->rightBottom.position.x = HPBarSprite->leftBottom.position.x + hpRate * len;;
+
+	HPBarSprite->Draw(&orth);
+}
+
 void EnemyTower::DebugDraw()
 {
 #ifdef USE_IMGUI
