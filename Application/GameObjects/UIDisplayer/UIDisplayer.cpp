@@ -105,8 +105,8 @@ void UIDisplayer::Update()
 		}
 
 		uiElements[drawOrder[i]].sprite->GetAppearance()->trans.pos =
-		{ 
-			uiElements[drawOrder[i]].initPosition.x + uiElements[drawOrder[i]].posOffset.x, 
+		{
+			uiElements[drawOrder[i]].initPosition.x + uiElements[drawOrder[i]].posOffset.x,
 			uiElements[drawOrder[i]].initPosition.y + uiElements[drawOrder[i]].posOffset.y,
 			0.0f };
 
@@ -115,9 +115,6 @@ void UIDisplayer::Update()
 			uiElements[drawOrder[i]].initScale.x + uiElements[drawOrder[i]].scaleOffset.x,
 			uiElements[drawOrder[i]].initScale.y + uiElements[drawOrder[i]].scaleOffset.y,
 			1.0f };
-
-		// Ensure sprite internal state (uvTrans, atlas) is updated before draw
-		uiElements[drawOrder[i]].sprite->Update();
 	}
 }
 
@@ -208,7 +205,7 @@ void UIDisplayer::HandlePauseToggleInput()
 
 	if (gameObjectManager->isStop)
 	{
-		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_B) || 
+		if (M::GetInstance()->getPadState.IsJustPressed(0, PAD_B) ||
 			M::GetInstance()->getPadState.IsJustPressed(0, PAD_LB))
 		{
 			// ポーズ解除
@@ -252,7 +249,7 @@ void UIDisplayer::UpdatePauseEasing()
 }
 void UIDisplayer::ApplyPauseXOffset(float xOffset)
 {
-// イージング一括適用関数
+	// イージング一括適用関数
 	uiElements[uiType::PauseScreen_1280x720].posOffset.x = xOffset;
 	uiElements[uiType::PauseButton01_350x50].posOffset.x = xOffset;
 	uiElements[uiType::PauseButton02_350x50].posOffset.x = xOffset;
@@ -380,6 +377,9 @@ void UIDisplayer::HandlePauseDecisionInput()
 		break;
 
 	default:
+		break;
+	}
+}
 void UIDisplayer::UpdatePauseCursorEasing()
 {
 	uiElements[uiType::Cursor50x50].posOffset.y = Easing::EaseOutCubic(
@@ -465,7 +465,7 @@ void UIDisplayer::SetUIMode(UIMode mode_)
 	}
 }
 
-void UIDisplayer::SuperDraw(Matrix4 * ortho_)
+void UIDisplayer::SuperDraw(Matrix4* ortho_)
 {
 	for (size_t i = 0; i < drawOrder.size(); i++)
 	{
@@ -512,7 +512,9 @@ void UIDisplayer::DebugDraw()
 }
 
 void UIDisplayer::Draw(Matrix4* vpMat_)
-{/**/}
+{/**/
+}
 
 void UIDisplayer::SetCollisionBackTable()
-{/**/}
+{/**/
+}

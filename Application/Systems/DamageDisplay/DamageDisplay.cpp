@@ -14,7 +14,11 @@ DamageDisplay::DamageNum::DamageNum()
 void DamageDisplay::DamageNum::Set(float num_, Vector3 world_, float scale_, Vector3 color_)
 {
 	onesPlace = (int)num_ % 10;
-	tensPlace = (int)(num_ / 10) % 10;
+	tensPlace = (int)(num_ / 10);
+	if (tensPlace != 0)
+	{
+		tensPlace %= 10;
+	} 
 	
 	cnt.count = 0.0f;
 	scale = scale_;
@@ -114,6 +118,7 @@ void DamageDisplay::Draw(Matrix4* pMat_)
 	
 	for (auto& it : damageNumSprites)
 	{
+		if (!it.isActive) return;
 		it.Draw(pMat_);
 	}
 
