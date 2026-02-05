@@ -41,6 +41,8 @@ void PlayerTower::Reset()
 
 	// 現在選択されているステージ
 	ReplaceOnMap(inGameController->curStage);
+
+	nextAnimationState = EnemyTowerAnimationState::kIdle;
 }
 
 // マップに配置
